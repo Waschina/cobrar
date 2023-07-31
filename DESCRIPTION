@@ -1,0 +1,17 @@
+Package: cobrar
+Title: Constraint-based metabolic network analysis in R
+Version: 0.0.1
+Authors@R: 
+    person("Silvio", "Waschina", , "s.waschina@nutrinf.uni-kiel.de", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-6290-3593"))
+Description: The package provides structures and functions to perform constraint-based metabolic network analysis, e.g., the prediction of metabolic fluxed using Flux Balance Analysis (FBA). `cobrar` is inspired by the R-package `sybil`, which is not maintained anymore.
+License: GPL (>= 3)
+SystemRequirements: libSBML-core-plus-packages (>= 5.16)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+LinkingTo: 
+    Rcpp,
+    RcppArmadillo
+Imports: 
+    Rcpp
