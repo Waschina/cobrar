@@ -11,20 +11,20 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// readSBML
-int readSBML(char filename);
-RcppExport SEXP _cobrar_readSBML(SEXP filenameSEXP) {
+// readSBMLFile
+Rcpp::XPtr<SBMLDocument> readSBMLFile(const std::string& filename);
+RcppExport SEXP _cobrar_readSBMLFile(SEXP filenameSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< char >::type filename(filenameSEXP);
-    rcpp_result_gen = Rcpp::wrap(readSBML(filename));
+    Rcpp::traits::input_parameter< const std::string& >::type filename(filenameSEXP);
+    rcpp_result_gen = Rcpp::wrap(readSBMLFile(filename));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_cobrar_readSBML", (DL_FUNC) &_cobrar_readSBML, 1},
+    {"_cobrar_readSBMLFile", (DL_FUNC) &_cobrar_readSBMLFile, 1},
     {NULL, NULL, 0}
 };
 
