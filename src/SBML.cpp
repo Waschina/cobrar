@@ -2,8 +2,6 @@
 #include "sbml/SBMLTypes.h"
 #include "sbml/SBMLDocument.h"
 
-LIBSBML_CPP_NAMESPACE_USE
-
 // Function to read an SBML file and return a pointer to the SBMLDocument
 // [[Rcpp::export]]
 Rcpp::XPtr<SBMLDocument> readSBMLFile(const std::string& filename) {
