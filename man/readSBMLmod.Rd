@@ -4,7 +4,7 @@
 \alias{readSBMLmod}
 \title{Reads an SBML file and constructs an object of class 'modelorg'}
 \usage{
-readSBMLmod(filename)
+readSBMLmod(file_path)
 }
 \arguments{
 \item{filename}{Path to SBML file.}
