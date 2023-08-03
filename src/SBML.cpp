@@ -8,6 +8,14 @@
 using namespace Rcpp;
 
 /*
+ * Get libSBML version number
+ */
+// [[Rcpp::export]]
+Rcpp::String getSBMLVersion() {
+  return getLibSBMLDottedVersion();
+}
+
+/*
  * Create pointers visible to R
  */
 

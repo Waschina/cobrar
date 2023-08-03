@@ -11,7 +11,9 @@
 #' @slot mod_attr A data frame with additional model attributes.
 #' @slot S A sparse numeric matrix of \link[Matrix]{dgCMatrix-class} representing the Stoichiometric matrix.
 #' @slot obj_coef A numeric vector containing coefficients for the objective function.
-#' @slot subSys A sparse matrix of \link[Matrix]{dgCMatrix-class} defining subsystems.
+#' @slot subSys A sparse Boolean matrix of \link[Matrix]{lgCMatrix-class} defining subsystems.
+#' @slot subSys_id A character vector representing subsystem identifiers.
+#' @slot subSys_name A character vector containing the subsystem names.
 #'
 #' @slot met_id A character vector representing metabolite identifiers.
 #' @slot met_name A character vector with metabolite names.

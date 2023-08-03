@@ -11,6 +11,26 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// getGLPKVersion
+Rcpp::CharacterVector getGLPKVersion();
+RcppExport SEXP _cobrar_getGLPKVersion() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(getGLPKVersion());
+    return rcpp_result_gen;
+END_RCPP
+}
+// getSBMLVersion
+Rcpp::String getSBMLVersion();
+RcppExport SEXP _cobrar_getSBMLVersion() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(getSBMLVersion());
+    return rcpp_result_gen;
+END_RCPP
+}
 // readSBMLfile
 SEXP readSBMLfile(std::string file_path);
 RcppExport SEXP _cobrar_readSBMLfile(SEXP file_pathSEXP) {
@@ -202,6 +222,8 @@ END_RCPP
 RcppExport SEXP _rcpp_module_boot_sbml_module();
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_cobrar_getGLPKVersion", (DL_FUNC) &_cobrar_getGLPKVersion, 0},
+    {"_cobrar_getSBMLVersion", (DL_FUNC) &_cobrar_getSBMLVersion, 0},
     {"_cobrar_readSBMLfile", (DL_FUNC) &_cobrar_readSBMLfile, 1},
     {"_cobrar_getModelObj", (DL_FUNC) &_cobrar_getModelObj, 1},
     {"_cobrar_getModelId", (DL_FUNC) &_cobrar_getModelId, 1},

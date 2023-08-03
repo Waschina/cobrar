@@ -27,7 +27,11 @@ to central model structures, metabolites, reactions, and genes.
 
 \item{\code{obj_coef}}{A numeric vector containing coefficients for the objective function.}
 
-\item{\code{subSys}}{A sparse matrix of \link[Matrix]{dgCMatrix-class} defining subsystems.}
+\item{\code{subSys}}{A sparse Boolean matrix of \link[Matrix]{lgCMatrix-class} defining subsystems.}
+
+\item{\code{subSys_id}}{A character vector representing subsystem identifiers.}
+
+\item{\code{subSys_name}}{A character vector containing the subsystem names.}
 
 \item{\code{met_id}}{A character vector representing metabolite identifiers.}
 
