@@ -1,9 +1,9 @@
 ## usethis namespace: start
 #' @useDynLib cobrar, .registration = TRUE
+#' @importFrom Rcpp evalCpp
 ## usethis namespace: end
 NULL
 
-#' @importFrom utils installed.packages
 .onAttach <- function(libname, pkgname) {
 
   packageStartupMessage("cobrar. Let's do this.")

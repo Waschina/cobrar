@@ -7,8 +7,18 @@
 readSBMLmod(file_path)
 }
 \arguments{
-\item{filename}{Path to SBML file.}
+\item{file_path}{Path to SBML file.}
+}
+\value{
+A \link{modelorg-class} object.
 }
 \description{
 Reads an SBML file and constructs an object of class 'modelorg'
+}
+\examples{
+library(cobrar)
+
+fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
+mod <- readSBMLmod(fpath)
+
 }

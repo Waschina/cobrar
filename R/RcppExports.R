@@ -9,8 +9,36 @@ getModelObj <- function(sbml_document_ptr) {
     .Call(`_cobrar_getModelObj`, sbml_document_ptr)
 }
 
+getModelId <- function(model_ptr) {
+    .Call(`_cobrar_getModelId`, model_ptr)
+}
+
+getModelName <- function(model_ptr) {
+    .Call(`_cobrar_getModelName`, model_ptr)
+}
+
+getModelCompartments <- function(model_ptr) {
+    .Call(`_cobrar_getModelCompartments`, model_ptr)
+}
+
 getStoichiometricMatrix <- function(model_ptr) {
     .Call(`_cobrar_getStoichiometricMatrix`, model_ptr)
+}
+
+getModelAnnotation <- function(model_ptr) {
+    .Call(`_cobrar_getModelAnnotation`, model_ptr)
+}
+
+getModelNotes <- function(model_ptr) {
+    .Call(`_cobrar_getModelNotes`, model_ptr)
+}
+
+getObjectiveFunction <- function(model_ptr) {
+    .Call(`_cobrar_getObjectiveFunction`, model_ptr)
+}
+
+getSubsystems <- function(model_ptr) {
+    .Call(`_cobrar_getSubsystems`, model_ptr)
 }
 
 getReactionIds <- function(model_ptr) {
@@ -21,7 +49,23 @@ getReactionNames <- function(model_ptr) {
     .Call(`_cobrar_getReactionNames`, model_ptr)
 }
 
+getReactionAnnotation <- function(model_ptr) {
+    .Call(`_cobrar_getReactionAnnotation`, model_ptr)
+}
+
 getReactionFluxBounds <- function(model_ptr) {
     .Call(`_cobrar_getReactionFluxBounds`, model_ptr)
+}
+
+getMetaboliteIds <- function(model_ptr) {
+    .Call(`_cobrar_getMetaboliteIds`, model_ptr)
+}
+
+getMetaboliteNames <- function(model_ptr) {
+    .Call(`_cobrar_getMetaboliteNames`, model_ptr)
+}
+
+getMetaboliteAnnotation <- function(model_ptr) {
+    .Call(`_cobrar_getMetaboliteAnnotation`, model_ptr)
 }
 

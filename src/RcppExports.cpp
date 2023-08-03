@@ -33,6 +33,39 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// getModelId
+Rcpp::String getModelId(SEXP model_ptr);
+RcppExport SEXP _cobrar_getModelId(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getModelId(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
+// getModelName
+Rcpp::String getModelName(SEXP model_ptr);
+RcppExport SEXP _cobrar_getModelName(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getModelName(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
+// getModelCompartments
+Rcpp::DataFrame getModelCompartments(SEXP model_ptr);
+RcppExport SEXP _cobrar_getModelCompartments(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getModelCompartments(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
 // getStoichiometricMatrix
 arma::sp_mat getStoichiometricMatrix(SEXP model_ptr);
 RcppExport SEXP _cobrar_getStoichiometricMatrix(SEXP model_ptrSEXP) {
@@ -41,6 +74,50 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
     rcpp_result_gen = Rcpp::wrap(getStoichiometricMatrix(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
+// getModelAnnotation
+Rcpp::String getModelAnnotation(SEXP model_ptr);
+RcppExport SEXP _cobrar_getModelAnnotation(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getModelAnnotation(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
+// getModelNotes
+Rcpp::String getModelNotes(SEXP model_ptr);
+RcppExport SEXP _cobrar_getModelNotes(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getModelNotes(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
+// getObjectiveFunction
+Rcpp::NumericVector getObjectiveFunction(SEXP model_ptr);
+RcppExport SEXP _cobrar_getObjectiveFunction(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getObjectiveFunction(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
+// getSubsystems
+Rcpp::List getSubsystems(SEXP model_ptr);
+RcppExport SEXP _cobrar_getSubsystems(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getSubsystems(model_ptr));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -66,6 +143,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// getReactionAnnotation
+Rcpp::CharacterVector getReactionAnnotation(SEXP model_ptr);
+RcppExport SEXP _cobrar_getReactionAnnotation(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getReactionAnnotation(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
 // getReactionFluxBounds
 Rcpp::List getReactionFluxBounds(SEXP model_ptr);
 RcppExport SEXP _cobrar_getReactionFluxBounds(SEXP model_ptrSEXP) {
@@ -77,16 +165,60 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// getMetaboliteIds
+Rcpp::CharacterVector getMetaboliteIds(SEXP model_ptr);
+RcppExport SEXP _cobrar_getMetaboliteIds(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getMetaboliteIds(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
+// getMetaboliteNames
+Rcpp::CharacterVector getMetaboliteNames(SEXP model_ptr);
+RcppExport SEXP _cobrar_getMetaboliteNames(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getMetaboliteNames(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
+// getMetaboliteAnnotation
+Rcpp::DataFrame getMetaboliteAnnotation(SEXP model_ptr);
+RcppExport SEXP _cobrar_getMetaboliteAnnotation(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getMetaboliteAnnotation(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 RcppExport SEXP _rcpp_module_boot_sbml_module();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_cobrar_readSBMLfile", (DL_FUNC) &_cobrar_readSBMLfile, 1},
     {"_cobrar_getModelObj", (DL_FUNC) &_cobrar_getModelObj, 1},
+    {"_cobrar_getModelId", (DL_FUNC) &_cobrar_getModelId, 1},
+    {"_cobrar_getModelName", (DL_FUNC) &_cobrar_getModelName, 1},
+    {"_cobrar_getModelCompartments", (DL_FUNC) &_cobrar_getModelCompartments, 1},
     {"_cobrar_getStoichiometricMatrix", (DL_FUNC) &_cobrar_getStoichiometricMatrix, 1},
+    {"_cobrar_getModelAnnotation", (DL_FUNC) &_cobrar_getModelAnnotation, 1},
+    {"_cobrar_getModelNotes", (DL_FUNC) &_cobrar_getModelNotes, 1},
+    {"_cobrar_getObjectiveFunction", (DL_FUNC) &_cobrar_getObjectiveFunction, 1},
+    {"_cobrar_getSubsystems", (DL_FUNC) &_cobrar_getSubsystems, 1},
     {"_cobrar_getReactionIds", (DL_FUNC) &_cobrar_getReactionIds, 1},
     {"_cobrar_getReactionNames", (DL_FUNC) &_cobrar_getReactionNames, 1},
+    {"_cobrar_getReactionAnnotation", (DL_FUNC) &_cobrar_getReactionAnnotation, 1},
     {"_cobrar_getReactionFluxBounds", (DL_FUNC) &_cobrar_getReactionFluxBounds, 1},
+    {"_cobrar_getMetaboliteIds", (DL_FUNC) &_cobrar_getMetaboliteIds, 1},
+    {"_cobrar_getMetaboliteNames", (DL_FUNC) &_cobrar_getMetaboliteNames, 1},
+    {"_cobrar_getMetaboliteAnnotation", (DL_FUNC) &_cobrar_getMetaboliteAnnotation, 1},
     {"_rcpp_module_boot_sbml_module", (DL_FUNC) &_rcpp_module_boot_sbml_module, 0},
     {NULL, NULL, 0}
 };
