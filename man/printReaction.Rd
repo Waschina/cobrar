@@ -19,7 +19,7 @@ instead of metabolite names.}
 A character vector with the individual reaction equations.
 }
 \description{
-Print the equation(s) of one or more reactions
+Print the equations of reactions.
 }
 \examples{
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")

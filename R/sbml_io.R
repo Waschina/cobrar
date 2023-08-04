@@ -29,6 +29,9 @@ readSBMLmod <- function(file_path) {
     mod_name <- mod_id
   S <- getStoichiometricMatrix(modelPtr)
   mod_compartments <- getModelCompartments(modelPtr)
+  mod_compartments$name <- ifelse(is.na(mod_compartments$name),
+                                  mod_compartments$id,
+                                  mod_compartments$name)
   mod_annotation <- getModelAnnotation(modelPtr)
   mod_notes <- getModelNotes(modelPtr)
   obj_coeff <- getObjectiveFunction(modelPtr)
