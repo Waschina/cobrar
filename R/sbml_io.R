@@ -25,6 +25,8 @@ readSBMLmod <- function(file_path) {
   # Model fields
   mod_id <- getModelId(modelPtr)
   mod_name <- getModelName(modelPtr)
+  if(is.na(mod_name))
+    mod_name <- mod_id
   S <- getStoichiometricMatrix(modelPtr)
   mod_compartments <- getModelCompartments(modelPtr)
   mod_annotation <- getModelAnnotation(modelPtr)
@@ -55,7 +57,7 @@ readSBMLmod <- function(file_path) {
         mod_desc = mod_id,
         mod_name = mod_name,
         mod_compart = mod_compartments$id,
-        mod_compartName = mod_compartments$name,
+        mod_compart_name = mod_compartments$name,
         mod_attr = data.frame(annotation = mod_annotation),
         mod_notes = mod_notes,
         S = S,
@@ -76,9 +78,9 @@ readSBMLmod <- function(file_path) {
         uppbnd = react_bnds$upper_bound,
         react_attr = data.frame(annotation = react_anno),
 
-        gprRules = NA_character_, # TODO
+        gprRules = character(0), # TODO
         genes = list(), # TODO
-        allGenes = NA_character_ # TODO
+        allGenes = character(0) # TODO
     )
   )
 }

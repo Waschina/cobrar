@@ -19,7 +19,7 @@ to central model structures, metabolites, reactions, and genes.
 
 \item{\code{mod_compart}}{A character vector indicating the model compartment.}
 
-\item{\code{mod_compartName}}{A character vector with the name of the model compartment.}
+\item{\code{mod_compart_name}}{A character vector with the name of the model compartment.}
 
 \item{\code{mod_attr}}{A data frame with additional model attributes.}
 
