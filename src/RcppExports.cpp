@@ -423,6 +423,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// getGeneProducts
+Rcpp::DataFrame getGeneProducts(SEXP model_ptr);
+RcppExport SEXP _cobrar_getGeneProducts(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getGeneProducts(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
+// getGPRs
+Rcpp::List getGPRs(SEXP model_ptr);
+RcppExport SEXP _cobrar_getGPRs(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getGPRs(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 RcppExport SEXP _rcpp_module_boot_sbml_module();
 
@@ -463,6 +485,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cobrar_getMetaboliteIds", (DL_FUNC) &_cobrar_getMetaboliteIds, 1},
     {"_cobrar_getMetaboliteNames", (DL_FUNC) &_cobrar_getMetaboliteNames, 1},
     {"_cobrar_getMetaboliteAnnotation", (DL_FUNC) &_cobrar_getMetaboliteAnnotation, 1},
+    {"_cobrar_getGeneProducts", (DL_FUNC) &_cobrar_getGeneProducts, 1},
+    {"_cobrar_getGPRs", (DL_FUNC) &_cobrar_getGPRs, 1},
     {"_rcpp_module_boot_sbml_module", (DL_FUNC) &_rcpp_module_boot_sbml_module, 0},
     {NULL, NULL, 0}
 };

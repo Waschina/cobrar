@@ -47,10 +47,8 @@ readSBMLmod <- function(file_path) {
   met_attr <- getMetaboliteAnnotation(modelPtr)
 
   # Genes
-  # TODO
-
-  # Clean up (frees memory)
-  rm(sbmldoc, modelPtr)
+  allGeneProducts <- getGeneProducts(modelPtr)
+  gpr <- getGPRs(modelPtr)
 
   return(
     new("modelorg",
@@ -79,9 +77,10 @@ readSBMLmod <- function(file_path) {
         uppbnd = react_bnds$upper_bound,
         react_attr = data.frame(annotation = react_anno),
 
-        gprRules = character(0), # TODO
-        genes = list(), # TODO
-        allGenes = character(0) # TODO
+        gprRules = gpr$rules,
+        genes = lapply(gpr$genes, function(x) gsub("^G_","",x)),
+        allGenes = gsub("^G_","",allGeneProducts$ID),
+        allGenes_name = allGeneProducts$name
     )
   )
 }

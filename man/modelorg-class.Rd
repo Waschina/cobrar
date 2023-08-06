@@ -50,10 +50,14 @@ to central model structures, metabolites, reactions, and genes.
 
 \item{\code{uppbnd}}{A character vector containing upper bounds for reactions.}
 
-\item{\code{gprRules}}{A character vector with Gene-Protein-Reaction association rules.}
+\item{\code{gprRules}}{A character vector with Gene-Protein-Reaction association rules
+(with gene product indexes corresponding to the order in slot 'genes').}
 
-\item{\code{genes}}{A list of gene-related information.}
+\item{\code{genes}}{A list of character vectors. Each vector contains the IDs of
+gene products associated to the respective reaction.}
 
 \item{\code{allGenes}}{A character vector with all gene identifiers.}
+
+\item{\code{allGenes_name}}{A character vector with all gene names.}
 }}
 

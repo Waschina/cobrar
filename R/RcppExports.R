@@ -145,3 +145,11 @@ getMetaboliteAnnotation <- function(model_ptr) {
     .Call(`_cobrar_getMetaboliteAnnotation`, model_ptr)
 }
 
+getGeneProducts <- function(model_ptr) {
+    .Call(`_cobrar_getGeneProducts`, model_ptr)
+}
+
+getGPRs <- function(model_ptr) {
+    .Call(`_cobrar_getGPRs`, model_ptr)
+}
+

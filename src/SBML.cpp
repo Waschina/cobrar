@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <RcppArmadillo.h>
 #include <sbml/SBMLTypes.h>
 #include <sbml/packages/fbc/common/FbcExtensionTypes.h>
@@ -468,6 +469,126 @@ Rcpp::DataFrame getMetaboliteAnnotation(SEXP model_ptr) {
 }
 
 
+// [[Rcpp::export]]
+Rcpp::DataFrame getGeneProducts(SEXP model_ptr) {
+  // Get the Model object from the SBMLDocument
+  Model* model = Rcpp::XPtr<Model>(model_ptr);
+
+  if (model == nullptr) {
+    Rcpp::stop("Invalid Model pointer.");
+  }
+
+  FbcModelPlugin* mplugin = static_cast<FbcModelPlugin*>(model->getPlugin("fbc"));
+
+  ListOfGeneProducts* lgenes = mplugin->getListOfGeneProducts();
+  Rcpp::CharacterVector geneID;
+  Rcpp::CharacterVector geneName;
+
+  for(unsigned int i = 0; i < mplugin->getNumGeneProducts(); i++) {
+    geneID.push_back(lgenes->get(i)->getId());
+    geneName.push_back(lgenes->get(i)->getName());
+  }
+
+  Rcpp::List cols = Rcpp::List::create(Named("ID") = geneID,
+                                       Named("name") = geneName);
+  Rcpp::DataFrame df(cols);
+
+  return df;
+}
+
+// small recursive helper function to retrieve GPR-association logical string
+std::string getGPRString(FbcAssociation* fasso,
+                         std::map<std::string, std::string>& variableMap,
+                         int& variableCount) {
+  if(fasso->isGeneProductRef()) {
+
+    GeneProductRef* gp = static_cast<GeneProductRef*>(fasso);
+    std::string gpID = gp->getGeneProduct();
+
+    if (variableMap.find(gpID) != variableMap.end()) {
+      return variableMap[gpID];
+    }
+
+    std::string newVariable = "x[" + std::to_string(variableCount++) + "]";
+    variableMap[gpID] = newVariable;
+    return newVariable;
+
+  } else if(fasso->isFbcAnd()) {
+
+    FbcAnd* fand = static_cast<FbcAnd*>(fasso);
+    ListOfFbcAssociations* assoList = fand->getListOfAssociations();
+
+    std::vector<std::string> chfasso;
+    std::string gpString;
+    for(unsigned int i = 0; i < assoList->getNumFbcAssociations(); i ++) {
+      std::string tmpstr = getGPRString(assoList->get(i),
+                                        variableMap, variableCount);
+      if(i > 0)
+        gpString += " & ";
+      gpString += tmpstr;
+    }
+    return "( " + gpString + " )";
+
+  } else {
+
+    FbcOr* fand = static_cast<FbcOr*>(fasso);
+    ListOfFbcAssociations* assoList = fand->getListOfAssociations();
+
+    std::vector<std::string> chfasso;
+    std::string gpString;
+    for(unsigned int i = 0; i < assoList->getNumFbcAssociations(); i ++) {
+      std::string tmpstr = getGPRString(assoList->get(i),
+                                        variableMap, variableCount);
+      if(i > 0)
+        gpString += " | ";
+      gpString += tmpstr;
+    }
+    return "( " + gpString + " )";
+
+  }
+}
+
+
+// [[Rcpp::export]]
+Rcpp::List getGPRs(SEXP model_ptr) {
+  // Get the Model object from the SBMLDocument
+  Model* model = Rcpp::XPtr<Model>(model_ptr);
+
+  if (model == nullptr) {
+    Rcpp::stop("Invalid Model pointer.");
+  }
+
+  Rcpp::CharacterVector igrp;
+  Rcpp::List rgenes;
+
+  for(unsigned int i = 0; i < model->getNumReactions(); i++) {
+    Reaction* reaction = model->getReaction(i);
+
+    std::string tmpstr = "";
+    FbcReactionPlugin* rplugin = static_cast<FbcReactionPlugin*>(reaction->getPlugin("fbc"));
+    GeneProductAssociation* fasso = rplugin->getGeneProductAssociation();
+
+    if(fasso != nullptr) {
+      std::map<std::string, std::string> variableMap;
+      int variableCount = 1; // Initialize the variable count
+      tmpstr = getGPRString(fasso->getAssociation(),variableMap,variableCount);
+
+      std::vector<std::string> orderedKeys;
+      for (const auto& pair : variableMap) {
+        orderedKeys.push_back(pair.first);
+      }
+
+      rgenes.push_back(orderedKeys);
+    }
+
+    igrp.push_back(tmpstr);
+  }
+
+  Rcpp::List cols = Rcpp::List::create(Named("rules") = igrp,
+                                       Named("genes") = rgenes);
+
+  return cols;
+}
 
 RCPP_MODULE(sbml_module) {
   function("readSBMLfile", &readSBMLfile, "Read SBML document using libSBML");

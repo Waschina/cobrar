@@ -25,9 +25,12 @@
 #' @slot lowbnd A character vector containing lower bounds for reactions.
 #' @slot uppbnd A character vector containing upper bounds for reactions.
 #'
-#' @slot gprRules A character vector with Gene-Protein-Reaction association rules.
-#' @slot genes A list of gene-related information.
+#' @slot gprRules A character vector with Gene-Protein-Reaction association rules
+#' (with gene product indexes corresponding to the order in slot 'genes').
+#' @slot genes A list of character vectors. Each vector contains the IDs of
+#' gene products associated to the respective reaction.
 #' @slot allGenes A character vector with all gene identifiers.
+#' @slot allGenes_name A character vector with all gene names.
 #'
 #' @aliases modelorg
 #'
@@ -64,9 +67,11 @@ setClass("modelorg",
            react_attr = "data.frame",
 
            # genes
+           gpr = "character",
            gprRules = "character",
            genes = "list",
-           allGenes = "character"
+           allGenes = "character",
+           allGenes_name = "character"
          ))
 
 #------------------------------------------------------------------------------#
