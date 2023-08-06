@@ -29,6 +29,8 @@
 #' @slot genes A list of gene-related information.
 #' @slot allGenes A character vector with all gene identifiers.
 #'
+#' @aliases modelorg
+#'
 #' @exportClass modelorg
 setClass("modelorg",
 

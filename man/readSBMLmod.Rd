@@ -16,8 +16,6 @@ A \link{modelorg-class} object.
 Reads an SBML file and constructs an object of class 'modelorg'
 }
 \examples{
-library(cobrar)
-
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)
 

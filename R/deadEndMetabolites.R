@@ -28,7 +28,7 @@ deadEndMetabolites <- function(object) {
   St <- object@S
   LBt <- object@lowbnd
   UBt <- object@uppbnd
-  St[which(abs(St) < 1e-6, arr.ind = TRUE)] <- 0
+  St[which(abs(St) < COBRAR_SETTINGS("TOLERANCE"), arr.ind = TRUE)] <- 0
 
   # turn reactions, which are only operating from RHS to LHS
   # this simplifies the algorithm below

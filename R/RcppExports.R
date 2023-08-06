@@ -5,6 +5,74 @@ getGLPKVersion <- function() {
     .Call(`_cobrar_getGLPKVersion`)
 }
 
+initProb <- function(name) {
+    .Call(`_cobrar_initProb`, name)
+}
+
+setObjDir <- function(xp, dir) {
+    .Call(`_cobrar_setObjDir`, xp, dir)
+}
+
+addColsLP <- function(xp, ncols) {
+    .Call(`_cobrar_addColsLP`, xp, ncols)
+}
+
+addRowsLP <- function(xp, nrows) {
+    .Call(`_cobrar_addRowsLP`, xp, nrows)
+}
+
+loadMatrixLP <- function(xp, ne, ia, ja, ra) {
+    .Call(`_cobrar_loadMatrixLP`, xp, ne, ia, ja, ra)
+}
+
+setColsBndsObjCoefsLP <- function(xp, j, type, lb, ub, obj_coef) {
+    .Call(`_cobrar_setColsBndsObjCoefsLP`, xp, j, type, lb, ub, obj_coef)
+}
+
+setColsKindLP <- function(xp, j, kind) {
+    .Call(`_cobrar_setColsKindLP`, xp, j, kind)
+}
+
+setRowsBndsLP <- function(xp, i, type, lb, ub) {
+    .Call(`_cobrar_setRowsBndsLP`, xp, i, type, lb, ub)
+}
+
+getSolStatLP <- function(xp) {
+    .Call(`_cobrar_getSolStatLP`, xp)
+}
+
+getColsPrimalLP <- function(xp) {
+    .Call(`_cobrar_getColsPrimalLP`, xp)
+}
+
+solveSimplex <- function(xp) {
+    .Call(`_cobrar_solveSimplex`, xp)
+}
+
+solveSimplexExact <- function(xp) {
+    .Call(`_cobrar_solveSimplexExact`, xp)
+}
+
+getObjVal <- function(xp) {
+    .Call(`_cobrar_getObjVal`, xp)
+}
+
+solveInterior <- function(xp) {
+    .Call(`_cobrar_solveInterior`, xp)
+}
+
+getObjValIpt <- function(xp) {
+    .Call(`_cobrar_getObjValIpt`, xp)
+}
+
+solveMIP <- function(xp) {
+    .Call(`_cobrar_solveMIP`, xp)
+}
+
+mipObjVal <- function(xp) {
+    .Call(`_cobrar_mipObjVal`, xp)
+}
+
 getSBMLVersion <- function() {
     .Call(`_cobrar_getSBMLVersion`)
 }

@@ -3,6 +3,7 @@
 \docType{class}
 \name{modelorg-class}
 \alias{modelorg-class}
+\alias{modelorg}
 \title{Stucture of modelorg Class}
 \description{
 This class represents a model organization with various attributes related

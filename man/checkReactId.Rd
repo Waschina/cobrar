@@ -4,10 +4,10 @@
 \alias{checkReactId}
 \title{Check reaction IDs and Indexes}
 \usage{
-checkReactId(object, react)
+checkReactId(model, react)
 }
 \arguments{
-\item{object}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{modelorg}}
 
 \item{react}{A character vector specifying the reaction IDs or a integer
 vector providing the reaction indices in the model.}

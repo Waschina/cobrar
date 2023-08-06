@@ -27,9 +27,9 @@ mod <- readSBMLmod(fpath)
 # print reaction specified by index
 printReaction(mod, react = 2)
 # print reaction specified by ID
-printReaction(mod, react = "R_PFL")
+printReaction(mod, react = "PFL")
 # print reaction with metabolite IDs instead of metabolite names
-printReaction(mod, react = "R_PFL", use.ids = TRUE)
+printReaction(mod, react = "PFL", use.ids = TRUE)
 # print multiple reactions at once
 printReaction(mod, react = c(2,8))
 

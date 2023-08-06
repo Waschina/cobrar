@@ -5,8 +5,6 @@
 #' @returns A \link{modelorg-class} object.
 #'
 #' @examples
-#' library(cobrar)
-#'
 #' fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 #' mod <- readSBMLmod(fpath)
 #'
@@ -69,12 +67,12 @@ readSBMLmod <- function(file_path) {
         subSys_id = subSys$subSys_ids,
         subSys_name = subSys$subSys_names,
 
-        met_id = met_id,
+        met_id = gsub("^M_","",met_id),
         met_name = met_name,
         met_comp = NA_integer_, # TODO
         met_attr = met_attr,
 
-        react_id = react_id,
+        react_id = gsub("^R_","",react_id),
         react_name = react_name,
         react_comp = NA_integer_, # TODO
         lowbnd = react_bnds$lower_bound,
