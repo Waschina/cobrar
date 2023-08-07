@@ -14,12 +14,13 @@
 - The GNU glpk library is a system requirement. There are no links/references to iBM's cplex in the cobrar package, which were one reason why sybil was discontinued on CRAN.
 - [roxygen2](https://roxygen2.r-lib.org/) is used for documenting functions and classes.
 - Feature trim: A range of functionalities in sybil are not part of cobrar. 
-
 - In cobrar, R's garbage collector handles memory management, including memory associated to C++-objects and the pointers to these.
 - Simplifications in class and function architecture
-  - No more Class "SyBiolAlg" nor derived classes. Different algorithms have their own function and detailed documentation of their return variables.
-- Performance (i.e., computation time) improvements in certain procedures. E.g.: identification of dead-end metabolites, reading SBML files, ... .
-
+  - No more Class "SysBiolAlg" nor derived classes. Different algorithms have their own function and detailed documentation of their return variables.
+- Performance (i.e., computation time) improvements in certain procedures:
+  - identification of dead-end metabolites
+  - reading SBML files,
+  - pFBA algorithm (a.k.a MTF 'Minimization of Total Flux').
 
 
 #### Notes

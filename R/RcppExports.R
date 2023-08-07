@@ -73,6 +73,14 @@ mipObjVal <- function(xp) {
     .Call(`_cobrar_mipObjVal`, xp)
 }
 
+getColsDualIptLP <- function(xp) {
+    .Call(`_cobrar_getColsDualIptLP`, xp)
+}
+
+getColsDualLP <- function(xp) {
+    .Call(`_cobrar_getColsDualLP`, xp)
+}
+
 getSBMLVersion <- function() {
     .Call(`_cobrar_getSBMLVersion`)
 }
@@ -125,6 +133,10 @@ getReactionNames <- function(model_ptr) {
     .Call(`_cobrar_getReactionNames`, model_ptr)
 }
 
+getReactionCompartment <- function(model_ptr) {
+    .Call(`_cobrar_getReactionCompartment`, model_ptr)
+}
+
 getReactionAnnotation <- function(model_ptr) {
     .Call(`_cobrar_getReactionAnnotation`, model_ptr)
 }
@@ -143,6 +155,10 @@ getMetaboliteNames <- function(model_ptr) {
 
 getMetaboliteAnnotation <- function(model_ptr) {
     .Call(`_cobrar_getMetaboliteAnnotation`, model_ptr)
+}
+
+getMetaboliteCompartments <- function(model_ptr) {
+    .Call(`_cobrar_getMetaboliteCompartments`, model_ptr)
 }
 
 getGeneProducts <- function(model_ptr) {

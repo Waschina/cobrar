@@ -11,7 +11,35 @@ glpkPar <- list(
 
   GLP_CV = 1,
   GLP_IV = 2,
-  GLP_BV = 3
+  GLP_BV = 3,
+
+  GLP_EBADB = 1,
+  GLP_ESING = 2,
+  GLP_ECOND = 3,
+  GLP_EBOUND = 4,
+  GLP_EFAIL = 5,
+  GLP_EOBJLL = 6,
+  GLP_EOBJUL = 7,
+  GLP_EITLIM = 8,
+  GLP_ETMLIM = 9,
+  GLP_ENOPFS = 10,
+  GLP_ENODFS = 11,
+  GLP_EROOT = 12,
+  GLP_ESTOP = 13,
+  GLP_EMIPGAP = 14,
+  GLP_ENOFEAS = 15,
+  GLP_ENOCVG = 16,
+  GLP_EINSTAB = 17,
+  GLP_EDATA = 18,
+  GLP_ERANGE = 19,
+
+  GLP_OPT = 5,
+  GLP_UNDEF = 1,
+  GLP_FEAS = 2,
+  GLP_INFEAS = 3,
+  GLP_NOFEAS = 4,
+  GLP_UNBND = 6
+
 )
 
 setClass(Class = "LPproblem_glpk",
@@ -55,16 +83,6 @@ setMethod("loadLPprob", signature(lp = "LPproblem_glpk"),
 
           function(lp, nCols, nRows, mat, ub, lb, obj, rlb, rtype, lpdir,
                    rub = NULL, ctype = NULL) {
-
-
-            crtype <- sapply(rtype,
-                             function(x) switch(EXPR = x,
-                                                "F" = glpkPar$GLP_FR,
-                                                "L" = glpkPar$GLP_LO,
-                                                "U" = glpkPar$GLP_UP,
-                                                "D" = glpkPar$GLP_DB,
-                                                "E" = glpkPar$GLP_FX,
-                                                      glpkPar$GLP_FX))
 
             # optimization direction
             lpdir <- switch(EXPR = lpdir,
@@ -128,10 +146,9 @@ setMethod("loadLPprob", signature(lp = "LPproblem_glpk"),
                         i = c(1:nRows),
                         lb = rlb,
                         ub = crub,
-                        type = crtype)
+                        type = rtype)
 
 
-            # TBC
           }
 )
 
@@ -195,6 +212,16 @@ setMethod("setColsKind", signature(lp = "LPproblem_glpk"),
 setMethod("setRowsBnds", signature(lp = "LPproblem_glpk"),
           function(lp, i, lb, ub , type) {
 
+
+            type <- sapply(type,
+                           function(x) switch(EXPR = x,
+                                              "F" = glpkPar$GLP_FR,
+                                              "L" = glpkPar$GLP_LO,
+                                              "U" = glpkPar$GLP_UP,
+                                              "D" = glpkPar$GLP_DB,
+                                              "E" = glpkPar$GLP_FX,
+                                              glpkPar$GLP_FX))
+
             if (is.null(type)) {
               Ctype <- as.null(type)
             }
@@ -229,7 +256,34 @@ setMethod("solveLp", signature(lp = "LPproblem_glpk"),
                      out <- solveSimplex(lp@ptr)
                    }
             )
-            return(out)
+
+            # get optimization status term for code in "out"
+            term <- switch(EXPR = out+1,
+                           "optimization process was successful",
+                           "invalid basis",
+                           "singular matrix",
+                           "ill-conditioned matrix",
+                           "invalid bounds",
+                           "solver failed",
+                           "objective lower limit reached",
+                           "objective upper limit reached",
+                           "iteration limit exceeded",
+                           "time limit exceeded",
+                           "no primal feasible solution",
+                           "no dual feasible solution",
+                           "root LP optimum not provided",
+                           "search terminated by application",
+                           "relative mip gap tolerance reached",
+                           "no primal/dual feasible solution",
+                           "no convergence",
+                           "numerical instability",
+                           "invalid data",
+                           "result out of range")
+            if(is.null(out))
+              term <- paste("Failed to obtain solution, unknown error code:", out)
+
+            return(list(code= out,
+                        term = term))
           }
 )
 
@@ -255,7 +309,19 @@ setMethod("getSolStat", signature(lp = "LPproblem_glpk"),
 
             out <- getSolStatLP(lp@ptr)
 
-            return(out)
+            # get term
+            term <- switch(EXPR = out,
+                           "invalid basis",
+                           "singular matrix",
+                           "ill-conditioned matrix",
+                           "invalid bounds",
+                           "solution process was successful",
+                           "solver failed")
+            if(is.null(out))
+              term <- paste("unknown status code:", out)
+
+            return(list(code = out,
+                        term = term))
           }
 )
 
@@ -263,6 +329,20 @@ setMethod("getColsPrimal", signature(lp = "LPproblem_glpk"),
           function(lp) {
 
             out <- getColsPrimalLP(lp@ptr)
+
+            return(out)
+          }
+)
+
+setMethod("getRedCosts", signature(lp = "LPproblem_glpk"),
+          function(lp) {
+
+            if (lp@method == "interior") {
+              out <- getColsDualIptLP(lp@ptr)
+            }
+            else {
+              out <- getColsDualLP(lp@ptr)
+            }
 
             return(out)
           }

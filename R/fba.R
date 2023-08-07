@@ -4,6 +4,8 @@
 #'
 #' @param model Model of class \link{modelorg}
 #'
+#' @returns A list with flux predictions (reaction fluxes 'fluxes', reduced costs 'redCosts'), and optimization status ()
+#'
 #' @examples
 #' fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 #' mod <- readSBMLmod(fpath)
@@ -58,10 +60,15 @@ fba <- function(model) {
   objRes <- getObjValue(LPprob)
   lp_fluxes <- getColsPrimal(LPprob)
 
-  return(list(ok = lp_ok,
-              stat = lp_stat,
+  redCosts <- getRedCosts(LPprob)
+
+  return(list(ok = lp_ok$code,
+              ok_term = lp_ok$term,
+              stat = lp_stat$code,
+              stat_term = lp_stat$term,
               obj = objRes,
-              fluxes = lp_fluxes
+              fluxes = lp_fluxes,
+              redCosts = redCosts
   ))
 }
 

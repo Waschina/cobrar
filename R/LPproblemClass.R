@@ -56,3 +56,16 @@ setGeneric("getSolStat", function(lp, ...) {
 setGeneric("getColsPrimal", function(lp, ...) {
   standardGeneric("getColsPrimal")
 })
+
+setGeneric("getRedCosts", function(lp, ...) {
+  standardGeneric("getRedCosts")
+})
+
+setGeneric("returnCode", function(lp, ...) {
+  standardGeneric("returnCode")
+})
+
+setGeneric("statusCode", function(lp, ...) {
+  standardGeneric("statusCode")
+})
+

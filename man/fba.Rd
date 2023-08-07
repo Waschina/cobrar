@@ -9,6 +9,9 @@ fba(model)
 \arguments{
 \item{model}{Model of class \link{modelorg}}
 }
+\value{
+A list with flux predictions (reaction fluxes 'fluxes', reduced costs 'redCosts'), and optimization status ()
+}
 \description{
 Performs basic flux balance analysis (fba)
 }

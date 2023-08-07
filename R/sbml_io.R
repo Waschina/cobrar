@@ -40,11 +40,13 @@ readSBMLmod <- function(file_path) {
   react_name <- getReactionNames(modelPtr)
   react_bnds <- getReactionFluxBounds(modelPtr)
   react_anno <- getReactionAnnotation(modelPtr)
+  react_comp <- getReactionCompartment(modelPtr)
 
   # Metabolites
   met_id <- getMetaboliteIds(modelPtr)
   met_name <- getMetaboliteNames(modelPtr)
   met_attr <- getMetaboliteAnnotation(modelPtr)
+  met_comp <- getMetaboliteCompartments(modelPtr)
 
   # Genes
   allGeneProducts <- getGeneProducts(modelPtr)
@@ -67,12 +69,12 @@ readSBMLmod <- function(file_path) {
 
         met_id = gsub("^M_","",met_id),
         met_name = met_name,
-        met_comp = NA_integer_, # TODO
+        met_comp = ifelse(met_comp == "", NA_character_, met_comp),
         met_attr = met_attr,
 
         react_id = gsub("^R_","",react_id),
         react_name = react_name,
-        react_comp = NA_integer_, # TODO
+        react_comp = ifelse(react_comp == "", NA_character_, react_comp),
         lowbnd = react_bnds$lower_bound,
         uppbnd = react_bnds$upper_bound,
         react_attr = data.frame(annotation = react_anno),

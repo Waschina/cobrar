@@ -415,3 +415,47 @@ SEXP mipObjVal(SEXP xp) {
 
   return out;
 }
+
+/* retrieve column dual value (interior) for all columns (interior) */
+// [[Rcpp::export]]
+SEXP getColsDualIptLP(SEXP xp) {
+
+  SEXP out = R_NilValue;
+  double col_dual = 0;
+
+  glp_prob* lp = (glp_prob*)R_ExternalPtrAddr(xp);
+
+  int num_cols, k;
+
+  num_cols = glp_get_num_cols(lp);
+
+  out = Rf_allocVector(REALSXP, num_cols);
+  for (k = 1; k <= num_cols; k++) {
+    col_dual = glp_ipt_col_dual(lp, k);
+    REAL(out)[k-1] = col_dual;
+  }
+
+  return out;
+}
+
+/* retrieve column dual value for all columns */
+// [[Rcpp::export]]
+SEXP getColsDualLP(SEXP xp) {
+
+  SEXP out = R_NilValue;
+  double col_dual = 0;
+
+  int num_cols, k;
+
+  glp_prob* lp = (glp_prob*)R_ExternalPtrAddr(xp);
+
+  num_cols = glp_get_num_cols(lp);
+
+  out = Rf_allocVector(REALSXP, num_cols);
+  for (k = 1; k <= num_cols; k++) {
+    col_dual = glp_get_col_dual(lp, k);
+    REAL(out)[k-1] = col_dual;
+  }
+
+  return out;
+}

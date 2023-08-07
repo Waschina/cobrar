@@ -331,6 +331,25 @@ Rcpp::CharacterVector getReactionNames(SEXP model_ptr) {
   return rxn_name;
 }
 
+// [[Rcpp::export]]
+Rcpp::CharacterVector getReactionCompartment(SEXP model_ptr) {
+  // Get the Model object from the SBMLDocument
+  Model* model = Rcpp::XPtr<Model>(model_ptr);
+
+  if (model == nullptr) {
+    Rcpp::stop("Invalid Model pointer.");
+  }
+
+  unsigned int num_reactions = model->getNumReactions();
+  Rcpp::CharacterVector rxn_comp;
+
+  for(unsigned int i = 0; i < num_reactions; i++) {
+    Reaction* reaction = model->getReaction(i);
+    rxn_comp.push_back(reaction->getCompartment());
+  }
+
+  return rxn_comp;
+}
 
 // [[Rcpp::export]]
 Rcpp::CharacterVector getReactionAnnotation(SEXP model_ptr) {
@@ -468,6 +487,30 @@ Rcpp::DataFrame getMetaboliteAnnotation(SEXP model_ptr) {
   return df;
 }
 
+// [[Rcpp::export]]
+Rcpp::CharacterVector getMetaboliteCompartments(SEXP model_ptr) {
+  // Get the Model object from the SBMLDocument
+  Model* model = Rcpp::XPtr<Model>(model_ptr);
+
+  if (model == nullptr) {
+    Rcpp::stop("Invalid Model pointer.");
+  }
+
+  unsigned int num_metabolites = model->getNumSpecies();
+  Rcpp::CharacterVector met_comp;
+
+  for(unsigned int i = 0; i < num_metabolites; i++) {
+    Species* species = model->getSpecies(i);
+    met_comp.push_back(species->getCompartment());
+  }
+
+  return met_comp;
+}
+
+
+/*
+ * Gene-Product-Reaction-Association fields
+ */
 
 // [[Rcpp::export]]
 Rcpp::DataFrame getGeneProducts(SEXP model_ptr) {
