@@ -459,3 +459,93 @@ SEXP getColsDualLP(SEXP xp) {
 
   return out;
 }
+
+/* set or replace row of constraint matrix */
+// [[Rcpp::export]]
+SEXP setMatRowLP(SEXP xp, SEXP i, SEXP len, SEXP ind, SEXP val) {
+  SEXP out = R_NilValue;
+
+  glp_prob* lp = (glp_prob*)R_ExternalPtrAddr(xp);
+
+  int *rind = INTEGER(ind);
+  double *rval = REAL(val);
+
+  glp_set_mat_row(lp, Rf_asInteger(i), Rf_asInteger(len), &(rind[-1]), &(rval[-1]));
+
+  return out;
+}
+
+/* get number of rows */
+// [[Rcpp::export]]
+SEXP getNumRowsLP(SEXP xp) {
+
+  SEXP out = R_NilValue;
+  int nrows = 0;
+
+  glp_prob* lp = (glp_prob*)R_ExternalPtrAddr(xp);
+
+  nrows = glp_get_num_rows(lp);
+
+  out = Rf_ScalarInteger(nrows);
+
+  return out;
+}
+
+
+/* wrapper for FVA */
+// [[Rcpp::export]]
+Rcpp::DataFrame fvaLP(SEXP xp, SEXP ind) {
+
+  // Get the indices as integers
+  IntegerVector indices(ind);
+
+  glp_prob* lp = (glp_prob*)R_ExternalPtrAddr(xp);
+
+  // overwrite current objective function
+  for(int i = 1; i <= glp_get_num_cols(lp); i++) {
+    glp_set_obj_coef(lp, i, 0.0);
+  }
+
+  // Create vectors to store results
+  NumericVector minVals(indices.size());
+  NumericVector maxVals(indices.size());
+
+  // MAX
+  glp_set_obj_dir(lp, GLP_MAX);
+  for(unsigned int i = 0; i < indices.size(); i++) {
+    int columnIndex = indices[i];
+    glp_set_obj_coef(lp, columnIndex, 1.0);
+
+    // Maximize the variable
+    glp_simplex(lp, &parmS);
+
+    // Store the maximum value
+    maxVals[i] = glp_get_obj_val(lp);
+
+    // Reset the objective coefficient to 0
+    glp_set_obj_coef(lp, columnIndex, 0.0);
+  }
+
+  // MIN
+  glp_set_obj_dir(lp, GLP_MIN);
+  for(unsigned int i = 0; i < indices.size(); i++) {
+    int columnIndex = indices[i];
+    glp_set_obj_coef(lp, columnIndex, 1.0);
+
+    // Minimize the variable
+    glp_simplex(lp, &parmS);
+
+    // Store the maximum value
+    minVals[i] = glp_get_obj_val(lp);
+
+    // Reset the objective coefficient to 0
+    glp_set_obj_coef(lp, columnIndex, 0.0);
+  }
+
+  // Create a DataFrame to store the results
+  DataFrame result = DataFrame::create(_["min.flux"] = minVals, _["max.flux"] = maxVals);
+
+  return result;
+}
+
+

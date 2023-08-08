@@ -347,3 +347,40 @@ setMethod("getRedCosts", signature(lp = "LPproblem_glpk"),
             return(out)
           }
 )
+
+setMethod("addSingleConstraint", signature(lp = "LPproblem_glpk"),
+          function(lp, coeffs, lb, ub, type) {
+
+            # add new row to constraint matrix
+            addRows(lp, nrows = 1)
+            i_newrow <- getNumRowsLP(lp@ptr)
+
+            nz <- which(coeffs != 0)
+
+            # add coeffs to new row
+            setMatRowLP(lp@ptr,
+                        as.integer(i_newrow),
+                        as.integer(length(nz)),
+                        as.integer(nz),
+                        as.numeric(coeffs[nz]))
+
+            # set bounds
+            setRowsBnds(lp,
+                        i = i_newrow,
+                        lb = lb,
+                        ub = ub,
+                        type = type)
+
+
+          }
+)
+
+setMethod("fvaJob", signature(lp = "LPproblem_glpk"),
+          function(lp, ind) {
+
+            fvares <- fvaLP(lp@ptr,
+                            as.integer(ind))
+
+            return(fvares)
+          }
+)

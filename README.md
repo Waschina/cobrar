@@ -10,6 +10,9 @@
 - [ ] MOMA
 - [ ] ROOM
 - [ ] additional constraints as slot in `modelorg`
+- [ ] `writeSBMLmod`
+- [ ] read SBML documents of version 2
+- [ ] define a class for FBA (and FBA-related) prediction results
 
 
 
@@ -23,7 +26,7 @@
 - Feature trim: A range of functionalities in sybil are not part of cobrar. 
 - In cobrar, R's garbage collector handles memory management, including memory associated to C++-objects and the pointers to these.
 - Simplifications in class and function architecture
-  - No more Class "SysBiolAlg" nor derived classes. Different algorithms have their own function and detailed documentation of their return variables.
+  - No more Class "SysBiolAlg" nor sub-classes. Different algorithms have their own function and detailed documentation of their return variables.
 - Performance (i.e., computation time) improvements in certain procedures:
   - identification of dead-end metabolites
   - reading SBML files,

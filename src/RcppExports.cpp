@@ -248,6 +248,44 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// setMatRowLP
+SEXP setMatRowLP(SEXP xp, SEXP i, SEXP len, SEXP ind, SEXP val);
+RcppExport SEXP _cobrar_setMatRowLP(SEXP xpSEXP, SEXP iSEXP, SEXP lenSEXP, SEXP indSEXP, SEXP valSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type xp(xpSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type i(iSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type len(lenSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type ind(indSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type val(valSEXP);
+    rcpp_result_gen = Rcpp::wrap(setMatRowLP(xp, i, len, ind, val));
+    return rcpp_result_gen;
+END_RCPP
+}
+// getNumRowsLP
+SEXP getNumRowsLP(SEXP xp);
+RcppExport SEXP _cobrar_getNumRowsLP(SEXP xpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type xp(xpSEXP);
+    rcpp_result_gen = Rcpp::wrap(getNumRowsLP(xp));
+    return rcpp_result_gen;
+END_RCPP
+}
+// fvaLP
+Rcpp::DataFrame fvaLP(SEXP xp, SEXP ind);
+RcppExport SEXP _cobrar_fvaLP(SEXP xpSEXP, SEXP indSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type xp(xpSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type ind(indSEXP);
+    rcpp_result_gen = Rcpp::wrap(fvaLP(xp, ind));
+    return rcpp_result_gen;
+END_RCPP
+}
 // getSBMLVersion
 Rcpp::String getSBMLVersion();
 RcppExport SEXP _cobrar_getSBMLVersion() {
@@ -513,6 +551,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cobrar_mipObjVal", (DL_FUNC) &_cobrar_mipObjVal, 1},
     {"_cobrar_getColsDualIptLP", (DL_FUNC) &_cobrar_getColsDualIptLP, 1},
     {"_cobrar_getColsDualLP", (DL_FUNC) &_cobrar_getColsDualLP, 1},
+    {"_cobrar_setMatRowLP", (DL_FUNC) &_cobrar_setMatRowLP, 5},
+    {"_cobrar_getNumRowsLP", (DL_FUNC) &_cobrar_getNumRowsLP, 1},
+    {"_cobrar_fvaLP", (DL_FUNC) &_cobrar_fvaLP, 2},
     {"_cobrar_getSBMLVersion", (DL_FUNC) &_cobrar_getSBMLVersion, 0},
     {"_cobrar_readSBMLfile", (DL_FUNC) &_cobrar_readSBMLfile, 1},
     {"_cobrar_getModelObj", (DL_FUNC) &_cobrar_getModelObj, 1},

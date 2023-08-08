@@ -7,6 +7,7 @@
 #' @examples
 #' fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 #' mod <- readSBMLmod(fpath)
+#' mod
 #'
 #' @import Matrix
 #' @export

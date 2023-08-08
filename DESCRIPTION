@@ -18,3 +18,8 @@ LinkingTo:
 Imports: 
     Rcpp,
     methods
+Suggests: 
+    knitr,
+    rmarkdown,
+    ggplot2
+VignetteBuilder: knitr

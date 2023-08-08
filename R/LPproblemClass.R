@@ -69,3 +69,10 @@ setGeneric("statusCode", function(lp, ...) {
   standardGeneric("statusCode")
 })
 
+setGeneric("addSingleConstraint", function(lp, ...) {
+  standardGeneric("addSingleConstraint")
+})
+
+setGeneric("fvaJob", function(lp, ...) {
+  standardGeneric("fvaJob")
+})

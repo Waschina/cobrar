@@ -18,5 +18,6 @@ Reads an SBML file and constructs an object of class 'modelorg'
 \examples{
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)
+mod
 
 }

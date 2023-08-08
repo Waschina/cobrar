@@ -81,6 +81,18 @@ getColsDualLP <- function(xp) {
     .Call(`_cobrar_getColsDualLP`, xp)
 }
 
+setMatRowLP <- function(xp, i, len, ind, val) {
+    .Call(`_cobrar_setMatRowLP`, xp, i, len, ind, val)
+}
+
+getNumRowsLP <- function(xp) {
+    .Call(`_cobrar_getNumRowsLP`, xp)
+}
+
+fvaLP <- function(xp, ind) {
+    .Call(`_cobrar_fvaLP`, xp, ind)
+}
+
 getSBMLVersion <- function() {
     .Call(`_cobrar_getSBMLVersion`)
 }
