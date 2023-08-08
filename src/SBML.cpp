@@ -608,6 +608,7 @@ Rcpp::List getGPRs(SEXP model_ptr) {
     Reaction* reaction = model->getReaction(i);
 
     std::string tmpstr = "";
+    std::vector<std::string> orderedKeys;
     FbcReactionPlugin* rplugin = static_cast<FbcReactionPlugin*>(reaction->getPlugin("fbc"));
     GeneProductAssociation* fasso = rplugin->getGeneProductAssociation();
 
@@ -616,14 +617,13 @@ Rcpp::List getGPRs(SEXP model_ptr) {
       int variableCount = 1; // Initialize the variable count
       tmpstr = getGPRString(fasso->getAssociation(),variableMap,variableCount);
 
-      std::vector<std::string> orderedKeys;
       for (const auto& pair : variableMap) {
         orderedKeys.push_back(pair.first);
       }
 
-      rgenes.push_back(orderedKeys);
     }
 
+    rgenes.push_back(orderedKeys);
     igrp.push_back(tmpstr);
   }
 

@@ -2,7 +2,7 @@
 #'
 #' Print the equations of reactions.
 #'
-#' @param object Model of class \link{modelorg}
+#' @param model Model of class \link{modelorg}
 #' @param react A character vector specifying the reaction IDs or a integer
 #' vector providing the reaction indices in the model.
 #' @param use.ids Boolean. Indicating whether metabolite IDs should be printed
@@ -23,23 +23,23 @@
 #' printReaction(mod, react = c(2,8))
 #'
 #' @export
-printReaction <- function(object, react, use.ids = FALSE) {
-  check <- checkReactId(object, react = react)
+printReaction <- function(model, react, use.ids = FALSE) {
+  check <- checkReactId(model, react = react)
   if(any(!check)) {
     stop("check argument react")
   }
 
-  cind <- react_pos(object, react)
-  mat <- object@S[, cind, drop = FALSE]
+  cind <- react_pos(model, react)
+  mat <- model@S[, cind, drop = FALSE]
   nnz <- apply(mat, 2, "!=", 0)
   reaction <- character(length(cind))
 
   for (j in seq(along = cind)) {
 
     if(use.ids) {
-      met <- object@met_id[nnz[, j]]
+      met <- model@met_id[nnz[, j]]
     } else {
-      met <- object@met_name[nnz[, j]]
+      met <- model@met_name[nnz[, j]]
     }
 
     nzv <- mat[, j][nnz[, j]]
@@ -64,9 +64,9 @@ printReaction <- function(object, react, use.ids = FALSE) {
     }
 
     arrow <- " <==> "
-    if(object@lowbnd[cind[j]] >= 0 & object@uppbnd[cind[j]] > 0)
+    if(model@lowbnd[cind[j]] >= 0 & model@uppbnd[cind[j]] > 0)
       arrow <- " --> "
-    if(object@lowbnd[cind[j]] < 0 & object@uppbnd[cind[j]] <= 0)
+    if(model@lowbnd[cind[j]] < 0 & model@uppbnd[cind[j]] <= 0)
       arrow <- " <-- "
 
     reaction[j] <- paste(educt, product, sep = arrow)

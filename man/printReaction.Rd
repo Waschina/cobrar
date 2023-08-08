@@ -4,10 +4,10 @@
 \alias{printReaction}
 \title{Print reaction(s)}
 \usage{
-printReaction(object, react, use.ids = FALSE)
+printReaction(model, react, use.ids = FALSE)
 }
 \arguments{
-\item{object}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{modelorg}}
 
 \item{react}{A character vector specifying the reaction IDs or a integer
 vector providing the reaction indices in the model.}

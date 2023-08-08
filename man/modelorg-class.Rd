@@ -46,6 +46,8 @@ to central model structures, metabolites, reactions, and genes.
 
 \item{\code{react_name}}{A character vector with reaction names.}
 
+\item{\code{react_comp}}{A character vector indicating reaction compartments.}
+
 \item{\code{lowbnd}}{A character vector containing lower bounds for reactions.}
 
 \item{\code{uppbnd}}{A character vector containing upper bounds for reactions.}

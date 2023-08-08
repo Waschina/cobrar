@@ -1,5 +1,25 @@
+#' Parsimonious Flux Balance Analysis (pFBA)
+#'
+#' Performs parsimonious FBA as describe by Lewis et al. 2010.
+#'
+#' @param model Model of class \link{modelorg}
+#' @param costcoeffw,costcoefbw A numeric vector containing cost coefficients
+#' for all variables/reactions (forward direction: 'costcoeffw'; backward
+#' direction: 'costcoefbw'). If set to NULL, all cost coefficients are set to 1,
+#' so that all variables have the same impact on the objective function.
+#'
+#' @returns
+#' Returned reduced costs ('redCosts') correspond to the optimization of the
+#' initial linear program (LP), which is basically the initial FBA to calculate
+#' the optimal value of the objective function that is defined in 'model'.
+#'
+#' @references
+#' N. E. Lewis et al., “Omic data from evolved E. coli are consistent with
+#' computed optimal growth from genome‐scale models,” Molecular Systems Biology,
+#' vol. 6, no. 1. EMBO, Jan. 2010. doi: 10.1038/msb.2010.47.
+#'
 #' @export
-p_fba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
+pfba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
 
   if(!is.null(costcoeffw) && !is.numeric(costcoeffw))
     stop("Argument 'costcoeffw' must be a numeric vector")
@@ -35,7 +55,7 @@ p_fba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
 
   # get solution (objective value)
   objRes <- getObjValue(LPprob)
-
+  redCosts <- getRedCosts(LPprob)
 
   #----------------------------------------------------------------------------#
   # New LP for minimalization of total flux                                    #
@@ -74,6 +94,9 @@ p_fba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
     bw <- costcoefbw
   }
 
+  if(length(bw) != length(fw) || length(fw) != nc)
+    stop("The weight vectors 'costcoeffw' and 'costcoefbw' must both be of length equal to the number of reactions.")
+
   LPprobNew <- new(paste0("LPproblem_",COBRAR_SETTINGS("SOLVER")),
                    name = paste0("LP_", model@mod_id,"_pFBA"),
                    method = COBRAR_SETTINGS("METHOD"))
@@ -106,9 +129,10 @@ p_fba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
               ok_term = lp_ok$term,
               stat = lp_stat$code,
               stat_term = lp_stat$term,
-              obj_fba = objRes,
+              obj = objRes,
               obj_mtf = objResMTF,
-              fluxes = lp_fluxes
+              fluxes = lp_fluxes,
+              redCosts = redCosts
   ))
 
 }

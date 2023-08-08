@@ -20,6 +20,9 @@ all reactions.}
 \code{react}. If \code{ub} is of length 1, the same value will be used for
 all reactions.}
 }
+\value{
+An updated model of class \link{modelorg}
+}
 \description{
 The function changes either upper bounds, lower bounds, or both for specific
 reactions.

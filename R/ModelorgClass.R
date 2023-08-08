@@ -22,6 +22,7 @@
 #'
 #' @slot react_id A character vector representing reaction identifiers.
 #' @slot react_name A character vector with reaction names.
+#' @slot react_comp A character vector indicating reaction compartments.
 #' @slot lowbnd A character vector containing lower bounds for reactions.
 #' @slot uppbnd A character vector containing upper bounds for reactions.
 #'
@@ -67,7 +68,6 @@ setClass("modelorg",
            react_attr = "data.frame",
 
            # genes
-           gpr = "character",
            gprRules = "character",
            genes = "list",
            allGenes = "character",
@@ -122,6 +122,39 @@ setMethod("met_pos", signature(object = "modelorg", met = "character"),
             return(match(met, object@met_id))
           }
 )
+setMethod("met_pos", signature(object = "modelorg", met = "numeric"),
+          function(object, met) {
+            return(met)
+          }
+)
+
+
+# number of genes
+setGeneric("gene_num", valueClass = "numeric", function(object) {
+  standardGeneric("gene_num")
+})
+setMethod("gene_num", signature(object = "modelorg"),
+          function(object) {
+            return(length(object@allGenes))
+          }
+)
+
+
+# index of gene(s)
+setGeneric("gene_pos", valueClass = "numeric", function(object, gene) {
+  standardGeneric("gene_pos")
+})
+setMethod("gene_pos", signature(object = "modelorg", gene = "character"),
+          function(object, gene) {
+            return(match(gene, object@allGenes))
+          }
+)
+setMethod("gene_pos", signature(object = "modelorg", gene = "numeric"),
+          function(object, gene) {
+            return(gene)
+          }
+)
+
 
 #------------------------------------------------------------------------------#
 # Miscellaneous                                                                #
@@ -169,7 +202,7 @@ setMethod("show", signature(object = "modelorg"),
             cat("number of reactions:   ", react_num(object), "\n")
             cat("number of metabolites: ", met_num(object), "\n")
             if (length(object@allGenes) > 0) {
-              cat("number of unique genes:", length(object@allGenes), "\n")
+              cat("number of unique genes:", gene_num(object), "\n")
             }
             cat("objective function:    ", printObjFunc(object), "\n")
           }

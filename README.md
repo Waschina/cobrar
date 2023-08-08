@@ -2,7 +2,14 @@
 
 
 
+#### Current TODOs
 
+- [ ] function `addReact(...)` and `rmReact(...)`
+- [ ] gene KOs
+- [ ] FVA (with adjustable proportions)
+- [ ] MOMA
+- [ ] ROOM
+- [ ] additional constraints as slot in `modelorg`
 
 
 
