@@ -62,7 +62,7 @@ rmReact <- function(model, react, rm_met = TRUE) {
   }
 
   react <- react_pos(model, react)
-  print(react)
+
   model@S        <- model@S[,-react, drop = FALSE]
   model@obj_coef <- model@obj_coef[-react]
   model@subSys   <- model@subSys[-react,, drop = FALSE]
@@ -116,7 +116,7 @@ rmReact <- function(model, react, rm_met = TRUE) {
 #'
 #' # create a double gene knock-out mutant
 #' mod_KO <- rmGene(mod, c("b4152","b0116"))
-#' mod
+#' mod_KO
 #'
 #'
 #' @export

@@ -32,7 +32,7 @@ mod
 
 # create a double gene knock-out mutant
 mod_KO <- rmGene(mod, c("b4152","b0116"))
-mod
+mod_KO
 
 
 }
