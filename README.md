@@ -5,13 +5,17 @@
 #### Current TODOs
 
 - [ ] function `addReact(...)` and `rmReact(...)`
-- [ ] gene KOs
-- [ ] FVA (with adjustable proportions)
-- [ ] MOMA
+  - [ ] addReact
+  - [x] rmReact
+
+- [x] gene KOs
+- [x] FVA (with adjustable proportions)
+- [ ] FVA documentation
+- [ ] MOMA (iterative linearized objective?)
 - [ ] ROOM
 - [ ] additional constraints as slot in `modelorg`
 - [ ] `writeSBMLmod`
-- [ ] read SBML documents of version 2
+- [ ] read SBML documents of version 2 (necessary?)
 - [ ] define a class for FBA (and FBA-related) prediction results
 
 
@@ -31,6 +35,7 @@
   - identification of dead-end metabolites
   - reading SBML files,
   - pFBA algorithm (a.k.a MTF 'Minimization of Total Flux').
+  - FVA; also now allows relaxed constraints on optimal growth (e.g. flux variability with 90-100% optimal growth)
 
 
 #### Notes

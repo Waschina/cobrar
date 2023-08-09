@@ -1,8 +1,8 @@
 ---
-title: "Flux Variability Analysis"
+title: "Flux Variability Analysis (FVA)"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Flux Variability Analysis}
+  %\VignetteIndexEntry{Flux Variability Analysis (FVA)}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,21 +14,61 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Variabilibity in metabolite uptake/production of *E. coli*
+
+This guide introduces Flux Variability Analysis (FVA) as applied in *cobrar* to the core metabolic network model of *Escherichia coli*. Here, FVA is applied to estimate possible flux ranges for metabolite exchanges (positive value = production, negative values = consumption) assuming a minimal media with D-glucose as sole carbon source and under aerobic or anaerobic growth conditions.
+
+For the following example, two packages are required:
+
 ```{r setup}
 library(cobrar)
 library(ggplot2)
 ```
 
-```{r}
+### Aerobic growth conditions
+
+```{r, fig.dim = c(7, 4.8)}
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)
 
 fvares <- fva(mod, react = mod@react_id[grepl("^EX_",mod@react_id)],
-              opt.factor = seq(0.8, 1, length.out = 31))
+              opt.factor = seq(0.5, 1, length.out = 61))
+fvares$react_name <- mod@react_name[match(fvares$react, mod@react_id)]
+fvares$react_name <- gsub(" exchange$","",fvares$react_name)
 
 
 ggplot(fvares,
-       aes(x = react)) +
+       aes(x = react_name)) +
+  geom_hline(yintercept = 0, linetype = 3) +
+  scale_color_viridis_c() +
   geom_linerange(aes(ymin = min.flux, ymax = max.flux, col = growth.fraction),
-                 linewidth = 10)
+                 linewidth = 6) +
+  labs(x = "Metabolite exchange",
+       y = expression(Flux~bgroup("[",frac(mmol,gDW~hr),"]")),
+       color = "Growth fraction") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1))
+```
+
+### Anaerobic growth conditions
+```{r, fig.dim = c(7, 4.8)}
+mod_anero <- changeBounds(mod, "EX_o2_e", lb = 0)
+
+fvares <- fva(mod_anero, react = mod_anero@react_id[grepl("^EX_",mod_anero@react_id)],
+              opt.factor = seq(0.5, 1, length.out = 61))
+fvares$react_name <- mod_anero@react_name[match(fvares$react, mod_anero@react_id)]
+fvares$react_name <- gsub(" exchange$","",fvares$react_name)
+
+
+ggplot(fvares,
+       aes(x = react_name)) +
+  geom_hline(yintercept = 0, linetype = 3) +
+  scale_color_viridis_c() +
+  geom_linerange(aes(ymin = min.flux, ymax = max.flux, col = growth.fraction),
+                 linewidth = 6) +
+  labs(x = "Metabolite exchange",
+       y = expression(Flux~bgroup("[",frac(mmol,gDW~hr),"]")),
+       color = "Growth fraction") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1))
 ```

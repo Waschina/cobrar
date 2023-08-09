@@ -125,14 +125,15 @@ pfba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
   fwflx <- lp_fluxes[1:nc]; bwflx <- lp_fluxes[(nc+1):(nc*2)]
   lp_fluxes <- ifelse(bwflx > fwflx, -bwflx, fwflx)
 
-  return(list(ok = lp_ok$code,
-              ok_term = lp_ok$term,
-              stat = lp_stat$code,
-              stat_term = lp_stat$term,
-              obj = objRes,
-              obj_mtf = objResMTF,
-              fluxes = lp_fluxes,
-              redCosts = redCosts
-  ))
+  return(new("FluxPrediction",
+             algorithm = "pFBA",
+             ok = lp_ok$code,
+             ok_term = lp_ok$term,
+             stat = lp_stat$code,
+             stat_term = lp_stat$term,
+             obj = objRes,
+             obj_sec = objResMTF,
+             fluxes = lp_fluxes,
+             redCosts = redCosts))
 
 }

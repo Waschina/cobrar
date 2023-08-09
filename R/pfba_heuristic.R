@@ -125,14 +125,16 @@ pfba_heuristic <- function(model, costcoeffw = NULL, costcoefbw = NULL,
   objRes    <- as.numeric(lp_fluxes %*% model@obj_coef)
   redCosts  <- getRedCosts(LPprob)
 
-  return(list(ok = lp_ok$code,
-              ok_term = lp_ok$term,
-              stat = lp_stat$code,
-              stat_term = lp_stat$term,
-              obj = objRes,
-              obj_mtf = objResMTF,
-              fluxes = lp_fluxes,
-              redCosts = redCosts[1:nc]
-  ))
+
+  return(new("FluxPrediction",
+             algorithm = "pFBA (heuristic)",
+             ok = lp_ok$code,
+             ok_term = lp_ok$term,
+             stat = lp_stat$code,
+             stat_term = lp_stat$term,
+             obj = objRes,
+             obj_sec = objResMTF,
+             fluxes = lp_fluxes,
+             redCosts = redCosts[1:nc]))
 
 }

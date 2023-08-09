@@ -311,12 +311,12 @@ setMethod("getSolStat", signature(lp = "LPproblem_glpk"),
 
             # get term
             term <- switch(EXPR = out,
-                           "invalid basis",
-                           "singular matrix",
-                           "ill-conditioned matrix",
-                           "invalid bounds",
-                           "solution process was successful",
-                           "solver failed")
+                           "solution is undefined",
+                           "solution is feasible",
+                           "olution is infeasible",
+                           "problem has no feasible solution",
+                           "solution is optimal",
+                           "problem has unbounded solution")
             if(is.null(out))
               term <- paste("unknown status code:", out)
 
