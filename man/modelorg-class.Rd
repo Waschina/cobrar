@@ -34,6 +34,10 @@ to central model structures, metabolites, reactions, and genes.
 
 \item{\code{subSys_name}}{A character vector containing the subsystem names.}
 
+\item{\code{constraints}}{An object of class \link{UserConstraints} which specifies
+constraints in a model in addition to stationarity and individual flux
+bounds.}
+
 \item{\code{met_id}}{A character vector representing metabolite identifiers.}
 
 \item{\code{met_name}}{A character vector with metabolite names.}

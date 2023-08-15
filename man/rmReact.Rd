@@ -21,3 +21,7 @@ An updated model of class \link{modelorg}
 \description{
 This function removes specified reactions from a model.
 }
+\note{
+If the reaction participates in a user constraint, this constraint is
+removed from the model.
+}

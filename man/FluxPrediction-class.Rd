@@ -26,7 +26,7 @@ of the optimization problem.}
 \item{\code{obj}}{Objective value.}
 
 \item{\code{obj_sec}}{Value of secondary objective function. E.g.: Summed absolute
-fluxes in \link\href{pfba}{pFBA}.}
+fluxes in \link{pfba}.}
 
 \item{\code{fluxes}}{Predicted flux values.}
 

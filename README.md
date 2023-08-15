@@ -7,16 +7,24 @@
 - [ ] function `addReact(...)` and `rmReact(...)`
   - [ ] addReact
   - [x] rmReact
-
 - [x] gene KOs
 - [x] FVA (with adjustable proportions)
 - [ ] FVA documentation
 - [ ] MOMA (iterative linearized objective?)
 - [ ] ROOM
 - [ ] additional constraints as slot in `modelorg`
+  - [x] Slot in modelorg
+  - [x] rm if reaction of a constraint is removed
+  - [x] addconstraint function
+  - [x] rm constraint function
+  - [ ] constraints taking effect (glpk  LP formulation)
+  - [ ] full documentation of function `addConstraint`, `rmConstraint`
+
 - [ ] `writeSBMLmod`
+- [ ] export and documentation of position functions
+- [ ] export and documentation of count functions (genes, reactions, constraints, metabolites)
 - [ ] read SBML documents of version 2 (necessary?)
-- [ ] define a class for FBA (and FBA-related) prediction results
+- [x] define a class for FBA (and FBA-related) prediction results
 
 
 

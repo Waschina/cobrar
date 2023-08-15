@@ -35,6 +35,12 @@ readSBMLmod <- function(file_path) {
   mod_notes <- getModelNotes(modelPtr)
   obj_coeff <- getObjectiveFunction(modelPtr)
   subSys <- getSubsystems(modelPtr); colnames(subSys$subSys) <- subSys$subSys_ids
+  constraints <- new("UserConstraints",
+                     coeff = as(Matrix(nrow = 0, ncol = ncol(S), sparse = TRUE),
+                                "dMatrix"),
+                     lb = numeric(0),
+                     ub = numeric(0),
+                     rtype = character(0))
 
   # Reactions
   react_id <- getReactionIds(modelPtr)
@@ -67,6 +73,7 @@ readSBMLmod <- function(file_path) {
         subSys = as(subSys$subSys, "lMatrix"),
         subSys_id = subSys$subSys_ids,
         subSys_name = subSys$subSys_names,
+        constraints = constraints,
 
         met_id = gsub("^M_","",met_id),
         met_name = met_name,

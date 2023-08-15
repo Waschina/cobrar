@@ -1,3 +1,40 @@
+#' Stucture of UserConstraints Class
+#'
+#' This class represents user constraints that can be added to a model of class
+#' \link{modelorg} in addition to the stationarity constraint (\eqn{S v = 0})
+#' and flux bounds.
+#'
+#' @slot coeff A sparse numeric matrix of \link[Matrix]{dgCMatrix-class}
+#' representing the coefficients for each reaction in the model. Each row
+#' denotes a user constraint, each column a reaction in the model in the same
+#' order as in slor "S" in the corresponding \link{modelorg} object.
+#' @slot lb Numeric vector provididing the lower bound for each constraint.
+#' @slot ub Numeric vector provididing the lower bound for each constraint.
+#' @slot rtype Character vector stating the constraint type. See details.
+#'
+#' @details
+#' The slot "rtype" describes the type of each constraint. Valid values and
+#' their effects are:
+#' | *code* | *description* | *rule* |
+#' | :----: | :--- | :----: |
+#' | "F" | free constraint | \eqn{-\infty < x < \infty} |
+#' | "L" | constraint with lower bound | \eqn{lb \leq x \leq \infty} |
+#' | "U" | constraint with upper bound | \eqn{-\infty \leq x \leq ub} |
+#' | "D" | double-bounded (ranged) constraint | \eqn{lb \leq x \leq ub} |
+#' | "E" | fixed (equality constraint) | \eqn{lb = x = ub} |
+#'
+#' @aliases UserConstraints
+#'
+#' @exportClass UserConstraints
+setClass("UserConstraints",
+         slots = c(
+           coeff = "dgCMatrix",
+           lb = "numeric",
+           ub = "numeric",
+           rtype = "character"
+         )
+)
+
 #' Stucture of modelorg Class
 #'
 #' This class represents a model organization with various attributes related
@@ -14,6 +51,9 @@
 #' @slot subSys A sparse Boolean matrix of \link[Matrix]{lgCMatrix-class} defining subsystems.
 #' @slot subSys_id A character vector representing subsystem identifiers.
 #' @slot subSys_name A character vector containing the subsystem names.
+#' @slot constraints An object of class \link{UserConstraints} which specifies
+#' constraints in a model in addition to stationarity and individual flux
+#' bounds.
 #'
 #' @slot met_id A character vector representing metabolite identifiers.
 #' @slot met_name A character vector with metabolite names.
@@ -52,6 +92,7 @@ setClass("modelorg",
            subSys = "lgCMatrix",
            subSys_id = "character",
            subSys_name = "character",
+           constraints = "UserConstraints",
 
            # metabolites,
            met_id = "character",
@@ -156,6 +197,16 @@ setMethod("gene_pos", signature(object = "modelorg", gene = "numeric"),
 )
 
 
+# number of user constraints
+setGeneric("constraints_num", valueClass = "numeric", function(object) {
+  standardGeneric("constraints_num")
+})
+setMethod("constraints_num", signature(object = "modelorg"),
+          function(object) {
+            return(nrow(object@constraints@coeff))
+          }
+)
+
 #------------------------------------------------------------------------------#
 # Miscellaneous                                                                #
 #------------------------------------------------------------------------------#
@@ -192,20 +243,78 @@ setMethod("printObjFunc", signature(object = "modelorg"),
 #' @export
 setMethod("show", signature(object = "modelorg"),
           function(object) {
-            cat("model ID:              ", object@mod_id, "\n")
-            cat("model name:            ", object@mod_name, "\n")
-            cat("number of compartments:", length(object@mod_compart), "\n")
+            cat("model ID:                  ", object@mod_id, "\n")
+            cat("model name:                ", object@mod_name, "\n")
+            cat("number of compartments:    ", length(object@mod_compart), "\n")
             for(i in 1:length(object@mod_compart)) {
-              cat("                       ", object@mod_compart[i], " (",
+              cat("                           ", object@mod_compart[i], " (",
                   object@mod_compart_name[i], ")\n")
             }
-            cat("number of reactions:   ", react_num(object), "\n")
-            cat("number of metabolites: ", met_num(object), "\n")
-            if (length(object@allGenes) > 0) {
-              cat("number of unique genes:", gene_num(object), "\n")
+            cat("number of reactions:       ", react_num(object), "\n")
+            cat("number of metabolites:     ", met_num(object), "\n")
+            cat("number of unique genes:    ", gene_num(object), "\n")
+            cat("number of user constraints:", constraints_num(object), "\n")
+            if(constraints_num(object) > 0 && constraints_num(object) <= 10) {
+              for(i in 1:constraints_num(object)) {
+                cat("                           ",constraint2string(object,i),"\n")
+              }
             }
-            cat("objective function:    ", printObjFunc(object), "\n")
+            cat("\n")
+            cat("objective function:        ", printObjFunc(object), "\n")
+          }
+)
+
+setGeneric("constraint2string" ,valueClass = "character", function(object, ind) {
+  standardGeneric("constraint2string")
+})
+setMethod("constraint2string", signature(object = "modelorg", ind = "integer"),
+          function(object, ind) {
+            nz <- which(object@constraints@coeff[ind,] != 0)
+            cnz <- c()
+            for(i in 1:length(nz)) {
+              cnz[i] <- paste0(ifelse(sign(object@constraints@coeff[ind,nz[i]])==1,"+","-"),
+                               round(abs(object@constraints@coeff[ind,nz[i]]), digits = 5)," ",
+                               object@react_id[nz[i]])
+            }
+            mid <- paste(cnz, collapse = " ")
+            lhs <- switch(object@constraints@rtype[ind],
+              "F" = "-Inf < ",
+              "L" = paste0(object@constraints@lb[ind]," <= "),
+              "U" = "-Inf < ",
+              "D" = paste0(object@constraints@lb[ind]," <= "),
+              "E" = paste0(object@constraints@lb[ind]," == ")
+            )
+
+            rhs <- switch(object@constraints@rtype[ind],
+                          "F" = " < Inf",
+                          "U" = paste0(" <= ", object@constraints@ub[ind]),
+                          "L" = " < Inf",
+                          "D" = paste0(" <= ", object@constraints@ub[ind]),
+                          "E" = paste0(" == ", object@constraints@ub[ind])
+            )
+
+            return(paste0(lhs, mid, rhs))
           }
 )
 
 
+# remove duplicate constraints
+setGeneric("rmDuplicateConstraints", valueClass = "modelorg", function(object) {
+  standardGeneric("rmDuplicateConstraints")
+})
+setMethod("rmDuplicateConstraints", signature(object = "modelorg"),
+          function(object) {
+            ccstr <- sapply(1:constraints_num(object), function(i) constraint2string(object , i))
+
+            indrm <- which(duplicated(ccstr))
+
+            if(length(indrm)>0) {
+              warning("Duplicate user constraints. Retaining only unique constraints.")
+              object@constraints@coeff <- object@constraints@coeff[-indrm,, drop = FALSE]
+              object@constraints@lb <- object@constraints@lb[-indrm]
+              object@constraints@ub <- object@constraints@ub[-indrm]
+              object@constraints@rtype <- object@constraints@rtype[-indrm]
+            }
+            return(object)
+          }
+)

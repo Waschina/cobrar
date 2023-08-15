@@ -52,6 +52,10 @@ changeBounds <- function(model, react, lb = NULL, ub = NULL) {
 #'
 #' @returns An updated model of class \link{modelorg}
 #'
+#' @note
+#' If the reaction participates in a user constraint, this constraint is
+#' removed from the model.
+#'
 #' @export
 rmReact <- function(model, react, rm_met = TRUE) {
   if(length(react) == 0)
@@ -76,6 +80,10 @@ rmReact <- function(model, react, rm_met = TRUE) {
 
   model@gprRules <- model@gprRules[-react]
   model@genes    <- model@genes[-react]
+  print(react)
+  rmconstr <- which(model@constraints@coeff[,react, drop = FALSE] != 0, arr.ind = T)[,1]
+  print(rmconstr)
+  model <- rmConstraint(model, rmconstr)
 
   if(rm_met) {
     TMPmat <- as(model@S[,-react], "TsparseMatrix")
@@ -141,6 +149,107 @@ rmGene <- function(model, gene, rm_react = TRUE, rm_met = TRUE) {
   # rm reaction (and metabolites)
   if(rm_react)
     model <- rmReact(model, rmReactions)
+
+  return(model)
+}
+
+#' @export
+setGeneric("addConstraint" ,valueClass = "modelorg", function(object,
+                                                              react,
+                                                              coeff,
+                                                              rtype,
+                                                              ...) {
+  standardGeneric("addConstraint")
+})
+setMethod("addConstraint", signature(object = "modelorg",
+                                     react = "character",
+                                     coeff = "numeric",
+                                     rtype = "character"),
+          function(object, react, coeff, rtype, lb = NULL, ub = NULL) {
+            return(addConstraint(object,
+                                 react = list(react),
+                                 coeff = list(coeff),
+                                 lb = lb,
+                                 ub = ub,
+                                 rtype = rtype))
+          }
+)
+setMethod("addConstraint", signature(object = "modelorg",
+                                     react = "list",
+                                     coeff = "list",
+                                     rtype = "character"),
+          function(object, react, coeff, rtype, lb = NULL, ub = NULL) {
+
+            nc <- length(react)
+
+            if(is.null(lb))
+              lb <- rep(NA_real_, nc)
+            if(is.null(ub))
+              ub <- rep(NA_real_, nc)
+
+            # validity checks
+            if(var(c(length(react),
+                     length(coeff),
+                     length(rtype),
+                     length(lb),
+                     length(ub))) != 0) {
+              "Lengths all arguments 'react', 'coeff', 'rtype', 'lb', and 'ub' must be equal."
+            }
+            if(any(!(rtype %in% c("F","L","U","D","E"))))
+              stop("Elements of the vector 'rtype' must be \"F\", \"L\", \"U\", \"D\", or \"E\".")
+            if(any(rtype != "F" & is.na(lb) & is.na(ub)))
+              stop("'ub' and 'lb' can only be both undefined if 'rtype' is \"F\".")
+            if(any(rtype == "L" & is.na(lb)))
+              stop("If 'rtype' is \"L\", 'lb' cannot be undefined.")
+            if(any(rtype == "U" & is.na(ub)))
+              stop("If 'rtype' is \"U\", 'ub' cannot be undefined.")
+            if(any(rtype == "D" & (is.na(ub) | is.na(lb))))
+              stop("If 'rtype' is \"D\", 'ub' and 'lb' both need to be defined.")
+
+            indtmp <- which(rtype == "E" & is.na(lb))
+            lb[indtmp] <- ub[indtmp]
+            indtmp <- which(rtype == "E" & is.na(ub))
+            ub[indtmp] <- lb[indtmp]
+
+            if(any(unlist(lapply(react, length)) != unlist(lapply(coeff, length))))
+              stop("List elementes of 'react' must have the same length as the corresponding list elements in 'coeff'.")
+
+            if(any(unlist(lapply(react, duplicated))))
+              stop("'react' IDs cannot be duplicated within a constraint definition.")
+
+            if(any(unlist(lapply(react, function(x) !(x %in% object@react_id)))))
+              stop("Not all reaction IDs in 'react' are part of the model.")
+
+            I <- matrix(c(rep(1:nc, unlist(lapply(react, length))),
+                          unlist(lapply(react, function(x) match(x, object@react_id)))),
+                        ncol = 2)
+
+
+            out <- Matrix(0, nrow = nc, ncol = react_num(object), sparse = T)
+            out[I] <- unlist(coeff)
+
+            object@constraints@coeff <- rbind(object@constraints@coeff,
+                                              out)
+            object@constraints@lb <- c(object@constraints@lb, lb)
+            object@constraints@ub <- c(object@constraints@ub, ub)
+            object@constraints@rtype <- c(object@constraints@rtype, rtype)
+
+            return(rmDuplicateConstraints(object))
+          }
+)
+
+#' @export
+rmConstraint <- function(model, ind) {
+  if(constraints_num(model) == 0 || any(!(ind %in% 1:constraints_num(model)))) {
+    stop("Invalid index for constraints.")
+  }
+
+  ind <- unique(ind)
+
+  model@constraints@coeff <- model@constraints@coeff[-ind,, drop = FALSE]
+  model@constraints@lb <- model@constraints@lb[-ind]
+  model@constraints@ub <- model@constraints@ub[-ind]
+  model@constraints@rtype <- model@constraints@rtype[-ind]
 
   return(model)
 }

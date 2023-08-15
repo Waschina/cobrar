@@ -12,7 +12,7 @@
 #' of the optimization problem.
 #' @slot obj Objective value.
 #' @slot obj_sec Value of secondary objective function. E.g.: Summed absolute
-#' fluxes in \link[pFBA](pfba).
+#' fluxes in \link{pfba}.
 #' @slot fluxes Predicted flux values.
 #' @slot redCost Predicted reduced costs (or "*dual value*") for reactions.
 #'
