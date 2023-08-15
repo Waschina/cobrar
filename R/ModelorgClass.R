@@ -198,10 +198,10 @@ setMethod("gene_pos", signature(object = "modelorg", gene = "numeric"),
 
 
 # number of user constraints
-setGeneric("constraints_num", valueClass = "numeric", function(object) {
-  standardGeneric("constraints_num")
+setGeneric("constraint_num", valueClass = "numeric", function(object) {
+  standardGeneric("constraint_num")
 })
-setMethod("constraints_num", signature(object = "modelorg"),
+setMethod("constraint_num", signature(object = "modelorg"),
           function(object) {
             return(nrow(object@constraints@coeff))
           }
@@ -253,9 +253,9 @@ setMethod("show", signature(object = "modelorg"),
             cat("number of reactions:       ", react_num(object), "\n")
             cat("number of metabolites:     ", met_num(object), "\n")
             cat("number of unique genes:    ", gene_num(object), "\n")
-            cat("number of user constraints:", constraints_num(object), "\n")
-            if(constraints_num(object) > 0 && constraints_num(object) <= 10) {
-              for(i in 1:constraints_num(object)) {
+            cat("number of user constraints:", constraint_num(object), "\n")
+            if(constraint_num(object) > 0 && constraint_num(object) <= 10) {
+              for(i in 1:constraint_num(object)) {
                 cat("                           ",constraint2string(object,i),"\n")
               }
             }
@@ -304,7 +304,7 @@ setGeneric("rmDuplicateConstraints", valueClass = "modelorg", function(object) {
 })
 setMethod("rmDuplicateConstraints", signature(object = "modelorg"),
           function(object) {
-            ccstr <- sapply(1:constraints_num(object), function(i) constraint2string(object , i))
+            ccstr <- sapply(1:constraint_num(object), function(i) constraint2string(object , i))
 
             indrm <- which(duplicated(ccstr))
 

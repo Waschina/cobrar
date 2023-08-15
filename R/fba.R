@@ -36,15 +36,18 @@ fba <- function(model) {
 
   loadLPprob(LPprob,
              nCols = react_num(model),
-             nRows = met_num(model),
-             mat   = model@S,
+             nRows = met_num(model)+constraint_num(model),
+             mat   = rbind(model@S, model@constraints@coeff),
              ub    = model@uppbnd,
              lb    = model@lowbnd,
              obj   = model@obj_coef,
-             rlb   = rep(0, met_num(model)),
-             rtype = rep("E", met_num(model)),
+             rlb   = c(rep(0, met_num(model)),
+                       model@constraints@lb),
+             rtype = c(rep("E", met_num(model)),
+                       model@constraints@rtype),
              lpdir = COBRAR_SETTINGS("OPT_DIRECTION"),
-             rub   = NULL,
+             rub   = c(rep(NA, met_num(model)),
+                       model@constraints@ub),
              ctype = NULL
   )
 

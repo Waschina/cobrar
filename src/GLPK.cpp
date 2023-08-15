@@ -475,6 +475,26 @@ SEXP setMatRowLP(SEXP xp, SEXP i, SEXP len, SEXP ind, SEXP val) {
   return out;
 }
 
+// /* set specific values in constraint matrix */
+// // [[Rcpp::export]]
+// SEXP setMatEntriesLP(SEXP xp, IntegerVector ci, IntegerVector cj, NumericVector val) {
+//   SEXP out = R_NilValue;
+//
+//   glp_prob* lp = (glp_prob*)R_ExternalPtrAddr(xp);
+//
+//   int n = ci.size();
+//
+//
+//   for(int i = 1; i <= n; i ++) {
+//     int row_ind = ci[i-1];
+//     int col_ind[] = {cj[i-1]};
+//     double ival[] = {val[i-1]};
+//     glp_set_mat_row(lp, row_ind, 1, col_ind, ival);
+//   }
+//
+//   return out;
+// }
+
 /* get number of rows */
 // [[Rcpp::export]]
 SEXP getNumRowsLP(SEXP xp) {

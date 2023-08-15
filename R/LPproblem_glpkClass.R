@@ -375,6 +375,32 @@ setMethod("addSingleConstraint", signature(lp = "LPproblem_glpk"),
           }
 )
 
+# setMethod("addConstraints", signature(lp = "LPproblem_glpk"),
+#           function(lp, coeffs, lb, ub, type) {
+#
+#             # nr of rows before addition
+#             t0rows <- getNumRowsLP(lp@ptr)
+#
+#             # add new rows to constraint matrix
+#             addRows(lp, nrows = nrow(coeffs))
+#
+#             TMPmat <- as(coeffs, "TsparseMatrix")
+#
+#             # add coeffs to new row
+#             setMatEntriesLP(lp@ptr,
+#                             as.integer(TMPmat@i+1+t0rows),
+#                             as.integer(TMPmat@j+1),
+#                             as.numeric(TMPmat@x))
+#
+#             # set bounds
+#             setRowsBnds(lp,
+#                         i = (t0rows+1):(t0rows+nrow(coeffs)),
+#                         lb = lb,
+#                         ub = ub,
+#                         type = type)
+#           }
+# )
+
 setMethod("fvaJob", signature(lp = "LPproblem_glpk"),
           function(lp, ind) {
 

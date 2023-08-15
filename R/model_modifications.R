@@ -153,20 +153,59 @@ rmGene <- function(model, gene, rm_react = TRUE, rm_met = TRUE) {
   return(model)
 }
 
+#' Add constraints to model
+#'
+#' Add linear reaction flux constraints to a metabolic network.
+#'
+#' @param model Model of class \link{modelorg}
+#' @param react Character vector or a list of character vectors containing the
+#' model's reactions IDs that are part of the respective constraint.
+#' @param coeff Numeric vector or list of numeric vectors defining the
+#' coefficients for the reactions listed in 'react'.
+#' @param rtype Character vector describing the type of the constraint(s). See
+#' details.
+#' @param lb,ub Numeric vector defining the lower and upper bound(s) of the
+#' constraint(s).
+#'
+#' @details
+#' The slot "rtype" describes the type of each constraint. Valid values and
+#' their effects are:
+#' | *code* | *description* | *rule* |
+#' | :----: | :--- | :----: |
+#' | "F" | free constraint | \eqn{-\infty < x < \infty} |
+#' | "L" | constraint with lower bound | \eqn{lb \leq x \leq \infty} |
+#' | "U" | constraint with upper bound | \eqn{-\infty \leq x \leq ub} |
+#' | "D" | double-bounded (ranged) constraint | \eqn{lb \leq x \leq ub} |
+#' | "E" | fixed (equality constraint) | \eqn{lb = x = ub} |
+#'
+#'
+#' @examples
+#' fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
+#' mod <- readSBMLmod(fpath)
+#'
+#' # Simulate anaerobic growth
+#' mod <- changeBounds(mod, "EX_o2_e", lb = 0)
+#'
+#' # Limit the proton production depending on the growth rate
+#' mod <- addConstraint(mod,
+#'                      react = c("EX_h_e","BIOMASS_Ecoli_core_w_GAM"),
+#'                      coeff = c(1, -20), rtype = "U", ub = 0)
+#'
 #' @export
-setGeneric("addConstraint" ,valueClass = "modelorg", function(object,
+setGeneric("addConstraint" ,valueClass = "modelorg", function(model,
                                                               react,
                                                               coeff,
                                                               rtype,
-                                                              ...) {
+                                                              lb = NULL,
+                                                              ub = NULL) {
   standardGeneric("addConstraint")
 })
-setMethod("addConstraint", signature(object = "modelorg",
+setMethod("addConstraint", signature(model = "modelorg",
                                      react = "character",
                                      coeff = "numeric",
                                      rtype = "character"),
-          function(object, react, coeff, rtype, lb = NULL, ub = NULL) {
-            return(addConstraint(object,
+          function(model, react, coeff, rtype, lb = NULL, ub = NULL) {
+            return(addConstraint(model,
                                  react = list(react),
                                  coeff = list(coeff),
                                  lb = lb,
@@ -174,11 +213,11 @@ setMethod("addConstraint", signature(object = "modelorg",
                                  rtype = rtype))
           }
 )
-setMethod("addConstraint", signature(object = "modelorg",
+setMethod("addConstraint", signature(model = "modelorg",
                                      react = "list",
                                      coeff = "list",
                                      rtype = "character"),
-          function(object, react, coeff, rtype, lb = NULL, ub = NULL) {
+          function(model, react, coeff, rtype, lb = NULL, ub = NULL) {
 
             nc <- length(react)
 
@@ -217,30 +256,30 @@ setMethod("addConstraint", signature(object = "modelorg",
             if(any(unlist(lapply(react, duplicated))))
               stop("'react' IDs cannot be duplicated within a constraint definition.")
 
-            if(any(unlist(lapply(react, function(x) !(x %in% object@react_id)))))
+            if(any(unlist(lapply(react, function(x) !(x %in% model@react_id)))))
               stop("Not all reaction IDs in 'react' are part of the model.")
 
             I <- matrix(c(rep(1:nc, unlist(lapply(react, length))),
-                          unlist(lapply(react, function(x) match(x, object@react_id)))),
+                          unlist(lapply(react, function(x) match(x, model@react_id)))),
                         ncol = 2)
 
 
-            out <- Matrix(0, nrow = nc, ncol = react_num(object), sparse = T)
+            out <- Matrix(0, nrow = nc, ncol = react_num(model), sparse = T)
             out[I] <- unlist(coeff)
 
-            object@constraints@coeff <- rbind(object@constraints@coeff,
+            model@constraints@coeff <- rbind(model@constraints@coeff,
                                               out)
-            object@constraints@lb <- c(object@constraints@lb, lb)
-            object@constraints@ub <- c(object@constraints@ub, ub)
-            object@constraints@rtype <- c(object@constraints@rtype, rtype)
+            model@constraints@lb <- c(model@constraints@lb, lb)
+            model@constraints@ub <- c(model@constraints@ub, ub)
+            model@constraints@rtype <- c(model@constraints@rtype, rtype)
 
-            return(rmDuplicateConstraints(object))
+            return(rmDuplicateConstraints(model))
           }
 )
 
 #' @export
 rmConstraint <- function(model, ind) {
-  if(constraints_num(model) == 0 || any(!(ind %in% 1:constraints_num(model)))) {
+  if(constraint_num(model) == 0 || any(!(ind %in% 1:constraint_num(model)))) {
     stop("Invalid index for constraints.")
   }
 

@@ -73,6 +73,10 @@ setGeneric("addSingleConstraint", function(lp, ...) {
   standardGeneric("addSingleConstraint")
 })
 
+# setGeneric("addConstraints", function(lp, ...) {
+#   standardGeneric("addConstraints")
+# })
+
 setGeneric("fvaJob", function(lp, ...) {
   standardGeneric("fvaJob")
 })
