@@ -12,10 +12,10 @@ fva(model, react = NULL, opt.factor = 1)
 \item{react}{Character vector of reaction IDs tested for flux variability. If
 NULL, all reactions are tested.}
 
-\item{opt.factor}{Numeric value between 0 and 1 to define the required
-fraction of the objective function value. E.g. 0.8 sets the constraint, that
-in the flux variability analysis, the objective function value must at least
-be 80\% of the original optimal value.}
+\item{opt.factor}{Numeric value > 0 to define the required fraction of the
+objective function value. E.g. 0.8 sets the constraint, that in the flux
+variability analysis, the objective function value must at least be 80\% of
+the original optimal value.}
 }
 \description{
 Perform Flux Variability Analysis with or without relaxed optimality

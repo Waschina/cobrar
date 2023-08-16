@@ -94,6 +94,9 @@ pfba_heuristic <- function(model, costcoeffw = NULL, costcoefbw = NULL,
   if(COBRAR_SETTINGS("OPT_DIRECTION") == "min")
     newObj <- c(model@obj_coef, -model@obj_coef) + pFBAcoeff * c(fw, bw)
 
+  # new user constraint matrix
+  newConstrMat <- cbind(model@constraints@coeff, -model@constraints@coeff)
+
   # define and parametrize LP problem
   LPprob <- new(paste0("LPproblem_",COBRAR_SETTINGS("SOLVER")),
                 name = paste0("LP_", model@mod_id,"_pFBA_heuristic"),
@@ -101,14 +104,16 @@ pfba_heuristic <- function(model, costcoeffw = NULL, costcoefbw = NULL,
 
   loadLPprob(LPprob,
              nCols = ncol(newS),
-             nRows = nr,
-             mat   = newS,
+             nRows = nr+constraint_num(model),
+             mat   = rbind(newS, newConstrMat),
              ub    = newUB,
              lb    = newLB,
              obj   = newObj,
-             rlb   = rep(0, nr),
-             rtype = rep("E", nr),
-             lpdir = COBRAR_SETTINGS("OPT_DIRECTION")
+             rlb   = c(rep(0, nr), model@constraints@lb),
+             rtype = c(rep("E", nr), model@constraints@rtype),
+             lpdir = COBRAR_SETTINGS("OPT_DIRECTION"),
+             rub   = c(rep(NA, met_num(model)),
+                       model@constraints@ub)
   )
 
   # optimization

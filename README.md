@@ -12,18 +12,18 @@
 - [x] FVA documentation
 - [ ] MOMA (iterative linearized objective?)
 - [ ] ROOM
-- [ ] additional constraints as slot in `modelorg`
+- [x] additional constraints as slot in `modelorg`
   - [x] Slot in modelorg
   - [x] rm if reaction of a constraint is removed
   - [x] addconstraint function
   - [x] rm constraint function
-  - [ ] constraints taking effect (glpk  LP formulation)
+  - [x] constraints taking effect (glpk  LP formulation)
     - [x] FBA
-    - [ ] pFBA
-    - [ ] pFBA-heuristic
-    - [ ] FVA
+    - [x] pFBA
+    - [x] pFBA-heuristic
+    - [x] FVA
 
-  - [ ] full documentation of function `addConstraint`, `rmConstraint`
+  - [x] full documentation of function `addConstraint`, `rmConstraint`
 
 - [ ] `writeSBMLmod`
 - [ ] export and documentation of position functions

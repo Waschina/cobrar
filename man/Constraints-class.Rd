@@ -27,11 +27,11 @@ their effects are:\tabular{clc}{
 \item{\code{coeff}}{A sparse numeric matrix of \link[Matrix]{dgCMatrix-class}
 representing the coefficients for each reaction in the model. Each row
 denotes a user constraint, each column a reaction in the model in the same
-order as in slor "S" in the corresponding \link{modelorg} object.}
+order as in slot "S" in the corresponding \link{modelorg} object.}
 
-\item{\code{lb}}{Numeric vector provididing the lower bound for each constraint.}
+\item{\code{lb}}{Numeric vector providing the lower bound for each constraint.}
 
-\item{\code{ub}}{Numeric vector provididing the lower bound for each constraint.}
+\item{\code{ub}}{Numeric vector providing the lower bound for each constraint.}
 
 \item{\code{rtype}}{Character vector stating the constraint type. See details.}
 }}

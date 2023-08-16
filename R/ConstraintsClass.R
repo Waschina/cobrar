@@ -7,9 +7,9 @@
 #' @slot coeff A sparse numeric matrix of \link[Matrix]{dgCMatrix-class}
 #' representing the coefficients for each reaction in the model. Each row
 #' denotes a user constraint, each column a reaction in the model in the same
-#' order as in slor "S" in the corresponding \link{modelorg} object.
-#' @slot lb Numeric vector provididing the lower bound for each constraint.
-#' @slot ub Numeric vector provididing the lower bound for each constraint.
+#' order as in slot "S" in the corresponding \link{modelorg} object.
+#' @slot lb Numeric vector providing the lower bound for each constraint.
+#' @slot ub Numeric vector providing the lower bound for each constraint.
 #' @slot rtype Character vector stating the constraint type. See details.
 #'
 #' @details

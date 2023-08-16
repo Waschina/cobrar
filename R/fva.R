@@ -6,10 +6,10 @@
 #' @param model Model of class \link{modelorg}
 #' @param react Character vector of reaction IDs tested for flux variability. If
 #' NULL, all reactions are tested.
-#' @param opt.factor Numeric value between 0 and 1 to define the required
-#' fraction of the objective function value. E.g. 0.8 sets the constraint, that
-#' in the flux variability analysis, the objective function value must at least
-#' be 80% of the original optimal value.
+#' @param opt.factor Numeric value > 0 to define the required fraction of the
+#' objective function value. E.g. 0.8 sets the constraint, that in the flux
+#' variability analysis, the objective function value must at least be 80% of
+#' the original optimal value.
 #'
 #' @examples
 #' fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
@@ -42,15 +42,18 @@ fva <- function(model, react = NULL, opt.factor = 1) {
 
   loadLPprob(LPprob,
              nCols = react_num(model),
-             nRows = met_num(model),
-             mat   = model@S,
+             nRows = met_num(model)+constraint_num(model),
+             mat   = rbind(model@S, model@constraints@coeff),
              ub    = model@uppbnd,
              lb    = model@lowbnd,
              obj   = model@obj_coef,
-             rlb   = rep(0, met_num(model)),
-             rtype = rep("E", met_num(model)),
+             rlb   = c(rep(0, met_num(model)),
+                       model@constraints@lb),
+             rtype = c(rep("E", met_num(model)),
+                       model@constraints@rtype),
              lpdir = COBRAR_SETTINGS("OPT_DIRECTION"),
-             rub   = NULL,
+             rub   = c(rep(NA, met_num(model)),
+                       model@constraints@ub),
              ctype = NULL
   )
 
@@ -67,9 +70,10 @@ fva <- function(model, react = NULL, opt.factor = 1) {
   #----------------------------------------------------------------------------#
   addSingleConstraint(LPprob,
                       model@obj_coef,
-                      objRes*opt.factor[1],
-                      objRes,
+                      min(objRes*opt.factor[1], objRes),
+                      max(objRes*opt.factor[1], objRes),
                       ifelse(opt.factor[1] == 1, "E","D"))
+
 
   react <- react_pos(model, react)
 
@@ -77,7 +81,7 @@ fva <- function(model, react = NULL, opt.factor = 1) {
   for(i in 1:length(opt.factor)) {
     if(i > 1) {
       setRowsBnds(LPprob,
-                  i = met_num(model)+1,
+                  i = met_num(model)+constraint_num(model)+1,
                   objRes*opt.factor[i],
                   objRes,
                   ifelse(opt.factor[i] == 1, "E","D"))

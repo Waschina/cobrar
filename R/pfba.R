@@ -39,15 +39,18 @@ pfba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
 
   loadLPprob(LPprob,
              nCols = react_num(model),
-             nRows = met_num(model),
-             mat   = model@S,
+             nRows = met_num(model)+constraint_num(model),
+             mat   = rbind(model@S, model@constraints@coeff),
              ub    = model@uppbnd,
              lb    = model@lowbnd,
              obj   = model@obj_coef,
-             rlb   = rep(0, met_num(model)),
-             rtype = rep("E", met_num(model)),
+             rlb   = c(rep(0, met_num(model)),
+                       model@constraints@lb),
+             rtype = c(rep("E", met_num(model)),
+                       model@constraints@rtype),
              lpdir = COBRAR_SETTINGS("OPT_DIRECTION"),
-             rub   = NULL,
+             rub   = c(rep(NA, met_num(model)),
+                       model@constraints@ub),
              ctype = NULL
   )
 
@@ -79,9 +82,12 @@ pfba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
   newLB <- c(aLB,bLB)
   newUB <- c(aUB,bUB)
 
-  # add new roe to maintain optimal objective function value
+  # add new row to maintain optimal objective function value
   newRow <- Matrix(c(model@obj_coef, -model@obj_coef), nrow = 1, sparse = TRUE)
   newS <- rbind(newS,newRow)
+
+  # new user constraint matrix
+  newConstrMat <- cbind(model@constraints@coeff, -model@constraints@coeff)
 
   # Init new LP
   if(is.null(costcoeffw)) {
@@ -105,15 +111,19 @@ pfba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
 
   loadLPprob(LPprobNew,
              nCols = ncol(newS),
-             nRows = nr+1,
-             mat   = newS,
+             nRows = nr+1+constraint_num(model),
+             mat   = rbind(newS,
+                           newConstrMat),
              ub    = newUB,
              lb    = newLB,
              obj   = c(fw,bw),
-             rlb   = c(rep(0, nr),objRes),
-             rtype = rep("E", nr+1),
+             rlb   = c(rep(0, nr), objRes,
+                       model@constraints@lb),
+             rtype = c(rep("E", nr+1),
+                       model@constraints@rtype),
              lpdir = "min",
-             rub   = NULL,
+             rub   = c(rep(NA, met_num(model)+1),
+                       model@constraints@ub),
              ctype = NULL
   )
 
