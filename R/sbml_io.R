@@ -35,7 +35,7 @@ readSBMLmod <- function(file_path) {
   mod_notes <- getModelNotes(modelPtr)
   obj_coeff <- getObjectiveFunction(modelPtr)
   subSys <- getSubsystems(modelPtr); colnames(subSys$subSys) <- subSys$subSys_ids
-  constraints <- new("UserConstraints",
+  constraints <- new("Constraints",
                      coeff = as(Matrix(nrow = 0, ncol = ncol(S), sparse = TRUE),
                                 "dMatrix"),
                      lb = numeric(0),

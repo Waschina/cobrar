@@ -10,7 +10,7 @@ rmReact(model, react, rm_met = TRUE)
 \item{model}{Model of class \link{modelorg}}
 
 \item{react}{A character vector stating the reaction IDs in a model or a
-numeric vector providing the reaction indexes.}
+numeric vector providing the reaction indices.}
 
 \item{rm_met}{Logical. Should metabolites, which are singletons after the
 reaction removal, be deleted as well?}

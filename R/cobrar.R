@@ -6,7 +6,7 @@
 NULL
 
 .onAttach <- function(libname, pkgname) {
-  packageStartupMessage("cobrar. Let's do this with...\n",
+  packageStartupMessage("cobrar uses...\n",
                         " - libSBML (v. ", getSBMLVersion(),")\n",
                         " - glpk (v. ",getGLPKVersion(),")")
 }

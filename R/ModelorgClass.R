@@ -1,41 +1,4 @@
-#' Stucture of UserConstraints Class
-#'
-#' This class represents user constraints that can be added to a model of class
-#' \link{modelorg} in addition to the stationarity constraint (\eqn{S v = 0})
-#' and flux bounds.
-#'
-#' @slot coeff A sparse numeric matrix of \link[Matrix]{dgCMatrix-class}
-#' representing the coefficients for each reaction in the model. Each row
-#' denotes a user constraint, each column a reaction in the model in the same
-#' order as in slor "S" in the corresponding \link{modelorg} object.
-#' @slot lb Numeric vector provididing the lower bound for each constraint.
-#' @slot ub Numeric vector provididing the lower bound for each constraint.
-#' @slot rtype Character vector stating the constraint type. See details.
-#'
-#' @details
-#' The slot "rtype" describes the type of each constraint. Valid values and
-#' their effects are:
-#' | *code* | *description* | *rule* |
-#' | :----: | :--- | :----: |
-#' | "F" | free constraint | \eqn{-\infty < x < \infty} |
-#' | "L" | constraint with lower bound | \eqn{lb \leq x \leq \infty} |
-#' | "U" | constraint with upper bound | \eqn{-\infty \leq x \leq ub} |
-#' | "D" | double-bounded (ranged) constraint | \eqn{lb \leq x \leq ub} |
-#' | "E" | fixed (equality constraint) | \eqn{lb = x = ub} |
-#'
-#' @aliases UserConstraints
-#'
-#' @exportClass UserConstraints
-setClass("UserConstraints",
-         slots = c(
-           coeff = "dgCMatrix",
-           lb = "numeric",
-           ub = "numeric",
-           rtype = "character"
-         )
-)
-
-#' Stucture of modelorg Class
+#' Structure of modelorg Class
 #'
 #' This class represents a model organization with various attributes related
 #' to central model structures, metabolites, reactions, and genes.
@@ -51,7 +14,7 @@ setClass("UserConstraints",
 #' @slot subSys A sparse Boolean matrix of \link[Matrix]{lgCMatrix-class} defining subsystems.
 #' @slot subSys_id A character vector representing subsystem identifiers.
 #' @slot subSys_name A character vector containing the subsystem names.
-#' @slot constraints An object of class \link{UserConstraints} which specifies
+#' @slot constraints An object of class \link{Constraints} which specifies
 #' constraints in a model in addition to stationarity and individual flux
 #' bounds.
 #'
@@ -67,7 +30,7 @@ setClass("UserConstraints",
 #' @slot uppbnd A character vector containing upper bounds for reactions.
 #'
 #' @slot gprRules A character vector with Gene-Protein-Reaction association rules
-#' (with gene product indexes corresponding to the order in slot 'genes').
+#' (with gene product indices corresponding to the order in slot 'genes').
 #' @slot genes A list of character vectors. Each vector contains the IDs of
 #' gene products associated to the respective reaction.
 #' @slot allGenes A character vector with all gene identifiers.
@@ -92,7 +55,7 @@ setClass("modelorg",
            subSys = "lgCMatrix",
            subSys_id = "character",
            subSys_name = "character",
-           constraints = "UserConstraints",
+           constraints = "Constraints",
 
            # metabolites,
            met_id = "character",
@@ -264,16 +227,16 @@ setMethod("show", signature(object = "modelorg"),
           }
 )
 
-setGeneric("constraint2string" ,valueClass = "character", function(object, ind) {
+setGeneric("constraint2string" ,valueClass = "character", function(object, ind, ...) {
   standardGeneric("constraint2string")
 })
-setMethod("constraint2string", signature(object = "modelorg", ind = "integer"),
-          function(object, ind) {
+setMethod("constraint2string", signature(object = "modelorg", ind = "numeric"),
+          function(object, ind, digits = 5) {
             nz <- which(object@constraints@coeff[ind,] != 0)
             cnz <- c()
             for(i in 1:length(nz)) {
               cnz[i] <- paste0(ifelse(sign(object@constraints@coeff[ind,nz[i]])==1,"+","-"),
-                               round(abs(object@constraints@coeff[ind,nz[i]]), digits = 5)," ",
+                               round(abs(object@constraints@coeff[ind,nz[i]]), digits = digits)," ",
                                object@react_id[nz[i]])
             }
             mid <- paste(cnz, collapse = " ")
@@ -304,7 +267,7 @@ setGeneric("rmDuplicateConstraints", valueClass = "modelorg", function(object) {
 })
 setMethod("rmDuplicateConstraints", signature(object = "modelorg"),
           function(object) {
-            ccstr <- sapply(1:constraint_num(object), function(i) constraint2string(object , i))
+            ccstr <- sapply(1:constraint_num(object), function(i) constraint2string(object , i, digits = Inf))
 
             indrm <- which(duplicated(ccstr))
 

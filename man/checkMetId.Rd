@@ -2,7 +2,7 @@
 % Please edit documentation in R/checkId.R
 \name{checkMetId}
 \alias{checkMetId}
-\title{Check metabolite IDs and Indexes}
+\title{Check metabolite IDs and Indices}
 \usage{
 checkMetId(model, met)
 }
@@ -16,6 +16,6 @@ vector providing the metabolite indices in the model.}
 A logical vector; TRUE if ID/index is valid, FALSE otherwise.
 }
 \description{
-Checks whether metabolite IDs or indexes are part of (valid) for a specific
+Checks whether metabolite IDs or indices are part of (valid) for a specific
 model.
 }

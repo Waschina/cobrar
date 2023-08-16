@@ -10,7 +10,7 @@ changeBounds(model, react, lb = NULL, ub = NULL)
 \item{model}{Model of class \link{modelorg}}
 
 \item{react}{A character vector stating the reaction IDs in a model or a
-numeric vector providing the reaction indexes.}
+numeric vector providing the reaction indices.}
 
 \item{lb}{A numeric vector giving the new lower flux bounds for reactions
 \code{react}. If \code{lb} is of length 1, the same value will be used for

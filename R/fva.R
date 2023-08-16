@@ -1,3 +1,26 @@
+#' Flux Variability Analysis (FVA)
+#'
+#' Perform Flux Variability Analysis with or without relaxed optimality
+#' constraint
+#'
+#' @param model Model of class \link{modelorg}
+#' @param react Character vector of reaction IDs tested for flux variability. If
+#' NULL, all reactions are tested.
+#' @param opt.factor Numeric value between 0 and 1 to define the required
+#' fraction of the objective function value. E.g. 0.8 sets the constraint, that
+#' in the flux variability analysis, the objective function value must at least
+#' be 80% of the original optimal value.
+#'
+#' @examples
+#' fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
+#' mod <- readSBMLmod(fpath)
+#'
+#' # Get flux variability for all exchange reactions
+#' fvares <- fva(mod, react = mod@react_id[grepl("^EX_",mod@react_id)],
+#'               opt.factor = 0.9)
+#' fvares
+#'
+#'
 #' @export
 fva <- function(model, react = NULL, opt.factor = 1) {
 
@@ -5,7 +28,7 @@ fva <- function(model, react = NULL, opt.factor = 1) {
     react <- 1:react_num(model)
 
   if(!all(checkReactId(model, react))) {
-    stop("Please check your reaction IDs/indexes in argument 'react'.")
+    stop("Please check your reaction IDs/indices in argument 'react'.")
   }
 
   #----------------------------------------------------------------------------#

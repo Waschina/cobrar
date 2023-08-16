@@ -2,7 +2,7 @@
 % Please edit documentation in R/checkId.R
 \name{checkReactId}
 \alias{checkReactId}
-\title{Check reaction IDs and Indexes}
+\title{Check reaction IDs and Indices}
 \usage{
 checkReactId(model, react)
 }
@@ -16,6 +16,6 @@ vector providing the reaction indices in the model.}
 A logical vector; TRUE if ID/index is valid, FALSE otherwise.
 }
 \description{
-Checks whether reaction IDs or indexes are part of (valid) for a specific
+Checks whether reaction IDs or indices are part of (valid) for a specific
 model.
 }

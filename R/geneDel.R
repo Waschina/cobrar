@@ -4,7 +4,7 @@
 #' a specified set of genes is deleted from a model.
 #'
 #' @param model Model of class \link{modelorg}
-#' @param gene Character or numeric vector providing the IDs or indexes of genes
+#' @param gene Character or numeric vector providing the IDs or indices of genes
 #' to be deleted from 'model'.
 #'
 #' @return Character vector with reactions IDs.

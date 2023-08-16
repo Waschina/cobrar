@@ -9,7 +9,7 @@ geneDel(model, gene)
 \arguments{
 \item{model}{Model of class \link{modelorg}}
 
-\item{gene}{Character or numeric vector providing the IDs or indexes of genes
+\item{gene}{Character or numeric vector providing the IDs or indices of genes
 to be deleted from 'model'.}
 }
 \value{

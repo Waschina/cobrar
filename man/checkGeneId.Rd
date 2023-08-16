@@ -2,7 +2,7 @@
 % Please edit documentation in R/checkId.R
 \name{checkGeneId}
 \alias{checkGeneId}
-\title{Check gene IDs and Indexes}
+\title{Check gene IDs and Indices}
 \usage{
 checkGeneId(model, gene)
 }
@@ -16,6 +16,6 @@ vector providing the gene indices in the model.}
 A logical vector; TRUE if ID/index is valid, FALSE otherwise.
 }
 \description{
-Checks whether gene IDs or indexes are part of (valid) for a specific
+Checks whether gene IDs or indices are part of (valid) for a specific
 model.
 }

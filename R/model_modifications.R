@@ -9,7 +9,7 @@
 #'
 #' @param model Model of class \link{modelorg}
 #' @param react A character vector stating the reaction IDs in a model or a
-#' numeric vector providing the reaction indexes.
+#' numeric vector providing the reaction indices.
 #' @param lb A numeric vector giving the new lower flux bounds for reactions
 #' \code{react}. If \code{lb} is of length 1, the same value will be used for
 #' all reactions.
@@ -26,7 +26,7 @@ changeBounds <- function(model, react, lb = NULL, ub = NULL) {
             "ub must be numeric" = is.null(ub) || is.numeric(ub))
 
   if(!all(checkReactId(model, react))) {
-    stop("Please check your reaction IDs/indexes in argument 'react'.")
+    stop("Please check your reaction IDs/indices in argument 'react'.")
   }
 
   # the actual change
@@ -46,7 +46,7 @@ changeBounds <- function(model, react, lb = NULL, ub = NULL) {
 #'
 #' @param model Model of class \link{modelorg}
 #' @param react A character vector stating the reaction IDs in a model or a
-#' numeric vector providing the reaction indexes.
+#' numeric vector providing the reaction indices.
 #' @param rm_met Logical. Should metabolites, which are singletons after the
 #' reaction removal, be deleted as well?
 #'
@@ -62,7 +62,7 @@ rmReact <- function(model, react, rm_met = TRUE) {
     return(model)
 
   if(!all(checkReactId(model, react))) {
-    stop("Please check your reaction IDs/indexes in argument 'react'.")
+    stop("Please check your reaction IDs/indices in argument 'react'.")
   }
 
   react <- react_pos(model, react)
@@ -109,7 +109,7 @@ rmReact <- function(model, react, rm_met = TRUE) {
 #'
 #' @param model Model of class \link{modelorg}
 #' @param gene A character vector stating the reaction IDs in a model or a
-#' numeric vector providing the reaction indexes.
+#' numeric vector providing the reaction indices.
 #' @param rm_react Logical. Should reaction, which are inaccessible after the
 #' gene knock outs, be deleted as well?
 #' @param rm_met Logical. Should metabolites, which are singletons after the
@@ -133,7 +133,7 @@ rmGene <- function(model, gene, rm_react = TRUE, rm_met = TRUE) {
     return(model)
 
   if(!all(checkGeneId(model, gene))) {
-    stop("Please check your gene IDs/indexes in argument 'gene'.")
+    stop("Please check your gene IDs/indices in argument 'gene'.")
   }
 
   gene <- gene_pos(model, gene)
@@ -277,10 +277,19 @@ setMethod("addConstraint", signature(model = "modelorg",
           }
 )
 
+#' Remove constraints
+#'
+#' Remove specific user constraints from a metabolic model.
+#'
+#' @param model Model of class \link{modelorg}
+#' @param ind Integer vector with the indices of the constraints to be removed
+#'
+#' @seealso [printConstraint()]
+#'
 #' @export
 rmConstraint <- function(model, ind) {
   if(constraint_num(model) == 0 || any(!(ind %in% 1:constraint_num(model)))) {
-    stop("Invalid index for constraints.")
+    stop("Invalid index or indices for constraints.")
   }
 
   ind <- unique(ind)
@@ -292,3 +301,5 @@ rmConstraint <- function(model, ind) {
 
   return(model)
 }
+
+

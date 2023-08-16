@@ -9,7 +9,7 @@
   - [x] rmReact
 - [x] gene KOs
 - [x] FVA (with adjustable proportions)
-- [ ] FVA documentation
+- [x] FVA documentation
 - [ ] MOMA (iterative linearized objective?)
 - [ ] ROOM
 - [ ] additional constraints as slot in `modelorg`
@@ -18,6 +18,11 @@
   - [x] addconstraint function
   - [x] rm constraint function
   - [ ] constraints taking effect (glpk  LP formulation)
+    - [x] FBA
+    - [ ] pFBA
+    - [ ] pFBA-heuristic
+    - [ ] FVA
+
   - [ ] full documentation of function `addConstraint`, `rmConstraint`
 
 - [ ] `writeSBMLmod`

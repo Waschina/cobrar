@@ -27,3 +27,6 @@ N. E. Lewis et al., “Omic data from evolved E. coli are consistent with
 computed optimal growth from genome‐scale models,” Molecular Systems Biology,
 vol. 6, no. 1. EMBO, Jan. 2010. doi: 10.1038/msb.2010.47.
 }
+\seealso{
+\code{\link[=pfba_heuristic]{pfba_heuristic()}}
+}

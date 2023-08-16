@@ -76,3 +76,26 @@ printReaction <- function(model, react, use.ids = FALSE) {
 
   return(reaction)
 }
+
+#' Print Constraint(s)
+#'
+#' Generate strings to summarize metabolic model constraints.
+#'
+#' @param model Model of class \link{modelorg}
+#' @param ind Integer vector with the indices of the constraints to be printed
+#'
+#' @export
+printConstraint <- function(model, ind = NULL) {
+  if(is.null(ind) && constraint_num(model) == 0)
+    return(character(0))
+
+  if(is.null(ind))
+    ind <- 1:constraint_num(model)
+
+  if(constraint_num(model) == 0 || any(!(ind %in% 1:constraint_num(model)))) {
+    stop("Invalid index or indices for constraints.")
+  }
+  res <- sapply(ind, FUN = function(i) constraint2string(model, i))
+
+  return(res)
+}

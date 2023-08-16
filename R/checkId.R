@@ -1,6 +1,6 @@
-#' Check reaction IDs and Indexes
+#' Check reaction IDs and Indices
 #'
-#' Checks whether reaction IDs or indexes are part of (valid) for a specific
+#' Checks whether reaction IDs or indices are part of (valid) for a specific
 #' model.
 #'
 #' @param model Model of class \link{modelorg}
@@ -21,7 +21,7 @@ checkReactId <- function(model, react) {
 
   checkRes <- rep(FALSE, length(react))
 
-  # Indexes provided
+  # Indices provided
   if(is.numeric(react)) {
     checkRes <- react <= react_num(model)
   }
@@ -35,9 +35,9 @@ checkReactId <- function(model, react) {
 }
 
 
-#' Check metabolite IDs and Indexes
+#' Check metabolite IDs and Indices
 #'
-#' Checks whether metabolite IDs or indexes are part of (valid) for a specific
+#' Checks whether metabolite IDs or indices are part of (valid) for a specific
 #' model.
 #'
 #' @param model Model of class \link{modelorg}
@@ -58,7 +58,7 @@ checkMetId <- function(model, met) {
 
   checkRes <- rep(FALSE, length(met))
 
-  # Indexes provided
+  # Indices provided
   if(is.numeric(met)) {
     checkRes <- met <= met_num(model)
   }
@@ -72,9 +72,9 @@ checkMetId <- function(model, met) {
 }
 
 
-#' Check gene IDs and Indexes
+#' Check gene IDs and Indices
 #'
-#' Checks whether gene IDs or indexes are part of (valid) for a specific
+#' Checks whether gene IDs or indices are part of (valid) for a specific
 #' model.
 #'
 #' @param model Model of class \link{modelorg}
@@ -95,7 +95,7 @@ checkGeneId <- function(model, gene) {
 
   checkRes <- rep(FALSE, length(gene))
 
-  # Indexes provided
+  # Indices provided
   if(is.numeric(gene)) {
     checkRes <- gene <= gene_num(model)
   }

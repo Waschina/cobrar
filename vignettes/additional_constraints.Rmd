@@ -1,0 +1,105 @@
+---
+title: "Working with additional constraints"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Working with additional constraints}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(cobrar)
+```
+
+## Constriant for a multi-carbon source growth environment
+
+Standard FBA models already contain the linear constraints:
+
+* Stationarity constraints: $\boldsymbol{S}\ \boldsymbol{v}=\boldsymbol{0}$
+* Flux bounds on individual reactions: $\boldsymbol{lb} \le \boldsymbol{v} \le \boldsymbol{ub}$
+
+In specific cases, it can be useful to include additional linear constraints to a model, e.g., to add additional thermodynamic constraints or interactions between reactions.
+
+This tutorial aims to illustrate how additional constraints can be added to an existing model and to inspect their impact on flux distribution predictions.
+
+First, we load a model of *Escherichia coli*'s core metabolism.
+
+```{r}
+fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
+mod <- readSBMLmod(fpath)
+```
+
+Second, we change the lower bounds of the exchange reactions for three potential carbon sources, namely Glucose, Fructose, and Fumarate. By doing so, we simulate a growth environment that provides three carbon sources simultaneously. The maximum uptake rate for each carbon source is set to $3\ mmol\  gDW^{-1}\ hr^{-1}$. Furthermore, we set the lower bound for the exchange reaction of oxygen (`EX_o2_e`) to $0\ mmol\ gDW^{-1}\ hr^{-1}$, to simulate anoxic conditions.
+
+```{r}
+mod <- changeBounds(mod, react = c("EX_glc__D_e","EX_fru_e", "EX_fum_e"),
+                    lb = c(-3,-3,-3))
+mod <- changeBounds(mod, react = "EX_o2_e", lb = 0)
+```
+
+Fumarate has 4 carbon atoms, while Glucose and Fructose have 6 carbon atoms each. Here, we want to add an additional constraint to the model that limits carbon source uptake to a total of 35 C-atom-mmol per gram dry weight and and per hour. This can be accomplished by:
+
+```{r}
+mod <- addConstraint(mod, react = c("EX_glc__D_e","EX_fru_e", "EX_fum_e"),
+                     coeff = c(6,6,4), rtype = "L", lb = -35)
+# print the user constraint
+printConstraint(mod)
+```
+Next, we can perform flux balance analysis (`fba()`) with the additional constraint and inspect predicted fluxes of all exchange reactions.
+
+```{r}
+sol <- fba(mod)
+getExchanges(mod, sol)
+```
+
+
+As wen can see, Fructose and Glucose are consumed, while the uptake of Fumarate is virtually zero. Also, there is a quite high production of protons (ID: `EX_h_e`). Next, we will add another constraint, that limits the release of protons depending on the growth rate. Specifically, we will limit the release to 5 mmol per newly formed gram dry weight biomass: $$v_{H^+} \le 5\ v_{Biomass}$$
+
+Which is the same as: $$v_{H^+} - 5\ v_{Biomass} \le 0$$
+
+This constraint can easily be added to the model:
+```{r}
+mod <- addConstraint(mod, react = c("EX_h_e","BIOMASS_Ecoli_core_w_GAM"),
+                     coeff = c(1, -5), rtype = "U", ub = 0)
+sol <- fba(mod)
+getExchanges(mod, sol)
+```
+The results show that as an effect of the second constraint the proton production (`EX_h_e`) is reduced, and all three carbon sources are consumed, including Fumarate.
+
+
+## Adding multiple constriants at once
+
+In the above example, both constraints were added to the model successively, each with a separate `addConstraint()` call. You can achieve the same final outcome model by adding both constraints simultaneously:
+
+```{r}
+# Load model
+fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
+mod <- readSBMLmod(fpath)
+
+# Change bounds
+mod <- changeBounds(mod, react = c("EX_glc__D_e","EX_fru_e", "EX_fum_e"),
+                    lb = c(-3,-3,-3))
+mod <- changeBounds(mod, react = "EX_o2_e", lb = 0)
+
+# Adding constraints
+mod <- addConstraint(mod,
+                     react = list(
+                       c("EX_glc__D_e","EX_fru_e", "EX_fum_e"),
+                       c("EX_h_e","BIOMASS_Ecoli_core_w_GAM")
+                     ),
+                     coeff = list(
+                       c(6,6,4),
+                       c(1,-5)
+                     ), rtype = c("L","U"), lb = c(-35,NA), ub = c(NA, 0))
+
+# Perform FBA
+sol <- fba(mod)
+getExchanges(mod, sol)
+```

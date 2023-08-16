@@ -18,6 +18,8 @@
 #' computed optimal growth from genome‐scale models,” Molecular Systems Biology,
 #' vol. 6, no. 1. EMBO, Jan. 2010. doi: 10.1038/msb.2010.47.
 #'
+#' @seealso [pfba_heuristic()]
+#'
 #' @export
 pfba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
 

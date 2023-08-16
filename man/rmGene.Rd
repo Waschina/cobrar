@@ -10,7 +10,7 @@ rmGene(model, gene, rm_react = TRUE, rm_met = TRUE)
 \item{model}{Model of class \link{modelorg}}
 
 \item{gene}{A character vector stating the reaction IDs in a model or a
-numeric vector providing the reaction indexes.}
+numeric vector providing the reaction indices.}
 
 \item{rm_react}{Logical. Should reaction, which are inaccessible after the
 gene knock outs, be deleted as well?}

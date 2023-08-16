@@ -4,7 +4,7 @@
 \name{modelorg-class}
 \alias{modelorg-class}
 \alias{modelorg}
-\title{Stucture of modelorg Class}
+\title{Structure of modelorg Class}
 \description{
 This class represents a model organization with various attributes related
 to central model structures, metabolites, reactions, and genes.
@@ -34,7 +34,7 @@ to central model structures, metabolites, reactions, and genes.
 
 \item{\code{subSys_name}}{A character vector containing the subsystem names.}
 
-\item{\code{constraints}}{An object of class \link{UserConstraints} which specifies
+\item{\code{constraints}}{An object of class \link{Constraints} which specifies
 constraints in a model in addition to stationarity and individual flux
 bounds.}
 
@@ -57,7 +57,7 @@ bounds.}
 \item{\code{uppbnd}}{A character vector containing upper bounds for reactions.}
 
 \item{\code{gprRules}}{A character vector with Gene-Protein-Reaction association rules
-(with gene product indexes corresponding to the order in slot 'genes').}
+(with gene product indices corresponding to the order in slot 'genes').}
 
 \item{\code{genes}}{A list of character vectors. Each vector contains the IDs of
 gene products associated to the respective reaction.}
