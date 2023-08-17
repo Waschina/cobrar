@@ -14,7 +14,7 @@
 readSBMLmod <- function(file_path) {
 
   # Pointers to SBML document and model (libSBML objects)
-  sbmldoc  <- readSBMLfile(file_path)
+  sbmldoc  <- readSBMLfile(normalizePath(file_path))
   modelPtr <- getModelObj(sbmldoc)
 
   #---------------#
