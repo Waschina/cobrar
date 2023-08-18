@@ -527,6 +527,37 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// writeSBML
+bool writeSBML(String file_path, String mod_id, String mod_name, String mod_desc, StringVector comp_id, StringVector comp_name, StringVector met_id, StringVector met_name, NumericVector met_charge, StringVector met_formula, StringVector met_comp, StringVector param_id, NumericVector param_val, IntegerVector param_sbo, StringVector react_id, StringVector react_name, Rcpp::ListOf<NumericVector> Scoeff, Rcpp::ListOf<StringVector> react_mets, StringVector react_lb, StringVector react_ub, LogicalVector react_rev);
+RcppExport SEXP _cobrar_writeSBML(SEXP file_pathSEXP, SEXP mod_idSEXP, SEXP mod_nameSEXP, SEXP mod_descSEXP, SEXP comp_idSEXP, SEXP comp_nameSEXP, SEXP met_idSEXP, SEXP met_nameSEXP, SEXP met_chargeSEXP, SEXP met_formulaSEXP, SEXP met_compSEXP, SEXP param_idSEXP, SEXP param_valSEXP, SEXP param_sboSEXP, SEXP react_idSEXP, SEXP react_nameSEXP, SEXP ScoeffSEXP, SEXP react_metsSEXP, SEXP react_lbSEXP, SEXP react_ubSEXP, SEXP react_revSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< String >::type file_path(file_pathSEXP);
+    Rcpp::traits::input_parameter< String >::type mod_id(mod_idSEXP);
+    Rcpp::traits::input_parameter< String >::type mod_name(mod_nameSEXP);
+    Rcpp::traits::input_parameter< String >::type mod_desc(mod_descSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type comp_id(comp_idSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type comp_name(comp_nameSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type met_id(met_idSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type met_name(met_nameSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type met_charge(met_chargeSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type met_formula(met_formulaSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type met_comp(met_compSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type param_id(param_idSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type param_val(param_valSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type param_sbo(param_sboSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type react_id(react_idSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type react_name(react_nameSEXP);
+    Rcpp::traits::input_parameter< Rcpp::ListOf<NumericVector> >::type Scoeff(ScoeffSEXP);
+    Rcpp::traits::input_parameter< Rcpp::ListOf<StringVector> >::type react_mets(react_metsSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type react_lb(react_lbSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type react_ub(react_ubSEXP);
+    Rcpp::traits::input_parameter< LogicalVector >::type react_rev(react_revSEXP);
+    rcpp_result_gen = Rcpp::wrap(writeSBML(file_path, mod_id, mod_name, mod_desc, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 RcppExport SEXP _rcpp_module_boot_sbml_module();
 
@@ -576,6 +607,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cobrar_getMetaboliteCompartments", (DL_FUNC) &_cobrar_getMetaboliteCompartments, 1},
     {"_cobrar_getGeneProducts", (DL_FUNC) &_cobrar_getGeneProducts, 1},
     {"_cobrar_getGPRs", (DL_FUNC) &_cobrar_getGPRs, 1},
+    {"_cobrar_writeSBML", (DL_FUNC) &_cobrar_writeSBML, 21},
     {"_rcpp_module_boot_sbml_module", (DL_FUNC) &_rcpp_module_boot_sbml_module, 0},
     {NULL, NULL, 0}
 };

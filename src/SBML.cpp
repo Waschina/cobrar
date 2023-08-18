@@ -633,6 +633,136 @@ Rcpp::List getGPRs(SEXP model_ptr) {
   return cols;
 }
 
+// [[Rcpp::export]]
+bool writeSBML(
+    String file_path,
+
+    String mod_id,
+    String mod_name,
+    String mod_desc,
+
+    StringVector comp_id,
+    StringVector comp_name,
+
+    StringVector met_id,
+    StringVector met_name,
+    NumericVector met_charge,
+    StringVector met_formula,
+    StringVector met_comp,
+
+    StringVector param_id,
+    NumericVector param_val,
+    IntegerVector param_sbo,
+
+    StringVector react_id,
+    StringVector react_name,
+    Rcpp::ListOf<NumericVector> Scoeff,
+    Rcpp::ListOf<StringVector> react_mets,
+    StringVector react_lb,
+    StringVector react_ub,
+    LogicalVector react_rev) {
+  bool out = false;
+
+  // init model
+  SBMLNamespaces sbmlns(3,2); // Level 3, version 1
+  sbmlns.addPkgNamespace("fbc",2); // with fbc version 2
+  SBMLDocument* document = new SBMLDocument(&sbmlns);
+  Model* model = document->createModel();
+
+  model->setId(mod_id);
+  model->setName(mod_name);
+  model->setMessage(mod_desc);
+
+  FbcModelPlugin* mplugin = static_cast<FbcModelPlugin*>(model->getPlugin("fbc"));
+
+  unsigned int nc = comp_id.size();
+  unsigned int nm = met_id.size();
+  unsigned int nr = react_id.size();
+  unsigned int np = param_id.size();
+
+  /*
+   add compartments
+   */
+  for(unsigned int i = 0; i < nc; i++) {
+    Compartment* icomp = model->createCompartment();
+    icomp->setId(Rcpp::as<std::string>(comp_id[i]));
+    icomp->setName(Rcpp::as<std::string>(comp_name[i]));
+  }
+
+  /*
+   add species (metabolites)
+  */
+  for(unsigned int i = 0; i < nm; i++) {
+    Species* sp =  model->createSpecies();
+
+    FbcSpeciesPlugin* splugin = static_cast<FbcSpeciesPlugin*>(sp->getPlugin("fbc"));
+
+    sp->setId(Rcpp::as<std::string>(met_id[i]));
+    sp->setName(Rcpp::as<std::string>(met_name[i]));
+    splugin->setChemicalFormula(Rcpp::as<std::string>(met_formula[i]));
+    splugin->setCharge(met_charge[i]);
+    sp->setConstant(false);
+    sp->setCompartment(Rcpp::as<std::string>(met_comp[i]));
+
+  }
+
+  /*
+   add species (metabolites)
+   */
+  for(unsigned int i = 0; i < np; i++) {
+    Parameter* ipar = model->createParameter();
+    ipar->setId(Rcpp::as<std::string>(param_id[i]));
+    ipar->setValue(param_val[i]);
+    ipar->setSBOTerm(param_sbo[i]);
+    ipar->setConstant(true);
+    ipar->setUnits("mmol_per_gDW_per_hr");
+  }
+
+  /*
+   add Reactions and their Stoichiometries
+   */
+  for(unsigned int i = 0; i < nr; i++) {
+    Reaction* rea = model->createReaction();
+    FbcReactionPlugin* rplugin = static_cast<FbcReactionPlugin*>(rea->getPlugin("fbc"));
+
+    rea->setId(Rcpp::as<std::string>(react_id[i]));
+    rea->setName(Rcpp::as<std::string>(react_name[i]));
+    rea->setReversible(react_rev[i]);
+    rea->setFast(false);
+
+    StringVector reaM = react_mets[i];
+    NumericVector reaS = Scoeff[i];
+    for(unsigned int j = 0; j < reaM.size(); j++) {
+
+      //reactant
+      if(reaS[j] < 0) {
+        SpeciesReference* srr = rea->createReactant();
+        srr->setSpecies(Rcpp::as<std::string>(reaM[j]));
+        srr->setStoichiometry(-reaS[j]);
+      }
+      //product
+      if(reaS[j] > 0) {
+        SpeciesReference* srp = rea->createProduct();
+        srp->setSpecies(Rcpp::as<std::string>(reaM[j]));
+        srp->setStoichiometry(reaS[j]);
+      }
+
+      rplugin->setLowerFluxBound(Rcpp::as<std::string>(react_lb[i]));
+      rplugin->setUpperFluxBound(Rcpp::as<std::string>(react_ub[i]));
+
+    }
+  }
+
+  /*
+   Export
+   */
+  SBMLWriter sbmlWriter;
+  out = sbmlWriter.writeSBML(document, file_path);
+
+  return(out);
+}
+
+
 RCPP_MODULE(sbml_module) {
   function("readSBMLfile", &readSBMLfile, "Read SBML document using libSBML");
   function("getModelObj", &getModelObj, "Get the Model object from the SBMLDocument");

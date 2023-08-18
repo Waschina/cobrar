@@ -181,3 +181,7 @@ getGPRs <- function(model_ptr) {
     .Call(`_cobrar_getGPRs`, model_ptr)
 }
 
+writeSBML <- function(file_path, mod_id, mod_name, mod_desc, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev) {
+    .Call(`_cobrar_writeSBML`, file_path, mod_id, mod_name, mod_desc, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev)
+}
+

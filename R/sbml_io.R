@@ -94,3 +94,86 @@ readSBMLmod <- function(file_path) {
     )
   )
 }
+
+#' Exports a Metabolic Network in SBML Format
+#'
+#' Export a constraint-based metabolic network model from a S4 object of class
+#' \link{modelorg} to a SBML file.
+#'
+#' @param model Model of class \link{modelorg}
+#' @param file_path SBML file name for exporting the model. Default is the
+#' model's ID with ".xml" suffix.
+#'
+#' @details
+#' SBML files are of level 3, version 2. FBC-package version 2.
+#'
+#'
+#' @returns TRUE if file export was successful.
+#'
+#' @export
+writeSBMLmod <- function(model, file_path = NULL) {
+
+  if(is.null(file_path))
+    file_path <- paste0(model@mod_id, ".xml")
+
+  # small corrections before import
+  if(!all(grepl("^R_",model@react_id)))
+    model@react_id <- paste0("R_",model@react_id)
+  if(!all(grepl("^M_",model@met_id)))
+    model@met_id <- paste0("M_",model@met_id)
+
+
+  # Stoichiometry lists
+  lReaMets <- apply(model@S, 2, FUN = function(x) model@met_id[which(abs(x)>0)])
+  lReaStoich <- apply(model@S, 2, FUN = function(x) x[which(abs(x)>0)])
+
+  # bound groups
+  bndgrp <- data.frame(id = model@react_id, lb = model@lowbnd, ub = model@uppbnd)
+  bndgrp$lb.term <- paste0(bndgrp$id,"_lb")
+  bndgrp$ub.term <- paste0(bndgrp$id,"_ub")
+  bndgrp$lb.term <- ifelse(bndgrp$lb == 0,"default_0", bndgrp$lb.term)
+  bndgrp$ub.term <- ifelse(bndgrp$ub == 0,"default_0", bndgrp$ub.term)
+  bndgrp$lb.term <- ifelse(bndgrp$lb == -COBRAR_SETTINGS("MAXIMUM"),"default_lb", bndgrp$lb.term)
+  bndgrp$ub.term <- ifelse(bndgrp$ub == COBRAR_SETTINGS("MAXIMUM"),"default_ub", bndgrp$ub.term)
+  bndgrp_para <- data.frame(bnd = c(bndgrp$lb.term, bndgrp$ub.term),
+                            val = c(bndgrp$lb, bndgrp$ub))
+  bndgrp_para <- bndgrp_para[!duplicated(bndgrp_para$bnd),]
+  bndgrp_para$SBO <- ifelse(grepl("^default_",bndgrp_para$bnd),626,625)
+  bndgrp_para <- bndgrp_para[order(bndgrp_para$bnd),]
+
+  out <- writeSBML(
+    file_path = file_path,
+
+    # Model fields
+    mod_id = model@mod_id,
+    mod_name = model@mod_name,
+    mod_desc = model@mod_desc,
+
+    # Compartments
+    comp_id = model@mod_compart,
+    comp_name = model@mod_compart_name,
+
+    # Species
+    met_id = model@met_id,
+    met_name = model@met_name,
+    met_charge = model@met_attr$charge,
+    met_formula = model@met_attr$chemicalFormula,
+    met_comp = model@met_comp,
+
+    # Parameters (bound groups)
+    param_id = bndgrp_para$bnd,
+    param_val = bndgrp_para$val,
+    param_sbo = bndgrp_para$SBO,
+
+    # Reactions and Stoichiometry
+    react_id = model@react_id,
+    react_name = model@react_name,
+    Scoeff = lReaStoich,
+    react_mets = lReaMets,
+    react_lb = bndgrp$lb.term,
+    react_ub = bndgrp$ub.term,
+    react_rev = ifelse(bndgrp$lb < 0 & bndgrp$ub > 0, TRUE, FALSE)
+  )
+
+  return(out)
+}
