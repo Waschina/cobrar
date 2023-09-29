@@ -19,17 +19,14 @@ Performs basic flux balance analysis (fba)
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)
 
-fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
-mod <- readSBMLmod(fpath)
-
 # aerobic growth
 res_aero <- fba(mod)
-cat(" Growth rate:       ", res_aero$obj,"\n",
-    "Acetate prodcution:", res_aero$fluxes[mod@react_id == "EX_ac_e"],"\n")
+cat(" Growth rate:       ", res_aero@obj,"\n",
+    "Acetate prodcution:", res_aero@fluxes[mod@react_id == "EX_ac_e"],"\n")
 
 mod <- changeBounds(mod, react = "EX_o2_e", lb = 0) # before: -1000
 res_anaero <- fba(mod)
-cat(" Growth rate:       ", res_anaero$obj,"\n",
-    "Acetate prodcution:", res_anaero$fluxes[mod@react_id == "EX_ac_e"],"\n")
+cat(" Growth rate:       ", res_anaero@obj,"\n",
+    "Acetate prodcution:", res_anaero@fluxes[mod@react_id == "EX_ac_e"],"\n")
 
 }

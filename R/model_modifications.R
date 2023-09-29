@@ -302,4 +302,177 @@ rmConstraint <- function(model, ind) {
   return(model)
 }
 
+#' Add or modify a reaction
+#'
+#' The function can be used to add or modify a reaction in an existing model.
+#'
+#' @param model Model of class \link{modelorg}
+#' @param id Character for the reaction ID
+#' @param met Character vector providing the IDs of metabolites that participate
+#' in the reaction
+#' @param Scoef Numeric vector (same length as `met`) of stoichiometric
+#' coefficients for the metabolites in `met`. The value in `Scoef[i]` is the
+#' stoichiometric coefficient of the metabolite in `met[i]`.
+#' @param reversible This option has now effect and is only here for legacy
+#' reasons. Whether a reaction is reversible or not is inferred by cobrar based
+#' on the lower and upper bounds.
+#' @param lb,ub Single numeric values that define the lower and upper flux
+#' limits, respectively.
+#' @param obj Single numeric value for the coefficient of the reaction in the
+#' objective function.
+#' @param subSystem A vector of character strings containing the sub system IDs
+#' to which the reaction belongs.
+#' @param subSystemName A character vector (same length as `subSystem`) for the
+#' names of the subsystems. If the subsystem is already part of the model and
+#' you do not want to change its name, just use NA the corresponding entry.
+#' @param gprAssoc A single character string giving the Gene-Product-Reaction
+#' (GPR) association for the reaction. If NA, no GRP association is created.
+#' @param reactName A single character string giving the name for the reaction.
+#' If NA, the value of argument `id` is used.
+#' @param metName A vector of character strings of the same length as `met`
+#' containing the metabolites names for the metabolites given in argument `met`.
+#' @param metCharge A numeric vector of the same length as `met` defining the
+#' charges for the metabolites given in argument `met`.
+#' @param metChemicalFormula A character vector of the same length as `met`
+#' defining the chemical formulas for the metabolites given in argument `met`.
+#' @param annotation An annotation string for the reaction.
+#'
+#' @details
+#' If you want to use the function to update data of a pre-existing reaction but
+#' not its stoichiometry, use NA for the parameters 'met' and 'Scoeff'.
+#' If the reaction is already part of the model, any reaction value (e.g., lb,
+#' ub, reactName), that is set to NA has the effect that the old value will be
+#' used.
+#' If the reaction is already part of the model, and values for the parameter
+#' `subSystem` are provided, all previous set Subsystem associations of the
+#' reaction will be removed.
+#' If metabolites or subsystems are not part of the model yet, they will be
+#' added.
 
+#'
+addReact <- function(model,
+                     id,
+                     met,
+                     Scoef,
+                     reversible = FALSE,
+                     lb = 0,
+                     ub = COBRAR_SETTINGS("MAXIMUM"),
+                     obj = 0,
+                     subSystem = NA,
+                     subSystemName = NA,
+                     gprAssoc = NA,
+                     reactName = NA,
+                     metName = NA,
+                     metComp = NA,
+                     metCharge = NA,
+                     metChemicalFormula = NA,
+                     annotation = NA) {
+
+  #--------------#
+  # basic checks #
+  #--------------#
+  if(any(duplicated(met)))
+    stop("Duplicates in metabolite IDs.")
+  if(length(met) == 0)
+    stop("Reaction needs at least one participating metabolite.")
+  if(length(Scoef) != length(met))
+    stop("Mismatch of number of metabolites and provides stoichiometrix coefficients.")
+
+  #--------------------------------------#
+  # Check if reaction addition or update #
+  #--------------------------------------#
+  if(id %in% model@react_id) {
+    indR <- which(id == model@react_id)
+
+    # remove previous stoichiometry if new coefficients are provided for
+    # existing reaction:
+    if(!is.na(Scoef[1]))
+      model@S[,indR] <- rep(0, met_num(model))
+
+  } else {
+    indR <- react_num(model) + 1
+    if(is.na(reactName))
+      reactName <- id
+
+    # extend data structures
+
+    # S and obj.-coeff.
+    model@S <- cbind(model@S, rep(0, met_num(model)))
+    model@obj_coef <- append(model@obj_coef, 0)
+
+    # reaction slots
+    model@react_attr <- rbind(model@react_attr,
+                            data.frame(annotation = NA_character_))
+    model@react_comp <- append(model@react_comp, NA)
+    model@react_id   <- append(model@react_id, id)
+    model@react_name <- append(model@react_name, NA_character_)
+
+    # bounds
+    model@lowbnd <- append(model@lowbnd, NA)
+    model@uppbnd <- append(model@uppbnd, NA)
+
+    # GPRs
+    model@genes <- append(model@genes, list(character(0L)))
+    model@gprRules <- append(model@gprRules, list(""))
+
+    # constraints
+    model@constraints@coeff <- cbind(model@constraints@coeff,
+                                   rep(0, constraint_num(model)))
+
+    # subsystems
+    model@subSys <- rbind(model@subSys,
+                        rep(0, ncol(model@subSys)))
+  }
+
+  # Add/update metabolites if necessary
+  model <- addMetabolite(model = model, id = met, name = metName, comp = metComp,
+                         chemicalFormula = metChemicalFormula, charge = metCharge)
+  indMs <- match(met, model@met_id)
+
+  # Add/update subsystems  if necessary
+  if(length(subSystem) > 0) {
+    # model <- addSubSystem(model, ...) TODO
+    indSubSys <- match(subSystem, model@subSys_id)
+  }
+
+  #----------------------------#
+  # Add/update reaction values #
+  #----------------------------#
+
+  # S and obj.-coeff.
+  if(!is.na(Scoef[1]))
+    model@S[matrix(c(rep(indR,length(indMs)), indMs),ncol = 2)] <- Scoef
+  if(!is.na(obj))
+    model@obj_coef[indR] <- obj
+
+  # reaction slots
+  if(!is.na(reactName))
+    model@react_name[indR] <- reactName
+  if(!is.na(annotation))
+    model@react_attr[indR]$annotation <- annotation
+
+  # bounds
+  model@lowbnd[indR] <- lb
+  model@uppbnd[indR] <- ub
+
+  # subsys
+  if(length(subSystem) > 0) {
+    model@S[matrix(c(indSubSys, rep(indR,length(indSubSys))),ncol = 2)] <- TRUE
+  }
+
+  return(model)
+}
+
+#' Add metabolites or update their data
+#'
+#' The functions allows you to add one or more metabolites to a model. When
+#' providing the ID of an already existing metabolite, you can use this function
+#' to update metabolite information.
+#'
+#' @param model Model of class \link{modelorg}
+#'
+#' @export
+addMetabolite <- function(model, id, name = NA, comp = NA, chemicalFormula = NA,
+                          charge = NA, annotation = NA) {
+  # TODO
+}

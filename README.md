@@ -4,9 +4,15 @@
 
 #### Current TODOs
 
-- [ ] function `addReact(...)` and `rmReact(...)`
-  - [ ] addReact
+- [ ] Model modification functions
+  - [ ] addReact (new name `addReaction`)
   - [x] rmReact
+  - [ ] addMetabolite
+  - [ ] rmMetabolite
+  - [ ] addGene
+  - [ ] rmGene
+  - [ ] addSubSystem
+  - [ ] rmSubSystem
 - [x] gene KOs
 - [x] FVA (with adjustable proportions)
 - [x] FVA documentation

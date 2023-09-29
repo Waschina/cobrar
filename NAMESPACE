@@ -2,6 +2,7 @@
 
 export(COBRAR_SETTINGS)
 export(addConstraint)
+export(addMetabolite)
 export(changeBounds)
 export(checkGeneId)
 export(checkMetId)
