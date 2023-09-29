@@ -673,7 +673,7 @@ bool writeSBML(
   model->setName(mod_name);
   model->setMessage(mod_desc);
 
-  FbcModelPlugin* mplugin = static_cast<FbcModelPlugin*>(model->getPlugin("fbc"));
+  // FbcModelPlugin* mplugin = static_cast<FbcModelPlugin*>(model->getPlugin("fbc"));
 
   unsigned int nc = comp_id.size();
   unsigned int nm = met_id.size();
@@ -707,7 +707,7 @@ bool writeSBML(
   }
 
   /*
-   add species (metabolites)
+   add parameters
    */
   for(unsigned int i = 0; i < np; i++) {
     Parameter* ipar = model->createParameter();

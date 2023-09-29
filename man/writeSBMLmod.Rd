@@ -20,5 +20,5 @@ Export a constraint-based metabolic network model from a S4 object of class
 \link{modelorg} to a SBML file.
 }
 \details{
-SBML files are of level 3, version 2. FBC-package version 2.
+Exported SBML files are of level 3, version 2. FBC-package version 2.
 }

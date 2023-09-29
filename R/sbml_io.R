@@ -105,7 +105,7 @@ readSBMLmod <- function(file_path) {
 #' model's ID with ".xml" suffix.
 #'
 #' @details
-#' SBML files are of level 3, version 2. FBC-package version 2.
+#' Exported SBML files are of level 3, version 2. FBC-package version 2.
 #'
 #'
 #' @returns TRUE if file export was successful.
@@ -116,7 +116,7 @@ writeSBMLmod <- function(model, file_path = NULL) {
   if(is.null(file_path))
     file_path <- paste0(model@mod_id, ".xml")
 
-  # small corrections before import
+  # small corrections before export
   if(!all(grepl("^R_",model@react_id)))
     model@react_id <- paste0("R_",model@react_id)
   if(!all(grepl("^M_",model@met_id)))
