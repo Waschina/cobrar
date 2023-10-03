@@ -28,6 +28,9 @@
 #' @slot react_comp A character vector indicating reaction compartments.
 #' @slot lowbnd A character vector containing lower bounds for reactions.
 #' @slot uppbnd A character vector containing upper bounds for reactions.
+#' @slot react_attr A data.frame that enables the storage of additional data for
+#' reactions. Only specific columns are extracted from and exported to SBML
+#' files. See \link(writeSBMLmod) for details.
 #'
 #' @slot gprRules A character vector with Gene-Protein-Reaction association rules
 #' (with gene product indices corresponding to the order in slot 'genes').

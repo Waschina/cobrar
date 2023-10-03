@@ -36,6 +36,16 @@
 - [ ] export and documentation of count functions (genes, reactions, constraints, metabolites)
 - [ ] read SBML documents of version 2 (necessary?)
 - [x] define a class for FBA (and FBA-related) prediction results
+- [ ] CVTerms
+  - [x] read reaction CVTerms
+  - [ ] write reaction CVTerms
+  - [x] read metabolite CVTerms
+  - [x] write metabolite CVTerms
+  - [ ] read geneProduct CVTerms
+  - [ ] write geneProduct CVTerms
+  - [ ] read model CVTerms
+  - [ ] write model CVTerms
+
 
 
 

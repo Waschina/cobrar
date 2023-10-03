@@ -46,14 +46,25 @@ readSBMLmod <- function(file_path) {
   react_id <- getReactionIds(modelPtr)
   react_name <- getReactionNames(modelPtr)
   react_bnds <- getReactionFluxBounds(modelPtr)
-  react_anno <- getReactionAnnotation(modelPtr)
+  # react_anno <- getReactionAnnotation(modelPtr)
+  react_anno <- rep(NA_character_,ncol(S))
   react_comp <- getReactionCompartment(modelPtr)
+  react_cvterms <- getReactionCVTerms(modelPtr)
+  react_cvterms <- lapply(react_cvterms, function(x) {
+    paste(x, collapse = ";")
+  })
 
   # Metabolites
   met_id <- getMetaboliteIds(modelPtr)
   met_name <- getMetaboliteNames(modelPtr)
   met_attr <- getMetaboliteAnnotation(modelPtr)
+  met_cvterms <- getMetaboliteCVTerms(modelPtr)
+  met_cvterms <- lapply(met_cvterms, function(x) {
+    paste(x, collapse = ";")
+  })
+  met_attr$CVTerms <- unlist(met_cvterms)
   met_comp <- getMetaboliteCompartments(modelPtr)
+
 
   # Genes
   allGeneProducts <- getGeneProducts(modelPtr)
@@ -85,7 +96,7 @@ readSBMLmod <- function(file_path) {
         react_comp = ifelse(react_comp == "", NA_character_, react_comp),
         lowbnd = react_bnds$lower_bound,
         uppbnd = react_bnds$upper_bound,
-        react_attr = data.frame(annotation = react_anno),
+        react_attr = data.frame(CVTerms = unlist(react_cvterms)),
 
         gprRules = gpr$rules,
         genes = lapply(gpr$genes, function(x) gsub("^G_","",x)),
@@ -106,6 +117,9 @@ readSBMLmod <- function(file_path) {
 #'
 #' @details
 #' Exported SBML files are of level 3, version 2. FBC-package version 2.
+#'
+#' What content from the data.frames `react_attr`, `met_attr`, and `mod_attr` is
+#' exported to SBML files? Currently only the columns named "CVTerms".
 #'
 #'
 #' @returns TRUE if file export was successful.
@@ -159,6 +173,7 @@ writeSBMLmod <- function(model, file_path = NULL) {
     met_charge = model@met_attr$charge,
     met_formula = model@met_attr$chemicalFormula,
     met_comp = model@met_comp,
+    met_cvterms = strsplit(model@met_attr$CVTerms, ";"),
 
     # Parameters (bound groups)
     param_id = bndgrp_para$bnd,

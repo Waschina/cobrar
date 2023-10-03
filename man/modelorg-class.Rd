@@ -56,6 +56,10 @@ bounds.}
 
 \item{\code{uppbnd}}{A character vector containing upper bounds for reactions.}
 
+\item{\code{react_attr}}{A data.frame that enables to store additional info for
+reactions. Only specific columns are extracted from and exported to SBML
+files. See details.}
+
 \item{\code{gprRules}}{A character vector with Gene-Protein-Reaction association rules
 (with gene product indices corresponding to the order in slot 'genes').}
 
