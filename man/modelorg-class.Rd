@@ -44,7 +44,9 @@ bounds.}
 
 \item{\code{met_comp}}{A character vector indicating metabolite compartments.}
 
-\item{\code{met_attr}}{A character vector with additional metabolite attributes.}
+\item{\code{met_attr}}{A data.frame that enables the storage of additional data for
+metabolites. Only specific columns are exported to SBML files. See
+\link{writeSBMLmod} for details.}
 
 \item{\code{react_id}}{A character vector representing reaction identifiers.}
 
@@ -56,9 +58,9 @@ bounds.}
 
 \item{\code{uppbnd}}{A character vector containing upper bounds for reactions.}
 
-\item{\code{react_attr}}{A data.frame that enables to store additional info for
-reactions. Only specific columns are extracted from and exported to SBML
-files. See details.}
+\item{\code{react_attr}}{A data.frame that enables the storage of additional data for
+reactions. Only specific columns are exported to SBML files. See
+\link{writeSBMLmod} for details.}
 
 \item{\code{gprRules}}{A character vector with Gene-Protein-Reaction association rules
 (with gene product indices corresponding to the order in slot 'genes').}
@@ -68,6 +70,8 @@ gene products associated to the respective reaction.}
 
 \item{\code{allGenes}}{A character vector with all gene identifiers.}
 
-\item{\code{allGenes_name}}{A character vector with all gene names.}
+\item{\code{genes_attr}}{A data.frame that enables the storage of additional data
+(e.g., name and CVTerms) for genes/gene products. Only specific columns are
+exported to SBML files. See \link{writeSBMLmod} for details.}
 }}
 

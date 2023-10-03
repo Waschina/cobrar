@@ -154,7 +154,7 @@ arma::sp_mat getStoichiometricMatrix(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::String getModelAnnotation(SEXP model_ptr) {
+Rcpp::StringVector getModelCVTerms(SEXP model_ptr) {
   // Get the Model object
   Model* model = Rcpp::XPtr<Model>(model_ptr);
 
@@ -162,11 +162,33 @@ Rcpp::String getModelAnnotation(SEXP model_ptr) {
     Rcpp::stop("Invalid Model pointer.");
   }
 
-  std::string modAnno = model->getAnnotationString();
-  if (modAnno.size() == 0)
-    return NA_STRING;
+  Rcpp::StringVector modelCVT;
 
-  return modAnno;
+  // Loop through CVTerms for the current reaction
+  for (unsigned int j = 0; j < model->getNumCVTerms(); ++j) {
+    CVTerm* cvTerm = model->getCVTerm(j);
+    std::string cvtstr;
+
+    int qualifierType = cvTerm->getQualifierType();
+
+    if (qualifierType == BIOLOGICAL_QUALIFIER) {
+      cvtstr = std::string("bqbiol_") + BiolQualifierType_toString(cvTerm->getBiologicalQualifierType());
+    } else if (qualifierType == MODEL_QUALIFIER) {
+      cvtstr = std::string("bqmodel_") + ModelQualifierType_toString(cvTerm->getModelQualifierType());
+    } else {
+      // qualifierType is UNKNOWN_QUALIFIER
+      cvtstr = std::string("bqunknown_unknown");
+    }
+
+    modelCVT.push_back(cvtstr);
+
+    for (unsigned int k = 0; k < cvTerm->getNumResources(); ++k) {
+      //biolQualifierType.push_back(BiolQualifierType_toString(cvTerm->getBiologicalQualifierType()));
+      modelCVT.push_back(cvTerm->getResourceURI(k));
+    }
+  }
+
+  return modelCVT;
 }
 
 // [[Rcpp::export]]
@@ -405,27 +427,6 @@ Rcpp::CharacterVector getReactionCompartment(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::CharacterVector getReactionAnnotation(SEXP model_ptr) {
-  // Get the Model object from the SBMLDocument
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
-
-  if (model == nullptr) {
-    Rcpp::stop("Invalid Model pointer.");
-  }
-
-  unsigned int num_reactions = model->getNumReactions();
-  Rcpp::CharacterVector rxn_anno;
-
-  for(unsigned int i = 0; i < num_reactions; i++) {
-    Reaction* reaction = model->getReaction(i);
-    rxn_anno.push_back(reaction->getAnnotationString());
-  }
-
-  return rxn_anno;
-}
-
-
-// [[Rcpp::export]]
 Rcpp::List getReactionFluxBounds(SEXP model_ptr) {
   // Get the Model object from the SBMLDocument
   Model* model = Rcpp::XPtr<Model>(model_ptr);
@@ -520,7 +521,6 @@ Rcpp::DataFrame getMetaboliteAnnotation(SEXP model_ptr) {
   unsigned int num_metabolites = model->getNumSpecies();
   Rcpp::CharacterVector met_chemForm;
   Rcpp::DoubleVector met_charge;
-  // Rcpp::CharacterVector met_anno;
 
   for(unsigned int i = 0; i < num_metabolites; i++) {
     Species* species = model->getSpecies(i);
@@ -529,7 +529,6 @@ Rcpp::DataFrame getMetaboliteAnnotation(SEXP model_ptr) {
 
     met_chemForm.push_back(splugin->getChemicalFormula());
     met_charge.push_back(splugin->getCharge());
-    // met_anno.push_back(species->getAnnotationString());
   }
 
   Rcpp::List cols = Rcpp::List::create(Named("chemicalFormula") = met_chemForm,
@@ -642,6 +641,53 @@ Rcpp::DataFrame getGeneProducts(SEXP model_ptr) {
   return df;
 }
 
+// [[Rcpp::export]]
+Rcpp::List getGeneProductCVTerms(SEXP model_ptr) {
+  // Get the Model object from the SBMLDocument
+  Model* model = Rcpp::XPtr<Model>(model_ptr);
+
+  if (model == nullptr) {
+    Rcpp::stop("Invalid Model pointer.");
+  }
+
+  FbcModelPlugin* mplugin = static_cast<FbcModelPlugin*>(model->getPlugin("fbc"));
+  ListOfGeneProducts* lgenes = mplugin->getListOfGeneProducts();
+
+  Rcpp::List cvtermList;
+
+  for(unsigned int i = 0; i < mplugin->getNumGeneProducts(); i++) {
+    GeneProduct* gene = lgenes->get(i);
+    std::vector<std::string> geneCVT;
+
+    // Loop through CVTerms for the current reaction
+    for (unsigned int j = 0; j < gene->getNumCVTerms(); ++j) {
+      CVTerm* cvTerm = gene->getCVTerm(j);
+      std::string cvtstr;
+
+      int qualifierType = cvTerm->getQualifierType();
+
+      if (qualifierType == BIOLOGICAL_QUALIFIER) {
+        cvtstr = std::string("bqbiol_") + BiolQualifierType_toString(cvTerm->getBiologicalQualifierType());
+      } else if (qualifierType == MODEL_QUALIFIER) {
+        cvtstr = std::string("bqmodel_") + ModelQualifierType_toString(cvTerm->getModelQualifierType());
+      } else {
+        // qualifierType is UNKNOWN_QUALIFIER
+        cvtstr = std::string("bqunknown_unknown");
+      }
+
+      geneCVT.push_back(cvtstr);
+
+      for (unsigned int k = 0; k < cvTerm->getNumResources(); ++k) {
+        //biolQualifierType.push_back(BiolQualifierType_toString(cvTerm->getBiologicalQualifierType()));
+        geneCVT.push_back(cvTerm->getResourceURI(k));
+      }
+    }
+    cvtermList.push_back(geneCVT);
+  }
+
+  return cvtermList;
+}
+
 // small recursive helper function to retrieve GPR-association logical string
 std::string getGPRString(FbcAssociation* fasso,
                          std::map<std::string, std::string>& variableMap,
@@ -736,6 +782,21 @@ Rcpp::List getGPRs(SEXP model_ptr) {
   return cols;
 }
 
+CVTerm* defineCVTerm(QualifierType_t qualtype,
+                     std::string biolQualType, std::string resource) {
+
+  CVTerm_t* cvt = new CVTerm_t();
+  cvt->setQualifierType(qualtype);
+  if(qualtype == BIOLOGICAL_QUALIFIER) {
+    cvt->setBiologicalQualifierType(BiolQualifierType_fromString(biolQualType.c_str()));
+  } else if(qualtype == MODEL_QUALIFIER) {
+    cvt->setModelQualifierType(ModelQualifierType_fromString(biolQualType.c_str()));
+  }
+  cvt->addResource(resource);
+
+  return cvt;
+}
+
 // [[Rcpp::export]]
 bool writeSBML(
     String file_path,
@@ -743,6 +804,8 @@ bool writeSBML(
     String mod_id,
     String mod_name,
     String mod_desc,
+    StringVector mod_cvterms,
+    String mod_notes,
 
     StringVector comp_id,
     StringVector comp_name,
@@ -764,7 +827,8 @@ bool writeSBML(
     Rcpp::ListOf<StringVector> react_mets,
     StringVector react_lb,
     StringVector react_ub,
-    LogicalVector react_rev) {
+    LogicalVector react_rev,
+    Rcpp::ListOf<StringVector> react_cvterms) {
   bool out = false;
 
   // init model
@@ -774,8 +838,43 @@ bool writeSBML(
   Model* model = document->createModel();
 
   model->setId(mod_id);
+  model->setMetaId(model->getId());
   model->setName(mod_name);
   model->setMessage(mod_desc);
+  model->setNotes(mod_notes);
+
+  // Model CVTerms
+  unsigned int j = 0;
+  while(j < mod_cvterms.size()) {
+    QualifierType_t qualifierType = UNKNOWN_QUALIFIER;
+    std::string jtype = "unknown";
+    std::string jstr = Rcpp::as<std::string>(mod_cvterms[j]);
+
+    if(jstr.substr(0, 7) == "bqbiol_") {
+      qualifierType = BIOLOGICAL_QUALIFIER;
+      jtype = jstr.substr(7);
+    } else if(jstr.substr(0, 8) == "bqmodel_") {
+      qualifierType = MODEL_QUALIFIER;
+      jtype = jstr.substr(8);
+    } else if(jstr.substr(0, 10) == "bqunknown_") {
+      qualifierType = UNKNOWN_QUALIFIER;
+      jtype = "unknown";
+    }
+
+    for(unsigned int k=j+1; k < mod_cvterms.size(); k++) {
+      std::string rstr = Rcpp::as<std::string>(mod_cvterms[k]);
+      if(rstr.substr(0, 2) == "bq") {
+        break;
+      }
+
+      CVTerm_t* cvt = defineCVTerm(qualifierType, jtype, rstr);
+
+
+      model->addCVTerm(cvt);
+      j++;
+    }
+    j++;
+  }
 
   // FbcModelPlugin* mplugin = static_cast<FbcModelPlugin*>(model->getPlugin("fbc"));
 
@@ -828,21 +927,14 @@ bool writeSBML(
       }
 
       for(unsigned int k=j+1; k < met_cvterms[i].size(); k++) {
-
-        CVTerm_t* cvt = new CVTerm_t();
-        cvt->setQualifierType(qualifierType);
-        if(qualifierType == BIOLOGICAL_QUALIFIER) {
-          cvt->setBiologicalQualifierType(BiolQualifierType_fromString(jtype.c_str()));
-        } else if(qualifierType == MODEL_QUALIFIER) {
-          cvt->setModelQualifierType(ModelQualifierType_fromString(jtype.c_str()));
-        }
-
         std::string rstr = Rcpp::as<std::string>(met_cvterms[i][k]);
         if(rstr.substr(0, 2) == "bq") {
           break;
         }
 
-        cvt->addResource(rstr);
+        CVTerm_t* cvt = defineCVTerm(qualifierType, jtype, rstr);
+
+
         sp->addCVTerm(cvt);
         j++;
       }
@@ -895,6 +987,39 @@ bool writeSBML(
       rplugin->setLowerFluxBound(Rcpp::as<std::string>(react_lb[i]));
       rplugin->setUpperFluxBound(Rcpp::as<std::string>(react_ub[i]));
 
+    }
+
+    // CVTerms
+    unsigned int j = 0;
+    while(j < react_cvterms[i].size()) {
+      QualifierType_t qualifierType = UNKNOWN_QUALIFIER;
+      std::string jtype = "unknown";
+      std::string jstr = Rcpp::as<std::string>(react_cvterms[i][j]);
+
+      if(jstr.substr(0, 7) == "bqbiol_") {
+        qualifierType = BIOLOGICAL_QUALIFIER;
+        jtype = jstr.substr(7);
+      } else if(jstr.substr(0, 8) == "bqmodel_") {
+        qualifierType = MODEL_QUALIFIER;
+        jtype = jstr.substr(8);
+      } else if(jstr.substr(0, 10) == "bqunknown_") {
+        qualifierType = UNKNOWN_QUALIFIER;
+        jtype = "unknown";
+      }
+
+      for(unsigned int k=j+1; k < react_cvterms[i].size(); k++) {
+        std::string rstr = Rcpp::as<std::string>(react_cvterms[i][k]);
+        if(rstr.substr(0, 2) == "bq") {
+          break;
+        }
+
+        CVTerm_t* cvt = defineCVTerm(qualifierType, jtype, rstr);
+
+
+        rea->addCVTerm(cvt);
+        j++;
+      }
+      j++;
     }
   }
 

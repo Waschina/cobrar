@@ -121,8 +121,8 @@ getStoichiometricMatrix <- function(model_ptr) {
     .Call(`_cobrar_getStoichiometricMatrix`, model_ptr)
 }
 
-getModelAnnotation <- function(model_ptr) {
-    .Call(`_cobrar_getModelAnnotation`, model_ptr)
+getModelCVTerms <- function(model_ptr) {
+    .Call(`_cobrar_getModelCVTerms`, model_ptr)
 }
 
 getReactionCVTerms <- function(model_ptr) {
@@ -153,10 +153,6 @@ getReactionCompartment <- function(model_ptr) {
     .Call(`_cobrar_getReactionCompartment`, model_ptr)
 }
 
-getReactionAnnotation <- function(model_ptr) {
-    .Call(`_cobrar_getReactionAnnotation`, model_ptr)
-}
-
 getReactionFluxBounds <- function(model_ptr) {
     .Call(`_cobrar_getReactionFluxBounds`, model_ptr)
 }
@@ -185,11 +181,15 @@ getGeneProducts <- function(model_ptr) {
     .Call(`_cobrar_getGeneProducts`, model_ptr)
 }
 
+getGeneProductCVTerms <- function(model_ptr) {
+    .Call(`_cobrar_getGeneProductCVTerms`, model_ptr)
+}
+
 getGPRs <- function(model_ptr) {
     .Call(`_cobrar_getGPRs`, model_ptr)
 }
 
-writeSBML <- function(file_path, mod_id, mod_name, mod_desc, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev) {
-    .Call(`_cobrar_writeSBML`, file_path, mod_id, mod_name, mod_desc, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev)
+writeSBML <- function(file_path, mod_id, mod_name, mod_desc, mod_cvterms, mod_notes, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev, react_cvterms) {
+    .Call(`_cobrar_writeSBML`, file_path, mod_id, mod_name, mod_desc, mod_cvterms, mod_notes, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev, react_cvterms)
 }
 

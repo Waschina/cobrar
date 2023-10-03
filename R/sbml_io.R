@@ -31,7 +31,7 @@ readSBMLmod <- function(file_path) {
   mod_compartments$name <- ifelse(is.na(mod_compartments$name),
                                   mod_compartments$id,
                                   mod_compartments$name)
-  mod_annotation <- getModelAnnotation(modelPtr)
+  mod_cvterms <- paste(getModelCVTerms(modelPtr), collapse = ";")
   mod_notes <- getModelNotes(modelPtr)
   obj_coeff <- getObjectiveFunction(modelPtr)
   subSys <- getSubsystems(modelPtr); colnames(subSys$subSys) <- subSys$subSys_ids
@@ -46,8 +46,6 @@ readSBMLmod <- function(file_path) {
   react_id <- getReactionIds(modelPtr)
   react_name <- getReactionNames(modelPtr)
   react_bnds <- getReactionFluxBounds(modelPtr)
-  # react_anno <- getReactionAnnotation(modelPtr)
-  react_anno <- rep(NA_character_,ncol(S))
   react_comp <- getReactionCompartment(modelPtr)
   react_cvterms <- getReactionCVTerms(modelPtr)
   react_cvterms <- lapply(react_cvterms, function(x) {
@@ -69,6 +67,10 @@ readSBMLmod <- function(file_path) {
   # Genes
   allGeneProducts <- getGeneProducts(modelPtr)
   gpr <- getGPRs(modelPtr)
+  gpr_cvterms <- getGeneProductCVTerms(modelPtr)
+  gpr_cvterms <- lapply(gpr_cvterms, function(x) {
+    paste(x, collapse = ";")
+  })
 
   return(
     new("modelorg",
@@ -77,7 +79,7 @@ readSBMLmod <- function(file_path) {
         mod_name = mod_name,
         mod_compart = mod_compartments$id,
         mod_compart_name = mod_compartments$name,
-        mod_attr = data.frame(annotation = mod_annotation),
+        mod_attr = data.frame(CVTerms = mod_cvterms),
         mod_notes = mod_notes,
         S = S,
         obj_coef = obj_coeff,
@@ -101,7 +103,8 @@ readSBMLmod <- function(file_path) {
         gprRules = gpr$rules,
         genes = lapply(gpr$genes, function(x) gsub("^G_","",x)),
         allGenes = gsub("^G_","",allGeneProducts$ID),
-        allGenes_name = allGeneProducts$name
+        genes_attr = data.frame(name = allGeneProducts$name,
+                                CVTerms = unlist(gpr_cvterms))
     )
   )
 }
@@ -136,6 +139,14 @@ writeSBMLmod <- function(model, file_path = NULL) {
   if(!all(grepl("^M_",model@met_id)))
     model@met_id <- paste0("M_",model@met_id)
 
+  if(is.na(model@mod_attr$CVTerms[1]))
+    model@mod_attr$CVTerms[1] <- ""
+  model@react_attr$CVTerms <- ifelse(is.na(model@react_attr$CVTerms),
+                                     "",model@react_attr$CVTerms)
+  model@met_attr$CVTerms <- ifelse(is.na(model@met_attr$CVTerms),
+                                   "",model@met_attr$CVTerms)
+  model@genes_attr$CVTerms <- ifelse(is.na(model@genes_attr$CVTerms),
+                                     "",model@genes_attr$CVTerms)
 
   # Stoichiometry lists
   lReaMets <- apply(model@S, 2, FUN = function(x) model@met_id[which(abs(x)>0)])
@@ -162,6 +173,8 @@ writeSBMLmod <- function(model, file_path = NULL) {
     mod_id = model@mod_id,
     mod_name = model@mod_name,
     mod_desc = model@mod_desc,
+    mod_cvterms = unlist(strsplit(model@mod_attr$CVTerms[1], ";")),
+    mod_notes = model@mod_notes,
 
     # Compartments
     comp_id = model@mod_compart,
@@ -187,7 +200,8 @@ writeSBMLmod <- function(model, file_path = NULL) {
     react_mets = lReaMets,
     react_lb = bndgrp$lb.term,
     react_ub = bndgrp$ub.term,
-    react_rev = ifelse(bndgrp$lb < 0 & bndgrp$ub > 0, TRUE, FALSE)
+    react_rev = ifelse(bndgrp$lb < 0 & bndgrp$ub > 0, TRUE, FALSE),
+    react_cvterms = strsplit(model@react_attr$CVTerms, ";")
   )
 
   return(out)

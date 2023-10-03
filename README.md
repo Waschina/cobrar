@@ -5,7 +5,7 @@
 #### Current TODOs
 
 - [ ] Model modification functions
-  - [ ] addReact (new name `addReaction`)
+  - [ ] addReact
   - [x] rmReact
   - [ ] addMetabolite
   - [ ] rmMetabolite
@@ -32,19 +32,22 @@
   - [x] full documentation of function `addConstraint`, `rmConstraint`
 
 - [ ] `writeSBMLmod`
+  - [ ] CVTerms (see below)
+  - [x] Model notes
+  - [ ] Subsystems/groups
 - [ ] export and documentation of position functions
 - [ ] export and documentation of count functions (genes, reactions, constraints, metabolites)
 - [ ] read SBML documents of version 2 (necessary?)
 - [x] define a class for FBA (and FBA-related) prediction results
 - [ ] CVTerms
   - [x] read reaction CVTerms
-  - [ ] write reaction CVTerms
+  - [x] write reaction CVTerms
   - [x] read metabolite CVTerms
   - [x] write metabolite CVTerms
-  - [ ] read geneProduct CVTerms
-  - [ ] write geneProduct CVTerms
-  - [ ] read model CVTerms
-  - [ ] write model CVTerms
+  - [x] read geneProduct CVTerms (no priority)
+  - [ ] write geneProduct CVTerms (no priority)
+  - [x] read model CVTerms
+  - [x] write model CVTerms
 
 
 
@@ -60,6 +63,7 @@
 - In cobrar, R's garbage collector handles memory management, including memory associated to C++-objects and the pointers to these.
 - Simplifications in class and function architecture
   - No more Class "SysBiolAlg" nor sub-classes. Different algorithms have their own function and detailed documentation of their return variables.
+- In sybil, columns names "annotation" were actually concatenated CVTerms (https://synonym.caltech.edu/software/libsbml/5.20.0/cpp-api/class_c_v_term.html). To avoid confusion with other levels of annotation, the columns (e.g. in `react_attr` or `met_attr`) are named 'CVTerms' in cobrar.
 - Performance (i.e., computation time) improvements in certain procedures:
   - identification of dead-end metabolites
   - reading SBML files,

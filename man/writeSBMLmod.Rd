@@ -21,4 +21,7 @@ Export a constraint-based metabolic network model from a S4 object of class
 }
 \details{
 Exported SBML files are of level 3, version 2. FBC-package version 2.
+
+What content from the data.frames \code{react_attr}, \code{met_attr}, and \code{mod_attr} is
+exported to SBML files? Currently only the columns named "CVTerms".
 }

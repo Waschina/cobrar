@@ -21,7 +21,9 @@
 #' @slot met_id A character vector representing metabolite identifiers.
 #' @slot met_name A character vector with metabolite names.
 #' @slot met_comp A character vector indicating metabolite compartments.
-#' @slot met_attr A character vector with additional metabolite attributes.
+#' @slot met_attr A data.frame that enables the storage of additional data for
+#' metabolites. Only specific columns are exported to SBML files. See
+#' \link{writeSBMLmod} for details.
 #'
 #' @slot react_id A character vector representing reaction identifiers.
 #' @slot react_name A character vector with reaction names.
@@ -29,15 +31,17 @@
 #' @slot lowbnd A character vector containing lower bounds for reactions.
 #' @slot uppbnd A character vector containing upper bounds for reactions.
 #' @slot react_attr A data.frame that enables the storage of additional data for
-#' reactions. Only specific columns are extracted from and exported to SBML
-#' files. See \link(writeSBMLmod) for details.
+#' reactions. Only specific columns are exported to SBML files. See
+#' \link{writeSBMLmod} for details.
 #'
 #' @slot gprRules A character vector with Gene-Protein-Reaction association rules
 #' (with gene product indices corresponding to the order in slot 'genes').
 #' @slot genes A list of character vectors. Each vector contains the IDs of
 #' gene products associated to the respective reaction.
 #' @slot allGenes A character vector with all gene identifiers.
-#' @slot allGenes_name A character vector with all gene names.
+#' @slot genes_attr A data.frame that enables the storage of additional data
+#' (e.g., name and CVTerms) for genes/gene products. Only specific columns are
+#' exported to SBML files. See \link{writeSBMLmod} for details.
 #'
 #' @aliases modelorg
 #'
@@ -78,7 +82,7 @@ setClass("modelorg",
            gprRules = "character",
            genes = "list",
            allGenes = "character",
-           allGenes_name = "character"
+           genes_attr = "data.frame"
          ))
 
 #------------------------------------------------------------------------------#

@@ -142,7 +142,7 @@ rmGene <- function(model, gene, rm_react = TRUE, rm_met = TRUE) {
 
   # rm gene parts
   model@allGenes <- model@allGenes[-gene]
-  model@allGenes_name <- model@allGenes_name[-gene]
+  model@genes_attr <- model@genes_attr[-gene,]
   model@genes <- lapply(model@genes,
                         function(x) ifelse(x %in% gene, NA_character_,x))
 
@@ -348,8 +348,8 @@ rmConstraint <- function(model, ind) {
 #' reaction will be removed.
 #' If metabolites or subsystems are not part of the model yet, they will be
 #' added.
-
 #'
+#' @export
 addReact <- function(model,
                      id,
                      met,
