@@ -30,24 +30,23 @@
     - [x] FVA
 
   - [x] full documentation of function `addConstraint`, `rmConstraint`
-
 - [ ] `writeSBMLmod`
-  - [ ] CVTerms (see below)
+  - [x] CVTerms (see below)
+    - [x] read reaction CVTerms
+    - [x] write reaction CVTerms
+    - [x] read metabolite CVTerms
+    - [x] write metabolite CVTerms
+    - [x] read geneProduct CVTerms
+    - [x] write geneProduct CVTerms
+    - [x] read model CVTerms
+    - [x] write model CVTerms
   - [x] Model notes
   - [ ] Subsystems/groups
+  - [x] GPRs
 - [ ] export and documentation of position functions
 - [ ] export and documentation of count functions (genes, reactions, constraints, metabolites)
 - [ ] read SBML documents of version 2 (necessary?)
 - [x] define a class for FBA (and FBA-related) prediction results
-- [ ] CVTerms
-  - [x] read reaction CVTerms
-  - [x] write reaction CVTerms
-  - [x] read metabolite CVTerms
-  - [x] write metabolite CVTerms
-  - [x] read geneProduct CVTerms (no priority)
-  - [ ] write geneProduct CVTerms (no priority)
-  - [x] read model CVTerms
-  - [x] write model CVTerms
 
 
 

@@ -817,6 +817,10 @@ bool writeSBML(
     StringVector met_comp,
     Rcpp::ListOf<StringVector> met_cvterms,
 
+    StringVector gene_id,
+    StringVector gene_name,
+    Rcpp::ListOf<StringVector> gene_cvterms,
+
     StringVector param_id,
     NumericVector param_val,
     IntegerVector param_sbo,
@@ -828,7 +832,8 @@ bool writeSBML(
     StringVector react_lb,
     StringVector react_ub,
     LogicalVector react_rev,
-    Rcpp::ListOf<StringVector> react_cvterms) {
+    Rcpp::ListOf<StringVector> react_cvterms,
+    StringVector gpr) {
   bool out = false;
 
   // init model
@@ -882,6 +887,7 @@ bool writeSBML(
   unsigned int nm = met_id.size();
   unsigned int nr = react_id.size();
   unsigned int np = param_id.size();
+  unsigned int ng = gene_id.size();
 
   /*
    add compartments
@@ -940,6 +946,53 @@ bool writeSBML(
       }
       j++;
     }
+  }
+
+  /*
+   add genes/gene products
+   */
+  FbcModelPlugin* mplugin = static_cast<FbcModelPlugin*>(model->getPlugin("fbc"));
+  for(unsigned int i = 0; i < ng; i++) {
+    GeneProduct* gene = mplugin->createGeneProduct();
+
+    gene->setId(Rcpp::as<std::string>(gene_id[i]));
+    gene->setMetaId(gene->getId());
+    gene->setLabel(gene->getId().substr(2));
+    gene->setName(Rcpp::as<std::string>(gene_name[i]));
+
+    // CVTerms
+    unsigned int j = 0;
+    while(j < gene_cvterms[i].size()) {
+      QualifierType_t qualifierType = UNKNOWN_QUALIFIER;
+      std::string jtype = "unknown";
+      std::string jstr = Rcpp::as<std::string>(gene_cvterms[i][j]);
+
+      if(jstr.substr(0, 7) == "bqbiol_") {
+        qualifierType = BIOLOGICAL_QUALIFIER;
+        jtype = jstr.substr(7);
+      } else if(jstr.substr(0, 8) == "bqmodel_") {
+        qualifierType = MODEL_QUALIFIER;
+        jtype = jstr.substr(8);
+      } else if(jstr.substr(0, 10) == "bqunknown_") {
+        qualifierType = UNKNOWN_QUALIFIER;
+        jtype = "unknown";
+      }
+
+      for(unsigned int k=j+1; k < gene_cvterms[i].size(); k++) {
+        std::string rstr = Rcpp::as<std::string>(gene_cvterms[i][k]);
+        if(rstr.substr(0, 2) == "bq") {
+          break;
+        }
+
+        CVTerm_t* cvt = defineCVTerm(qualifierType, jtype, rstr);
+
+
+        gene->addCVTerm(cvt);
+        j++;
+      }
+      j++;
+    }
+
   }
 
   /*
@@ -1020,6 +1073,13 @@ bool writeSBML(
         j++;
       }
       j++;
+    }
+
+    // GPR
+    if(gpr[i] != "") {
+      GeneProductAssociation* asso = rplugin->createGeneProductAssociation();
+      asso->setAssociation(Rcpp::as<std::string>(gpr[i]),mplugin, true);
+      asso->toSBML();
     }
   }
 

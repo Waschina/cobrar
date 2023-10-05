@@ -148,7 +148,7 @@ rmGene <- function(model, gene, rm_react = TRUE, rm_met = TRUE) {
 
   # rm reaction (and metabolites)
   if(rm_react)
-    model <- rmReact(model, rmReactions)
+    model <- rmReact(model, rmReactions, rm_met)
 
   return(model)
 }

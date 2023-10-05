@@ -109,6 +109,14 @@ readSBMLmod <- function(file_path) {
   )
 }
 
+deformatGene<-function(idstr) {
+  idstr <- gsub("\\((\\S+)\\)", "\\1", idstr)
+  idstr <- gsub(":", "_", idstr, fixed = TRUE)
+  return(idstr)
+}
+
+
+
 #' Exports a Metabolic Network in SBML Format
 #'
 #' Export a constraint-based metabolic network model from a S4 object of class
@@ -138,6 +146,11 @@ writeSBMLmod <- function(model, file_path = NULL) {
     model@react_id <- paste0("R_",model@react_id)
   if(!all(grepl("^M_",model@met_id)))
     model@met_id <- paste0("M_",model@met_id)
+  if(!all(grepl("^G_",model@allGenes))) {
+    model@allGenes <- paste0("G_",model@allGenes)
+    model@genes <- lapply(model@genes, function(x) paste0("G_",x))
+  }
+
 
   if(is.na(model@mod_attr$CVTerms[1]))
     model@mod_attr$CVTerms[1] <- ""
@@ -166,6 +179,27 @@ writeSBMLmod <- function(model, file_path = NULL) {
   bndgrp_para$SBO <- ifelse(grepl("^default_",bndgrp_para$bnd),626,625)
   bndgrp_para <- bndgrp_para[order(bndgrp_para$bnd),]
 
+  # gpr string for libSBML
+  gpr <- c()
+  for(i in 1:length(model@react_id)) {
+    x <- model@gprRules[[i]]
+    y <- model@genes[[i]]
+
+    if(length(y) == 0) {
+      gpr <- append(gpr, "")
+    } else {
+      for(j in 1:length(y)) {
+        x <- gsub(paste0("x[",j,"]"),
+                  y[j], x, fixed = TRUE)
+      }
+      gpr <- append(gpr, x)
+    }
+  }
+  gpr <- gsub("\\&", "and", gpr)
+  gpr <- gsub("\\|", "or", gpr)
+  #print(gpr)
+
+  # Let's export
   out <- writeSBML(
     file_path = file_path,
 
@@ -188,6 +222,11 @@ writeSBMLmod <- function(model, file_path = NULL) {
     met_comp = model@met_comp,
     met_cvterms = strsplit(model@met_attr$CVTerms, ";"),
 
+    # Genes
+    gene_id = model@allGenes,
+    gene_name = model@genes_attr$name,
+    gene_cvterms = strsplit(model@genes_attr$CVTerms, ";"),
+
     # Parameters (bound groups)
     param_id = bndgrp_para$bnd,
     param_val = bndgrp_para$val,
@@ -201,7 +240,8 @@ writeSBMLmod <- function(model, file_path = NULL) {
     react_lb = bndgrp$lb.term,
     react_ub = bndgrp$ub.term,
     react_rev = ifelse(bndgrp$lb < 0 & bndgrp$ub > 0, TRUE, FALSE),
-    react_cvterms = strsplit(model@react_attr$CVTerms, ";")
+    react_cvterms = strsplit(model@react_attr$CVTerms, ";"),
+    gpr = gpr
   )
 
   return(out)
