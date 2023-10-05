@@ -40,7 +40,7 @@
     - [x] write geneProduct CVTerms
     - [x] read model CVTerms
     - [x] write model CVTerms
-  - [ ] SBOTerms
+  - [x] SBOTerms
     - [x] read reaction SBOTerms
     - [x] write reaction SBOTerms
     - [x] read metabolite SBOTerms
@@ -50,7 +50,7 @@
     - [x] read model SBOTerm
     - [x] write model SBOTerm
   - [x] Model notes
-  - [ ] Subsystems/groups
+  - [x] Subsystems/groups
   - [x] GPRs
   - [ ] Objective function
 - [ ] export and documentation of position functions

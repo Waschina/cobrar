@@ -899,6 +899,10 @@ bool writeSBML(
     Rcpp::ListOf<StringVector> met_cvterms,
     IntegerVector met_sbo,
 
+    Rcpp::ListOf<IntegerVector> subsys,
+    StringVector subsys_id,
+    StringVector subsys_name,
+
     StringVector gene_id,
     StringVector gene_name,
     Rcpp::ListOf<StringVector> gene_cvterms,
@@ -918,13 +922,21 @@ bool writeSBML(
     Rcpp::ListOf<StringVector> react_cvterms,
     IntegerVector react_sbo,
     StringVector gpr) {
+
   bool out = false;
 
   // init model
   SBMLNamespaces sbmlns(3,2); // Level 3, version 2
   sbmlns.addPkgNamespace("fbc",2); // with fbc version 2
+  if(subsys_id.size() > 0) {
+    sbmlns.addPkgNamespace("groups",1);
+  }
   SBMLDocument* document = new SBMLDocument(&sbmlns);
   document->setPackageRequired("fbc", false);
+  if(subsys_id.size() > 0) {
+    document->setPackageRequired("groups", false);
+  }
+
   Model* model = document->createModel();
 
   model->setId(mod_id);
@@ -1196,6 +1208,29 @@ bool writeSBML(
       asso->setAssociation(Rcpp::as<std::string>(gpr[i]),mplugin, true);
       asso->toSBML();
     }
+  }
+
+  /*
+   * Subsystems (or Pathways)
+   */
+  if(subsys_id.size() > 0) {
+    // std::cout << "Using groups extension for subsystems" << std::endl;
+    GroupsModelPlugin* grpplugin = static_cast<GroupsModelPlugin*>(model->getPlugin("groups"));
+
+    // add subsystems
+    for(unsigned int i=0; i<subsys_id.size(); i++) {
+      // std::cout << subsys_id[i] << std::endl;
+      Group* grpi = grpplugin->createGroup();
+      grpi->setKind(GROUP_KIND_PARTONOMY);
+      grpi->setId(Rcpp::as<std::string>(subsys_id[i]));
+      grpi->setName(Rcpp::as<std::string>(subsys_name[i]));
+
+      for(unsigned int j = 0; j<subsys[i].size(); j++) {
+        Member* membi = grpi->createMember();
+        membi->setIdRef(Rcpp::as<std::string>(react_id[subsys[i][j]]));
+      }
+    }
+
   }
 
   /*

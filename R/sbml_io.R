@@ -34,7 +34,6 @@ readSBMLmod <- function(file_path) {
   mod_cvterms <- paste(getModelCVTerms(modelPtr), collapse = ";")
   mod_notes <- getModelNotes(modelPtr)
   obj_coeff <- getObjectiveFunction(modelPtr)
-  subSys <- getSubsystems(modelPtr); colnames(subSys$subSys) <- subSys$subSys_ids
   constraints <- new("Constraints",
                      coeff = as(Matrix(nrow = 0, ncol = ncol(S), sparse = TRUE),
                                 "dMatrix"),
@@ -42,6 +41,9 @@ readSBMLmod <- function(file_path) {
                      ub = numeric(0),
                      rtype = character(0))
   mod_sbo <- getModelSBOTerm(modelPtr)
+
+  # Subsystems
+  subSys <- getSubsystems(modelPtr); colnames(subSys$subSys) <- subSys$subSys_ids
 
   # Reactions
   react_id <- getReactionIds(modelPtr)
@@ -227,6 +229,11 @@ writeSBMLmod <- function(model, file_path = NULL) {
     met_comp = model@met_comp,
     met_cvterms = strsplit(model@met_attr$CVTerms, ";"),
     met_sbo = sboterm2int(model@met_attr$SBOTerm),
+
+    # Subsystems
+    subsys = apply(model@subSys, 2, function(x) which(x)-1),
+    subsys_id = model@subSys_id,
+    subsys_name = model@subSys_name,
 
     # Genes
     gene_id = model@allGenes,
