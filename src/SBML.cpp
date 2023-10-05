@@ -840,6 +840,7 @@ bool writeSBML(
   SBMLNamespaces sbmlns(3,2); // Level 3, version 2
   sbmlns.addPkgNamespace("fbc",2); // with fbc version 2
   SBMLDocument* document = new SBMLDocument(&sbmlns);
+  document->setPackageRequired("fbc", false);
   Model* model = document->createModel();
 
   model->setId(mod_id);
@@ -847,6 +848,9 @@ bool writeSBML(
   model->setName(mod_name);
   model->setMessage(mod_desc);
   model->setNotes(mod_notes);
+
+  FbcModelPlugin* mplugin = static_cast<FbcModelPlugin*>(model->getPlugin("fbc"));
+  mplugin->setStrict(true);
 
   // Model CVTerms
   unsigned int j = 0;
@@ -881,6 +885,25 @@ bool writeSBML(
     j++;
   }
 
+  // Units
+  UnitDefinition* unitl = model->createUnitDefinition();
+  unitl->setId("mmol_per_gDW_per_hr");
+  Unit* unit_mole = unitl->createUnit();
+  unit_mole->setKind(UnitKind_forName("mole"));
+  unit_mole->setScale(-3);
+  unit_mole->setExponent(1);
+  unit_mole->setMultiplier(1);
+  Unit* unit_gram = unitl->createUnit();
+  unit_gram->setKind(UnitKind_forName("gram"));
+  unit_gram->setScale(0);
+  unit_gram->setExponent(-1);
+  unit_gram->setMultiplier(1);
+  Unit* unit_sec = unitl->createUnit();
+  unit_sec->setKind(UnitKind_forName("second"));
+  unit_sec->setScale(0);
+  unit_sec->setExponent(-1);
+  unit_sec->setMultiplier(3600);
+
   // FbcModelPlugin* mplugin = static_cast<FbcModelPlugin*>(model->getPlugin("fbc"));
 
   unsigned int nc = comp_id.size();
@@ -896,6 +919,7 @@ bool writeSBML(
     Compartment* icomp = model->createCompartment();
     icomp->setId(Rcpp::as<std::string>(comp_id[i]));
     icomp->setName(Rcpp::as<std::string>(comp_name[i]));
+    icomp->setConstant(true);
   }
 
   /*
@@ -913,6 +937,8 @@ bool writeSBML(
     splugin->setCharge(met_charge[i]);
     sp->setConstant(false);
     sp->setCompartment(Rcpp::as<std::string>(met_comp[i]));
+    sp->setHasOnlySubstanceUnits(false);
+    sp->setBoundaryCondition(false);
 
     // CVTerms
     unsigned int j = 0;
@@ -951,7 +977,6 @@ bool writeSBML(
   /*
    add genes/gene products
    */
-  FbcModelPlugin* mplugin = static_cast<FbcModelPlugin*>(model->getPlugin("fbc"));
   for(unsigned int i = 0; i < ng; i++) {
     GeneProduct* gene = mplugin->createGeneProduct();
 
@@ -1029,12 +1054,14 @@ bool writeSBML(
         SpeciesReference* srr = rea->createReactant();
         srr->setSpecies(Rcpp::as<std::string>(reaM[j]));
         srr->setStoichiometry(-reaS[j]);
+        srr->setConstant(true);
       }
       //product
       if(reaS[j] > 0) {
         SpeciesReference* srp = rea->createProduct();
         srp->setSpecies(Rcpp::as<std::string>(reaM[j]));
         srp->setStoichiometry(reaS[j]);
+        srp->setConstant(true);
       }
 
       rplugin->setLowerFluxBound(Rcpp::as<std::string>(react_lb[i]));
