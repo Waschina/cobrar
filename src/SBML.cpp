@@ -192,7 +192,7 @@ Rcpp::StringVector getModelCVTerms(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List getReactionCVTerms(SEXP model_ptr) {
+Rcpp::String getModelSBOTerm(SEXP model_ptr) {
   // Get the Model object
   Model* model = Rcpp::XPtr<Model>(model_ptr);
 
@@ -200,45 +200,9 @@ Rcpp::List getReactionCVTerms(SEXP model_ptr) {
     Rcpp::stop("Invalid Model pointer.");
   }
 
-  Rcpp::List cvtermList;
+  Rcpp::StringVector modelCVT;
 
-  // Loop through reactions and extract CVTerms
-  for (unsigned int i = 0; i < model->getNumReactions(); ++i) {
-    Reaction* reaction = model->getReaction(i);
-
-    if (reaction != nullptr) {
-
-      std::vector<std::string> reaCVT;
-
-      // Loop through CVTerms for the current reaction
-      for (unsigned int j = 0; j < reaction->getNumCVTerms(); ++j) {
-        CVTerm* cvTerm = reaction->getCVTerm(j);
-        std::string cvtstr;
-
-        int qualifierType = cvTerm->getQualifierType();
-
-        if (qualifierType == BIOLOGICAL_QUALIFIER) {
-          cvtstr = std::string("bqbiol_") + BiolQualifierType_toString(cvTerm->getBiologicalQualifierType());
-        } else if (qualifierType == MODEL_QUALIFIER) {
-          cvtstr = std::string("bqmodel_") + ModelQualifierType_toString(cvTerm->getModelQualifierType());
-        } else {
-          // qualifierType is UNKNOWN_QUALIFIER
-          cvtstr = std::string("bqunknown_unknown");
-        }
-
-        reaCVT.push_back(cvtstr);
-
-        for (unsigned int k = 0; k < cvTerm->getNumResources(); ++k) {
-          //biolQualifierType.push_back(BiolQualifierType_toString(cvTerm->getBiologicalQualifierType()));
-          reaCVT.push_back(cvTerm->getResourceURI(k));
-        }
-      }
-
-      cvtermList.push_back(reaCVT);
-    }
-  }
-
-  return cvtermList;
+  return model->getSBOTermID();
 }
 
 // [[Rcpp::export]]
@@ -463,6 +427,74 @@ Rcpp::List getReactionFluxBounds(SEXP model_ptr) {
   return reaction_flux_bounds;
 }
 
+// [[Rcpp::export]]
+Rcpp::List getReactionCVTerms(SEXP model_ptr) {
+  // Get the Model object
+  Model* model = Rcpp::XPtr<Model>(model_ptr);
+
+  if (model == nullptr) {
+    Rcpp::stop("Invalid Model pointer.");
+  }
+
+  Rcpp::List cvtermList;
+
+  // Loop through reactions and extract CVTerms
+  for (unsigned int i = 0; i < model->getNumReactions(); ++i) {
+    Reaction* reaction = model->getReaction(i);
+
+    if (reaction != nullptr) {
+
+      std::vector<std::string> reaCVT;
+
+      // Loop through CVTerms for the current reaction
+      for (unsigned int j = 0; j < reaction->getNumCVTerms(); ++j) {
+        CVTerm* cvTerm = reaction->getCVTerm(j);
+        std::string cvtstr;
+
+        int qualifierType = cvTerm->getQualifierType();
+
+        if (qualifierType == BIOLOGICAL_QUALIFIER) {
+          cvtstr = std::string("bqbiol_") + BiolQualifierType_toString(cvTerm->getBiologicalQualifierType());
+        } else if (qualifierType == MODEL_QUALIFIER) {
+          cvtstr = std::string("bqmodel_") + ModelQualifierType_toString(cvTerm->getModelQualifierType());
+        } else {
+          // qualifierType is UNKNOWN_QUALIFIER
+          cvtstr = std::string("bqunknown_unknown");
+        }
+
+        reaCVT.push_back(cvtstr);
+
+        for (unsigned int k = 0; k < cvTerm->getNumResources(); ++k) {
+          //biolQualifierType.push_back(BiolQualifierType_toString(cvTerm->getBiologicalQualifierType()));
+          reaCVT.push_back(cvTerm->getResourceURI(k));
+        }
+      }
+
+      cvtermList.push_back(reaCVT);
+    }
+  }
+
+  return cvtermList;
+}
+
+// [[Rcpp::export]]
+Rcpp::StringVector getReactionSBOTerms(SEXP model_ptr) {
+  // Get the Model object
+  Model* model = Rcpp::XPtr<Model>(model_ptr);
+
+  if (model == nullptr) {
+    Rcpp::stop("Invalid Model pointer.");
+  }
+
+  Rcpp::StringVector sboterm;
+
+  // Loop through reactions and extract SBOTerm
+  for (unsigned int i = 0; i < model->getNumReactions(); ++i) {
+    Reaction* reaction = model->getReaction(i);
+    sboterm.push_back(reaction->getSBOTermID());
+  }
+  return sboterm;
+}
 
 /*
  * Metabolite fields
@@ -487,7 +519,6 @@ Rcpp::CharacterVector getMetaboliteIds(SEXP model_ptr) {
 
   return met_id;
 }
-
 
 // [[Rcpp::export]]
 Rcpp::CharacterVector getMetaboliteNames(SEXP model_ptr) {
@@ -587,6 +618,27 @@ Rcpp::List getMetaboliteCVTerms(SEXP model_ptr) {
   }
 
   return cvtermList;
+}
+
+// [[Rcpp::export]]
+Rcpp::StringVector getMetaboliteSBOTerms(SEXP model_ptr) {
+  // Get the Model object from the SBMLDocument
+  Model* model = Rcpp::XPtr<Model>(model_ptr);
+
+  if (model == nullptr) {
+    Rcpp::stop("Invalid Model pointer.");
+  }
+
+  unsigned int num_metabolites = model->getNumSpecies();
+
+  Rcpp::StringVector sboterm;
+
+  for(unsigned int i = 0; i < num_metabolites; i++) {
+    Species* species = model->getSpecies(i);
+    sboterm.push_back(species->getSBOTermID());
+  }
+
+  return sboterm;
 }
 
 // [[Rcpp::export]]
@@ -740,6 +792,34 @@ std::string getGPRString(FbcAssociation* fasso,
   }
 }
 
+// [[Rcpp::export]]
+Rcpp::StringVector getGeneProductSBOTerms(SEXP model_ptr) {
+  // Get the Model object from the SBMLDocument
+  Model* model = Rcpp::XPtr<Model>(model_ptr);
+
+  if (model == nullptr) {
+    Rcpp::stop("Invalid Model pointer.");
+  }
+
+  FbcModelPlugin* mplugin = static_cast<FbcModelPlugin*>(model->getPlugin("fbc"));
+  ListOfGeneProducts* lgenes = mplugin->getListOfGeneProducts();
+
+  Rcpp::StringVector sboterm;
+
+  for(unsigned int i = 0; i < mplugin->getNumGeneProducts(); i++) {
+    GeneProduct* gene = lgenes->get(i);
+
+    sboterm.push_back(gene->getSBOTermID());
+  }
+
+  return sboterm;
+}
+
+
+/*
+ * EXPORT
+ */
+
 
 // [[Rcpp::export]]
 Rcpp::List getGPRs(SEXP model_ptr) {
@@ -806,6 +886,7 @@ bool writeSBML(
     String mod_desc,
     StringVector mod_cvterms,
     String mod_notes,
+    int mod_sbo,
 
     StringVector comp_id,
     StringVector comp_name,
@@ -816,10 +897,12 @@ bool writeSBML(
     StringVector met_formula,
     StringVector met_comp,
     Rcpp::ListOf<StringVector> met_cvterms,
+    IntegerVector met_sbo,
 
     StringVector gene_id,
     StringVector gene_name,
     Rcpp::ListOf<StringVector> gene_cvterms,
+    IntegerVector gene_sbo,
 
     StringVector param_id,
     NumericVector param_val,
@@ -833,6 +916,7 @@ bool writeSBML(
     StringVector react_ub,
     LogicalVector react_rev,
     Rcpp::ListOf<StringVector> react_cvterms,
+    IntegerVector react_sbo,
     StringVector gpr) {
   bool out = false;
 
@@ -848,6 +932,7 @@ bool writeSBML(
   model->setName(mod_name);
   model->setMessage(mod_desc);
   model->setNotes(mod_notes);
+  model->setSBOTerm(mod_sbo);
 
   FbcModelPlugin* mplugin = static_cast<FbcModelPlugin*>(model->getPlugin("fbc"));
   mplugin->setStrict(true);
@@ -939,6 +1024,7 @@ bool writeSBML(
     sp->setCompartment(Rcpp::as<std::string>(met_comp[i]));
     sp->setHasOnlySubstanceUnits(false);
     sp->setBoundaryCondition(false);
+    sp->setSBOTerm(met_sbo[i]);
 
     // CVTerms
     unsigned int j = 0;
@@ -984,6 +1070,7 @@ bool writeSBML(
     gene->setMetaId(gene->getId());
     gene->setLabel(gene->getId().substr(2));
     gene->setName(Rcpp::as<std::string>(gene_name[i]));
+    gene->setSBOTerm(gene_sbo[i]);
 
     // CVTerms
     unsigned int j = 0;
@@ -1044,6 +1131,7 @@ bool writeSBML(
     rea->setName(Rcpp::as<std::string>(react_name[i]));
     rea->setReversible(react_rev[i]);
     rea->setFast(false);
+    rea->setSBOTerm(react_sbo[i]);
 
     StringVector reaM = react_mets[i];
     NumericVector reaS = Scoeff[i];

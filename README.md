@@ -40,9 +40,19 @@
     - [x] write geneProduct CVTerms
     - [x] read model CVTerms
     - [x] write model CVTerms
+  - [ ] SBOTerms
+    - [x] read reaction SBOTerms
+    - [x] write reaction SBOTerms
+    - [x] read metabolite SBOTerms
+    - [x] write metabolite SBOTerms
+    - [x] read geneProduct SBOTerms
+    - [x] write geneProduct SBOTerms
+    - [x] read model SBOTerm
+    - [x] write model SBOTerm
   - [x] Model notes
   - [ ] Subsystems/groups
   - [x] GPRs
+  - [ ] Objective function
 - [ ] export and documentation of position functions
 - [ ] export and documentation of count functions (genes, reactions, constraints, metabolites)
 - [ ] read SBML documents of version 2 (necessary?)
@@ -65,7 +75,7 @@
 - In sybil, columns names "annotation" were actually concatenated CVTerms (https://synonym.caltech.edu/software/libsbml/5.20.0/cpp-api/class_c_v_term.html). To avoid confusion with other levels of annotation, the columns (e.g. in `react_attr` or `met_attr`) are named 'CVTerms' in cobrar.
 - Performance (i.e., computation time) improvements in certain procedures:
   - identification of dead-end metabolites
-  - reading SBML files,
+  - reading/exporting SBML files,
   - pFBA algorithm (a.k.a MTF 'Minimization of Total Flux').
   - FVA; also now allows relaxed constraints on optimal growth (e.g. flux variability with 90-100% optimal growth)
 

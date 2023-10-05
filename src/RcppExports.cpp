@@ -373,14 +373,14 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// getReactionCVTerms
-Rcpp::List getReactionCVTerms(SEXP model_ptr);
-RcppExport SEXP _cobrar_getReactionCVTerms(SEXP model_ptrSEXP) {
+// getModelSBOTerm
+Rcpp::String getModelSBOTerm(SEXP model_ptr);
+RcppExport SEXP _cobrar_getModelSBOTerm(SEXP model_ptrSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
-    rcpp_result_gen = Rcpp::wrap(getReactionCVTerms(model_ptr));
+    rcpp_result_gen = Rcpp::wrap(getModelSBOTerm(model_ptr));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -461,6 +461,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// getReactionCVTerms
+Rcpp::List getReactionCVTerms(SEXP model_ptr);
+RcppExport SEXP _cobrar_getReactionCVTerms(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getReactionCVTerms(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
+// getReactionSBOTerms
+Rcpp::StringVector getReactionSBOTerms(SEXP model_ptr);
+RcppExport SEXP _cobrar_getReactionSBOTerms(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getReactionSBOTerms(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
 // getMetaboliteIds
 Rcpp::CharacterVector getMetaboliteIds(SEXP model_ptr);
 RcppExport SEXP _cobrar_getMetaboliteIds(SEXP model_ptrSEXP) {
@@ -505,6 +527,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// getMetaboliteSBOTerms
+Rcpp::StringVector getMetaboliteSBOTerms(SEXP model_ptr);
+RcppExport SEXP _cobrar_getMetaboliteSBOTerms(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getMetaboliteSBOTerms(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
 // getMetaboliteCompartments
 Rcpp::CharacterVector getMetaboliteCompartments(SEXP model_ptr);
 RcppExport SEXP _cobrar_getMetaboliteCompartments(SEXP model_ptrSEXP) {
@@ -538,6 +571,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// getGeneProductSBOTerms
+Rcpp::StringVector getGeneProductSBOTerms(SEXP model_ptr);
+RcppExport SEXP _cobrar_getGeneProductSBOTerms(SEXP model_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type model_ptr(model_ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(getGeneProductSBOTerms(model_ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
 // getGPRs
 Rcpp::List getGPRs(SEXP model_ptr);
 RcppExport SEXP _cobrar_getGPRs(SEXP model_ptrSEXP) {
@@ -550,8 +594,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // writeSBML
-bool writeSBML(String file_path, String mod_id, String mod_name, String mod_desc, StringVector mod_cvterms, String mod_notes, StringVector comp_id, StringVector comp_name, StringVector met_id, StringVector met_name, NumericVector met_charge, StringVector met_formula, StringVector met_comp, Rcpp::ListOf<StringVector> met_cvterms, StringVector gene_id, StringVector gene_name, Rcpp::ListOf<StringVector> gene_cvterms, StringVector param_id, NumericVector param_val, IntegerVector param_sbo, StringVector react_id, StringVector react_name, Rcpp::ListOf<NumericVector> Scoeff, Rcpp::ListOf<StringVector> react_mets, StringVector react_lb, StringVector react_ub, LogicalVector react_rev, Rcpp::ListOf<StringVector> react_cvterms, StringVector gpr);
-RcppExport SEXP _cobrar_writeSBML(SEXP file_pathSEXP, SEXP mod_idSEXP, SEXP mod_nameSEXP, SEXP mod_descSEXP, SEXP mod_cvtermsSEXP, SEXP mod_notesSEXP, SEXP comp_idSEXP, SEXP comp_nameSEXP, SEXP met_idSEXP, SEXP met_nameSEXP, SEXP met_chargeSEXP, SEXP met_formulaSEXP, SEXP met_compSEXP, SEXP met_cvtermsSEXP, SEXP gene_idSEXP, SEXP gene_nameSEXP, SEXP gene_cvtermsSEXP, SEXP param_idSEXP, SEXP param_valSEXP, SEXP param_sboSEXP, SEXP react_idSEXP, SEXP react_nameSEXP, SEXP ScoeffSEXP, SEXP react_metsSEXP, SEXP react_lbSEXP, SEXP react_ubSEXP, SEXP react_revSEXP, SEXP react_cvtermsSEXP, SEXP gprSEXP) {
+bool writeSBML(String file_path, String mod_id, String mod_name, String mod_desc, StringVector mod_cvterms, String mod_notes, int mod_sbo, StringVector comp_id, StringVector comp_name, StringVector met_id, StringVector met_name, NumericVector met_charge, StringVector met_formula, StringVector met_comp, Rcpp::ListOf<StringVector> met_cvterms, IntegerVector met_sbo, StringVector gene_id, StringVector gene_name, Rcpp::ListOf<StringVector> gene_cvterms, IntegerVector gene_sbo, StringVector param_id, NumericVector param_val, IntegerVector param_sbo, StringVector react_id, StringVector react_name, Rcpp::ListOf<NumericVector> Scoeff, Rcpp::ListOf<StringVector> react_mets, StringVector react_lb, StringVector react_ub, LogicalVector react_rev, Rcpp::ListOf<StringVector> react_cvterms, IntegerVector react_sbo, StringVector gpr);
+RcppExport SEXP _cobrar_writeSBML(SEXP file_pathSEXP, SEXP mod_idSEXP, SEXP mod_nameSEXP, SEXP mod_descSEXP, SEXP mod_cvtermsSEXP, SEXP mod_notesSEXP, SEXP mod_sboSEXP, SEXP comp_idSEXP, SEXP comp_nameSEXP, SEXP met_idSEXP, SEXP met_nameSEXP, SEXP met_chargeSEXP, SEXP met_formulaSEXP, SEXP met_compSEXP, SEXP met_cvtermsSEXP, SEXP met_sboSEXP, SEXP gene_idSEXP, SEXP gene_nameSEXP, SEXP gene_cvtermsSEXP, SEXP gene_sboSEXP, SEXP param_idSEXP, SEXP param_valSEXP, SEXP param_sboSEXP, SEXP react_idSEXP, SEXP react_nameSEXP, SEXP ScoeffSEXP, SEXP react_metsSEXP, SEXP react_lbSEXP, SEXP react_ubSEXP, SEXP react_revSEXP, SEXP react_cvtermsSEXP, SEXP react_sboSEXP, SEXP gprSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -561,6 +605,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< String >::type mod_desc(mod_descSEXP);
     Rcpp::traits::input_parameter< StringVector >::type mod_cvterms(mod_cvtermsSEXP);
     Rcpp::traits::input_parameter< String >::type mod_notes(mod_notesSEXP);
+    Rcpp::traits::input_parameter< int >::type mod_sbo(mod_sboSEXP);
     Rcpp::traits::input_parameter< StringVector >::type comp_id(comp_idSEXP);
     Rcpp::traits::input_parameter< StringVector >::type comp_name(comp_nameSEXP);
     Rcpp::traits::input_parameter< StringVector >::type met_id(met_idSEXP);
@@ -569,9 +614,11 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< StringVector >::type met_formula(met_formulaSEXP);
     Rcpp::traits::input_parameter< StringVector >::type met_comp(met_compSEXP);
     Rcpp::traits::input_parameter< Rcpp::ListOf<StringVector> >::type met_cvterms(met_cvtermsSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type met_sbo(met_sboSEXP);
     Rcpp::traits::input_parameter< StringVector >::type gene_id(gene_idSEXP);
     Rcpp::traits::input_parameter< StringVector >::type gene_name(gene_nameSEXP);
     Rcpp::traits::input_parameter< Rcpp::ListOf<StringVector> >::type gene_cvterms(gene_cvtermsSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type gene_sbo(gene_sboSEXP);
     Rcpp::traits::input_parameter< StringVector >::type param_id(param_idSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type param_val(param_valSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type param_sbo(param_sboSEXP);
@@ -583,8 +630,9 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< StringVector >::type react_ub(react_ubSEXP);
     Rcpp::traits::input_parameter< LogicalVector >::type react_rev(react_revSEXP);
     Rcpp::traits::input_parameter< Rcpp::ListOf<StringVector> >::type react_cvterms(react_cvtermsSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type react_sbo(react_sboSEXP);
     Rcpp::traits::input_parameter< StringVector >::type gpr(gprSEXP);
-    rcpp_result_gen = Rcpp::wrap(writeSBML(file_path, mod_id, mod_name, mod_desc, mod_cvterms, mod_notes, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, gene_id, gene_name, gene_cvterms, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev, react_cvterms, gpr));
+    rcpp_result_gen = Rcpp::wrap(writeSBML(file_path, mod_id, mod_name, mod_desc, mod_cvterms, mod_notes, mod_sbo, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, met_sbo, gene_id, gene_name, gene_cvterms, gene_sbo, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev, react_cvterms, react_sbo, gpr));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -623,7 +671,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cobrar_getModelCompartments", (DL_FUNC) &_cobrar_getModelCompartments, 1},
     {"_cobrar_getStoichiometricMatrix", (DL_FUNC) &_cobrar_getStoichiometricMatrix, 1},
     {"_cobrar_getModelCVTerms", (DL_FUNC) &_cobrar_getModelCVTerms, 1},
-    {"_cobrar_getReactionCVTerms", (DL_FUNC) &_cobrar_getReactionCVTerms, 1},
+    {"_cobrar_getModelSBOTerm", (DL_FUNC) &_cobrar_getModelSBOTerm, 1},
     {"_cobrar_getModelNotes", (DL_FUNC) &_cobrar_getModelNotes, 1},
     {"_cobrar_getObjectiveFunction", (DL_FUNC) &_cobrar_getObjectiveFunction, 1},
     {"_cobrar_getSubsystems", (DL_FUNC) &_cobrar_getSubsystems, 1},
@@ -631,15 +679,19 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cobrar_getReactionNames", (DL_FUNC) &_cobrar_getReactionNames, 1},
     {"_cobrar_getReactionCompartment", (DL_FUNC) &_cobrar_getReactionCompartment, 1},
     {"_cobrar_getReactionFluxBounds", (DL_FUNC) &_cobrar_getReactionFluxBounds, 1},
+    {"_cobrar_getReactionCVTerms", (DL_FUNC) &_cobrar_getReactionCVTerms, 1},
+    {"_cobrar_getReactionSBOTerms", (DL_FUNC) &_cobrar_getReactionSBOTerms, 1},
     {"_cobrar_getMetaboliteIds", (DL_FUNC) &_cobrar_getMetaboliteIds, 1},
     {"_cobrar_getMetaboliteNames", (DL_FUNC) &_cobrar_getMetaboliteNames, 1},
     {"_cobrar_getMetaboliteAnnotation", (DL_FUNC) &_cobrar_getMetaboliteAnnotation, 1},
     {"_cobrar_getMetaboliteCVTerms", (DL_FUNC) &_cobrar_getMetaboliteCVTerms, 1},
+    {"_cobrar_getMetaboliteSBOTerms", (DL_FUNC) &_cobrar_getMetaboliteSBOTerms, 1},
     {"_cobrar_getMetaboliteCompartments", (DL_FUNC) &_cobrar_getMetaboliteCompartments, 1},
     {"_cobrar_getGeneProducts", (DL_FUNC) &_cobrar_getGeneProducts, 1},
     {"_cobrar_getGeneProductCVTerms", (DL_FUNC) &_cobrar_getGeneProductCVTerms, 1},
+    {"_cobrar_getGeneProductSBOTerms", (DL_FUNC) &_cobrar_getGeneProductSBOTerms, 1},
     {"_cobrar_getGPRs", (DL_FUNC) &_cobrar_getGPRs, 1},
-    {"_cobrar_writeSBML", (DL_FUNC) &_cobrar_writeSBML, 29},
+    {"_cobrar_writeSBML", (DL_FUNC) &_cobrar_writeSBML, 33},
     {"_rcpp_module_boot_sbml_module", (DL_FUNC) &_rcpp_module_boot_sbml_module, 0},
     {NULL, NULL, 0}
 };

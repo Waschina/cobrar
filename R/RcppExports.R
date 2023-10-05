@@ -125,8 +125,8 @@ getModelCVTerms <- function(model_ptr) {
     .Call(`_cobrar_getModelCVTerms`, model_ptr)
 }
 
-getReactionCVTerms <- function(model_ptr) {
-    .Call(`_cobrar_getReactionCVTerms`, model_ptr)
+getModelSBOTerm <- function(model_ptr) {
+    .Call(`_cobrar_getModelSBOTerm`, model_ptr)
 }
 
 getModelNotes <- function(model_ptr) {
@@ -157,6 +157,14 @@ getReactionFluxBounds <- function(model_ptr) {
     .Call(`_cobrar_getReactionFluxBounds`, model_ptr)
 }
 
+getReactionCVTerms <- function(model_ptr) {
+    .Call(`_cobrar_getReactionCVTerms`, model_ptr)
+}
+
+getReactionSBOTerms <- function(model_ptr) {
+    .Call(`_cobrar_getReactionSBOTerms`, model_ptr)
+}
+
 getMetaboliteIds <- function(model_ptr) {
     .Call(`_cobrar_getMetaboliteIds`, model_ptr)
 }
@@ -173,6 +181,10 @@ getMetaboliteCVTerms <- function(model_ptr) {
     .Call(`_cobrar_getMetaboliteCVTerms`, model_ptr)
 }
 
+getMetaboliteSBOTerms <- function(model_ptr) {
+    .Call(`_cobrar_getMetaboliteSBOTerms`, model_ptr)
+}
+
 getMetaboliteCompartments <- function(model_ptr) {
     .Call(`_cobrar_getMetaboliteCompartments`, model_ptr)
 }
@@ -185,11 +197,15 @@ getGeneProductCVTerms <- function(model_ptr) {
     .Call(`_cobrar_getGeneProductCVTerms`, model_ptr)
 }
 
+getGeneProductSBOTerms <- function(model_ptr) {
+    .Call(`_cobrar_getGeneProductSBOTerms`, model_ptr)
+}
+
 getGPRs <- function(model_ptr) {
     .Call(`_cobrar_getGPRs`, model_ptr)
 }
 
-writeSBML <- function(file_path, mod_id, mod_name, mod_desc, mod_cvterms, mod_notes, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, gene_id, gene_name, gene_cvterms, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev, react_cvterms, gpr) {
-    .Call(`_cobrar_writeSBML`, file_path, mod_id, mod_name, mod_desc, mod_cvterms, mod_notes, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, gene_id, gene_name, gene_cvterms, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev, react_cvterms, gpr)
+writeSBML <- function(file_path, mod_id, mod_name, mod_desc, mod_cvterms, mod_notes, mod_sbo, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, met_sbo, gene_id, gene_name, gene_cvterms, gene_sbo, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev, react_cvterms, react_sbo, gpr) {
+    .Call(`_cobrar_writeSBML`, file_path, mod_id, mod_name, mod_desc, mod_cvterms, mod_notes, mod_sbo, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, met_sbo, gene_id, gene_name, gene_cvterms, gene_sbo, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev, react_cvterms, react_sbo, gpr)
 }
 

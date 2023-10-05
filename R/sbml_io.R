@@ -41,6 +41,7 @@ readSBMLmod <- function(file_path) {
                      lb = numeric(0),
                      ub = numeric(0),
                      rtype = character(0))
+  mod_sbo <- getModelSBOTerm(modelPtr)
 
   # Reactions
   react_id <- getReactionIds(modelPtr)
@@ -51,6 +52,7 @@ readSBMLmod <- function(file_path) {
   react_cvterms <- lapply(react_cvterms, function(x) {
     paste(x, collapse = ";")
   })
+  react_sboterms <- getReactionSBOTerms(modelPtr)
 
   # Metabolites
   met_id <- getMetaboliteIds(modelPtr)
@@ -62,6 +64,7 @@ readSBMLmod <- function(file_path) {
   })
   met_attr$CVTerms <- unlist(met_cvterms)
   met_comp <- getMetaboliteCompartments(modelPtr)
+  met_attr$SBOTerm <- getMetaboliteSBOTerms(modelPtr)
 
 
   # Genes
@@ -71,6 +74,7 @@ readSBMLmod <- function(file_path) {
   gpr_cvterms <- lapply(gpr_cvterms, function(x) {
     paste(x, collapse = ";")
   })
+  gpr_sbo <- getGeneProductSBOTerms(modelPtr)
 
   return(
     new("modelorg",
@@ -79,7 +83,7 @@ readSBMLmod <- function(file_path) {
         mod_name = mod_name,
         mod_compart = mod_compartments$id,
         mod_compart_name = mod_compartments$name,
-        mod_attr = data.frame(CVTerms = mod_cvterms),
+        mod_attr = data.frame(CVTerms = mod_cvterms, SBOTerm = mod_sbo),
         mod_notes = mod_notes,
         S = S,
         obj_coef = obj_coeff,
@@ -98,24 +102,24 @@ readSBMLmod <- function(file_path) {
         react_comp = ifelse(react_comp == "", NA_character_, react_comp),
         lowbnd = react_bnds$lower_bound,
         uppbnd = react_bnds$upper_bound,
-        react_attr = data.frame(CVTerms = unlist(react_cvterms)),
+        react_attr = data.frame(CVTerms = unlist(react_cvterms),
+                                SBOTerm = react_sboterms),
 
         gprRules = gpr$rules,
         genes = lapply(gpr$genes, function(x) gsub("^G_","",x)),
         allGenes = gsub("^G_","",allGeneProducts$ID),
         genes_attr = data.frame(name = allGeneProducts$name,
-                                CVTerms = unlist(gpr_cvterms))
+                                CVTerms = unlist(gpr_cvterms),
+                                SBOTerm = gpr_sbo)
     )
   )
 }
 
-deformatGene<-function(idstr) {
-  idstr <- gsub("\\((\\S+)\\)", "\\1", idstr)
-  idstr <- gsub(":", "_", idstr, fixed = TRUE)
-  return(idstr)
+
+# Small helpter function to transform an SBO Term to it's integer als ID
+sboterm2int <- function(sbo) {
+  return(as.numeric(gsub("SBO:","",sbo)))
 }
-
-
 
 #' Exports a Metabolic Network in SBML Format
 #'
@@ -209,6 +213,7 @@ writeSBMLmod <- function(model, file_path = NULL) {
     mod_desc = model@mod_desc,
     mod_cvterms = unlist(strsplit(model@mod_attr$CVTerms[1], ";")),
     mod_notes = model@mod_notes,
+    mod_sbo = sboterm2int(model@mod_attr$SBOTerm[1]),
 
     # Compartments
     comp_id = model@mod_compart,
@@ -221,11 +226,13 @@ writeSBMLmod <- function(model, file_path = NULL) {
     met_formula = model@met_attr$chemicalFormula,
     met_comp = model@met_comp,
     met_cvterms = strsplit(model@met_attr$CVTerms, ";"),
+    met_sbo = sboterm2int(model@met_attr$SBOTerm),
 
     # Genes
     gene_id = model@allGenes,
     gene_name = model@genes_attr$name,
     gene_cvterms = strsplit(model@genes_attr$CVTerms, ";"),
+    gene_sbo = sboterm2int(model@genes_attr$SBOTerm),
 
     # Parameters (bound groups)
     param_id = bndgrp_para$bnd,
@@ -241,6 +248,7 @@ writeSBMLmod <- function(model, file_path = NULL) {
     react_ub = bndgrp$ub.term,
     react_rev = ifelse(bndgrp$lb < 0 & bndgrp$ub > 0, TRUE, FALSE),
     react_cvterms = strsplit(model@react_attr$CVTerms, ";"),
+    react_sbo = sboterm2int(model@react_attr$SBOTerm),
     gpr = gpr
   )
 
