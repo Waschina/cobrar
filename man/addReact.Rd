@@ -21,7 +21,8 @@ addReact(
   metComp = NA,
   metCharge = NA,
   metChemicalFormula = NA,
-  annotation = NA
+  CVTerms = NA,
+  SBOTerm = "SBO:0000176"
 )
 }
 \arguments{
@@ -68,7 +69,9 @@ charges for the metabolites given in argument \code{met}.}
 \item{metChemicalFormula}{A character vector of the same length as \code{met}
 defining the chemical formulas for the metabolites given in argument \code{met}.}
 
-\item{annotation}{An annotation string for the reaction.}
+\item{CVTerms}{Cross-references to other resources.}
+
+\item{SBOTerm}{A termID from the Systems Biology Ontology.}
 }
 \description{
 The function can be used to add or modify a reaction in an existing model.

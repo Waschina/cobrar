@@ -53,8 +53,8 @@
   - [x] Subsystems/groups
   - [x] GPRs
   - [x] Objective function
-- [ ] export and documentation of position functions
-- [ ] export and documentation of count functions (genes, reactions, constraints, metabolites)
+- [x] export and documentation of position functions
+- [x] export and documentation of count functions (genes, reactions, constraints, metabolites)
 - [ ] read SBML documents of version 2 (necessary?)
 - [x] define a class for FBA (and FBA-related) prediction results
 

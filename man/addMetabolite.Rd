@@ -11,7 +11,8 @@ addMetabolite(
   comp = NA,
   chemicalFormula = NA,
   charge = NA,
-  annotation = NA
+  CVTerms = NA,
+  SBOTerm = rep("SBO:0000247", length(id))
 )
 }
 \arguments{

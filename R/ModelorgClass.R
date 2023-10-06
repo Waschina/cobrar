@@ -89,91 +89,151 @@ setClass("modelorg",
 # setters and getters                                                          #
 #------------------------------------------------------------------------------#
 
-# number of reactions
-setGeneric("react_num", valueClass = "numeric", function(object) {
+#' Number of reactions
+#'
+#' Get the total number of reactions of a model
+#'
+#' @param model Model of class \link{modelorg}
+#'
+#' @export
+setGeneric("react_num", valueClass = "numeric", function(model) {
   standardGeneric("react_num")
 })
-setMethod("react_num", signature(object = "modelorg"),
-          function(object) {
-            return(length(object@react_id))
+setMethod("react_num", signature(model = "modelorg"),
+          function(model) {
+            return(length(model@react_id))
           }
 )
 
-# index of reaction(s)
-setGeneric("react_pos", valueClass = "numeric", function(object, react) {
+#' Index of reaction(s)
+#'
+#' Returns the index(es) of specific reaction(s).
+#'
+#' @param model Model of class \link{modelorg}
+#' @param react Character vector with reaction IDs or Integer vector providing
+#' indexes.
+#'
+#' @details
+#' Returns NA for reaction IDs not part of the model or the index is larger than
+#' the number of reactions in the model.
+#'
+#' @export
+setGeneric("react_pos", valueClass = "numeric", function(model, react) {
   standardGeneric("react_pos")
 })
-setMethod("react_pos", signature(object = "modelorg", react = "character"),
-          function(object, react) {
-            return(match(react, object@react_id))
+setMethod("react_pos", signature(model = "modelorg", react = "character"),
+          function(model, react) {
+            return(match(react, model@react_id))
           }
 )
-setMethod("react_pos", signature(object = "modelorg", react = "numeric"),
-          function(object, react) {
-            return(react)
+setMethod("react_pos", signature(model = "modelorg", react = "numeric"),
+          function(model, react) {
+            return(ifelse(react <= react_num(model),react, NA_integer_))
           }
 )
 
-# number of metabolites
-setGeneric("met_num", valueClass = "numeric", function(object) {
+#' Number of metabolites
+#'
+#' Get the total number of metabolites of a model
+#'
+#' @param model Model of class \link{modelorg}
+#'
+#' @export
+setGeneric("met_num", valueClass = "numeric", function(model) {
   standardGeneric("met_num")
 })
-setMethod("met_num", signature(object = "modelorg"),
-          function(object) {
-            return(length(object@met_id))
+setMethod("met_num", signature(model = "modelorg"),
+          function(model) {
+            return(length(model@met_id))
           }
 )
 
-# index of metabolite(s)
-setGeneric("met_pos", valueClass = "numeric", function(object, met) {
+#' Index of metabolite(s)
+#'
+#' Returns the index(es) of specific metabolite(s).
+#'
+#' @param model Model of class \link{modelorg}
+#' @param met Character vector with metabolite IDs or Integer vector providing
+#' indexes.
+#'
+#' @details
+#' Returns NA for metabolite IDs not part of the model or if the index is larger
+#' than the number of metabolites in the model.
+#'
+#' @export
+setGeneric("met_pos", valueClass = "numeric", function(model, met) {
   standardGeneric("met_pos")
 })
-setMethod("met_pos", signature(object = "modelorg", met = "character"),
-          function(object, met) {
-            return(match(met, object@met_id))
+setMethod("met_pos", signature(model = "modelorg", met = "character"),
+          function(model, met) {
+            return(match(met, model@met_id))
           }
 )
-setMethod("met_pos", signature(object = "modelorg", met = "numeric"),
-          function(object, met) {
-            return(met)
+setMethod("met_pos", signature(model = "modelorg", met = "numeric"),
+          function(model, met) {
+            return(ifelse((met<=met_num(model)), met, NA_integer_))
           }
 )
 
 
-# number of genes
-setGeneric("gene_num", valueClass = "numeric", function(object) {
+#' Number of genes
+#'
+#' Get the total number of genes of a model
+#'
+#' @param model Model of class \link{modelorg}
+#'
+#' @export
+setGeneric("gene_num", valueClass = "numeric", function(model) {
   standardGeneric("gene_num")
 })
-setMethod("gene_num", signature(object = "modelorg"),
-          function(object) {
-            return(length(object@allGenes))
+setMethod("gene_num", signature(model = "modelorg"),
+          function(model) {
+            return(length(model@allGenes))
           }
 )
 
 
-# index of gene(s)
-setGeneric("gene_pos", valueClass = "numeric", function(object, gene) {
+#' Index of gene(s)
+#'
+#' Returns the index(es) of specific gene(s).
+#'
+#' @param model Model of class \link{modelorg}
+#' @param gene Character vector with gene IDs or Integer vector providing
+#' indexes.
+#'
+#' @details
+#' Returns NA for gene IDs not part of the model or if the index is larger
+#' than the number of gene in the model.
+#'
+#' @export
+setGeneric("gene_pos", valueClass = "numeric", function(model, gene) {
   standardGeneric("gene_pos")
 })
-setMethod("gene_pos", signature(object = "modelorg", gene = "character"),
-          function(object, gene) {
-            return(match(gene, object@allGenes))
+setMethod("gene_pos", signature(model = "modelorg", gene = "character"),
+          function(model, gene) {
+            return(match(gene, model@allGenes))
           }
 )
-setMethod("gene_pos", signature(object = "modelorg", gene = "numeric"),
-          function(object, gene) {
-            return(gene)
+setMethod("gene_pos", signature(model = "modelorg", gene = "numeric"),
+          function(model, gene) {
+            return(ifelse(gene<=gene_num(model),gene,NA_integer_))
           }
 )
 
 
-# number of user constraints
-setGeneric("constraint_num", valueClass = "numeric", function(object) {
+#' Number of constraints
+#'
+#' Get the total number of constraints of a model
+#'
+#' @param model Model of class \link{modelorg}
+#'
+#' @export
+setGeneric("constraint_num", valueClass = "numeric", function(model) {
   standardGeneric("constraint_num")
 })
-setMethod("constraint_num", signature(object = "modelorg"),
-          function(object) {
-            return(nrow(object@constraints@coeff))
+setMethod("constraint_num", signature(model = "modelorg"),
+          function(model) {
+            return(nrow(model@constraints@coeff))
           }
 )
 

@@ -80,9 +80,9 @@ rmReact <- function(model, react, rm_met = TRUE) {
 
   model@gprRules <- model@gprRules[-react]
   model@genes    <- model@genes[-react]
-  print(react)
+  # print(react)
   rmconstr <- which(model@constraints@coeff[,react, drop = FALSE] != 0, arr.ind = T)[,1]
-  print(rmconstr)
+  # print(rmconstr)
   model <- rmConstraint(model, rmconstr)
 
   if(rm_met) {
@@ -335,7 +335,8 @@ rmConstraint <- function(model, ind) {
 #' charges for the metabolites given in argument `met`.
 #' @param metChemicalFormula A character vector of the same length as `met`
 #' defining the chemical formulas for the metabolites given in argument `met`.
-#' @param annotation An annotation string for the reaction.
+#' @param CVTerms Cross-references to other resources.
+#' @param SBOTerm A termID from the Systems Biology Ontology.
 #'
 #' @details
 #' If you want to use the function to update data of a pre-existing reaction but
@@ -366,7 +367,8 @@ addReact <- function(model,
                      metComp = NA,
                      metCharge = NA,
                      metChemicalFormula = NA,
-                     annotation = NA) {
+                     CVTerms = NA,
+                     SBOTerm = "SBO:0000176") {
 
   #--------------#
   # basic checks #
@@ -401,8 +403,7 @@ addReact <- function(model,
     model@obj_coef <- append(model@obj_coef, 0)
 
     # reaction slots
-    model@react_attr <- rbind(model@react_attr,
-                            data.frame(annotation = NA_character_))
+    model@react_attr <- model@react_attr[react_num(model)+1,] <- NA
     model@react_comp <- append(model@react_comp, NA)
     model@react_id   <- append(model@react_id, id)
     model@react_name <- append(model@react_name, NA_character_)
@@ -448,8 +449,10 @@ addReact <- function(model,
   # reaction slots
   if(!is.na(reactName))
     model@react_name[indR] <- reactName
-  if(!is.na(annotation))
-    model@react_attr[indR]$annotation <- annotation
+  if(!is.na(CVTerms))
+    model@react_attr[indR]$CVTerms <- CVTerms
+  if(!is.na(SBOTerm))
+    model@react_attr[indR]$SBOTerm <- SBOTerm
 
   # bounds
   model@lowbnd[indR] <- lb
@@ -473,6 +476,23 @@ addReact <- function(model,
 #'
 #' @export
 addMetabolite <- function(model, id, name = NA, comp = NA, chemicalFormula = NA,
-                          charge = NA, annotation = NA) {
+                          charge = NA, CVTerms = NA,
+                          SBOTerm = rep("SBO:0000247", length(id))) {
+
+  #--------------#
+  # basic checks #
+  #--------------#
+  if(any(duplicated(id)))
+    stop("Duplicates in metabolite IDs.")
+  if(length(id) == 0)
+    stop("No metabolite ID provided.")
+  if(!is.na(name[1]) && length(name) != length(id))
+    stop("Mismatch of number of metabolite IDs and Names.")
+  if(!is.na(comp[1]) && length(comp) != length(id))
+    stop("Mismatch of number of metabolite IDs and compartment.")
+  if(!is.na(chemicalFormula[1]) && length(chemicalFormula) != length(id))
+    stop("Mismatch of number of metabolite IDs and chemical formulas.")
+
+
   # TODO
 }
