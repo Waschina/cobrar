@@ -256,7 +256,10 @@ writeSBMLmod <- function(model, file_path = NULL) {
     react_rev = ifelse(bndgrp$lb < 0 & bndgrp$ub > 0, TRUE, FALSE),
     react_cvterms = strsplit(model@react_attr$CVTerms, ";"),
     react_sbo = sboterm2int(model@react_attr$SBOTerm),
-    gpr = gpr
+    gpr = gpr,
+
+    # Objective
+    obj_coef = model@obj_coef
   )
 
   return(out)

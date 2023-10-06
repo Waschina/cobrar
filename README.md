@@ -30,8 +30,8 @@
     - [x] FVA
 
   - [x] full documentation of function `addConstraint`, `rmConstraint`
-- [ ] `writeSBMLmod`
-  - [x] CVTerms (see below)
+- [x] `writeSBMLmod`
+  - [x] CVTerms
     - [x] read reaction CVTerms
     - [x] write reaction CVTerms
     - [x] read metabolite CVTerms
@@ -52,7 +52,7 @@
   - [x] Model notes
   - [x] Subsystems/groups
   - [x] GPRs
-  - [ ] Objective function
+  - [x] Objective function
 - [ ] export and documentation of position functions
 - [ ] export and documentation of count functions (genes, reactions, constraints, metabolites)
 - [ ] read SBML documents of version 2 (necessary?)
@@ -82,4 +82,7 @@
 
 #### Notes
 
-*Multiple objectives*. The SBML standard with its fbc extension allows to specify more than one objective (class `ListOfObjectives`). However, cobrar can only handle one current objective function per model, which is defined as an objective coefficient vector in slot `obj_coef` of an object of class `modelorg`. Note that when reading SBML models, cobrar will only use the first objective defined in the SBML document.
+- cobrar exports SBML files level 3 version 2 with `fbc` version 3 and `groups` version 1. 
+- Group assignments are only supported for reactions.
+- currently only glpk is supported as solver. A plugin for IBM's ILOG cplex is planned.
+- *Multiple objectives*. The SBML standard with its fbc extension allows to specify more than one objective (class `ListOfObjectives`). However, cobrar can only handle one current objective function per model, which is defined as an objective coefficient vector in slot `obj_coef` of an object of class `modelorg`. Note that when reading SBML models, cobrar will only use the first objective defined in the SBML document.

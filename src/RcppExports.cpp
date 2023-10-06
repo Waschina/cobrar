@@ -594,8 +594,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // writeSBML
-bool writeSBML(String file_path, String mod_id, String mod_name, String mod_desc, StringVector mod_cvterms, String mod_notes, int mod_sbo, StringVector comp_id, StringVector comp_name, StringVector met_id, StringVector met_name, NumericVector met_charge, StringVector met_formula, StringVector met_comp, Rcpp::ListOf<StringVector> met_cvterms, IntegerVector met_sbo, Rcpp::ListOf<IntegerVector> subsys, StringVector subsys_id, StringVector subsys_name, StringVector gene_id, StringVector gene_name, Rcpp::ListOf<StringVector> gene_cvterms, IntegerVector gene_sbo, StringVector param_id, NumericVector param_val, IntegerVector param_sbo, StringVector react_id, StringVector react_name, Rcpp::ListOf<NumericVector> Scoeff, Rcpp::ListOf<StringVector> react_mets, StringVector react_lb, StringVector react_ub, LogicalVector react_rev, Rcpp::ListOf<StringVector> react_cvterms, IntegerVector react_sbo, StringVector gpr);
-RcppExport SEXP _cobrar_writeSBML(SEXP file_pathSEXP, SEXP mod_idSEXP, SEXP mod_nameSEXP, SEXP mod_descSEXP, SEXP mod_cvtermsSEXP, SEXP mod_notesSEXP, SEXP mod_sboSEXP, SEXP comp_idSEXP, SEXP comp_nameSEXP, SEXP met_idSEXP, SEXP met_nameSEXP, SEXP met_chargeSEXP, SEXP met_formulaSEXP, SEXP met_compSEXP, SEXP met_cvtermsSEXP, SEXP met_sboSEXP, SEXP subsysSEXP, SEXP subsys_idSEXP, SEXP subsys_nameSEXP, SEXP gene_idSEXP, SEXP gene_nameSEXP, SEXP gene_cvtermsSEXP, SEXP gene_sboSEXP, SEXP param_idSEXP, SEXP param_valSEXP, SEXP param_sboSEXP, SEXP react_idSEXP, SEXP react_nameSEXP, SEXP ScoeffSEXP, SEXP react_metsSEXP, SEXP react_lbSEXP, SEXP react_ubSEXP, SEXP react_revSEXP, SEXP react_cvtermsSEXP, SEXP react_sboSEXP, SEXP gprSEXP) {
+bool writeSBML(String file_path, String mod_id, String mod_name, String mod_desc, StringVector mod_cvterms, String mod_notes, int mod_sbo, StringVector comp_id, StringVector comp_name, StringVector met_id, StringVector met_name, NumericVector met_charge, StringVector met_formula, StringVector met_comp, Rcpp::ListOf<StringVector> met_cvterms, IntegerVector met_sbo, Rcpp::ListOf<IntegerVector> subsys, StringVector subsys_id, StringVector subsys_name, StringVector gene_id, StringVector gene_name, Rcpp::ListOf<StringVector> gene_cvterms, IntegerVector gene_sbo, StringVector param_id, NumericVector param_val, IntegerVector param_sbo, StringVector react_id, StringVector react_name, Rcpp::ListOf<NumericVector> Scoeff, Rcpp::ListOf<StringVector> react_mets, StringVector react_lb, StringVector react_ub, LogicalVector react_rev, Rcpp::ListOf<StringVector> react_cvterms, IntegerVector react_sbo, StringVector gpr, NumericVector obj_coef);
+RcppExport SEXP _cobrar_writeSBML(SEXP file_pathSEXP, SEXP mod_idSEXP, SEXP mod_nameSEXP, SEXP mod_descSEXP, SEXP mod_cvtermsSEXP, SEXP mod_notesSEXP, SEXP mod_sboSEXP, SEXP comp_idSEXP, SEXP comp_nameSEXP, SEXP met_idSEXP, SEXP met_nameSEXP, SEXP met_chargeSEXP, SEXP met_formulaSEXP, SEXP met_compSEXP, SEXP met_cvtermsSEXP, SEXP met_sboSEXP, SEXP subsysSEXP, SEXP subsys_idSEXP, SEXP subsys_nameSEXP, SEXP gene_idSEXP, SEXP gene_nameSEXP, SEXP gene_cvtermsSEXP, SEXP gene_sboSEXP, SEXP param_idSEXP, SEXP param_valSEXP, SEXP param_sboSEXP, SEXP react_idSEXP, SEXP react_nameSEXP, SEXP ScoeffSEXP, SEXP react_metsSEXP, SEXP react_lbSEXP, SEXP react_ubSEXP, SEXP react_revSEXP, SEXP react_cvtermsSEXP, SEXP react_sboSEXP, SEXP gprSEXP, SEXP obj_coefSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -635,7 +635,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::ListOf<StringVector> >::type react_cvterms(react_cvtermsSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type react_sbo(react_sboSEXP);
     Rcpp::traits::input_parameter< StringVector >::type gpr(gprSEXP);
-    rcpp_result_gen = Rcpp::wrap(writeSBML(file_path, mod_id, mod_name, mod_desc, mod_cvterms, mod_notes, mod_sbo, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, met_sbo, subsys, subsys_id, subsys_name, gene_id, gene_name, gene_cvterms, gene_sbo, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev, react_cvterms, react_sbo, gpr));
+    Rcpp::traits::input_parameter< NumericVector >::type obj_coef(obj_coefSEXP);
+    rcpp_result_gen = Rcpp::wrap(writeSBML(file_path, mod_id, mod_name, mod_desc, mod_cvterms, mod_notes, mod_sbo, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, met_sbo, subsys, subsys_id, subsys_name, gene_id, gene_name, gene_cvterms, gene_sbo, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev, react_cvterms, react_sbo, gpr, obj_coef));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -694,7 +695,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cobrar_getGeneProductCVTerms", (DL_FUNC) &_cobrar_getGeneProductCVTerms, 1},
     {"_cobrar_getGeneProductSBOTerms", (DL_FUNC) &_cobrar_getGeneProductSBOTerms, 1},
     {"_cobrar_getGPRs", (DL_FUNC) &_cobrar_getGPRs, 1},
-    {"_cobrar_writeSBML", (DL_FUNC) &_cobrar_writeSBML, 36},
+    {"_cobrar_writeSBML", (DL_FUNC) &_cobrar_writeSBML, 37},
     {"_rcpp_module_boot_sbml_module", (DL_FUNC) &_rcpp_module_boot_sbml_module, 0},
     {NULL, NULL, 0}
 };

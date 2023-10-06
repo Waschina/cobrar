@@ -921,7 +921,9 @@ bool writeSBML(
     LogicalVector react_rev,
     Rcpp::ListOf<StringVector> react_cvterms,
     IntegerVector react_sbo,
-    StringVector gpr) {
+    StringVector gpr,
+
+    NumericVector obj_coef) {
 
   bool out = false;
 
@@ -1207,6 +1209,18 @@ bool writeSBML(
       GeneProductAssociation* asso = rplugin->createGeneProductAssociation();
       asso->setAssociation(Rcpp::as<std::string>(gpr[i]),mplugin, true);
       asso->toSBML();
+    }
+  }
+
+  /*
+   * Obective
+   */
+  Objective* obj = mplugin->createObjective();
+  for(unsigned int i = 0; i<nr; i++) {
+    if(obj_coef[i] != 0) {
+      FluxObjective* fobj = obj->createFluxObjective();
+      fobj->setReaction(Rcpp::as<std::string>(react_id[i]));
+      fobj->setCoefficient(obj_coef[i]);
     }
   }
 
