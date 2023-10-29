@@ -87,9 +87,9 @@ rmReact <- function(model, react, rm_met = TRUE) {
 
   if(rm_met) {
     TMPmat <- as(model@S[,-react], "TsparseMatrix")
-    metrm <- which(!(1:met_num(model) %in% (TMPmat@i+1)))
+    metrm <- which(!(1:met_num(model) %in% (TMPmat@i+1))) # identifies unused mets
     if(length(metrm) > 0) {
-
+      # TODO: replace this with the function rmMetabolite
       model@S        <- model@S[-metrm,, drop = FALSE]
       model@met_id   <- model@met_id[-metrm]
       model@met_name <- model@met_name[-metrm]
@@ -350,6 +350,53 @@ rmConstraint <- function(model, ind) {
 #' If metabolites or subsystems are not part of the model yet, they will be
 #' added.
 #'
+#' @examples
+#' # This example adds the 4-aminobutyrate degradation pathway to the E. coli
+#' # core metabolic model
+#' fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
+#' mod <- readSBMLmod(fpath)
+#'
+#' fba(mod)
+#'
+#' # 4abut transport: 4abut_e + h_e ⇌ 4abut_c + h_c
+#' mod <- addReact(mod, id = "ABUTt", Scoef = c(-1,-1,1,1),
+#'                 met = c("4abut_e","h_e","4abut_c","h_c"), reversible = TRUE,
+#'                 lb = -1000, ub = 1000,
+#'                 reactName = "4-aminobutyrate transport in via proton symport",
+#'                 metName = c("4-aminobutyrate",NA, "4-aminobutyrate",NA),
+#'                 metComp = c("e","e","c","c"), metCharge = c(0,NA,0,NA),
+#'                 metChemicalFormula = c("C4H9NO2",NA,"C4H9NO2",NA),
+#'                 SBOTerm = "SBO:0000185")
+#'
+#' # exchange reaction for 4abut (with 1.5 mmol/gDW/hr availability)
+#' mod <- addReact(mod, id = "EX_4abut_e", Scoef = c(-1), met = "4abut_e",
+#'                 lb = -1.5, ub = 1000, reactName = "4-aminobutyrate exchange",
+#'                 SBOTerm = "SBO:0000627")
+#'
+#' # 4abut amninotransferase (EC 2.6.1.19)
+#' mod <- addReact(mod, id = "ABTA", Scoef = c(-1,-1,1,1),
+#'                 met = c("4abut_c","akg_c","glu__L_c","sucsal_c"),
+#'                 lb = 0,
+#'                 reactName = "4-aminobutyrate transaminase",
+#'                 metName = c(NA,NA,NA,"Succinic semialdehyde"),
+#'                 metComp = c(NA,NA,NA,"c"), metCharge = c(NA,NA,NA,-1),
+#'                 metChemicalFormula = c(NA,NA,NA,"C4H5O3"),
+#'                 CVTerms = "bqbiol_is;http://identifiers.org/ec-code/2.6.1.19",
+#'                 gprAssoc = "b2662 | b1302")
+#'
+#' # Succinate-semialdehyde dehydrogenase (NAD) (EC 1.2.1.24)
+#' mod <- addReact(mod, id = "SSALx", Scoef = c(-1,-1,-1,2,1,1),
+#'                 met = c("h2o_c","nad_c","sucsal_c","h_c","nadh_c","succ_c"),
+#'                 lb = 0,
+#'                 reactName = "Succinate-semialdehyde dehydrogenase (NAD)",
+#'                 CVTerms = "bqbiol_is;http://identifiers.org/ec-code/1.2.1.24",
+#'                 gprAssoc = "b1525")
+#'
+#' printReaction(mod, "SSALx")
+#'
+#' fba(mod)
+#'
+#'
 #' @export
 addReact <- function(model,
                      id,
@@ -403,7 +450,7 @@ addReact <- function(model,
     model@obj_coef <- append(model@obj_coef, 0)
 
     # reaction slots
-    model@react_attr <- model@react_attr[react_num(model)+1,] <- NA
+    model@react_attr[react_num(model)+1,] <- NA
     model@react_comp <- append(model@react_comp, NA)
     model@react_id   <- append(model@react_id, id)
     model@react_name <- append(model@react_name, NA_character_)
@@ -414,15 +461,16 @@ addReact <- function(model,
 
     # GPRs
     model@genes <- append(model@genes, list(character(0L)))
-    model@gprRules <- append(model@gprRules, list(""))
+    model@gprRules <- append(model@gprRules, "")
 
     # constraints
     model@constraints@coeff <- cbind(model@constraints@coeff,
-                                   rep(0, constraint_num(model)))
+                                     matrix(0, nrow = constraint_num(model),
+                                            ncol = 1))
 
     # subsystems
     model@subSys <- rbind(model@subSys,
-                        rep(0, ncol(model@subSys)))
+                          rep(FALSE, ncol(model@subSys)))
   }
 
   # Add/update metabolites if necessary
@@ -431,8 +479,8 @@ addReact <- function(model,
   indMs <- match(met, model@met_id)
 
   # Add/update subsystems  if necessary
-  if(length(subSystem) > 0) {
-    # model <- addSubSystem(model, ...) TODO
+  if(length(subSystem) > 0 && !any(is.na(subSystem))) {
+    model <- addSubSystem(model, id = subSystem, name = subSystemName) # TODO!
     indSubSys <- match(subSystem, model@subSys_id)
   }
 
@@ -442,7 +490,7 @@ addReact <- function(model,
 
   # S and obj.-coeff.
   if(!is.na(Scoef[1]))
-    model@S[matrix(c(rep(indR,length(indMs)), indMs),ncol = 2)] <- Scoef
+    model@S[matrix(c(indMs, rep(indR,length(indMs))),ncol = 2)] <- Scoef
   if(!is.na(obj))
     model@obj_coef[indR] <- obj
 
@@ -450,17 +498,29 @@ addReact <- function(model,
   if(!is.na(reactName))
     model@react_name[indR] <- reactName
   if(!is.na(CVTerms))
-    model@react_attr[indR]$CVTerms <- CVTerms
+    model@react_attr$CVTerms[indR] <- CVTerms
   if(!is.na(SBOTerm))
-    model@react_attr[indR]$SBOTerm <- SBOTerm
+    model@react_attr$SBOTerm[indR] <- SBOTerm
 
   # bounds
   model@lowbnd[indR] <- lb
   model@uppbnd[indR] <- ub
 
   # subsys
-  if(length(subSystem) > 0) {
+  if(length(subSystem) > 0 && !any(is.na(subSystem))) {
     model@S[matrix(c(indSubSys, rep(indR,length(indSubSys))),ncol = 2)] <- TRUE
+  }
+
+  # GPR
+  if(!is.na(gprAssoc)) {
+    gpr_new <- parseBoolean(gprAssoc)
+    model@genes[indR] <- list(gpr_new$gene)
+    model@gprRules[indR] <- gpr_new$rule
+
+    # in case the GPR involves new genes
+    newgenes <- gpr_new$gene[!(gpr_new$gene %in% model@allGenes) & gpr_new$gene != ""]
+    if(length(newgenes) > 0)
+      model <- addGene(model, newgenes) # TODO
   }
 
   return(model)
@@ -473,11 +533,35 @@ addReact <- function(model,
 #' to update metabolite information.
 #'
 #' @param model Model of class \link{modelorg}
+#' @param id Character vector with metabolite IDs
+#' @param comp Character vector of the metabolites' compartment IDs
+#' @param name Character vector for metabolite names
+#' @param chemicalFormula Character vector for the metabolites' chemical formulas
+#' @param charge Numeric vector for the metabolites' charge
+#' @param CVTerms Character vector for the metabolites' CV-Terms
+#' @param SBOTerm Character vector for the metabolites' SBO-Terms
 #'
 #' @export
-addMetabolite <- function(model, id, name = NA, comp = NA, chemicalFormula = NA,
+addMetabolite <- function(model, id, comp = NA, name = NA, chemicalFormula = NA,
                           charge = NA, CVTerms = NA,
                           SBOTerm = rep("SBO:0000247", length(id))) {
+  norig <- met_num(model)
+
+  #--------------------------------#
+  # If optional values are missing #
+  #--------------------------------#
+  if(length(comp) == 1 && is.na(comp))
+    comp <- rep(NA, length(id))
+  if(length(name) == 1 && is.na(name))
+    name <- rep(NA, length(id))
+  if(length(chemicalFormula) == 1 && is.na(chemicalFormula))
+    chemicalFormula <- rep(NA, length(id))
+  if(length(charge) == 1 && is.na(charge))
+    charge <- rep(NA, length(id))
+  if(length(CVTerms) == 1 && is.na(CVTerms))
+    CVTerms <- rep(NA, length(id))
+  if(length(SBOTerm) == 1 && is.na(SBOTerm))
+    SBOTerm <- rep(NA, length(id))
 
   #--------------#
   # basic checks #
@@ -486,13 +570,135 @@ addMetabolite <- function(model, id, name = NA, comp = NA, chemicalFormula = NA,
     stop("Duplicates in metabolite IDs.")
   if(length(id) == 0)
     stop("No metabolite ID provided.")
-  if(!is.na(name[1]) && length(name) != length(id))
+  if(length(name) != length(id))
     stop("Mismatch of number of metabolite IDs and Names.")
-  if(!is.na(comp[1]) && length(comp) != length(id))
+  if(length(comp) != length(id))
     stop("Mismatch of number of metabolite IDs and compartment.")
-  if(!is.na(chemicalFormula[1]) && length(chemicalFormula) != length(id))
+  if(length(chemicalFormula) != length(id))
     stop("Mismatch of number of metabolite IDs and chemical formulas.")
+  if(length(charge) != length(id))
+    stop("Mismatch of number of metabolite IDs and charge.")
 
 
-  # TODO
+  #---------------------------------------------------------------#
+  # check if metabolites are new or if updated infos are provided #
+  #---------------------------------------------------------------#
+  indM <- match(id, model@met_id)
+  nnew <- sum(is.na(indM))
+  if(nnew > 0) {
+    indnew <- which(is.na(indM))
+    indM[is.na(indM)] <- (norig+1):(norig+nnew)
+
+    # extent metabolite-related model stuctures
+
+    # S
+    model@S <- rbind(model@S, matrix(0, nrow = nnew, ncol = react_num(model)))
+
+    # metabolite slots
+    model@met_attr[norig+nnew,] <- NA
+    model@met_comp <- append(model@met_comp, rep(NA, nnew))
+    model@met_name <- append(model@met_name, rep(NA_character_, nnew))
+    model@met_id   <- append(model@met_id, id[indnew])
+
+    # use ids if names for new metabolites are not provided
+    name[which(indM > norig & is.na(name))] <- id[which(indM > norig & is.na(name))]
+
+  }
+
+  #------------------------------#
+  # Add/update metabolite values #
+  #------------------------------#
+
+  # name
+  model@met_name[indM][which(!is.na(name))] <- name[which(!is.na(name))]
+
+  # attributes
+  model@met_attr$chemicalFormula[indM][which(!is.na(chemicalFormula))] <- chemicalFormula[which(!is.na(chemicalFormula))]
+  model@met_attr$charge[indM][which(!is.na(charge))] <- charge[which(!is.na(charge))]
+  model@met_attr$CVTerms[indM][which(!is.na(CVTerms))] <- CVTerms[which(!is.na(CVTerms))]
+  model@met_attr$SBOTerm[indM][which(!is.na(SBOTerm))] <- SBOTerm[which(!is.na(SBOTerm))]
+
+  # compartment
+  comp_new <- comp_pos(model, comp)
+  if(any(is.na(comp_new) & !is.na(comp)))
+    warning(paste0("Supplied compartment not part of the model yet: ",
+                   paste(comp[is.na(comp_new) & !is.na(comp)], collapse = ", ")))
+  model@met_comp[indM][which(!is.na(comp))] <- model@mod_compart[comp_new[which(!is.na(comp))]]
+
+
+  return(model)
+}
+
+#' Add genes or update their data
+#'
+#' The functions allows you to add one or more genes to a model. When
+#' providing the ID of an already existing genes, you can use this function
+#' to update the genes' information.
+#'
+#' @param model Model of class \link{modelorg}
+#' @param id Character vector with gene IDs
+#' @param name Character vector for gene names
+#' @param CVTerms Character vector for the genes' CV-Terms
+#' @param SBOTerm Character vector for the genes' SBO-Terms
+#'
+#' @export
+addGene <- function(model, id, name = NA, CVTerms = NA,
+                    SBOTerm = rep("SBO:0000243",length(id))) {
+  norig <- gene_num(model)
+
+  #--------------------------------#
+  # If optional values are missing #
+  #--------------------------------#
+  if(length(name) == 1 && is.na(name))
+    name <- rep(NA, length(id))
+  if(length(CVTerms) == 1 && is.na(CVTerms))
+    CVTerms <- rep(NA, length(id))
+  if(length(SBOTerm) == 1 && is.na(SBOTerm))
+    SBOTerm <- rep(NA, length(id))
+
+  #--------------#
+  # basic checks #
+  #--------------#
+  if(any(duplicated(id)))
+    stop("Duplicates in gene IDs.")
+  if(length(id) == 0)
+    stop("No gene ID provided.")
+  if(length(name) != length(id))
+    stop("Mismatch of number of gene IDs and Names.")
+  if(length(CVTerms) != length(id))
+    stop("Mismatch of number of gene IDs and CVTerms.")
+  if(length(SBOTerm) != length(id))
+    stop("Mismatch of number of gene IDs and SBOTerms.")
+
+  #---------------------------------------------------------#
+  # check if genes are new or if updated infos are provided #
+  #---------------------------------------------------------#
+  indG <- match(id, model@allGenes)
+  nnew <- sum(is.na(indG))
+  if(nnew > 0) {
+    indnew <- which(is.na(indG))
+    indG[is.na(indG)] <- (norig+1):(norig+nnew)
+
+    # extent gene-related model structures
+
+    # gene slots
+    model@genes_attr[norig+nnew,] <- NA
+    model@allGenes   <- append(model@allGenes, id[indnew])
+
+    # use ids if names for new genes are not provided
+    name[which(indG > norig & is.na(name))] <- id[which(indG > norig & is.na(name))]
+
+  }
+
+  #------------------------#
+  # Add/update gene values #
+  #------------------------#
+
+  # attributes
+  model@genes_attr$name[indG][which(!is.na(name))] <- name[which(!is.na(name))]
+  model@genes_attr$CVTerms[indG][which(!is.na(CVTerms))] <- CVTerms[which(!is.na(CVTerms))]
+  model@genes_attr$SBOTerm[indG][which(!is.na(SBOTerm))] <- SBOTerm[which(!is.na(SBOTerm))]
+
+
+  return(model)
 }

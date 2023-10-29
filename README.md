@@ -5,19 +5,21 @@
 #### Current TODOs
 
 - [ ] Model modification functions
-  - [ ] addReact
+  - [x] addReact
   - [x] rmReact
-  - [ ] addMetabolite
+  - [x] addMetabolite
   - [ ] rmMetabolite
-  - [ ] addGene
-  - [ ] rmGene
+  - [ ] addComp
+  - [ ] rmComp (no prio)
+  - [x] addGene
+  - [x] rmGene
   - [ ] addSubSystem
   - [ ] rmSubSystem
 - [x] gene KOs
 - [x] FVA (with adjustable proportions)
 - [x] FVA documentation
-- [ ] MOMA (iterative linearized objective?)
-- [ ] ROOM
+- [ ] MOMA (iterative linearized objective?) -> quadratic opt not possible with glpk
+- [ ] ROOM (mixed-integer optimization)
 - [x] additional constraints as slot in `modelorg`
   - [x] Slot in modelorg
   - [x] rm if reaction of a constraint is removed
@@ -55,7 +57,7 @@
   - [x] Objective function
 - [x] export and documentation of position functions
 - [x] export and documentation of count functions (genes, reactions, constraints, metabolites)
-- [ ] read SBML documents of version 2 (necessary?)
+- [ ] read SBML documents of level 2 (necessary?)
 - [x] define a class for FBA (and FBA-related) prediction results
 
 

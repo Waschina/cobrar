@@ -269,7 +269,7 @@
           </rdf:RDF>
         </sbml:annotation>
       </species>
-      <species id="M_h2o_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="H2O H2O" metaid="M_h2o_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="0" fbc:chemicalFormula="H2O">
+      <species id="M_h2o_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="H2O" metaid="M_h2o_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="0" fbc:chemicalFormula="H2O">
         <sbml:annotation xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
             <rdf:Description rdf:about="#M_h2o_c">
@@ -336,7 +336,7 @@
           </rdf:RDF>
         </sbml:annotation>
       </species>
-      <species id="M_h2o_e" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="H2O H2O" metaid="M_h2o_e" sboTerm="SBO:0000247" compartment="e" fbc:charge="0" fbc:chemicalFormula="H2O">
+      <species id="M_h2o_e" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="H2O" metaid="M_h2o_e" sboTerm="SBO:0000247" compartment="e" fbc:charge="0" fbc:chemicalFormula="H2O">
         <sbml:annotation xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
             <rdf:Description rdf:about="#M_h2o_e">
@@ -636,7 +636,7 @@
           </rdf:RDF>
         </sbml:annotation>
       </species>
-      <species id="M_nad_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="Nicotinamide adenine dinucleotide" metaid="M_nad_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="-1" fbc:chemicalFormula="C21H26N7O14P2">
+      <species id="M_nad_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="NAD" metaid="M_nad_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="-1" fbc:chemicalFormula="C21H26N7O14P2">
         <sbml:annotation xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
             <rdf:Description rdf:about="#M_nad_c">
@@ -672,7 +672,7 @@
           </rdf:RDF>
         </sbml:annotation>
       </species>
-      <species id="M_nadh_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="Nicotinamide adenine dinucleotide - reduced" metaid="M_nadh_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="-2" fbc:chemicalFormula="C21H27N7O14P2">
+      <species id="M_nadh_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="NADH" metaid="M_nadh_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="-2" fbc:chemicalFormula="C21H27N7O14P2">
         <sbml:annotation xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
             <rdf:Description rdf:about="#M_nadh_c">
@@ -703,7 +703,7 @@
           </rdf:RDF>
         </sbml:annotation>
       </species>
-      <species id="M_nadp_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="Nicotinamide adenine dinucleotide phosphate" metaid="M_nadp_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="-3" fbc:chemicalFormula="C21H25N7O17P3">
+      <species id="M_nadp_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="NADP" metaid="M_nadp_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="-3" fbc:chemicalFormula="C21H25N7O17P3">
         <sbml:annotation xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
             <rdf:Description rdf:about="#M_nadp_c">
@@ -742,7 +742,7 @@
           </rdf:RDF>
         </sbml:annotation>
       </species>
-      <species id="M_nadph_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="Nicotinamide adenine dinucleotide phosphate - reduced" metaid="M_nadph_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="-4" fbc:chemicalFormula="C21H26N7O17P3">
+      <species id="M_nadph_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="NADPH" metaid="M_nadph_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="-4" fbc:chemicalFormula="C21H26N7O17P3">
         <sbml:annotation xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
             <rdf:Description rdf:about="#M_nadph_c">
@@ -918,7 +918,7 @@
           </rdf:RDF>
         </sbml:annotation>
       </species>
-      <species id="M_o2_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="O2 O2" metaid="M_o2_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="0" fbc:chemicalFormula="O2">
+      <species id="M_o2_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="O2" metaid="M_o2_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="0" fbc:chemicalFormula="O2">
         <sbml:annotation xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
             <rdf:Description rdf:about="#M_o2_c">
@@ -995,7 +995,7 @@
           </rdf:RDF>
         </sbml:annotation>
       </species>
-      <species id="M_o2_e" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="O2 O2" metaid="M_o2_e" sboTerm="SBO:0000247" compartment="e" fbc:charge="0" fbc:chemicalFormula="O2">
+      <species id="M_o2_e" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="O2" metaid="M_o2_e" sboTerm="SBO:0000247" compartment="e" fbc:charge="0" fbc:chemicalFormula="O2">
         <sbml:annotation xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
             <rdf:Description rdf:about="#M_o2_e">
@@ -1880,7 +1880,7 @@
           </rdf:RDF>
         </sbml:annotation>
       </species>
-      <species id="M_adp_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="ADP C10H12N5O10P2" metaid="M_adp_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="-3" fbc:chemicalFormula="C10H12N5O10P2">
+      <species id="M_adp_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="ADP" metaid="M_adp_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="-3" fbc:chemicalFormula="C10H12N5O10P2">
         <sbml:annotation xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
             <rdf:Description rdf:about="#M_adp_c">
@@ -1994,7 +1994,7 @@
           </rdf:RDF>
         </sbml:annotation>
       </species>
-      <species id="M_amp_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="AMP C10H12N5O7P" metaid="M_amp_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="-2" fbc:chemicalFormula="C10H12N5O7P">
+      <species id="M_amp_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="AMP" metaid="M_amp_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="-2" fbc:chemicalFormula="C10H12N5O7P">
         <sbml:annotation xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
             <rdf:Description rdf:about="#M_amp_c">
@@ -2038,7 +2038,7 @@
           </rdf:RDF>
         </sbml:annotation>
       </species>
-      <species id="M_atp_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="ATP C10H12N5O13P3" metaid="M_atp_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="-4" fbc:chemicalFormula="C10H12N5O13P3">
+      <species id="M_atp_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="ATP" metaid="M_atp_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="-4" fbc:chemicalFormula="C10H12N5O13P3">
         <sbml:annotation xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
             <rdf:Description rdf:about="#M_atp_c">
@@ -2121,7 +2121,7 @@
           </rdf:RDF>
         </sbml:annotation>
       </species>
-      <species id="M_co2_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="CO2 CO2" metaid="M_co2_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="0" fbc:chemicalFormula="CO2">
+      <species id="M_co2_c" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="CO2" metaid="M_co2_c" sboTerm="SBO:0000247" compartment="c" fbc:charge="0" fbc:chemicalFormula="CO2">
         <sbml:annotation xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
             <rdf:Description rdf:about="#M_co2_c">
@@ -2161,7 +2161,7 @@
           </rdf:RDF>
         </sbml:annotation>
       </species>
-      <species id="M_co2_e" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="CO2 CO2" metaid="M_co2_e" sboTerm="SBO:0000247" compartment="e" fbc:charge="0" fbc:chemicalFormula="CO2">
+      <species id="M_co2_e" constant="false" boundaryCondition="false" hasOnlySubstanceUnits="false" name="CO2" metaid="M_co2_e" sboTerm="SBO:0000247" compartment="e" fbc:charge="0" fbc:chemicalFormula="CO2">
         <sbml:annotation xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
             <rdf:Description rdf:about="#M_co2_e">

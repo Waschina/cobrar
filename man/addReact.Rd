@@ -88,3 +88,51 @@ reaction will be removed.
 If metabolites or subsystems are not part of the model yet, they will be
 added.
 }
+\examples{
+# This example adds the 4-aminobutyrate degradation pathway to the E. coli
+# core metabolic model
+fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
+mod <- readSBMLmod(fpath)
+
+fba(mod)
+
+# 4abut transport: 4abut_e + h_e ⇌ 4abut_c + h_c
+mod <- addReact(mod, id = "ABUTt", Scoef = c(-1,-1,1,1),
+                met = c("4abut_e","h_e","4abut_c","h_c"), reversible = TRUE,
+                lb = -1000, ub = 1000,
+                reactName = "4-aminobutyrate transport in via proton symport",
+                metName = c("4-aminobutyrate",NA, "4-aminobutyrate",NA),
+                metComp = c("e","e","c","c"), metCharge = c(0,NA,0,NA),
+                metChemicalFormula = c("C4H9NO2",NA,"C4H9NO2",NA),
+                SBOTerm = "SBO:0000185")
+
+# exchange reaction for 4abut (with 1.5 mmol/gDW/hr availability)
+mod <- addReact(mod, id = "EX_4abut_e", Scoef = c(-1), met = "4abut_e",
+                lb = -1.5, ub = 1000, reactName = "4-aminobutyrate exchange",
+                SBOTerm = "SBO:0000627")
+
+# 4abut amninotransferase (EC 2.6.1.19)
+mod <- addReact(mod, id = "ABTA", Scoef = c(-1,-1,1,1),
+                met = c("4abut_c","akg_c","glu__L_c","sucsal_c"),
+                lb = 0,
+                reactName = "4-aminobutyrate transaminase",
+                metName = c(NA,NA,NA,"Succinic semialdehyde"),
+                metComp = c(NA,NA,NA,"c"), metCharge = c(NA,NA,NA,-1),
+                metChemicalFormula = c(NA,NA,NA,"C4H5O3"),
+                CVTerms = "bqbiol_is;http://identifiers.org/ec-code/2.6.1.19",
+                gprAssoc = "b2662 | b1302")
+
+# Succinate-semialdehyde dehydrogenase (NAD) (EC 1.2.1.24)
+mod <- addReact(mod, id = "SSALx", Scoef = c(-1,-1,-1,2,1,1),
+                met = c("h2o_c","nad_c","sucsal_c","h_c","nadh_c","succ_c"),
+                lb = 0,
+                reactName = "Succinate-semialdehyde dehydrogenase (NAD)",
+                CVTerms = "bqbiol_is;http://identifiers.org/ec-code/1.2.1.24",
+                gprAssoc = "b1525")
+
+printReaction(mod, "SSALx")
+
+fba(mod)
+
+
+}

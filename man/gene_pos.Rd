@@ -17,5 +17,5 @@ Returns the index(es) of specific gene(s).
 }
 \details{
 Returns NA for gene IDs not part of the model or if the index is larger
-than the number of gene in the model.
+than the number of genes in the model.
 }

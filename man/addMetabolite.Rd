@@ -7,8 +7,8 @@
 addMetabolite(
   model,
   id,
-  name = NA,
   comp = NA,
+  name = NA,
   chemicalFormula = NA,
   charge = NA,
   CVTerms = NA,
@@ -17,6 +17,20 @@ addMetabolite(
 }
 \arguments{
 \item{model}{Model of class \link{modelorg}}
+
+\item{id}{Character vector with metabolite IDs}
+
+\item{comp}{Character vector of the metabolites' compartment IDs}
+
+\item{name}{Character vector for metabolite names}
+
+\item{chemicalFormula}{Character vector for the metabolites' chemical formulas}
+
+\item{charge}{Numeric vector for the metabolites' charge}
+
+\item{CVTerms}{Character vector for the metabolites' CV-Terms}
+
+\item{SBOTerm}{Character vector for the metabolites' SBO-Terms}
 }
 \description{
 The functions allows you to add one or more metabolites to a model. When

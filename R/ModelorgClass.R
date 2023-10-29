@@ -131,6 +131,12 @@ setMethod("react_pos", signature(model = "modelorg", react = "numeric"),
             return(ifelse(react <= react_num(model),react, NA_integer_))
           }
 )
+setMethod("react_pos", signature(model = "modelorg", react = "missing"),
+          function(model, react) {
+            return(NA_integer_)
+          }
+)
+
 
 #' Number of metabolites
 #'
@@ -174,7 +180,11 @@ setMethod("met_pos", signature(model = "modelorg", met = "numeric"),
             return(ifelse((met<=met_num(model)), met, NA_integer_))
           }
 )
-
+setMethod("met_pos", signature(model = "modelorg", met = "missing"),
+          function(model, met) {
+            return(NA_integer_)
+          }
+)
 
 #' Number of genes
 #'
@@ -203,7 +213,7 @@ setMethod("gene_num", signature(model = "modelorg"),
 #'
 #' @details
 #' Returns NA for gene IDs not part of the model or if the index is larger
-#' than the number of gene in the model.
+#' than the number of genes in the model.
 #'
 #' @export
 setGeneric("gene_pos", valueClass = "numeric", function(model, gene) {
@@ -219,7 +229,64 @@ setMethod("gene_pos", signature(model = "modelorg", gene = "numeric"),
             return(ifelse(gene<=gene_num(model),gene,NA_integer_))
           }
 )
+setMethod("gene_pos", signature(model = "modelorg", gene = "missing"),
+          function(model, gene) {
+            return(NA_integer_)
+          }
+)
 
+#' Number of compartments
+#'
+#' Get the total number of compartments of a model
+#'
+#' @param model Model of class \link{modelorg}
+#'
+#' @export
+setGeneric("comp_num", valueClass = "numeric", function(model) {
+  standardGeneric("comp_num")
+})
+setMethod("comp_num", signature(model = "modelorg"),
+          function(model) {
+            return(length(model@mod_compart))
+          }
+)
+
+#' Index of compartment(s)
+#'
+#' Returns the index(es) of specific compartment(s).
+#'
+#' @param model Model of class \link{modelorg}
+#' @param gene Character vector with compartment IDs or Integer vector providing
+#' indexes.
+#'
+#' @details
+#' Returns NA for compartment IDs not part of the model or if the index is larger
+#' than the number of compartments in the model.
+#'
+#' @export
+setGeneric("comp_pos", valueClass = "numeric", function(model, comp) {
+  standardGeneric("comp_pos")
+})
+setMethod("comp_pos", signature(model = "modelorg", comp = "character"),
+          function(model, comp) {
+            return(match(comp, model@mod_compart))
+          }
+)
+setMethod("comp_pos", signature(model = "modelorg", comp = "numeric"),
+          function(model, comp) {
+            return(ifelse(comp<=comp_num(model),comp,NA_integer_))
+          }
+)
+setMethod("comp_pos", signature(model = "modelorg", comp = "missing"),
+          function(model, comp) {
+            return(NA_integer_)
+          }
+)
+setMethod("comp_pos", signature(model = "modelorg", comp = "logical"),
+          function(model, comp) {
+            return(rep(NA_integer_, length(comp)))
+          }
+)
 
 #' Number of constraints
 #'
