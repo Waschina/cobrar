@@ -6,7 +6,7 @@
 #'
 #' @import Matrix
 #' @export
-readsybilmod <- function(file_path) {
+readSybilmod <- function(file_path) {
   sybildoc.lst  <- readRDS(normalizePath(file_path))
 
   if( !is.list(sybildoc.lst) ) sybildoc.lst <- list(sybildoc.lst)
