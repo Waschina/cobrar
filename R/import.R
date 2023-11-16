@@ -11,8 +11,10 @@ readSybilmod <- function(file_path) {
 
   if( !is.list(sybildoc.lst) ) sybildoc.lst <- list(sybildoc.lst)
 
-  models.lst <- list()
-  for(sybildoc in sybildoc.lst){
+  models.lst <- vector(mode="list", length=length(sybildoc.lst))
+  names(models.lst) <- names(sybildoc.lst)
+  for(i in seq_along(sybildoc.lst)){
+      sybildoc <- sybildoc.lst[[i]]
       constraints <- new("Constraints",
                          coeff = as(Matrix(nrow = 0, ncol = ncol(sybildoc@S), sparse = TRUE),
                                     "dMatrix"),
@@ -52,7 +54,7 @@ readSybilmod <- function(file_path) {
                 allGenes = sybildoc@allGenes,
                 genes_attr = data.frame())
  
-    models.lst <- append(models.lst, mod) 
+    models.lst[[i]] <- mod
   }
   
   if( length(models.lst) == 1 ){
