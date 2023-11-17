@@ -29,12 +29,8 @@ changeBounds <- function(model, react, lb = NULL, ub = NULL) {
     stop("Please check your reaction IDs/indices in argument 'react'.")
   }
 
-  if(is.numeric(react)) {
-      react.idx <- react
-  }else {
-      react.idx <- match(react, model@react_id)
-  }
-  
+  react.idx <- react_pos(model, react)
+
   # the actual change
   if(!is.null(lb)) {
     model@lowbnd[react.idx] <- lb
