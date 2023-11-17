@@ -82,23 +82,15 @@ rmReact <- function(model, react, rm_met = TRUE) {
 
   model@gprRules <- model@gprRules[-react]
   model@genes    <- model@genes[-react]
-  # print(react)
+
   rmconstr <- which(model@constraints@coeff[,react, drop = FALSE] != 0, arr.ind = T)[,1]
-  # print(rmconstr)
-  model <- rmConstraint(model, rmconstr)
+  if(length(rmconstr) > 0)
+    model <- rmConstraint(model, rmconstr)
 
   if(rm_met) {
-    TMPmat <- as(model@S[,-react], "TsparseMatrix")
-    metrm <- which(!(1:met_num(model) %in% (TMPmat@i+1))) # identifies unused mets
-    if(length(metrm) > 0) {
-      # TODO: replace this with the function rmMetabolite
-      model@S        <- model@S[-metrm,, drop = FALSE]
-      model@met_id   <- model@met_id[-metrm]
-      model@met_name <- model@met_name[-metrm]
-      model@met_comp <- model@met_comp[-metrm]
-      model@met_attr <- model@met_attr[-metrm,, drop = FALSE]
-
-    }
+    metrm <- which(apply(model@S,1,function(x) all(x == 0))) # identifies unused mets
+    if(length(metrm) > 0)
+      model <- rmMetabolite(model, metrm)
   }
 
   return(model)
@@ -290,6 +282,9 @@ setMethod("addConstraint", signature(model = "modelorg",
 #'
 #' @export
 rmConstraint <- function(model, ind) {
+  if(length(ind) == 0)
+    return(model)
+
   if(constraint_num(model) == 0 || any(!(ind %in% 1:constraint_num(model)))) {
     stop("Invalid index or indices for constraints.")
   }
@@ -630,6 +625,49 @@ addMetabolite <- function(model, id, comp = NA, name = NA, chemicalFormula = NA,
 
   return(model)
 }
+
+#' Remove metabolites from a model
+#'
+#' This function removes specified metabolites from a model.
+#'
+#' @param model Model of class \link{modelorg}
+#' @param met A character vector stating the metabolite IDs in a model or a
+#' numeric vector providing the metabolite indices.
+#'
+#' @returns An updated model of class \link{modelorg}
+#'
+#' @note
+#' If at least one of the provided metabolites still participates in a reaction,
+#' the function stops with an error message.
+#'
+#' @export
+rmMetabolite <- function(model, met) {
+  if(length(met) == 0)
+    return(model)
+
+  if(!all(checkMetId(model, met))) {
+    stop("Please check your metabolite IDs/indices in argument 'met'.")
+  }
+
+  met <- met_pos(model, met)
+
+  # print(paste0("Removing metabolites: ",paste(model@met_id[met], collapse = ", ")))
+
+  if(any(model@S[met,] != 0)) {
+    stop("At least one provided metabolite still participates in at least one reaction.")
+  }
+
+  # remove metabolite from data structures
+  model@S        <- model@S[-met,, drop = FALSE]
+  model@met_id   <- model@met_id[-met]
+  model@met_name <- model@met_name[-met]
+  model@met_comp <- model@met_comp[-met]
+  model@met_attr <- model@met_attr[-met,, drop = FALSE]
+
+  return(model)
+}
+
+
 
 #' Add genes or update their data
 #'
