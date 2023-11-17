@@ -8,7 +8,7 @@
   - [x] addReact
   - [x] rmReact
   - [x] addMetabolite
-  - [ ] rmMetabolite
+  - [x] rmMetabolite
   - [ ] addComp
   - [ ] rmComp (no prio)
   - [x] addGene
