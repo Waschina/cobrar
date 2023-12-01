@@ -761,7 +761,7 @@ addGene <- function(model, id, name = NA, CVTerms = NA,
 #' @examples
 #' fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 #' mod <- readSBMLmod(fpath)
-#' mod <- addCompartments(mod, id = "p", name = "periplasm")
+#' mod <- addCompartment(mod, id = "p", name = "periplasm")
 #'
 #' @export
 addCompartment <- function(model, id, name = NA) {
