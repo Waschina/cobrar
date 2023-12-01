@@ -256,7 +256,7 @@ setMethod("comp_num", signature(model = "modelorg"),
 #' Returns the index(es) of specific compartment(s).
 #'
 #' @param model Model of class \link{modelorg}
-#' @param gene Character vector with compartment IDs or Integer vector providing
+#' @param comp Character vector with compartment IDs or Integer vector providing
 #' indexes.
 #'
 #' @details
@@ -301,6 +301,59 @@ setGeneric("constraint_num", valueClass = "numeric", function(model) {
 setMethod("constraint_num", signature(model = "modelorg"),
           function(model) {
             return(nrow(model@constraints@coeff))
+          }
+)
+
+#' Number of subsystems
+#'
+#' Get the total number of subsystems of a model
+#'
+#' @param model Model of class \link{modelorg}
+#'
+#' @export
+setGeneric("subsys_num", valueClass = "numeric", function(model) {
+  standardGeneric("subsys_num")
+})
+setMethod("subsys_num", signature(model = "modelorg"),
+          function(model) {
+            return(length(model@subSys_id))
+          }
+)
+
+#' Index of subsystem(s)
+#'
+#' Returns the index(es) of specific subsystem(s).
+#'
+#' @param model Model of class \link{modelorg}
+#' @param subsys Character vector with subsystem IDs or Integer vector providing
+#' indexes.
+#'
+#' @details
+#' Returns NA for subsystem IDs not part of the model or if the index is larger
+#' than the number of subsystems in the model.
+#'
+#' @export
+setGeneric("subsys_pos", valueClass = "numeric", function(model, subsys) {
+  standardGeneric("subsys_pos")
+})
+setMethod("subsys_pos", signature(model = "modelorg", subsys = "character"),
+          function(model, subsys) {
+            return(match(subsys, model@subSys_id))
+          }
+)
+setMethod("subsys_pos", signature(model = "modelorg", subsys = "numeric"),
+          function(model, subsys) {
+            return(ifelse(subsys<=subsys_num(model),subsys,NA_integer_))
+          }
+)
+setMethod("subsys_pos", signature(model = "modelorg", subsys = "missing"),
+          function(model, subsys) {
+            return(NA_integer_)
+          }
+)
+setMethod("subsys_pos", signature(model = "modelorg", subsys = "logical"),
+          function(model, subsys) {
+            return(rep(NA_integer_, length(subsys)))
           }
 )
 
@@ -356,6 +409,7 @@ setMethod("show", signature(object = "modelorg"),
                 cat("                           ",constraint2string(object,i),"\n")
               }
             }
+            cat("number of subsystems:      ", subsys_num(object), "\n")
             cat("\n")
             cat("objective function:        ", printObjFunc(object), "\n")
           }

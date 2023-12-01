@@ -107,3 +107,75 @@ checkGeneId <- function(model, gene) {
 
   return(checkRes)
 }
+
+#' Check compartment IDs and Indices
+#'
+#' Checks whether compartment IDs or indices are part of (valid) for a specific
+#' model.
+#'
+#' @param model Model of class \link{modelorg}
+#' @param comp A character vector specifying the compartment IDs or a integer
+#' vector providing the compartment indices in the model.
+#'
+#' @return A logical vector; TRUE if ID/index is valid, FALSE otherwise.
+#'
+#' @export
+checkCompartmentId <- function(model, comp) {
+  if (!is(model, "modelorg")) {
+    stop("Argument 'model' needs an model of class 'modelorg'.")
+  }
+
+  if(!(is.numeric(comp) && all(comp %% 1 == 0) && all(comp > 0) || is.character(comp))) {
+    stop("Argument 'comp' needs to be either a non-negative integer vector or a character vector")
+  }
+
+  checkRes <- rep(FALSE, length(comp))
+
+  # Indices provided
+  if(is.numeric(comp)) {
+    checkRes <- comp <= comp_num(model)
+  }
+
+  # IDs provided
+  if(is.character(comp)) {
+    checkRes <- comp %in% model@mod_compart
+  }
+
+  return(checkRes)
+}
+
+#' Check subsystem IDs and Indices
+#'
+#' Checks whether subsystem IDs or indices are part of (valid) for a specific
+#' model.
+#'
+#' @param model Model of class \link{modelorg}
+#' @param subsystem A character vector specifying the subsystem IDs or a integer
+#' vector providing the subsystem indices in the model.
+#'
+#' @return A logical vector; TRUE if ID/index is valid, FALSE otherwise.
+#'
+#' @export
+checkSubsystemId <- function(model, subsystem) {
+  if (!is(model, "modelorg")) {
+    stop("Argument 'model' needs an model of class 'modelorg'.")
+  }
+
+  if(!(is.numeric(subsystem) && all(subsystem %% 1 == 0) && all(subsystem > 0) || is.character(subsystem))) {
+    stop("Argument 'subsystem' needs to be either a non-negative integer vector or a character vector")
+  }
+
+  checkRes <- rep(FALSE, length(subsystem))
+
+  # Indices provided
+  if(is.numeric(subsystem)) {
+    checkRes <- subsystem <= comp_num(model)
+  }
+
+  # IDs provided
+  if(is.character(subsystem)) {
+    checkRes <- subsystem %in% model@subSys_id
+  }
+
+  return(checkRes)
+}

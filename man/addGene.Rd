@@ -24,7 +24,7 @@ addGene(
 \item{SBOTerm}{Character vector for the genes' SBO-Terms}
 }
 \description{
-The functions allows you to add one or more genes to a model. When
+The function allows you to add one or more genes to a model. When
 providing the ID of an already existing genes, you can use this function
-to update the genes' information.
+to update the gene's information.
 }

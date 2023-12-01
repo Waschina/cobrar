@@ -9,7 +9,7 @@ comp_pos(model, comp)
 \arguments{
 \item{model}{Model of class \link{modelorg}}
 
-\item{gene}{Character vector with compartment IDs or Integer vector providing
+\item{comp}{Character vector with compartment IDs or Integer vector providing
 indexes.}
 }
 \description{

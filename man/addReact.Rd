@@ -13,8 +13,8 @@ addReact(
   lb = 0,
   ub = COBRAR_SETTINGS("MAXIMUM"),
   obj = 0,
-  subSystem = NA,
-  subSystemName = NA,
+  subsystem = NA,
+  subsystemName = NA,
   gprAssoc = NA,
   reactName = NA,
   metName = NA,
@@ -47,10 +47,10 @@ limits, respectively.}
 \item{obj}{Single numeric value for the coefficient of the reaction in the
 objective function.}
 
-\item{subSystem}{A vector of character strings containing the sub system IDs
+\item{subsystem}{A vector of character strings containing the sub system IDs
 to which the reaction belongs.}
 
-\item{subSystemName}{A character vector (same length as \code{subSystem}) for the
+\item{subsystemName}{A character vector (same length as \code{subsystem}) for the
 names of the subsystems. If the subsystem is already part of the model and
 you do not want to change its name, just use NA the corresponding entry.}
 
@@ -83,7 +83,7 @@ If the reaction is already part of the model, any reaction value (e.g., lb,
 ub, reactName), that is set to NA has the effect that the old value will be
 used.
 If the reaction is already part of the model, and values for the parameter
-\code{subSystem} are provided, all previous set Subsystem associations of the
+\code{subsystem} are provided, all previous set subsystem associations of the
 reaction will be removed.
 If metabolites or subsystems are not part of the model yet, they will be
 added.
@@ -119,6 +119,7 @@ mod <- addReact(mod, id = "ABTA", Scoef = c(-1,-1,1,1),
                 metName = c(NA,NA,NA,"Succinic semialdehyde"),
                 metComp = c(NA,NA,NA,"c"), metCharge = c(NA,NA,NA,-1),
                 metChemicalFormula = c(NA,NA,NA,"C4H5O3"),
+                subsystem = "GABAdegr", subsystemName = "4-aminobutyrate degradation",
                 CVTerms = "bqbiol_is;http://identifiers.org/ec-code/2.6.1.19",
                 gprAssoc = "b2662 | b1302")
 
@@ -127,6 +128,7 @@ mod <- addReact(mod, id = "SSALx", Scoef = c(-1,-1,-1,2,1,1),
                 met = c("h2o_c","nad_c","sucsal_c","h_c","nadh_c","succ_c"),
                 lb = 0,
                 reactName = "Succinate-semialdehyde dehydrogenase (NAD)",
+                subsystem = "GABAdegr",
                 CVTerms = "bqbiol_is;http://identifiers.org/ec-code/1.2.1.24",
                 gprAssoc = "b1525")
 

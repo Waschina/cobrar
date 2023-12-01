@@ -317,9 +317,9 @@ rmConstraint <- function(model, ind) {
 #' limits, respectively.
 #' @param obj Single numeric value for the coefficient of the reaction in the
 #' objective function.
-#' @param subSystem A vector of character strings containing the sub system IDs
+#' @param subsystem A vector of character strings containing the sub system IDs
 #' to which the reaction belongs.
-#' @param subSystemName A character vector (same length as `subSystem`) for the
+#' @param subsystemName A character vector (same length as `subsystem`) for the
 #' names of the subsystems. If the subsystem is already part of the model and
 #' you do not want to change its name, just use NA the corresponding entry.
 #' @param gprAssoc A single character string giving the Gene-Product-Reaction
@@ -342,7 +342,7 @@ rmConstraint <- function(model, ind) {
 #' ub, reactName), that is set to NA has the effect that the old value will be
 #' used.
 #' If the reaction is already part of the model, and values for the parameter
-#' `subSystem` are provided, all previous set Subsystem associations of the
+#' `subsystem` are provided, all previous set subsystem associations of the
 #' reaction will be removed.
 #' If metabolites or subsystems are not part of the model yet, they will be
 #' added.
@@ -378,6 +378,7 @@ rmConstraint <- function(model, ind) {
 #'                 metName = c(NA,NA,NA,"Succinic semialdehyde"),
 #'                 metComp = c(NA,NA,NA,"c"), metCharge = c(NA,NA,NA,-1),
 #'                 metChemicalFormula = c(NA,NA,NA,"C4H5O3"),
+#'                 subsystem = "GABAdegr", subsystemName = "4-aminobutyrate degradation",
 #'                 CVTerms = "bqbiol_is;http://identifiers.org/ec-code/2.6.1.19",
 #'                 gprAssoc = "b2662 | b1302")
 #'
@@ -386,6 +387,7 @@ rmConstraint <- function(model, ind) {
 #'                 met = c("h2o_c","nad_c","sucsal_c","h_c","nadh_c","succ_c"),
 #'                 lb = 0,
 #'                 reactName = "Succinate-semialdehyde dehydrogenase (NAD)",
+#'                 subsystem = "GABAdegr",
 #'                 CVTerms = "bqbiol_is;http://identifiers.org/ec-code/1.2.1.24",
 #'                 gprAssoc = "b1525")
 #'
@@ -403,8 +405,8 @@ addReact <- function(model,
                      lb = 0,
                      ub = COBRAR_SETTINGS("MAXIMUM"),
                      obj = 0,
-                     subSystem = NA,
-                     subSystemName = NA,
+                     subsystem = NA,
+                     subsystemName = NA,
                      gprAssoc = NA,
                      reactName = NA,
                      metName = NA,
@@ -467,7 +469,8 @@ addReact <- function(model,
 
     # subsystems
     model@subSys <- rbind(model@subSys,
-                          rep(FALSE, ncol(model@subSys)))
+                          Matrix(FALSE, nrow = 1, ncol = ncol(model@subSys),
+                                 sparse = TRUE))
   }
 
   # Add/update metabolites if necessary
@@ -476,9 +479,9 @@ addReact <- function(model,
   indMs <- match(met, model@met_id)
 
   # Add/update subsystems  if necessary
-  if(length(subSystem) > 0 && !any(is.na(subSystem))) {
-    model <- addSubSystem(model, id = subSystem, name = subSystemName) # TODO!
-    indSubSys <- match(subSystem, model@subSys_id)
+  if(length(subsystem) > 0 && !any(is.na(subsystem))) {
+    model <- addSubsystem(model, id = subsystem, name = subsystemName)
+    indSubSys <- subsys_pos(model, subsystem)
   }
 
   #----------------------------#
@@ -504,8 +507,9 @@ addReact <- function(model,
   model@uppbnd[indR] <- ub
 
   # subsys
-  if(length(subSystem) > 0 && !any(is.na(subSystem))) {
-    model@S[matrix(c(indSubSys, rep(indR,length(indSubSys))),ncol = 2)] <- TRUE
+  if(length(subsystem) > 0 && !any(is.na(subsystem))) {
+    model@subSys[indR,] <- FALSE
+    model@subSys[matrix(c(rep(indR,length(indSubSys)), indSubSys),ncol = 2)] <- TRUE
   }
 
   # GPR
@@ -525,7 +529,7 @@ addReact <- function(model,
 
 #' Add metabolites or update their data
 #'
-#' The functions allows you to add one or more metabolites to a model. When
+#' The function allows you to add one or more metabolites to a model. When
 #' providing the ID of an already existing metabolite, you can use this function
 #' to update metabolite information.
 #'
@@ -586,7 +590,7 @@ addMetabolite <- function(model, id, comp = NA, name = NA, chemicalFormula = NA,
     indnew <- which(is.na(indM))
     indM[is.na(indM)] <- (norig+1):(norig+nnew)
 
-    # extent metabolite-related model stuctures
+    # extent metabolite-related model structures
 
     # S
     model@S <- rbind(model@S, matrix(0, nrow = nnew, ncol = react_num(model)))
@@ -617,9 +621,10 @@ addMetabolite <- function(model, id, comp = NA, name = NA, chemicalFormula = NA,
 
   # compartment
   comp_new <- comp_pos(model, comp)
-  if(any(is.na(comp_new) & !is.na(comp)))
-    warning(paste0("Supplied compartment not part of the model yet: ",
-                   paste(comp[is.na(comp_new) & !is.na(comp)], collapse = ", ")))
+  if(any(is.na(comp_new[!is.na(comp)]))) {
+    model <- addCompartment(model, unique(comp[is.na(comp_new) & !is.na(comp)]))
+    comp_new <- comp_pos(model, comp)
+  }
   model@met_comp[indM][which(!is.na(comp))] <- model@mod_compart[comp_new[which(!is.na(comp))]]
 
 
@@ -671,9 +676,9 @@ rmMetabolite <- function(model, met) {
 
 #' Add genes or update their data
 #'
-#' The functions allows you to add one or more genes to a model. When
+#' The function allows you to add one or more genes to a model. When
 #' providing the ID of an already existing genes, you can use this function
-#' to update the genes' information.
+#' to update the gene's information.
 #'
 #' @param model Model of class \link{modelorg}
 #' @param id Character vector with gene IDs
@@ -739,6 +744,202 @@ addGene <- function(model, id, name = NA, CVTerms = NA,
   model@genes_attr$CVTerms[indG][which(!is.na(CVTerms))] <- CVTerms[which(!is.na(CVTerms))]
   model@genes_attr$SBOTerm[indG][which(!is.na(SBOTerm))] <- SBOTerm[which(!is.na(SBOTerm))]
 
+
+  return(model)
+}
+
+#' Add Compartments or update their data
+#'
+#' The function allows you to add one or more compartments to a model. When
+#' providing the ID of an already existing compartment, you can use this
+#' function to update the compartment's name.
+#'
+#' @param model Model of class \link{modelorg}
+#' @param id Character vector with compartment IDs
+#' @param name Character vector for compartment names
+#'
+#' @examples
+#' fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
+#' mod <- readSBMLmod(fpath)
+#' mod <- addCompartments(mod, id = "p", name = "periplasm")
+#'
+#' @export
+addCompartment <- function(model, id, name = NA) {
+  norig <- comp_num(model)
+
+  #--------------------------------#
+  # If optional values are missing #
+  #--------------------------------#
+  if(length(name) == 1 && is.na(name))
+    name <- rep(NA, length(id))
+
+  #--------------#
+  # basic checks #
+  #--------------#
+  if(any(duplicated(id)))
+    stop("Duplicates in compartment IDs.")
+  if(length(id) == 0)
+    stop("No compartment ID provided.")
+  if(length(name) != length(id))
+    stop("Mismatch of number of compartment IDs and Names.")
+
+  #----------------------------------------------------------------#
+  # check if compartments are new or if updated infos are provided #
+  #----------------------------------------------------------------#
+  indC <- comp_pos(model, id)
+  nnew <- sum(is.na(indC))
+  if(nnew > 0) {
+    indnew <- which(is.na(indC))
+    indC[is.na(indC)] <- (norig+1):(norig+nnew)
+
+    # extent compartment-related model structures
+    model@mod_compart      <- append(model@mod_compart, id[indnew])
+    model@mod_compart_name <- append(model@mod_compart_name, name[indnew])
+
+    # use ids if names for new metabolites are not provided
+    name[which(indC > norig & is.na(name))] <- id[which(indC > norig & is.na(name))]
+  }
+
+  #-------------------------------#
+  # Add/update compartment values #
+  #-------------------------------#
+
+  # name
+  model@mod_compart_name[indC][which(!is.na(name))] <- name[which(!is.na(name))]
+
+  return(model)
+}
+
+#' Remove compartments from a model
+#'
+#' This function removes specified compartments from a model.
+#'
+#' @param model Model of class \link{modelorg}
+#' @param comp A character vector stating the compartment IDs in a model or a
+#' numeric vector providing the compartment indices.
+#'
+#' @returns An updated model of class \link{modelorg}
+#'
+#' @note
+#' If at least one of the provided compartments still has metabolites associated
+#' with it, the function stops with an error message.
+#'
+#' @export
+rmCompartment <- function(model, comp) {
+  if(length(comp) == 0)
+    return(model)
+
+  if(!all(checkCompartmentId(model, comp))) {
+    stop("Please check your metabolite IDs/indices in argument 'comp'.")
+  }
+
+  comp <- comp_pos(model, comp)
+
+  if(any(comp_pos(model, model@met_comp) %in% comp)) {
+    stop("At least one provided compartment still has metabolites associated with it.")
+  }
+
+  # remove metabolite from data structures
+  model@mod_compart      <- model@mod_compart[-comp]
+  model@mod_compart_name <- model@mod_compart_name[-comp]
+
+  return(model)
+}
+
+#' Add subsystems or update their data
+#'
+#' The function allows you to add one or more subsystems to a model. When
+#' providing the ID of an already existing subsystem, you can use this
+#' function to update the subsystem's name.
+#'
+#' @param model Model of class \link{modelorg}
+#' @param id Character vector with subsystem IDs
+#' @param name Character vector for subsystem names
+#'
+#' @examples
+#' fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
+#' mod <- readSBMLmod(fpath)
+#' mod <- addSubsystem(mod, id = "Bifidoshunt",
+#'                     name = "glucose fermentation to acetate and lactate (Bifidobacteria)")
+#'
+#' @export
+addSubsystem <- function(model, id, name = NA) {
+  norig <- subsys_num(model)
+
+  #--------------------------------#
+  # If optional values are missing #
+  #--------------------------------#
+  if(length(name) == 1 && is.na(name))
+    name <- rep(NA, length(id))
+
+  #--------------#
+  # basic checks #
+  #--------------#
+  if(any(duplicated(id)))
+    stop("Duplicates in subsystem IDs.")
+  if(length(id) == 0)
+    stop("No subsystem ID provided.")
+  if(length(name) != length(id))
+    stop("Mismatch of number of subsystem IDs and Names.")
+
+  #----------------------------------------------------------------#
+  # check if subsystems are new or if updated names are provided   #
+  #----------------------------------------------------------------#
+  indS <- subsys_pos(model, id)
+  nnew <- sum(is.na(indS))
+  if(nnew > 0) {
+    indnew <- which(is.na(indS))
+    indS[is.na(indS)] <- (norig+1):(norig+nnew)
+
+    # extent compartment-related model structures
+    model@subSys_id   <- append(model@subSys_id, id[indnew])
+    model@subSys_name <- append(model@subSys_name, rep(NA_character_,nnew))
+    model@subSys <- cbind(model@subSys,
+                          Matrix(FALSE,
+                                 nrow = nrow(model@subSys),
+                                 ncol = length(indnew),
+                                 sparse = TRUE))
+    colnames(model@subSys)[indnew] <- id[indnew]
+
+    # use ids if names for new metabolites are not provided
+    name[which(indS > norig & is.na(name))] <- id[which(indS > norig & is.na(name))]
+  }
+
+  #-------------------------------#
+  # Add/update compartment values #
+  #-------------------------------#
+
+  # name
+  model@subSys_name[indS][which(!is.na(name))] <- name[which(!is.na(name))]
+
+  return(model)
+}
+
+#' Remove subsystems from a model
+#'
+#' This function removes specified subsystems from a model.
+#'
+#' @param model Model of class \link{modelorg}
+#' @param subsystem A character vector stating the subsystem IDs in a model or a
+#' numeric vector providing the subsystem indices.
+#'
+#' @returns An updated model  of class \link{modelorg}
+#'
+#' @export
+rmSubsystem <- function(model, subsystem) {
+  if(length(subsystem) == 0)
+    return(model)
+
+  if(!all(checkSubsystemId(model, subsystem))) {
+    stop("Please check your subsystem IDs/indices in argument 'subsystem'.")
+  }
+
+  subsystem <- subsys_pos(model, subsystem)
+
+  # remove metabolite from data structures
+  model@subSys      <- model@subSys[,-subsystem]
+  model@subSys_id   <- model@subSys_id[-subsystem]
+  model@subSys_name <- model@subSys_name[-subsystem]
 
   return(model)
 }

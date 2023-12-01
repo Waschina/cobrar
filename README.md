@@ -2,19 +2,20 @@
 
 
 
-#### Current TODOs
+#### Current TODO
 
-- [ ] Model modification functions
+- [ ] R CMD check
+- [x] Model modification functions
   - [x] addReact
   - [x] rmReact
   - [x] addMetabolite
   - [x] rmMetabolite
-  - [ ] addComp
-  - [ ] rmComp (no prio)
+  - [x] addCompartment
+  - [x] rmCompartment(no prio)
   - [x] addGene
   - [x] rmGene
-  - [ ] addSubSystem
-  - [ ] rmSubSystem
+  - [x] addSubSystem
+  - [x] rmSubSystem
 - [x] gene KOs
 - [x] FVA (with adjustable proportions)
 - [x] FVA documentation

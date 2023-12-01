@@ -33,7 +33,7 @@ addMetabolite(
 \item{SBOTerm}{Character vector for the metabolites' SBO-Terms}
 }
 \description{
-The functions allows you to add one or more metabolites to a model. When
+The function allows you to add one or more metabolites to a model. When
 providing the ID of an already existing metabolite, you can use this function
 to update metabolite information.
 }
