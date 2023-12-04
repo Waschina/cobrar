@@ -2,7 +2,8 @@
 % Please edit documentation in R/import.R
 \name{readSybilmod}
 \alias{readSybilmod}
-\title{Reads an sybil model file and constructs an object of class 'modelorg'}
+\title{Reads a sybil model file and constructs an object of cobrar's class
+'modelorg'}
 \usage{
 readSybilmod(file_path)
 }
@@ -10,8 +11,10 @@ readSybilmod(file_path)
 \item{file_path}{Path to sybil model(s) saved as RDS file.}
 }
 \value{
-A \link{modelorg-class} object or a list with \link{modelorg-class} objects.
+A \link{modelorg-class} object or a list with \link{modelorg-class}
+objects.
 }
 \description{
-Reads an sybil model file and constructs an object of class 'modelorg'
+Reads a sybil model file and constructs an object of cobrar's class
+'modelorg'
 }
