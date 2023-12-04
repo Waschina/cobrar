@@ -14,7 +14,9 @@
 #' @slot obj_sec Value of secondary objective function. E.g.: Summed absolute
 #' fluxes in \link{pfba}.
 #' @slot fluxes Predicted flux values.
-#' @slot redCost Predicted reduced costs (or "*dual value*") for reactions.
+#' @slot redCosts Predicted reduced costs (or "*dual value*") for reactions.
+#'
+#' @aliases FluxPrediction
 #'
 #' @exportClass FluxPrediction
 setClass("FluxPrediction",

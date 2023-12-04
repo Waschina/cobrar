@@ -22,8 +22,8 @@ geneDel <- function(model, gene) {
   if(is.numeric(gene))
     KOgenes <- model@allGenes[gene]
 
-  gprL <- lapply(1:react_num(mod),
-                 function(i) c(gpr = mod@gprRules[i], genes = mod@genes[i]))
+  gprL <- lapply(1:react_num(model),
+                 function(i) c(gpr = model@gprRules[i], genes = model@genes[i]))
 
   # can each reaction be catalysed after gene KO(s)?
   reactCata <- unlist(lapply(gprL, function(gpr_i) {

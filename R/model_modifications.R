@@ -185,6 +185,12 @@ rmGene <- function(model, gene, rm_react = TRUE, rm_met = TRUE) {
 #'                      react = c("EX_h_e","BIOMASS_Ecoli_core_w_GAM"),
 #'                      coeff = c(1, -20), rtype = "U", ub = 0)
 #'
+#'
+#' @importFrom stats var
+#'
+#' @docType methods
+#' @rdname addConstraint-methods
+#'
 #' @export
 setGeneric("addConstraint" ,valueClass = "modelorg", function(model,
                                                               react,
@@ -194,6 +200,8 @@ setGeneric("addConstraint" ,valueClass = "modelorg", function(model,
                                                               ub = NULL) {
   standardGeneric("addConstraint")
 })
+#' @rdname addConstraint-methods
+#' @aliases addConstraint,modelorg,character,numeric,character
 setMethod("addConstraint", signature(model = "modelorg",
                                      react = "character",
                                      coeff = "numeric",
@@ -207,6 +215,8 @@ setMethod("addConstraint", signature(model = "modelorg",
                                  rtype = rtype))
           }
 )
+#' @rdname addConstraint-methods
+#' @aliases addConstraint,modelorg,list,list,character
 setMethod("addConstraint", signature(model = "modelorg",
                                      react = "list",
                                      coeff = "list",
@@ -328,6 +338,8 @@ rmConstraint <- function(model, ind) {
 #' If NA, the value of argument `id` is used.
 #' @param metName A vector of character strings of the same length as `met`
 #' containing the metabolites names for the metabolites given in argument `met`.
+#' @param metComp A vector of character strings of the same length as `met`
+#' specifying the compartment IDs for the metabolites given in argument `met`.
 #' @param metCharge A numeric vector of the same length as `met` defining the
 #' charges for the metabolites given in argument `met`.
 #' @param metChemicalFormula A character vector of the same length as `met`
@@ -355,7 +367,7 @@ rmConstraint <- function(model, ind) {
 #'
 #' fba(mod)
 #'
-#' # 4abut transport: 4abut_e + h_e ⇌ 4abut_c + h_c
+#' # 4abut transport: 4abut_e + h_e <=> 4abut_c + h_c
 #' mod <- addReact(mod, id = "ABUTt", Scoef = c(-1,-1,1,1),
 #'                 met = c("4abut_e","h_e","4abut_c","h_c"), reversible = TRUE,
 #'                 lb = -1000, ub = 1000,

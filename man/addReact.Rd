@@ -63,6 +63,9 @@ If NA, the value of argument \code{id} is used.}
 \item{metName}{A vector of character strings of the same length as \code{met}
 containing the metabolites names for the metabolites given in argument \code{met}.}
 
+\item{metComp}{A vector of character strings of the same length as \code{met}
+specifying the compartment IDs for the metabolites given in argument \code{met}.}
+
 \item{metCharge}{A numeric vector of the same length as \code{met} defining the
 charges for the metabolites given in argument \code{met}.}
 
@@ -96,7 +99,7 @@ mod <- readSBMLmod(fpath)
 
 fba(mod)
 
-# 4abut transport: 4abut_e + h_e ⇌ 4abut_c + h_c
+# 4abut transport: 4abut_e + h_e <=> 4abut_c + h_c
 mod <- addReact(mod, id = "ABUTt", Scoef = c(-1,-1,1,1),
                 met = c("4abut_e","h_e","4abut_c","h_c"), reversible = TRUE,
                 lb = -1000, ub = 1000,

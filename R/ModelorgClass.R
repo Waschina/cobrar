@@ -9,6 +9,8 @@
 #' @slot mod_compart A character vector indicating the model compartment.
 #' @slot mod_compart_name A character vector with the name of the model compartment.
 #' @slot mod_attr A data frame with additional model attributes.
+#' @slot mod_notes A character string that can contain an XML block with
+#' additional information about the model.
 #' @slot S A sparse numeric matrix of \link[Matrix]{dgCMatrix-class} representing the Stoichiometric matrix.
 #' @slot obj_coef A numeric vector containing coefficients for the objective function.
 #' @slot subSys A sparse Boolean matrix of \link[Matrix]{lgCMatrix-class} defining subsystems.
@@ -95,10 +97,14 @@ setClass("modelorg",
 #'
 #' @param model Model of class \link{modelorg}
 #'
+#' @docType methods
+#' @rdname react_num-methods
 #' @export
 setGeneric("react_num", valueClass = "numeric", function(model) {
   standardGeneric("react_num")
 })
+#' @rdname react_num-methods
+#' @aliases react_num,modelorg
 setMethod("react_num", signature(model = "modelorg"),
           function(model) {
             return(length(model@react_id))
@@ -117,20 +123,28 @@ setMethod("react_num", signature(model = "modelorg"),
 #' Returns NA for reaction IDs not part of the model or the index is larger than
 #' the number of reactions in the model.
 #'
+#' @docType methods
+#' @rdname react_pos-methods
 #' @export
 setGeneric("react_pos", valueClass = "numeric", function(model, react) {
   standardGeneric("react_pos")
 })
+#' @rdname react_pos-methods
+#' @aliases react_pos,modelorg,character
 setMethod("react_pos", signature(model = "modelorg", react = "character"),
           function(model, react) {
             return(match(react, model@react_id))
           }
 )
+#' @rdname react_pos-methods
+#' @aliases react_pos,modelorg,numeric
 setMethod("react_pos", signature(model = "modelorg", react = "numeric"),
           function(model, react) {
             return(ifelse(react <= react_num(model),react, NA_integer_))
           }
 )
+#' @rdname react_pos-methods
+#' @aliases react_pos,modelorg,missing
 setMethod("react_pos", signature(model = "modelorg", react = "missing"),
           function(model, react) {
             return(NA_integer_)
@@ -144,10 +158,14 @@ setMethod("react_pos", signature(model = "modelorg", react = "missing"),
 #'
 #' @param model Model of class \link{modelorg}
 #'
+#' @docType methods
+#' @rdname met_num-methods
 #' @export
 setGeneric("met_num", valueClass = "numeric", function(model) {
   standardGeneric("met_num")
 })
+#' @rdname met_num-methods
+#' @aliases met_num,modelorg
 setMethod("met_num", signature(model = "modelorg"),
           function(model) {
             return(length(model@met_id))
@@ -166,20 +184,28 @@ setMethod("met_num", signature(model = "modelorg"),
 #' Returns NA for metabolite IDs not part of the model or if the index is larger
 #' than the number of metabolites in the model.
 #'
+#' @docType methods
+#' @rdname met_pos-methods
 #' @export
 setGeneric("met_pos", valueClass = "numeric", function(model, met) {
   standardGeneric("met_pos")
 })
+#' @rdname met_pos-methods
+#' @aliases met_pos,modelorg,character
 setMethod("met_pos", signature(model = "modelorg", met = "character"),
           function(model, met) {
             return(match(met, model@met_id))
           }
 )
+#' @rdname met_pos-methods
+#' @aliases met_pos,modelorg,numeric
 setMethod("met_pos", signature(model = "modelorg", met = "numeric"),
           function(model, met) {
             return(ifelse((met<=met_num(model)), met, NA_integer_))
           }
 )
+#' @rdname met_pos-methods
+#' @aliases met_pos,modelorg,missing
 setMethod("met_pos", signature(model = "modelorg", met = "missing"),
           function(model, met) {
             return(NA_integer_)
@@ -192,10 +218,14 @@ setMethod("met_pos", signature(model = "modelorg", met = "missing"),
 #'
 #' @param model Model of class \link{modelorg}
 #'
+#' @docType methods
+#' @rdname gene_num-methods
 #' @export
 setGeneric("gene_num", valueClass = "numeric", function(model) {
   standardGeneric("gene_num")
 })
+#' @rdname gene_num-methods
+#' @aliases gene_num,modelorg
 setMethod("gene_num", signature(model = "modelorg"),
           function(model) {
             return(length(model@allGenes))
@@ -215,20 +245,28 @@ setMethod("gene_num", signature(model = "modelorg"),
 #' Returns NA for gene IDs not part of the model or if the index is larger
 #' than the number of genes in the model.
 #'
+#' @docType methods
+#' @rdname gene_pos-methods
 #' @export
 setGeneric("gene_pos", valueClass = "numeric", function(model, gene) {
   standardGeneric("gene_pos")
 })
+#' @rdname gene_pos-methods
+#' @aliases gene_pos,modelorg,character
 setMethod("gene_pos", signature(model = "modelorg", gene = "character"),
           function(model, gene) {
             return(match(gene, model@allGenes))
           }
 )
+#' @rdname gene_pos-methods
+#' @aliases gene_pos,modelorg,numeric
 setMethod("gene_pos", signature(model = "modelorg", gene = "numeric"),
           function(model, gene) {
             return(ifelse(gene<=gene_num(model),gene,NA_integer_))
           }
 )
+#' @rdname gene_pos-methods
+#' @aliases gene_pos,modelorg,missing
 setMethod("gene_pos", signature(model = "modelorg", gene = "missing"),
           function(model, gene) {
             return(NA_integer_)
@@ -241,10 +279,14 @@ setMethod("gene_pos", signature(model = "modelorg", gene = "missing"),
 #'
 #' @param model Model of class \link{modelorg}
 #'
+#' @docType methods
+#' @rdname comp_num-methods
 #' @export
 setGeneric("comp_num", valueClass = "numeric", function(model) {
   standardGeneric("comp_num")
 })
+#' @rdname comp_num-methods
+#' @aliases comp_num,modelorg
 setMethod("comp_num", signature(model = "modelorg"),
           function(model) {
             return(length(model@mod_compart))
@@ -263,25 +305,35 @@ setMethod("comp_num", signature(model = "modelorg"),
 #' Returns NA for compartment IDs not part of the model or if the index is larger
 #' than the number of compartments in the model.
 #'
+#' @docType methods
+#' @rdname comp_pos-methods
 #' @export
 setGeneric("comp_pos", valueClass = "numeric", function(model, comp) {
   standardGeneric("comp_pos")
 })
+#' @rdname comp_pos-methods
+#' @aliases comp_pos,modelorg,character
 setMethod("comp_pos", signature(model = "modelorg", comp = "character"),
           function(model, comp) {
             return(match(comp, model@mod_compart))
           }
 )
+#' @rdname comp_pos-methods
+#' @aliases comp_pos,modelorg,numeric
 setMethod("comp_pos", signature(model = "modelorg", comp = "numeric"),
           function(model, comp) {
             return(ifelse(comp<=comp_num(model),comp,NA_integer_))
           }
 )
+#' @rdname comp_pos-methods
+#' @aliases comp_pos,modelorg,missing
 setMethod("comp_pos", signature(model = "modelorg", comp = "missing"),
           function(model, comp) {
             return(NA_integer_)
           }
 )
+#' @rdname comp_pos-methods
+#' @aliases comp_pos,modelorg,logical
 setMethod("comp_pos", signature(model = "modelorg", comp = "logical"),
           function(model, comp) {
             return(rep(NA_integer_, length(comp)))
@@ -294,10 +346,14 @@ setMethod("comp_pos", signature(model = "modelorg", comp = "logical"),
 #'
 #' @param model Model of class \link{modelorg}
 #'
+#' @docType methods
+#' @rdname constraint_num-methods
 #' @export
 setGeneric("constraint_num", valueClass = "numeric", function(model) {
   standardGeneric("constraint_num")
 })
+#' @rdname constraint_num-methods
+#' @aliases constraint_num,modelorg
 setMethod("constraint_num", signature(model = "modelorg"),
           function(model) {
             return(nrow(model@constraints@coeff))
@@ -310,10 +366,14 @@ setMethod("constraint_num", signature(model = "modelorg"),
 #'
 #' @param model Model of class \link{modelorg}
 #'
+#' @docType methods
+#' @rdname subsys_num-methods
 #' @export
 setGeneric("subsys_num", valueClass = "numeric", function(model) {
   standardGeneric("subsys_num")
 })
+#' @rdname subsys_num-methods
+#' @aliases subsys_num,modelorg
 setMethod("subsys_num", signature(model = "modelorg"),
           function(model) {
             return(length(model@subSys_id))
@@ -332,25 +392,35 @@ setMethod("subsys_num", signature(model = "modelorg"),
 #' Returns NA for subsystem IDs not part of the model or if the index is larger
 #' than the number of subsystems in the model.
 #'
+#' @docType methods
+#' @rdname subsys_pos-methods
 #' @export
 setGeneric("subsys_pos", valueClass = "numeric", function(model, subsys) {
   standardGeneric("subsys_pos")
 })
+#' @rdname subsys_pos-methods
+#' @aliases subsys_pos,modelorg,character
 setMethod("subsys_pos", signature(model = "modelorg", subsys = "character"),
           function(model, subsys) {
             return(match(subsys, model@subSys_id))
           }
 )
+#' @rdname subsys_pos-methods
+#' @aliases subsys_pos,modelorg,numeric
 setMethod("subsys_pos", signature(model = "modelorg", subsys = "numeric"),
           function(model, subsys) {
             return(ifelse(subsys<=subsys_num(model),subsys,NA_integer_))
           }
 )
+#' @rdname subsys_pos-methods
+#' @aliases subsys_pos,modelorg,missing
 setMethod("subsys_pos", signature(model = "modelorg", subsys = "missing"),
           function(model, subsys) {
             return(NA_integer_)
           }
 )
+#' @rdname subsys_pos-methods
+#' @aliases subsys_pos,modelorg,logical
 setMethod("subsys_pos", signature(model = "modelorg", subsys = "logical"),
           function(model, subsys) {
             return(rep(NA_integer_, length(subsys)))

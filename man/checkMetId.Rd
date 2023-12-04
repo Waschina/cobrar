@@ -9,7 +9,7 @@ checkMetId(model, met)
 \arguments{
 \item{model}{Model of class \link{modelorg}}
 
-\item{react}{A character vector specifying the metabolite IDs or a integer
+\item{met}{A character vector specifying the metabolite IDs or a integer
 vector providing the metabolite indices in the model.}
 }
 \value{

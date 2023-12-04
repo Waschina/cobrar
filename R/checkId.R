@@ -41,7 +41,7 @@ checkReactId <- function(model, react) {
 #' model.
 #'
 #' @param model Model of class \link{modelorg}
-#' @param react A character vector specifying the metabolite IDs or a integer
+#' @param met A character vector specifying the metabolite IDs or a integer
 #' vector providing the metabolite indices in the model.
 #'
 #' @return A logical vector; TRUE if ID/index is valid, FALSE otherwise.

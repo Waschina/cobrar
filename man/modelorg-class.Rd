@@ -24,6 +24,9 @@ to central model structures, metabolites, reactions, and genes.
 
 \item{\code{mod_attr}}{A data frame with additional model attributes.}
 
+\item{\code{mod_notes}}{A character string that can contain an XML block with
+additional information about the model.}
+
 \item{\code{S}}{A sparse numeric matrix of \link[Matrix]{dgCMatrix-class} representing the Stoichiometric matrix.}
 
 \item{\code{obj_coef}}{A numeric vector containing coefficients for the objective function.}

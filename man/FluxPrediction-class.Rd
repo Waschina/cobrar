@@ -3,6 +3,7 @@
 \docType{class}
 \name{FluxPrediction-class}
 \alias{FluxPrediction-class}
+\alias{FluxPrediction}
 \title{Class for flux prediction results}
 \description{
 This class represents a flux prediction results, e.g., from Flux Balance
@@ -30,6 +31,6 @@ fluxes in \link{pfba}.}
 
 \item{\code{fluxes}}{Predicted flux values.}
 
-\item{\code{redCost}}{Predicted reduced costs (or "\emph{dual value}") for reactions.}
+\item{\code{redCosts}}{Predicted reduced costs (or "\emph{dual value}") for reactions.}
 }}
 
