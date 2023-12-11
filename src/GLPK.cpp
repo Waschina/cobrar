@@ -62,7 +62,7 @@ SEXP initProb(const char* name)
 }
 
 // [[Rcpp::export]]
-SEXP setObjDir(SEXP xp, int dir)
+SEXP setObjDirLP(SEXP xp, int dir)
 {
   glp_prob* lp = (glp_prob*)R_ExternalPtrAddr(xp);
 

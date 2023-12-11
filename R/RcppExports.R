@@ -9,8 +9,8 @@ initProb <- function(name) {
     .Call(`_cobrar_initProb`, name)
 }
 
-setObjDir <- function(xp, dir) {
-    .Call(`_cobrar_setObjDir`, xp, dir)
+setObjDirLP <- function(xp, dir) {
+    .Call(`_cobrar_setObjDirLP`, xp, dir)
 }
 
 addColsLP <- function(xp, ncols) {

@@ -154,7 +154,7 @@ setMethod("loadLPprob", signature(lp = "LPproblem_glpk"),
 
 setMethod("setObjDirection", signature(lp = "LPproblem_glpk"),
           function(lp, lpdir) {
-            setObjDir(lp@ptr, lpdir)
+            setObjDirLP(lp@ptr, lpdir)
           }
 )
 

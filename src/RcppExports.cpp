@@ -32,15 +32,15 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// setObjDir
-SEXP setObjDir(SEXP xp, int dir);
-RcppExport SEXP _cobrar_setObjDir(SEXP xpSEXP, SEXP dirSEXP) {
+// setObjDirLP
+SEXP setObjDirLP(SEXP xp, int dir);
+RcppExport SEXP _cobrar_setObjDirLP(SEXP xpSEXP, SEXP dirSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type xp(xpSEXP);
     Rcpp::traits::input_parameter< int >::type dir(dirSEXP);
-    rcpp_result_gen = Rcpp::wrap(setObjDir(xp, dir));
+    rcpp_result_gen = Rcpp::wrap(setObjDirLP(xp, dir));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -646,7 +646,7 @@ RcppExport SEXP _rcpp_module_boot_sbml_module();
 static const R_CallMethodDef CallEntries[] = {
     {"_cobrar_getGLPKVersion", (DL_FUNC) &_cobrar_getGLPKVersion, 0},
     {"_cobrar_initProb", (DL_FUNC) &_cobrar_initProb, 1},
-    {"_cobrar_setObjDir", (DL_FUNC) &_cobrar_setObjDir, 2},
+    {"_cobrar_setObjDirLP", (DL_FUNC) &_cobrar_setObjDirLP, 2},
     {"_cobrar_addColsLP", (DL_FUNC) &_cobrar_addColsLP, 2},
     {"_cobrar_addRowsLP", (DL_FUNC) &_cobrar_addRowsLP, 2},
     {"_cobrar_loadMatrixLP", (DL_FUNC) &_cobrar_loadMatrixLP, 5},
