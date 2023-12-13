@@ -1,5 +1,7 @@
 # cobrar
-
+  <!-- badges: start -->
+  [![R-CMD-check](https://github.com/Waschina/cobrar/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Waschina/cobrar/actions/workflows/R-CMD-check.yaml)
+  <!-- badges: end -->
 
 
 #### Current TODO
