@@ -9,7 +9,7 @@ Depends:
     Matrix
 License: GPL (>= 3)
 SystemRequirements:
-    libSBML-core-plus-packages (>= 5.16),
+    libSBML (>= 5.16),
     GLPK (>= 4.65)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
