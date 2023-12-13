@@ -22,6 +22,7 @@ jobs:
     permissions:
       contents: write
     steps:
+      - run: sudo apt-get -y install libsbml-dev
       - uses: actions/checkout@v3
 
       - uses: r-lib/actions/setup-pandoc@v2
