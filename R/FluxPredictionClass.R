@@ -36,10 +36,10 @@ setClass("FluxPrediction",
 
 #' Print a short summary of a flux prediction result
 #'
-#' Displays a summary the results obtained from a metabolic flux prediction
+#' Displays a summary of the results obtained from a metabolic flux prediction
 #' (e.g., FBA or pFBA).
 #'
-#' @param object S4-object of class \link{modelorg}.
+#' @param object S4-object of class \link{FluxPrediction}.
 #'
 #' @export
 setMethod("show", signature(object = "FluxPrediction"),
