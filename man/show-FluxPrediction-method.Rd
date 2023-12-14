@@ -7,9 +7,9 @@
 \S4method{show}{FluxPrediction}(object)
 }
 \arguments{
-\item{object}{S4-object of class \link{modelorg}.}
+\item{object}{S4-object of class \link{FluxPrediction}.}
 }
 \description{
-Displays a summary the results obtained from a metabolic flux prediction
+Displays a summary of the results obtained from a metabolic flux prediction
 (e.g., FBA or pFBA).
 }
