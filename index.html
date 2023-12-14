@@ -73,153 +73,102 @@
 <div class="section level1">
 <div class="page-header"><h1 id="cobrar">cobrar<a class="anchor" aria-label="anchor" href="#cobrar"></a>
 </h1></div>
-<p><!-- badges: start --> <a href="https://github.com/Waschina/cobrar/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/Waschina/cobrar/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <!-- badges: end --></p>
+<!-- badges: start -->
+
+<p>The R-package <em>cobrar</em> provides structures and functions to perform constraint-based metabolic network analysis, e.g., the prediction of metabolic fluxes using Flux Balance Analysis (FBA). <em>cobrar</em> is inspired by the former CRAN R-package <em>sybil</em>.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<div class="section level3">
+<h3 id="prerequisites">Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites"></a>
+</h3>
+<p><em>cobrar</em> requires the two system libraries libSBML and glpk. These libraries are available from most OS package manager.</p>
 <div class="section level4">
-<h4 id="current-todo">Current TODO<a class="anchor" aria-label="anchor" href="#current-todo"></a>
+<h4 id="ubuntudebianmint">Ubuntu/Debian/Mint<a class="anchor" aria-label="anchor" href="#ubuntudebianmint"></a>
 </h4>
-<ul class="task-list">
-<li>
-<input type="checkbox" disabled>R CMD check</li>
-<li>
-<input type="checkbox" disabled checked>Model modification functions<ul class="task-list">
-<li>
-<input type="checkbox" disabled checked>addReact</li>
-<li>
-<input type="checkbox" disabled checked>rmReact</li>
-<li>
-<input type="checkbox" disabled checked>addMetabolite</li>
-<li>
-<input type="checkbox" disabled checked>rmMetabolite</li>
-<li>
-<input type="checkbox" disabled checked>addCompartment</li>
-<li>
-<input type="checkbox" disabled checked>rmCompartment(no prio)</li>
-<li>
-<input type="checkbox" disabled checked>addGene</li>
-<li>
-<input type="checkbox" disabled checked>rmGene</li>
-<li>
-<input type="checkbox" disabled checked>addSubSystem</li>
-<li>
-<input type="checkbox" disabled checked>rmSubSystem</li>
-</ul>
-</li>
-<li>
-<input type="checkbox" disabled checked>gene KOs</li>
-<li>
-<input type="checkbox" disabled checked>FVA (with adjustable proportions)</li>
-<li>
-<input type="checkbox" disabled checked>FVA documentation</li>
-<li>
-<input type="checkbox" disabled>MOMA (iterative linearized objective?) -&gt; quadratic opt not possible with glpk</li>
-<li>
-<input type="checkbox" disabled>ROOM (mixed-integer optimization)</li>
-<li>
-<input type="checkbox" disabled checked>additional constraints as slot in <code>modelorg</code><ul class="task-list">
-<li>
-<input type="checkbox" disabled checked>Slot in modelorg</li>
-<li>
-<input type="checkbox" disabled checked>rm if reaction of a constraint is removed</li>
-<li>
-<input type="checkbox" disabled checked>addconstraint function</li>
-<li>
-<input type="checkbox" disabled checked>rm constraint function</li>
-<li>
-<input type="checkbox" disabled checked>constraints taking effect (glpk LP formulation)<ul class="task-list">
-<li>
-<input type="checkbox" disabled checked>FBA</li>
-<li>
-<input type="checkbox" disabled checked>pFBA</li>
-<li>
-<input type="checkbox" disabled checked>pFBA-heuristic</li>
-<li>
-<input type="checkbox" disabled checked>FVA</li>
-</ul>
-</li>
-<li>
-<input type="checkbox" disabled checked>full documentation of function <code>addConstraint</code>, <code>rmConstraint</code>
-</li>
-</ul>
-</li>
-<li>
-<input type="checkbox" disabled checked><code>writeSBMLmod</code><ul class="task-list">
-<li>
-<input type="checkbox" disabled checked>CVTerms<ul class="task-list">
-<li>
-<input type="checkbox" disabled checked>read reaction CVTerms</li>
-<li>
-<input type="checkbox" disabled checked>write reaction CVTerms</li>
-<li>
-<input type="checkbox" disabled checked>read metabolite CVTerms</li>
-<li>
-<input type="checkbox" disabled checked>write metabolite CVTerms</li>
-<li>
-<input type="checkbox" disabled checked>read geneProduct CVTerms</li>
-<li>
-<input type="checkbox" disabled checked>write geneProduct CVTerms</li>
-<li>
-<input type="checkbox" disabled checked>read model CVTerms</li>
-<li>
-<input type="checkbox" disabled checked>write model CVTerms</li>
-</ul>
-</li>
-<li>
-<input type="checkbox" disabled checked>SBOTerms<ul class="task-list">
-<li>
-<input type="checkbox" disabled checked>read reaction SBOTerms</li>
-<li>
-<input type="checkbox" disabled checked>write reaction SBOTerms</li>
-<li>
-<input type="checkbox" disabled checked>read metabolite SBOTerms</li>
-<li>
-<input type="checkbox" disabled checked>write metabolite SBOTerms</li>
-<li>
-<input type="checkbox" disabled checked>read geneProduct SBOTerms</li>
-<li>
-<input type="checkbox" disabled checked>write geneProduct SBOTerms</li>
-<li>
-<input type="checkbox" disabled checked>read model SBOTerm</li>
-<li>
-<input type="checkbox" disabled checked>write model SBOTerm</li>
-</ul>
-</li>
-<li>
-<input type="checkbox" disabled checked>Model notes</li>
-<li>
-<input type="checkbox" disabled checked>Subsystems/groups</li>
-<li>
-<input type="checkbox" disabled checked>GPRs</li>
-<li>
-<input type="checkbox" disabled checked>Objective function</li>
-</ul>
-</li>
-<li>
-<input type="checkbox" disabled checked>export and documentation of position functions</li>
-<li>
-<input type="checkbox" disabled checked>export and documentation of count functions (genes, reactions, constraints, metabolites)</li>
-<li>
-<input type="checkbox" disabled>read SBML documents of level 2 (necessary?)</li>
-<li>
-<input type="checkbox" disabled checked>define a class for FBA (and FBA-related) prediction results</li>
-</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install libsbml-dev libglpk-dev</span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="key-differences-to-sybil">Key differences to <code>sybil</code>
-<a class="anchor" aria-label="anchor" href="#key-differences-to-sybil"></a>
+<h4 id="centosfedorarhel">Centos/Fedora/RHEL<a class="anchor" aria-label="anchor" href="#centosfedorarhel"></a>
 </h4>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install glpk-devel</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="macos">MacOS<a class="anchor" aria-label="anchor" href="#macos"></a>
+</h4>
+<p>TODO.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="installation-via-cran">Installation via CRAN<a class="anchor" aria-label="anchor" href="#installation-via-cran"></a>
+</h3>
+<p><em>cobrar</em> is not yet available on CRAN, but we a working on it.</p>
+</div>
+<div class="section level3">
+<h3 id="installation-via-github">Installation via GitHub<a class="anchor" aria-label="anchor" href="#installation-via-github"></a>
+</h3>
+<p>You can install the development version of <em>cobrar</em> from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Waschina/cobrar"</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
+<p>The full documentation including illustrative examples is available <a href="https://waschina.github.io/cobrar/" class="external-link">here</a>.</p>
+<p>The following (very brief) example illustrates how to use <code>cobrar</code> to perform flux balance analysis for a core metabolism model of <em>Escherichia coli</em>. In a first simulation, fluxes and growth are predicted for the default constraints of the model, which represents a minimal medium with glucose as the sole carbon source and the presence of oxygen. The second simulation performs the same flux balance analysis but without oxygen to simulate an anoxic growth environment.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># First, load the cobrar package and the metabolic model:</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">cobrar</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: Matrix</span></span>
+<span><span class="co">#&gt; cobrar uses...</span></span>
+<span><span class="co">#&gt;  - libSBML (v. 5.18.0)</span></span>
+<span><span class="co">#&gt;  - glpk (v. 4.65)</span></span>
+<span><span class="va">fpath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"e_coli_core.xml"</span>, package<span class="op">=</span><span class="st">"cobrar"</span><span class="op">)</span></span>
+<span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/readSBMLmod.html">readSBMLmod</a></span><span class="op">(</span><span class="va">fpath</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Next, perform simulation 1: Aerobic growth of E. coli</span></span>
+<span><span class="va">res_aero</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fba.html">fba</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Finally, simulation 2: Anaerobic growth of E. coli</span></span>
+<span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/changeBounds.html">changeBounds</a></span><span class="op">(</span><span class="va">mod</span>, react <span class="op">=</span> <span class="st">"EX_o2_e"</span>, lb <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="co"># before: -1000</span></span>
+<span><span class="va">res_anaero</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fba.html">fba</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Report simulation results (i.e., growth and acetate production)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"[Aerobic growth]\n"</span>,</span>
+<span>    <span class="st">" Growth rate:        "</span>, <span class="va">res_aero</span><span class="op">@</span><span class="va">obj</span>,<span class="st">"\n"</span>,</span>
+<span>    <span class="st">" Acetate production: "</span>, <span class="va">res_aero</span><span class="op">@</span><span class="va">fluxes</span><span class="op">[</span><span class="va">mod</span><span class="op">@</span><span class="va">react_id</span> <span class="op">==</span> <span class="st">"EX_ac_e"</span><span class="op">]</span>,<span class="st">"\n\n"</span>,</span>
+<span>    <span class="st">"[Anaerobic growth]\n"</span>,</span>
+<span>    <span class="st">" Growth rate:        "</span>, <span class="va">res_anaero</span><span class="op">@</span><span class="va">obj</span>,<span class="st">"\n"</span>,</span>
+<span>    <span class="st">" Acetate prodcution: "</span>, <span class="va">res_anaero</span><span class="op">@</span><span class="va">fluxes</span><span class="op">[</span><span class="va">mod</span><span class="op">@</span><span class="va">react_id</span> <span class="op">==</span> <span class="st">"EX_ac_e"</span><span class="op">]</span>,<span class="st">"\n"</span>,</span>
+<span>    sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [Aerobic growth]</span></span>
+<span><span class="co">#&gt;  Growth rate:        0.8739215</span></span>
+<span><span class="co">#&gt;  Acetate production: 0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [Anaerobic growth]</span></span>
+<span><span class="co">#&gt;  Growth rate:        0.2116629</span></span>
+<span><span class="co">#&gt;  Acetate prodcution: 8.503585</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="key-differences-to-sybil">Key differences to sybil<a class="anchor" aria-label="anchor" href="#key-differences-to-sybil"></a>
+</h2>
 <ul>
-<li>cobrar is fully functional from reading SBML files until optimisation of linear programs, without the need of additional packages such as “sybilSBML” or “glpkAPI”.</li>
-<li>The GNU glpk library is a system requirement. There are no links/references to iBM’s cplex in the cobrar package, which were one reason why sybil was discontinued on CRAN.</li>
+<li>cobrar is fully functional from reading SBML files until optimisation of linear programs, without the need of additional packages such as <em>sybilSBML</em> or <em>glpkAPI</em>.</li>
+<li>The GNU glpk library is a system requirement. There are no links/references to IBM’s CPLEX in the <em>cobrar</em> package, which were one reason why <em>sybil</em> was discontinued on CRAN.</li>
 <li>
 <a href="https://roxygen2.r-lib.org/" class="external-link">roxygen2</a> is used for documenting functions and classes.</li>
-<li>Feature trim: A range of functionalities in sybil are not part of cobrar.</li>
-<li>In cobrar, R’s garbage collector handles memory management, including memory associated to C++-objects and the pointers to these.</li>
+<li>Feature trim: A range of functions in <em>sybil</em> are not part of <em>cobrar</em>.</li>
+<li>In <em>cobrar</em>, R’s garbage collector handles memory management, including memory associated to C++-objects and the pointers to these.</li>
 <li>Simplifications in class and function architecture
 <ul>
-<li>No more Class “SysBiolAlg” nor sub-classes. Different algorithms have their own function and detailed documentation of their return variables.</li>
+<li>No more Class “SysBiolAlg” nor sub-classes. Different algorithms have their own function and detailed documentation of their return values</li>
 </ul>
 </li>
-<li>In sybil, columns names “annotation” were actually concatenated CVTerms (<a href="https://synonym.caltech.edu/software/libsbml/5.20.0/cpp-api/class_c_v_term.html" class="external-link uri">https://synonym.caltech.edu/software/libsbml/5.20.0/cpp-api/class_c_v_term.html</a>). To avoid confusion with other levels of annotation, the columns (e.g. in <code>react_attr</code> or <code>met_attr</code>) are named ‘CVTerms’ in cobrar.</li>
+<li>In <em>sybil</em>, columns named “annotation” were actually concatenated CVTerms (<a href="https://synonym.caltech.edu/software/libsbml/5.20.0/cpp-api/class_c_v_term.html" class="external-link uri">https://synonym.caltech.edu/software/libsbml/5.20.0/cpp-api/class_c_v_term.html</a>). To avoid confusion with other levels of annotation, the columns (e.g. in <code>react_attr</code> or <code>met_attr</code>) are named ‘CVTerms’ in <em>cobrar</em>.</li>
+<li>
+<em>cobrar</em> allows to assign SBOTerms to reactions, metabolites, genes.</li>
 <li>Performance (i.e., computation time) improvements in certain procedures:
 <ul>
 <li>identification of dead-end metabolites</li>
@@ -230,15 +179,16 @@
 </li>
 </ul>
 </div>
-<div class="section level4">
-<h4 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a>
-</h4>
+<div class="section level2">
+<h2 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a>
+</h2>
 <ul>
-<li>cobrar exports SBML files level 3 version 2 with <code>fbc</code> version 3 and <code>groups</code> version 1.</li>
-<li>Group assignments are only supported for reactions.</li>
-<li>currently only glpk is supported as solver. A plugin for IBM’s ILOG cplex is planned.</li>
 <li>
-<em>Multiple objectives</em>. The SBML standard with its fbc extension allows to specify more than one objective (class <code>ListOfObjectives</code>). However, cobrar can only handle one current objective function per model, which is defined as an objective coefficient vector in slot <code>obj_coef</code> of an object of class <code>modelorg</code>. Note that when reading SBML models, cobrar will only use the first objective defined in the SBML document.</li>
+<em>cobrar</em> exports SBML files level 3 version 2 with <code>fbc</code> version 3 and <code>groups</code> version 1.</li>
+<li>Group assignments are only supported for reactions.</li>
+<li>currently only glpk is supported as solver. A plugin for IBM’s ILOG CPLEX is planned.</li>
+<li>
+<em>Multiple objectives</em>. The SBML standard with its fbc extension allows to specify more than one objective (class <code>ListOfObjectives</code>). However, <em>cobrar</em> can only handle one current objective function per model, which is defined as an objective coefficient vector in slot <code>obj_coef</code> of an object of class <code>modelorg</code>. Note that when reading SBML models, <em>cobrar</em> will only use the first objective defined in the SBML document.</li>
 </ul>
 </div>
 </div>
@@ -265,10 +215,17 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Silvio Waschina <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-6290-3593" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Johannes Zimmermann <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-5041-1954" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Sina Zimmermann <br><small class="roles"> Author </small> <a href="https://orcid.org/0009-0005-0537-4970" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/Waschina/cobrar/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/Waschina/cobrar/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
+</div>
 
   </div>
 </div>
@@ -276,7 +233,7 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Silvio Waschina.</p>
+<p>Developed by Silvio Waschina, Johannes Zimmermann, Sina Zimmermann.</p>
 </div>
 
 <div class="pkgdown">
