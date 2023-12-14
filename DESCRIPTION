@@ -2,8 +2,13 @@ Package: cobrar
 Title: Constraint-based metabolic network analysis in R
 Version: 0.1.0
 Authors@R: 
-    person("Silvio", "Waschina", , "s.waschina@nutrinf.uni-kiel.de", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-6290-3593"))
+    c(person("Silvio", "Waschina", email = "s.waschina@nutrinf.uni-kiel.de", role = c("aut", "cre"),
+             comment = c(ORCID = "0000-0002-6290-3593")),
+      person("Johannes", "Zimmermann", role = c("aut"),
+             comment = c(ORCID = "0000-0002-5041-1954")),
+      person("Sina", "Zimmermann", role = c("aut"),
+             comment = c(ORCID = "0009-0005-0537-4970"))
+      )
 Description: The package provides structures and functions to perform constraint-based metabolic network analysis, e.g., the prediction of metabolic fluxes using Flux Balance Analysis (FBA). `cobrar` is inspired by the former CRAN R-package `sybil`.
 Depends:
     Matrix
