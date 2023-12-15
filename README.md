@@ -11,7 +11,7 @@
 The R-package *cobrar* provides structures and functions to perform
 constraint-based metabolic network analysis, e.g., the prediction of
 metabolic fluxes using Flux Balance Analysis (FBA). *cobrar* is inspired
-by the former CRAN R-package *sybil*.
+by the former CRAN R-package *sybil*[1](#R1).
 
 ## Installation
 
@@ -29,12 +29,16 @@ sudo apt install libsbml-dev libglpk-dev
 #### Centos/Fedora/RHEL
 
 ``` sh
-sudo yum install glpk-devel
+sudo yum install libsbml-devel glpk-devel
 ```
 
 #### MacOS
 
-TODO.
+TODO (install libsbml from source, glpk from MacPorts or homebrew).
+
+#### Windowns
+
+TODO
 
 ### Installation via CRAN
 
@@ -68,8 +72,8 @@ but without oxygen to simulate an anoxic growth environment.
 library(cobrar)
 #> Loading required package: Matrix
 #> cobrar uses...
-#>  - libSBML (v. 5.18.0)
-#>  - glpk (v. 4.65)
+#>  - libSBML (v. 5.19.0)
+#>  - glpk (v. 5.0)
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)
 
@@ -136,10 +140,17 @@ cat("[Aerobic growth]\n",
 - Group assignments are only supported for reactions.
 - currently only glpk is supported as solver. A plugin for IBM’s ILOG
   CPLEX is planned.
-- *Multiple objectives*. The SBML standard with its fbc extension allows
-  to specify more than one objective (class `ListOfObjectives`).
+- *Multiple objectives*. The SBML standard with its `fbc` extension
+  allows to specify more than one objective (class `ListOfObjectives`).
   However, *cobrar* can only handle one current objective function per
   model, which is defined as an objective coefficient vector in slot
   `obj_coef` of an object of class `modelorg`. Note that when reading
   SBML models, *cobrar* will only use the first objective defined in the
   SBML document.
+
+## References
+
+1.  <a id="R1"></a>Gelius-Dietrich, G., Desouki, A.A., Fritzemeier,
+    C.J., Lercher, M.J. sybil – Efficient constraint-based modelling
+    in R. BMC Syst Biol 7, 125 (2013).
+    <https://doi.org/10.1186/1752-0509-7-125>
