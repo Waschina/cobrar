@@ -75,7 +75,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The R-package <em>cobrar</em> provides structures and functions to perform constraint-based metabolic network analysis, e.g., the prediction of metabolic fluxes using Flux Balance Analysis (FBA). <em>cobrar</em> is inspired by the former CRAN R-package <em>sybil</em>.</p>
+<p>The R-package <em>cobrar</em> provides structures and functions to perform constraint-based metabolic network analysis, e.g., the prediction of metabolic fluxes using Flux Balance Analysis (FBA). <em>cobrar</em> is inspired by the former CRAN R-package <em>sybil</em><a href="#R1">1</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -91,12 +91,17 @@
 <div class="section level4">
 <h4 id="centosfedorarhel">Centos/Fedora/RHEL<a class="anchor" aria-label="anchor" href="#centosfedorarhel"></a>
 </h4>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install glpk-devel</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install libsbml-devel glpk-devel</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="macos">MacOS<a class="anchor" aria-label="anchor" href="#macos"></a>
 </h4>
-<p>TODO.</p>
+<p>TODO (install libsbml from source, glpk from MacPorts or homebrew).</p>
+</div>
+<div class="section level4">
+<h4 id="windowns">Windowns<a class="anchor" aria-label="anchor" href="#windowns"></a>
+</h4>
+<p>TODO</p>
 </div>
 </div>
 <div class="section level3">
@@ -123,8 +128,8 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">cobrar</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: Matrix</span></span>
 <span><span class="co">#&gt; cobrar uses...</span></span>
-<span><span class="co">#&gt;  - libSBML (v. 5.18.0)</span></span>
-<span><span class="co">#&gt;  - glpk (v. 4.65)</span></span>
+<span><span class="co">#&gt;  - libSBML (v. 5.19.0)</span></span>
+<span><span class="co">#&gt;  - glpk (v. 5.0)</span></span>
 <span><span class="va">fpath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"e_coli_core.xml"</span>, package<span class="op">=</span><span class="st">"cobrar"</span><span class="op">)</span></span>
 <span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/readSBMLmod.html">readSBMLmod</a></span><span class="op">(</span><span class="va">fpath</span><span class="op">)</span></span>
 <span></span>
@@ -188,8 +193,17 @@
 <li>Group assignments are only supported for reactions.</li>
 <li>currently only glpk is supported as solver. A plugin for IBM’s ILOG CPLEX is planned.</li>
 <li>
-<em>Multiple objectives</em>. The SBML standard with its fbc extension allows to specify more than one objective (class <code>ListOfObjectives</code>). However, <em>cobrar</em> can only handle one current objective function per model, which is defined as an objective coefficient vector in slot <code>obj_coef</code> of an object of class <code>modelorg</code>. Note that when reading SBML models, <em>cobrar</em> will only use the first objective defined in the SBML document.</li>
+<em>Multiple objectives</em>. The SBML standard with its <code>fbc</code> extension allows to specify more than one objective (class <code>ListOfObjectives</code>). However, <em>cobrar</em> can only handle one current objective function per model, which is defined as an objective coefficient vector in slot <code>obj_coef</code> of an object of class <code>modelorg</code>. Note that when reading SBML models, <em>cobrar</em> will only use the first objective defined in the SBML document.</li>
 </ul>
+</div>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li>
+<a id="R1"></a>Gelius-Dietrich, G., Desouki, A.A., Fritzemeier, C.J., Lercher, M.J. sybil – Efficient constraint-based modelling in R. BMC Syst Biol 7, 125 (2013). <a href="https://doi.org/10.1186/1752-0509-7-125" class="external-link uri">https://doi.org/10.1186/1752-0509-7-125</a>
+</li>
+</ol>
 </div>
 </div>
   </div>
