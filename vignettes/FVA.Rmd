@@ -44,7 +44,7 @@ ggplot(fvares,
   geom_linerange(aes(ymin = min.flux, ymax = max.flux, col = growth.fraction),
                  linewidth = 6) +
   labs(x = "Metabolite exchange",
-       y = expression(Flux~bgroup("[",frac(mmol,gDW~hr),"]")),
+       y = y = "mmol / (gDW hr)",
        color = "Growth fraction") +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1))
@@ -67,7 +67,7 @@ ggplot(fvares,
   geom_linerange(aes(ymin = min.flux, ymax = max.flux, col = growth.fraction),
                  linewidth = 6) +
   labs(x = "Metabolite exchange",
-       y = expression(Flux~bgroup("[",frac(mmol,gDW~hr),"]")),
+       y = "mmol / (gDW hr)",
        color = "Growth fraction") +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1))
