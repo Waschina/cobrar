@@ -15,44 +15,84 @@ by the former CRAN R-package *sybil*[1](#R1).
 
 ## Installation
 
-### Prerequisites
+Please note that *cobrar* requires the two system libraries libSBML and
+glpk. The following installation instructions for different operating
+systems first install the dependencies, than *cobrar*. In case you have
+libSBML and glpk already installed, you can jump right to the last part
+of the instructions.
 
-*cobrar* requires the two system libraries libSBML and glpk. These
-libraries are available from most OS package manager.
+*cobrar* is in its development phase and the described installtion
+instructions installs the latest development version.
 
 #### Ubuntu/Debian/Mint
+
+Install *libSBML* and *glpk*:
 
 ``` sh
 sudo apt install libsbml-dev libglpk-dev
 ```
 
-#### Centos/Fedora/RHEL
-
-``` sh
-sudo yum install libsbml-devel glpk-devel
-```
-
-#### MacOS
-
-TODO (install libsbml from source, glpk from MacPorts or homebrew).
-
-#### Windowns
-
-TODO
-
-### Installation via CRAN
-
-*cobrar* is not yet available on CRAN, but we a working on it.
-
-### Installation via GitHub
-
-You can install the development version of *cobrar* from
-[GitHub](https://github.com/) with:
+Install cobrar (in *R*):
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("Waschina/cobrar")
 ```
+
+#### Centos/Fedora/RHEL
+
+Install *libSBML* and *glpk*:
+
+``` sh
+sudo yum install libsbml-devel glpk-devel
+```
+
+Install cobrar (in *R*):
+
+``` r
+# install.packages("devtools")
+devtools::install_github("Waschina/cobrar")
+```
+
+#### MacOS
+
+*libSBML* can be installed from source:
+
+``` sh
+curl -LO https://github.com/sbmlteam/libsbml/archive/refs/tags/v5.20.2.tar.gz
+tar -zxf v5.20.2.tar.gz
+cd libsbml-5.20.2
+mkdir build
+cd build
+cmake -DENABLE_FBC=ON -DENABLE_GROUPS=ON ..
+make
+sudo make install 
+```
+
+Install *glpk* either homebrew or MacPorts:
+
+``` sh
+# Homebrew
+brew install glpk
+
+# OR: MacPorts
+sudo port install glpk
+```
+
+Install cobrar (in *R*):
+
+``` r
+# install.packages("devtools")
+devtools::install_github("Waschina/cobrar")
+```
+
+#### Windowns
+
+TODO
+
+#### Conda
+
+TODO
 
 ## Usage
 
@@ -72,8 +112,8 @@ but without oxygen to simulate an anoxic growth environment.
 library(cobrar)
 #> Loading required package: Matrix
 #> cobrar uses...
-#>  - libSBML (v. 5.19.0)
-#>  - glpk (v. 5.0)
+#>  - libSBML (v. 5.18.0)
+#>  - glpk (v. 4.65)
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)
 
