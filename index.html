@@ -79,43 +79,60 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<div class="section level3">
-<h3 id="prerequisites">Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites"></a>
-</h3>
-<p><em>cobrar</em> requires the two system libraries libSBML and glpk. These libraries are available from most OS package manager.</p>
+<p>Please note that <em>cobrar</em> requires the two system libraries libSBML and glpk. The following installation instructions for different operating systems first install the dependencies, than <em>cobrar</em>. In case you have libSBML and glpk already installed, you can jump right to the last part of the instructions.</p>
+<p><em>cobrar</em> is in its development phase and the described installtion instructions installs the latest development version.</p>
 <div class="section level4">
 <h4 id="ubuntudebianmint">Ubuntu/Debian/Mint<a class="anchor" aria-label="anchor" href="#ubuntudebianmint"></a>
 </h4>
+<p>Install <em>libSBML</em> and <em>glpk</em>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install libsbml-dev libglpk-dev</span></code></pre></div>
+<p>Install cobrar (in <em>R</em>):</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Waschina/cobrar"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="centosfedorarhel">Centos/Fedora/RHEL<a class="anchor" aria-label="anchor" href="#centosfedorarhel"></a>
 </h4>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install libsbml-devel glpk-devel</span></code></pre></div>
+<p>Install <em>libSBML</em> and <em>glpk</em>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install libsbml-devel glpk-devel</span></code></pre></div>
+<p>Install cobrar (in <em>R</em>):</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Waschina/cobrar"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="macos">MacOS<a class="anchor" aria-label="anchor" href="#macos"></a>
 </h4>
-<p>TODO (install libsbml from source, glpk from MacPorts or homebrew).</p>
+<p><em>libSBML</em> can be installed from source:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-LO</span> https://github.com/sbmlteam/libsbml/archive/refs/tags/v5.20.2.tar.gz</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-zxf</span> v5.20.2.tar.gz</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> libsbml-5.20.2</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> build</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> build</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-DENABLE_FBC</span><span class="op">=</span>ON <span class="at">-DENABLE_GROUPS</span><span class="op">=</span>ON ..</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> make install </span></code></pre></div>
+<p>Install <em>glpk</em> either homebrew or MacPorts:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Homebrew</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install glpk</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># OR: MacPorts</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> port install glpk</span></code></pre></div>
+<p>Install cobrar (in <em>R</em>):</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Waschina/cobrar"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="windowns">Windowns<a class="anchor" aria-label="anchor" href="#windowns"></a>
 </h4>
 <p>TODO</p>
 </div>
-</div>
-<div class="section level3">
-<h3 id="installation-via-cran">Installation via CRAN<a class="anchor" aria-label="anchor" href="#installation-via-cran"></a>
-</h3>
-<p><em>cobrar</em> is not yet available on CRAN, but we a working on it.</p>
-</div>
-<div class="section level3">
-<h3 id="installation-via-github">Installation via GitHub<a class="anchor" aria-label="anchor" href="#installation-via-github"></a>
-</h3>
-<p>You can install the development version of <em>cobrar</em> from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Waschina/cobrar"</span><span class="op">)</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="conda">Conda<a class="anchor" aria-label="anchor" href="#conda"></a>
+</h4>
+<p>TODO</p>
 </div>
 </div>
 <div class="section level2">
@@ -123,13 +140,13 @@
 </h2>
 <p>The full documentation including illustrative examples is available <a href="https://waschina.github.io/cobrar/" class="external-link">here</a>.</p>
 <p>The following (very brief) example illustrates how to use <code>cobrar</code> to perform flux balance analysis for a core metabolism model of <em>Escherichia coli</em>. In a first simulation, fluxes and growth are predicted for the default constraints of the model, which represents a minimal medium with glucose as the sole carbon source and the presence of oxygen. The second simulation performs the same flux balance analysis but without oxygen to simulate an anoxic growth environment.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># First, load the cobrar package and the metabolic model:</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">cobrar</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: Matrix</span></span>
 <span><span class="co">#&gt; cobrar uses...</span></span>
-<span><span class="co">#&gt;  - libSBML (v. 5.19.0)</span></span>
-<span><span class="co">#&gt;  - glpk (v. 5.0)</span></span>
+<span><span class="co">#&gt;  - libSBML (v. 5.18.0)</span></span>
+<span><span class="co">#&gt;  - glpk (v. 4.65)</span></span>
 <span><span class="va">fpath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"e_coli_core.xml"</span>, package<span class="op">=</span><span class="st">"cobrar"</span><span class="op">)</span></span>
 <span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/readSBMLmod.html">readSBMLmod</a></span><span class="op">(</span><span class="va">fpath</span><span class="op">)</span></span>
 <span></span>
