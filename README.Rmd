@@ -19,13 +19,13 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/Waschina/cobrar/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Waschina/cobrar/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The R-package *cobrar* provides structures and functions to perform constraint-based metabolic network analysis, e.g., the prediction of metabolic fluxes using Flux Balance Analysis (FBA). *cobrar* is inspired by the former CRAN R-package *sybil*[1](#R1).
+The R package *cobrar* provides structures and functions for constraint-based metabolic network analysis, e.g. the prediction of metabolic fluxes using fluxes using Flux Balance Analysis (FBA). *cobrar* is inspired by the former by the former CRAN R package *sybil*[(1)](#R1).
 
 ## Installation
 
-Please note that *cobrar* requires the two system libraries libSBML and glpk. The following installation instructions for different operating systems first install the dependencies, than *cobrar*. In case you have libSBML and glpk already installed, you can jump right to the last part of the instructions.
+Please note that *cobrar* requires the two system libraries *libSBML* and *glpk*. The following installation instructions for different operating systems install the dependencies first, then *cobrar*. If you already have *libSBML* and *glpk* installed, you can skip to the last part of the instructions.
 
-*cobrar* is in its development phase and the described installtion instructions installs the latest development version.
+*cobrar* is under development and the installation instructions described will install the latest development version.
 
 #### Ubuntu/Debian/Mint
 
