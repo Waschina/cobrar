@@ -130,6 +130,7 @@ rmGene <- function(model, gene, rm_react = TRUE, rm_met = TRUE) {
     stop("Please check your gene IDs/indices in argument 'gene'.")
   }
 
+  gene_ids <- gene
   gene <- gene_pos(model, gene)
 
   rmReactions <- geneDel(model, gene)
@@ -138,7 +139,7 @@ rmGene <- function(model, gene, rm_react = TRUE, rm_met = TRUE) {
   model@allGenes <- model@allGenes[-gene]
   model@genes_attr <- model@genes_attr[-gene,]
   model@genes <- lapply(model@genes,
-                        function(x) ifelse(x %in% gene, NA_character_,x))
+                        function(x) ifelse(x %in% gene_ids, NA_character_,x))
 
   # rm reaction (and metabolites)
   if(rm_react)
