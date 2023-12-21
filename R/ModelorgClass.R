@@ -85,7 +85,61 @@ setClass("modelorg",
            genes = "list",
            allGenes = "character",
            genes_attr = "data.frame"
+         ),
+         prototype = list(
+           # model slots
+           mod_id = "cobrar-model",
+           mod_desc = NA_character_,
+           mod_name = "cobrar-model",
+           mod_compart = character(0L),
+           mod_compart_name = character(0L),
+           mod_attr = data.frame(CVTerms = "", SBOTerm = "SBO:0000624"),
+           mod_notes = NA_character_,
+           S = as(as(as(Matrix(nrow = 0, ncol = 0, sparse = TRUE),
+                        "dMatrix"),
+                     "generalMatrix"),
+                  "CsparseMatrix"),
+           obj_coef = numeric(0L),
+           subSys = as(as(as(Matrix(nrow = 0, ncol = 0, sparse = TRUE),
+                             "lMatrix"),
+                          "generalMatrix"),
+                       "CsparseMatrix"),
+           subSys_id = character(0L),
+           subSys_name = character(0L),
+           constraints = new("Constraints",
+                             coeff = as(as(as(Matrix(nrow = 0, ncol = 0, sparse = TRUE),
+                                        "dMatrix"),"generalMatrix"),"CsparseMatrix"),
+                             lb = numeric(0),
+                             ub = numeric(0),
+                             rtype = character(0)),
+
+           # Metabolites
+           met_id = character(0L),
+           met_name = character(0L),
+           met_comp = character(0L),
+           met_attr = data.frame(chemicalFormula = character(0L),
+                                 charge = numeric(0L),
+                                 CVTerms = character(0L),
+                                 SBOTerm = character(0L)),
+
+           # reactions
+           react_id = character(0L),
+           react_name = character(0L),
+           react_comp = character(0L),
+           lowbnd = numeric(0),
+           uppbnd = numeric(0),
+           react_attr = data.frame(CVTerms = character(0L),
+                                   SBOTerm = character(0L)),
+
+           # genes
+           gprRules = character(0L),
+           genes = list(),
+           allGenes = character(0L),
+           genes_attr = data.frame(name = character(0L),
+                                   CVTerms = character(0L),
+                                   SBOTerm = character(0L))
          ))
+
 
 #------------------------------------------------------------------------------#
 # setters and getters                                                          #

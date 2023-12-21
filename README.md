@@ -87,7 +87,7 @@ Install cobrar (in *R*):
 devtools::install_github("Waschina/cobrar")
 ```
 
-#### Windowns
+#### Windows
 
 TODO
 

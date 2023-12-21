@@ -120,7 +120,7 @@ readSBMLmod <- function(file_path) {
 
 # Small helpter function to transform an SBO Term to it's integer als ID
 sboterm2int <- function(sbo) {
-  return(as.numeric(gsub("SBO:","",sbo)))
+  return(as.numeric(gsub("SBO:|SBO_","",sbo)))
 }
 
 #' Exports a Metabolic Network in SBML Format
@@ -160,25 +160,33 @@ writeSBMLmod <- function(model, file_path = NULL) {
 
   if(is.na(model@mod_attr$CVTerms[1]))
     model@mod_attr$CVTerms[1] <- ""
-  model@react_attr$CVTerms <- ifelse(is.na(model@react_attr$CVTerms),
-                                     "",model@react_attr$CVTerms)
-  model@met_attr$CVTerms <- ifelse(is.na(model@met_attr$CVTerms),
-                                   "",model@met_attr$CVTerms)
-  model@genes_attr$CVTerms <- ifelse(is.na(model@genes_attr$CVTerms),
-                                     "",model@genes_attr$CVTerms)
+
+  if(react_num(model) > 0)
+    model@react_attr$CVTerms <- ifelse(is.na(model@react_attr$CVTerms),
+                                       "",model@react_attr$CVTerms)
+  if(met_num(model) > 0)
+    model@met_attr$CVTerms <- ifelse(is.na(model@met_attr$CVTerms),
+                                     "",model@met_attr$CVTerms)
+  if(gene_num(model) > 0)
+    model@genes_attr$CVTerms <- ifelse(is.na(model@genes_attr$CVTerms),
+                                       "",model@genes_attr$CVTerms)
 
   # Stoichiometry lists
   lReaMets <- apply(model@S, 2, FUN = function(x) model@met_id[which(abs(x)>0)])
   lReaStoich <- apply(model@S, 2, FUN = function(x) x[which(abs(x)>0)])
 
   # bound groups
-  bndgrp <- data.frame(id = model@react_id, lb = model@lowbnd, ub = model@uppbnd)
-  bndgrp$lb.term <- paste0(bndgrp$id,"_lb")
-  bndgrp$ub.term <- paste0(bndgrp$id,"_ub")
-  bndgrp$lb.term <- ifelse(bndgrp$lb == 0,"default_0", bndgrp$lb.term)
-  bndgrp$ub.term <- ifelse(bndgrp$ub == 0,"default_0", bndgrp$ub.term)
-  bndgrp$lb.term <- ifelse(bndgrp$lb == -COBRAR_SETTINGS("MAXIMUM"),"default_lb", bndgrp$lb.term)
-  bndgrp$ub.term <- ifelse(bndgrp$ub == COBRAR_SETTINGS("MAXIMUM"),"default_ub", bndgrp$ub.term)
+  bndgrp <- data.frame(id = model@react_id, lb = model@lowbnd, ub = model@uppbnd,
+                       lb.term = rep(NA_character_, react_num(model)),
+                       ub.term = rep(NA_character_, react_num(model)))
+  if(nrow(bndgrp)>0){
+    bndgrp$lb.term <- paste0(bndgrp$id,"_lb")
+    bndgrp$ub.term <- paste0(bndgrp$id,"_ub")
+    bndgrp$lb.term <- ifelse(bndgrp$lb == 0,"default_0", bndgrp$lb.term)
+    bndgrp$ub.term <- ifelse(bndgrp$ub == 0,"default_0", bndgrp$ub.term)
+    bndgrp$lb.term <- ifelse(bndgrp$lb == -COBRAR_SETTINGS("MAXIMUM"),"default_lb", bndgrp$lb.term)
+    bndgrp$ub.term <- ifelse(bndgrp$ub == COBRAR_SETTINGS("MAXIMUM"),"default_ub", bndgrp$ub.term)
+  }
   bndgrp_para <- data.frame(bnd = c(bndgrp$lb.term, bndgrp$ub.term),
                             val = c(bndgrp$lb, bndgrp$ub))
   bndgrp_para <- bndgrp_para[!duplicated(bndgrp_para$bnd),]
@@ -187,22 +195,24 @@ writeSBMLmod <- function(model, file_path = NULL) {
 
   # gpr string for libSBML
   gpr <- c()
-  for(i in 1:length(model@react_id)) {
-    x <- model@gprRules[[i]]
-    y <- model@genes[[i]]
+  if(react_num(model)>0) {
+    for(i in 1:length(model@react_id)) {
+      x <- model@gprRules[[i]]
+      y <- model@genes[[i]]
 
-    if(length(y) == 0) {
-      gpr <- append(gpr, "")
-    } else {
-      for(j in 1:length(y)) {
-        x <- gsub(paste0("x[",j,"]"),
-                  y[j], x, fixed = TRUE)
+      if(length(y) == 0) {
+        gpr <- append(gpr, "")
+      } else {
+        for(j in 1:length(y)) {
+          x <- gsub(paste0("x[",j,"]"),
+                    y[j], x, fixed = TRUE)
+        }
+        gpr <- append(gpr, x)
       }
-      gpr <- append(gpr, x)
     }
+    gpr <- gsub("\\&", "and", gpr)
+    gpr <- gsub("\\|", "or", gpr)
   }
-  gpr <- gsub("\\&", "and", gpr)
-  gpr <- gsub("\\|", "or", gpr)
   #print(gpr)
 
   # Let's export
