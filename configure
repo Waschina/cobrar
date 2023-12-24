@@ -2641,7 +2641,7 @@ $as_echo "$ac_cv_lib_sbml_main" >&6; }
 if test "x$ac_cv_lib_sbml_main" = xyes; then :
 
             LIBSBML_LIBS="-lsbml"
-            LIBSBML_INCLUDE_PATH="/usr/local/include" # Default path on macOS
+            # LIBSBML_INCLUDE_PATH="/usr/local/include" # Default path on macOS
 
 else
 
@@ -2649,7 +2649,7 @@ else
                 if test -n "$(command -v brew)"; then
                     BREW_PREFIX=$(brew --prefix)
                     LIBSBML_LIBS="-L$BREW_PREFIX/Cellar/libsbml/lib -lsbml"
-                    LIBSBML_INCLUDE_PATH="$BREW_PREFIX/Cellar/libsbml/include"
+                    LIBSBML_INCLUDE_PATH="I$BREW_PREFIX/Cellar/libsbml"
                 else
                     as_fn_error $? "libsbml not found. Install libsbml or ensure Homebrew is installed." "$LINENO" 5
                 fi
@@ -2718,7 +2718,7 @@ $as_echo "$ac_cv_lib_glpk_glp_version" >&6; }
 if test "x$ac_cv_lib_glpk_glp_version" = xyes; then :
 
             GLPK_LIBS="-lglpk"
-            GLPK_INCLUDE_PATH="/usr/local/include" # Default path on macOS
+            # GLPK_INCLUDE_PATH="/usr/local/include" # Default path on macOS
 
 else
 
@@ -2726,7 +2726,7 @@ else
                 if test -n "$(command -v brew)"; then
                     BREW_PREFIX=$(brew --prefix)
                     GLPK_LIBS="-L$BREW_PREFIX/Cellar/glpk/lib -lglpk"
-                    GLPK_INCLUDE_PATH="$BREW_PREFIX/Cellar/glpk/include"
+                    GLPK_INCLUDE_PATH="-I$BREW_PREFIX/Cellar/glpk"
                 else
                     as_fn_error $? "glpk not found. Install glpk or ensure Homebrew is installed." "$LINENO" 5
                 fi

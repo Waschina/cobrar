@@ -22,13 +22,13 @@ AC_ARG_WITH([libsbml],
         # Check for libsbml in default and Homebrew paths as before
         AC_CHECK_LIB([sbml], [main], [
             LIBSBML_LIBS="-lsbml"
-            LIBSBML_INCLUDE_PATH="/usr/local/include" # Default path on macOS
+            # LIBSBML_INCLUDE_PATH="/usr/local/include" # Default path on macOS
         ], [
             if test "$(uname)" = "Darwin"; then
                 if test -n "$(command -v brew)"; then
                     BREW_PREFIX=$(brew --prefix)
                     LIBSBML_LIBS="-L$BREW_PREFIX/Cellar/libsbml/lib -lsbml"
-                    LIBSBML_INCLUDE_PATH="$BREW_PREFIX/Cellar/libsbml/include"
+                    LIBSBML_INCLUDE_PATH="I$BREW_PREFIX/Cellar/libsbml"
                 else
                     AC_MSG_ERROR([libsbml not found. Install libsbml or ensure Homebrew is installed.])
                 fi
@@ -54,13 +54,13 @@ AC_ARG_WITH([glpk],
         # Check for glpk in default and Homebrew paths as before
         AC_CHECK_LIB([glpk], [glp_version], [
             GLPK_LIBS="-lglpk"
-            GLPK_INCLUDE_PATH="/usr/local/include" # Default path on macOS
+            # GLPK_INCLUDE_PATH="/usr/local/include" # Default path on macOS
         ], [
             if test "$(uname)" = "Darwin"; then
                 if test -n "$(command -v brew)"; then
                     BREW_PREFIX=$(brew --prefix)
                     GLPK_LIBS="-L$BREW_PREFIX/Cellar/glpk/lib -lglpk"
-                    GLPK_INCLUDE_PATH="$BREW_PREFIX/Cellar/glpk/include"
+                    GLPK_INCLUDE_PATH="-I$BREW_PREFIX/Cellar/glpk"
                 else
                     AC_MSG_ERROR([glpk not found. Install glpk or ensure Homebrew is installed.])
                 fi
