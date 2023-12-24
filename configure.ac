@@ -1,46 +1,88 @@
 # Initialize Autoconf
-AC_INIT([YourPackage], [1.0], [youremail@example.com])
+AC_INIT([cobrar], [0.1.0], [s.waschina@nutrinf.uni-kiel.de])
 
-# Check for GLPK
-AC_ARG_WITH([glpk],
-    AS_HELP_STRING([--with-glpk=DIR], [Specify the location of GLPK]),
-    [GLPK_DIR="$withval"],
-    [GLPK_DIR=""])
+# Initialize variables
+LIBSBML_LIBS=""
+GLPK_LIBS=""
+LIBSBML_INCLUDE_PATH=""
+GLPK_INCLUDE_PATH=""
 
-if test "$GLPK_DIR" = ""; then
-    AC_CHECK_LIB([glpk], [glp_create_prob], [
-        GLPK_LIBS="-lglpk"
-        AC_DEFINE([HAVE_GLPK], [1], [Have GLPK library])
-    ], [
-        AC_MSG_ERROR([GLPK library not found])
-    ])
-else
-    GLPK_LIBS="-L$GLPK_DIR/lib -lglpk"
-    AC_DEFINE([HAVE_GLPK], [1], [Have GLPK library])
-fi
-
-# Check for libSBML
+# Check for user-provided libsbml path
 AC_ARG_WITH([libsbml],
-    AS_HELP_STRING([--with-libsbml=DIR], [Specify the location of libSBML]),
-    [LIBSBML_DIR="$withval"],
-    [LIBSBML_DIR=""])
+    AS_HELP_STRING([--with-libsbml=<DIR>], [Specify libsbml installation path]),
+    [
+        if test -d "$withval"; then
+            LIBSBML_LIBS="-L$withval/lib -lsbml"
+            LIBSBML_INCLUDE_PATH="$withval/include"
+        else
+            AC_MSG_ERROR([Directory $withval does not exist])
+        fi
+    ],
+    [
+        # Check for libsbml in default and Homebrew paths as before
+        AC_CHECK_LIB([sbml], [main], [
+            LIBSBML_LIBS="-lsbml"
+            LIBSBML_INCLUDE_PATH="/usr/local/include" # Default path on macOS
+        ], [
+            if test "$(uname)" = "Darwin"; then
+                if test -n "$(command -v brew)"; then
+                    BREW_PREFIX=$(brew --prefix)
+                    LIBSBML_LIBS="-L$BREW_PREFIX/Cellar/libsbml/lib -lsbml"
+                    LIBSBML_INCLUDE_PATH="$BREW_PREFIX/Cellar/libsbml/include"
+                else
+                    AC_MSG_ERROR([libsbml not found. Install libsbml or ensure Homebrew is installed.])
+                fi
+            else
+                AC_MSG_ERROR([libsbml not found. Install libsbml.])
+            fi
+        ])
+    ]
+)
 
-if test "$LIBSBML_DIR" = ""; then
-    AC_CHECK_LIB([sbml], [SBML_parseL3Formula], [
-        LIBSBML_LIBS="-lsbml"
-        AC_DEFINE([HAVE_LIBSBML], [1], [Have libSBML library])
-    ], [
-        AC_MSG_ERROR([libSBML library not found])
-    ])
-else
-    LIBSBML_LIBS="-L$LIBSBML_DIR/lib -lsbml"
-    AC_DEFINE([HAVE_LIBSBML], [1], [Have libSBML library])
-fi
+# Check for user-provided glpk path
+AC_ARG_WITH([glpk],
+    AS_HELP_STRING([--with-glpk=<DIR>], [Specify glpk installation path]),
+    [
+        if test -d "$withval"; then
+            GLPK_LIBS="-L$withval/lib -lglpk"
+            GLPK_INCLUDE_PATH="$withval/include"
+        else
+            AC_MSG_ERROR([Directory $withval does not exist])
+        fi
+    ],
+    [
+        # Check for glpk in default and Homebrew paths as before
+        AC_CHECK_LIB([glpk], [glp_version], [
+            GLPK_LIBS="-lglpk"
+            GLPK_INCLUDE_PATH="/usr/local/include" # Default path on macOS
+        ], [
+            if test "$(uname)" = "Darwin"; then
+                if test -n "$(command -v brew)"; then
+                    BREW_PREFIX=$(brew --prefix)
+                    GLPK_LIBS="-L$BREW_PREFIX/Cellar/glpk/lib -lglpk"
+                    GLPK_INCLUDE_PATH="$BREW_PREFIX/Cellar/glpk/include"
+                else
+                    AC_MSG_ERROR([glpk not found. Install glpk or ensure Homebrew is installed.])
+                fi
+            else
+                AC_MSG_ERROR([glpk not found. Install glpk.])
+            fi
+        ])
+    ]
+)
 
-# Output files
-AC_SUBST(LIBSBML_LIBS)
-AC_SUBST(GLPK_LIBS)
+# Output variables
+AC_SUBST([LIBSBML_LIBS])
+AC_SUBST([GLPK_LIBS])
+AC_SUBST([LIBSBML_INCLUDE_PATH])
+AC_SUBST([GLPK_INCLUDE_PATH])
+
+# output Makevars
 AC_CONFIG_FILES([src/Makevars])
+
+# Output summary
+AC_MSG_RESULT([libsbml found at $LIBSBML_INCLUDE_PATH with $LIBSBML_LIBS])
+AC_MSG_RESULT([glpk found at $GLPK_INCLUDE_PATH with $GLPK_LIBS])
 
 # Output messages
 AC_OUTPUT
