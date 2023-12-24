@@ -4,8 +4,11 @@ AC_INIT([cobrar], [0.1.0], [s.waschina@nutrinf.uni-kiel.de])
 # Initialize variables
 LIBSBML_LIBS=""
 GLPK_LIBS=""
-LIBSBML_INCLUDE_PATH=""
-GLPK_INCLUDE_PATH=""
+LIBSBML_CFLAGS=""
+GLPK_CFLAGS=""
+
+# Check for pkg-config
+PKG_CHECK_EXISTS([pkg-config], [HAVE_PKG_CONFIG=yes], [HAVE_PKG_CONFIG=no])
 
 # Check for user-provided libsbml path
 AC_ARG_WITH([libsbml],
@@ -13,29 +16,29 @@ AC_ARG_WITH([libsbml],
     [
         if test -d "$withval"; then
             LIBSBML_LIBS="-L$withval/lib -lsbml"
-            LIBSBML_INCLUDE_PATH="$withval/include"
+            LIBSBML_CFLAGS="-I$withval/include"
         else
             AC_MSG_ERROR([Directory $withval does not exist])
         fi
     ],
     [
         # Check for libsbml in default and Homebrew paths as before
-        AC_CHECK_LIB([sbml], [main], [
-            LIBSBML_LIBS="-lsbml"
-            # LIBSBML_INCLUDE_PATH="/usr/local/include" # Default path on macOS
-        ], [
-            if test "$(uname)" = "Darwin"; then
-                if test -n "$(command -v brew)"; then
-                    BREW_PREFIX=$(brew --prefix)
-                    LIBSBML_LIBS="-L$BREW_PREFIX/Cellar/libsbml/lib -lsbml" # CHECK!
-                    LIBSBML_INCLUDE_PATH="I$BREW_PREFIX/Cellar/libsbml" # CHECK!
-                else
-                    AC_MSG_ERROR([libsbml not found. Install libsbml or ensure Homebrew is installed.])
-                fi
-            else
-                AC_MSG_ERROR([libsbml not found. Install libsbml.])
+        if test "$HAVE_PKG_CONFIG" = "yes"; then
+            # Check for libsbml using pkg-config
+    	    PKG_CHECK_MODULES([LIBSBML], [libsbml])
+    	    if test "$LIBSBML" == ""; then
+                AC_MSG_NOTICE([libsbml not found using pkg-config])
             fi
-        ])
+        fi
+        
+        # Last try (no user input, no pkg-config result
+        if test "$LIBSBML" == ""; then
+            AC_CHECK_LIB([sbml], [main], [
+                LIBSBML_LIBS="-lsbml"
+            ], [
+                AC_MSG_ERROR([libsbml not found])
+            ]) 
+        fi
     ]
 )
 
@@ -45,7 +48,7 @@ AC_ARG_WITH([glpk],
     [
         if test -d "$withval"; then
             GLPK_LIBS="-L$withval/lib -lglpk"
-            GLPK_INCLUDE_PATH="$withval/include"
+            GLPK_CFLAGS="$withval/include"
         else
             AC_MSG_ERROR([Directory $withval does not exist])
         fi
@@ -54,19 +57,8 @@ AC_ARG_WITH([glpk],
         # Check for glpk in default and Homebrew paths as before
         AC_CHECK_LIB([glpk], [glp_version], [
             GLPK_LIBS="-lglpk"
-            # GLPK_INCLUDE_PATH="/usr/local/include" # Default path on macOS
         ], [
-            if test "$(uname)" = "Darwin"; then
-                if test -n "$(command -v brew)"; then
-                    BREW_PREFIX=$(brew --prefix)
-                    GLPK_LIBS="-L$(find $BREW_PREFIX/Cellar/glpk -name lib) -lglpk"
-                    GLPK_INCLUDE_PATH="-I$(dirname `find $BREW_PREFIX/Cellar/glpk -name glpk.h`)"
-                else
-                    AC_MSG_ERROR([glpk not found. Install glpk or ensure Homebrew is installed.])
-                fi
-            else
-                AC_MSG_ERROR([glpk not found. Install glpk.])
-            fi
+            AC_MSG_ERROR([glpk not found. Install glpk.])
         ])
     ]
 )
@@ -74,15 +66,15 @@ AC_ARG_WITH([glpk],
 # Output variables
 AC_SUBST([LIBSBML_LIBS])
 AC_SUBST([GLPK_LIBS])
-AC_SUBST([LIBSBML_INCLUDE_PATH])
-AC_SUBST([GLPK_INCLUDE_PATH])
+AC_SUBST([LIBSBML_CFLAGS])
+AC_SUBST([GLPK_CFLAGS])
 
 # output Makevars
 AC_CONFIG_FILES([src/Makevars])
 
 # Output summary
-AC_MSG_RESULT([libsbml found at $LIBSBML_INCLUDE_PATH with $LIBSBML_LIBS])
-AC_MSG_RESULT([glpk found at $GLPK_INCLUDE_PATH with $GLPK_LIBS])
+AC_MSG_RESULT([libsbml found: $LIBSBML_CFLAGS $LIBSBML_LIBS])
+AC_MSG_RESULT([glpk found: $GLPK_CFLAGS $GLPK_LIBS])
 
 # Output messages
 AC_OUTPUT
