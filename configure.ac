@@ -12,7 +12,7 @@ PKG_CHECK_EXISTS([pkg-config], [HAVE_PKG_CONFIG=yes], [HAVE_PKG_CONFIG=no])
 
 # Check for user-provided libsbml path
 AC_ARG_WITH([libsbml],
-    AS_HELP_STRING([--with-libsbml=<DIR>], [Specify libsbml installation path]),
+    AS_HELP_STRING([--with-libsbml=PATH], [Specify libsbml installation path]),
     [
         if test -d "$withval"; then
             LIBSBML_LIBS="-L$withval/lib -lsbml"
@@ -26,13 +26,13 @@ AC_ARG_WITH([libsbml],
         if test "$HAVE_PKG_CONFIG" = "yes"; then
             # Check for libsbml using pkg-config
     	    PKG_CHECK_MODULES([LIBSBML], [libsbml])
-    	    if test "$LIBSBML" == ""; then
+    	    if test "$LIBSBML_LIBS" == ""; then
                 AC_MSG_NOTICE([libsbml not found using pkg-config])
             fi
         fi
         
         # Last try (no user input, no pkg-config result
-        if test "$LIBSBML" == ""; then
+        if test "$LIBSBML_LIBS" == ""; then
             AC_CHECK_LIB([sbml], [main], [
                 LIBSBML_LIBS="-lsbml"
             ], [
@@ -44,7 +44,7 @@ AC_ARG_WITH([libsbml],
 
 # Check for user-provided glpk path
 AC_ARG_WITH([glpk],
-    AS_HELP_STRING([--with-glpk=<DIR>], [Specify glpk installation path]),
+    AS_HELP_STRING([--with-glpk=PATH], [Specify glpk installation path]),
     [
         if test -d "$withval"; then
             GLPK_LIBS="-L$withval/lib -lglpk"

@@ -1277,8 +1277,8 @@ if test -n "$ac_init_help"; then
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
-  --with-libsbml=<DIR>    Specify libsbml installation path
-  --with-glpk=<DIR>       Specify glpk installation path
+  --with-libsbml=PATH     Specify libsbml installation path
+  --with-glpk=PATH        Specify glpk installation path
 
 Some influential environment variables:
   PKG_CONFIG  path to pkg-config utility
@@ -2850,14 +2850,14 @@ else
 $as_echo "yes" >&6; }
 
 fi
-    	    if test "$LIBSBML" == ""; then
+    	    if test "$LIBSBML_LIBS" == ""; then
                 { $as_echo "$as_me:${as_lineno-$LINENO}: libsbml not found using pkg-config" >&5
 $as_echo "$as_me: libsbml not found using pkg-config" >&6;}
             fi
         fi
 
         # Last try (no user input, no pkg-config result
-        if test "$LIBSBML" == ""; then
+        if test "$LIBSBML_LIBS" == ""; then
             { $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lsbml" >&5
 $as_echo_n "checking for main in -lsbml... " >&6; }
 if ${ac_cv_lib_sbml_main+:} false; then :
