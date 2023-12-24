@@ -61,7 +61,7 @@ AC_ARG_WITH([glpk],
             if test "$(uname)" = "Darwin"; then
                 if test -n "$(command -v brew)"; then
                     BREW_PREFIX=$(brew --prefix)
-                    GLPK_LIBS="-L$(find $BREW_PREFIX/Cellar/glpk -name lib)"
+                    GLPK_LIBS="-L$(find $BREW_PREFIX/Cellar/glpk -name lib) -lglpk"
                     GLPK_CFLAGS="I$(dirname `find $BREW_PREFIX/Cellar/GLPK -name glpk.h`)"
                 else
                     AC_MSG_ERROR([libsbml not found. Consider installing it with homebrew via 'brew install glpk'.])
