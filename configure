@@ -2856,7 +2856,7 @@ $as_echo "$as_me: libsbml not found using pkg-config" >&6;}
             fi
         fi
 
-        # Last try (no user input, no pkg-config result
+        # Last try (no user input, no pkg-config result)
         if test "$LIBSBML_LIBS" == ""; then
             { $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lsbml" >&5
 $as_echo_n "checking for main in -lsbml... " >&6; }
@@ -2961,7 +2961,15 @@ if test "x$ac_cv_lib_glpk_glp_version" = xyes; then :
 
 else
 
-            as_fn_error $? "glpk not found. Install glpk." "$LINENO" 5
+            if test "$(uname)" = "Darwin"; then
+                if test -n "$(command -v brew)"; then
+                    BREW_PREFIX=$(brew --prefix)
+                    GLPK_LIBS="-L$(find $BREW_PREFIX/Cellar/glpk -lib)"
+                    GLPK_CFLAGS="I$(dirname `find $BREW_PREFIX/Cellar/GLPK -glpk.h`)"
+                else
+                    as_fn_error $? "libsbml not found. Consider installing it with homebrew via 'brew install glpk'." "$LINENO" 5
+                fi
+            fi
 
 fi
 

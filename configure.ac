@@ -31,7 +31,7 @@ AC_ARG_WITH([libsbml],
             fi
         fi
         
-        # Last try (no user input, no pkg-config result
+        # Last try (no user input, no pkg-config result)
         if test "$LIBSBML_LIBS" == ""; then
             AC_CHECK_LIB([sbml], [main], [
                 LIBSBML_LIBS="-lsbml"
@@ -58,7 +58,15 @@ AC_ARG_WITH([glpk],
         AC_CHECK_LIB([glpk], [glp_version], [
             GLPK_LIBS="-lglpk"
         ], [
-            AC_MSG_ERROR([glpk not found. Install glpk.])
+            if test "$(uname)" = "Darwin"; then
+                if test -n "$(command -v brew)"; then
+                    BREW_PREFIX=$(brew --prefix)
+                    GLPK_LIBS="-L$(find $BREW_PREFIX/Cellar/glpk -lib)"
+                    GLPK_CFLAGS="I$(dirname `find $BREW_PREFIX/Cellar/GLPK -glpk.h`)"
+                else
+                    AC_MSG_ERROR([libsbml not found. Consider installing it with homebrew via 'brew install glpk'.])
+                fi
+            fi
         ])
     ]
 )
