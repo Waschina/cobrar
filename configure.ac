@@ -27,8 +27,8 @@ AC_ARG_WITH([libsbml],
             if test "$(uname)" = "Darwin"; then
                 if test -n "$(command -v brew)"; then
                     BREW_PREFIX=$(brew --prefix)
-                    LIBSBML_LIBS="-L$BREW_PREFIX/Cellar/libsbml/lib -lsbml"
-                    LIBSBML_INCLUDE_PATH="I$BREW_PREFIX/Cellar/libsbml"
+                    LIBSBML_LIBS="-L$BREW_PREFIX/Cellar/libsbml/lib -lsbml" # CHECK!
+                    LIBSBML_INCLUDE_PATH="I$BREW_PREFIX/Cellar/libsbml" # CHECK!
                 else
                     AC_MSG_ERROR([libsbml not found. Install libsbml or ensure Homebrew is installed.])
                 fi
@@ -59,8 +59,8 @@ AC_ARG_WITH([glpk],
             if test "$(uname)" = "Darwin"; then
                 if test -n "$(command -v brew)"; then
                     BREW_PREFIX=$(brew --prefix)
-                    GLPK_LIBS="-L$BREW_PREFIX/Cellar/glpk/lib -lglpk"
-                    GLPK_INCLUDE_PATH="-I$BREW_PREFIX/Cellar/glpk"
+                    GLPK_LIBS="-L$($BREW_PREFIX/Cellar/glpk -name lib) -lglpk"
+                    GLPK_INCLUDE_PATH="-I$(dirname `find $BREW_PREFIX/Cellar/glpk -name glpk.h`)"
                 else
                     AC_MSG_ERROR([glpk not found. Install glpk or ensure Homebrew is installed.])
                 fi
