@@ -59,7 +59,7 @@ AC_ARG_WITH([glpk],
             if test "$(uname)" = "Darwin"; then
                 if test -n "$(command -v brew)"; then
                     BREW_PREFIX=$(brew --prefix)
-                    GLPK_LIBS="-L$($BREW_PREFIX/Cellar/glpk -name lib) -lglpk"
+                    GLPK_LIBS="-L$(find $BREW_PREFIX/Cellar/glpk -name lib) -lglpk"
                     GLPK_INCLUDE_PATH="-I$(dirname `find $BREW_PREFIX/Cellar/glpk -name glpk.h`)"
                 else
                     AC_MSG_ERROR([glpk not found. Install glpk or ensure Homebrew is installed.])
