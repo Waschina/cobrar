@@ -5,3 +5,6 @@
 ^Meta$
 ^\.github$
 ^README\.Rmd$
+config.log
+config.status
+

@@ -22,11 +22,20 @@ AC_ARG_WITH([libsbml],
         fi
     ],
     [
-        # Check for libsbml in default and Homebrew paths as before
+        # Check for libsbml
         if test "$HAVE_PKG_CONFIG" = "yes"; then
             # Check for libsbml using pkg-config
     	    PKG_CHECK_MODULES([LIBSBML], [libsbml])
-    	    if test "$LIBSBML_LIBS" == ""; then
+    	    if test "$LIBSBML_LIBS" != ""; then
+    	        # Check for FBC extension
+                AC_CHECK_HEADER([sbml/packages/fbc/common/FbcExtensionTypes.h], ,
+                    AC_MSG_ERROR([libsbml installation does not have the required FBC extension.]),
+                    [#include <sbml/SBMLTypes.h>])
+                # Check for FBC extension
+                AC_CHECK_HEADER([sbml/packages/groups/common/GroupsExtensionTypes.h], ,
+                    AC_MSG_ERROR([libsbml installation does not have the required groups extension.]),
+                    [#include <sbml/SBMLTypes.h>])
+            else    
                 AC_MSG_NOTICE([libsbml not found using pkg-config])
             fi
         fi
@@ -35,6 +44,14 @@ AC_ARG_WITH([libsbml],
         if test "$LIBSBML_LIBS" == ""; then
             AC_CHECK_LIB([sbml], [main], [
                 LIBSBML_LIBS="-lsbml"
+                # Check for FBC extension
+                AC_CHECK_HEADER([sbml/packages/fbc/common/FbcExtensionTypes.h], ,
+                    AC_MSG_ERROR([libsbml installation does not have the required FBC extension.]),
+                    [#include <sbml/SBMLTypes.h>])
+                # Check for FBC extension
+                AC_CHECK_HEADER([sbml/packages/groups/common/GroupsExtensionTypes.h], ,
+                    AC_MSG_ERROR([libsbml installation does not have the required groups extension.]),
+                    [#include <sbml/SBMLTypes.h>])
             ], [
                 AC_MSG_ERROR([libsbml not found])
             ]) 
@@ -42,6 +59,7 @@ AC_ARG_WITH([libsbml],
     ]
 )
 
+      
 # Check for user-provided glpk path
 AC_ARG_WITH([glpk],
     AS_HELP_STRING([--with-glpk=PATH], [Specify glpk installation path]),
