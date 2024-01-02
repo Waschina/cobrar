@@ -25,7 +25,7 @@ AC_ARG_WITH([libsbml],
         # Check for libsbml
         if test "$HAVE_PKG_CONFIG" = "yes"; then
             # Check for libsbml using pkg-config
-    	    PKG_CHECK_MODULES([LIBSBML], [libsbml])
+    	    PKG_CHECK_MODULES([LIBSBML], [libsbml], , AC_MSG_NOTICE([libsbml not found using pkg-config]))
     	    if test "$LIBSBML_LIBS" != ""; then
     	        # Check for FBC extension
                 AC_CHECK_HEADER([sbml/packages/fbc/common/FbcExtensionTypes.h], ,
@@ -35,8 +35,6 @@ AC_ARG_WITH([libsbml],
                 AC_CHECK_HEADER([sbml/packages/groups/common/GroupsExtensionTypes.h], ,
                     AC_MSG_ERROR([libsbml installation does not have the required groups extension.]),
                     [#include <sbml/SBMLTypes.h>])
-            else    
-                AC_MSG_NOTICE([libsbml not found using pkg-config])
             fi
         fi
         

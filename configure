@@ -2792,8 +2792,8 @@ else
             # Check for libsbml using pkg-config
 
 pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for libsbml" >&5
-$as_echo_n "checking for libsbml... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for LIBSBML" >&5
+$as_echo_n "checking for LIBSBML... " >&6; }
 
 if test -n "$LIBSBML_CFLAGS"; then
     pkg_cv_LIBSBML_CFLAGS="$LIBSBML_CFLAGS"
@@ -2833,7 +2833,7 @@ fi
 
 
 if test $pkg_failed = yes; then
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+   	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 
 if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
@@ -2849,31 +2849,13 @@ fi
 	# Put the nasty error message in config.log where it belongs
 	echo "$LIBSBML_PKG_ERRORS" >&5
 
-	as_fn_error $? "Package requirements (libsbml) were not met:
-
-$LIBSBML_PKG_ERRORS
-
-Consider adjusting the PKG_CONFIG_PATH environment variable if you
-installed software in a non-standard prefix.
-
-Alternatively, you may set the environment variables LIBSBML_CFLAGS
-and LIBSBML_LIBS to avoid the need to call pkg-config.
-See the pkg-config man page for more details." "$LINENO" 5
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: libsbml not found using pkg-config" >&5
+$as_echo "$as_me: libsbml not found using pkg-config" >&6;}
 elif test $pkg_failed = untried; then
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+     	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-	{ { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
-$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
-is in your PATH or set the PKG_CONFIG environment variable to the full
-path to pkg-config.
-
-Alternatively, you may set the environment variables LIBSBML_CFLAGS
-and LIBSBML_LIBS to avoid the need to call pkg-config.
-See the pkg-config man page for more details.
-
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
-See \`config.log' for more details" "$LINENO" 5; }
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: libsbml not found using pkg-config" >&5
+$as_echo "$as_me: libsbml not found using pkg-config" >&6;}
 else
 	LIBSBML_CFLAGS=$pkg_cv_LIBSBML_CFLAGS
 	LIBSBML_LIBS=$pkg_cv_LIBSBML_LIBS
@@ -2902,9 +2884,6 @@ else
 fi
 
 
-            else
-                { $as_echo "$as_me:${as_lineno-$LINENO}: libsbml not found using pkg-config" >&5
-$as_echo "$as_me: libsbml not found using pkg-config" >&6;}
             fi
         fi
 
