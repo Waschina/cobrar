@@ -36,8 +36,8 @@ sudo apt install libsbml-dev libglpk-dev
 
 Install cobrar (in *R*):
 ``` r
-# install.packages("devtools")
-devtools::install_github("Waschina/cobrar")
+# install.packages("remotes")
+remotes::install_github("Waschina/cobrar")
 ```
 
 #### Centos/Fedora/RHEL
@@ -49,8 +49,8 @@ sudo yum install libsbml-devel glpk-devel
 
 Install cobrar (in *R*):
 ``` r
-# install.packages("devtools")
-devtools::install_github("Waschina/cobrar")
+# install.packages("remotes")
+remotes::install_github("Waschina/cobrar")
 ```
 #### MacOS
 
@@ -75,11 +75,22 @@ brew install glpk
 sudo port install glpk
 ```
 
+Add the the path to libSBML to the library paths that are checked by R.
+``` sh
+export R_LD_LIBRARY_PATH="`R RHOME`/lib:/usr/local/lib"
+```
+
 Install cobrar (in *R*):
 ``` r
-# install.packages("devtools")
-devtools::install_github("Waschina/cobrar")
+# install.packages("remotes")
+remotes::install_github("Waschina/cobrar")
 ``` 
+
+Using *cobrar* in R:
+``` r
+dyn.load("/usr/local/lib/libsbml.5.20.2.dylib")
+library(cobrar)
+```
 
 #### Windows
 TODO
