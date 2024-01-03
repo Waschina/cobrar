@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/Waschina/cobrar/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Waschina/cobrar/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The R package *cobrar* provides structures and functions for constraint-based metabolic network analysis, e.g. the prediction of metabolic fluxes using fluxes using Flux Balance Analysis (FBA). *cobrar* is inspired by the former by the former CRAN R package *sybil*[(1)](#R1).
+The R package *cobrar* provides structures and functions for constraint-based metabolic network analysis, e.g. the prediction of metabolic fluxes using fluxes using Flux Balance Analysis (FBA). *cobrar* is inspired by the former CRAN R package *sybil*[(1)](#R1).
 
 ## Installation
 

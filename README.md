@@ -11,8 +11,7 @@
 The R package *cobrar* provides structures and functions for
 constraint-based metabolic network analysis, e.g. the prediction of
 metabolic fluxes using fluxes using Flux Balance Analysis (FBA).
-*cobrar* is inspired by the former by the former CRAN R package
-*sybil*[(1)](#R1).
+*cobrar* is inspired by the former CRAN R package *sybil*[(1)](#R1).
 
 ## Installation
 
@@ -126,8 +125,8 @@ but without oxygen to simulate an anoxic growth environment.
 library(cobrar)
 #> Loading required package: Matrix
 #> cobrar uses...
-#>  - libSBML (v. 5.18.0)
-#>  - glpk (v. 4.65)
+#>  - libSBML (v. 5.19.0)
+#>  - glpk (v. 5.0)
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)
 
