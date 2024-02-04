@@ -80,7 +80,7 @@ AC_ARG_WITH([glpk],
                     GLPK_LIBS="-L$(find $BREW_PREFIX/Cellar/glpk -name lib) -lglpk"
                     GLPK_CFLAGS="-I$(dirname `find $BREW_PREFIX/Cellar/GLPK -name glpk.h`)"
                 else
-                    AC_MSG_ERROR([libsbml not found. Consider installing it with homebrew via 'brew install glpk'.])
+                    AC_MSG_ERROR([glpk not found. Consider installing it with homebrew via 'brew install glpk'.])
                 fi
             fi
         ])
