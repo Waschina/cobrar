@@ -1,2 +1,6 @@
-PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS) -I/usr/include/sbml/
-PKG_LIBS = $(SHLIB_OPENMP_CXXFLAGS) $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS) -lsbml
+PKG_CPPFLAGS=-D_R_=1 -DUSE_R=1 -I${GLPK_HOME}/include -I"$(LIB_SBML)/include -DCHECK_GLPK_ARGS
+PKG_LIBS=-L${GLPK_HOME}/lib -L"$(LIB_SBML)/bin" -lglpk -lgmp  -lsbml
+
+all: $(SHLIB)
+	mkdir -p "$(R_PACKAGE_DIR)/libs$(R_ARCH)"
+	cp "$(LIB_SBML)/bin/libsbml.dll" "$(R_PACKAGE_DIR)\libs$(R_ARCH)"
