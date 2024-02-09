@@ -586,7 +586,9 @@ PACKAGE_URL=''
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+GMP_CFLAGS
 GLPK_CFLAGS
+GMP_LIBS
 GLPK_LIBS
 OBJEXT
 EXEEXT
@@ -644,6 +646,7 @@ ac_user_opts='
 enable_option_checking
 with_libsbml
 with_glpk
+with_gmp
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1279,6 +1282,8 @@ Optional Packages:
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-libsbml=PATH     Specify libsbml installation path
   --with-glpk=PATH        Specify glpk installation path
+  --with-gmp=PATH         Specify gmp (GNU multiple precision arithmetic
+                          library) installation path
 
 Some influential environment variables:
   PKG_CONFIG  path to pkg-config utility
@@ -1848,8 +1853,10 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 # Initialize variables
 LIBSBML_LIBS=""
 GLPK_LIBS=""
+GMP_LIBS=""
 LIBSBML_CFLAGS=""
 GLPK_CFLAGS=""
+GMP_CFLAGS=""
 
 # Check for pkg-config
 
@@ -3030,7 +3037,84 @@ fi
 fi
 
 
+# Check for user-provided gmp path
+
+# Check whether --with-gmp was given.
+if test "${with_gmp+set}" = set; then :
+  withval=$with_gmp;
+        if test -d "$withval"; then
+            GMP_LIBS="-L$withval/lib -lgmp"
+            GMP_CFLAGS="$withval/include"
+        else
+            as_fn_error $? "Directory $withval does not exist" "$LINENO" 5
+        fi
+
+else
+
+        # Check for gmp in default and Homebrew paths as before
+        { $as_echo "$as_me:${as_lineno-$LINENO}: checking for __gmpz_init in -lgmp" >&5
+$as_echo_n "checking for __gmpz_init in -lgmp... " >&6; }
+if ${ac_cv_lib_gmp___gmpz_init+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lgmp  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char __gmpz_init ();
+int
+main ()
+{
+return __gmpz_init ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_gmp___gmpz_init=yes
+else
+  ac_cv_lib_gmp___gmpz_init=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_gmp___gmpz_init" >&5
+$as_echo "$ac_cv_lib_gmp___gmpz_init" >&6; }
+if test "x$ac_cv_lib_gmp___gmpz_init" = xyes; then :
+
+            GMP_LIBS="-lgmp"
+
+else
+
+            if test "$(uname)" = "Darwin"; then
+                if test -n "$(command -v brew)"; then
+                    BREW_PREFIX=$(brew --prefix)
+                    GMP_LIBS="-L$(find $BREW_PREFIX/Cellar/gmp -name lib) -lgmp"
+                    GMP_CFLAGS="-I$(dirname `find $BREW_PREFIX/Cellar/GMP -name gmp.h`)"
+                else
+                    { $as_echo "$as_me:${as_lineno-$LINENO}: result: gmp (optional) not found. Consider installing it with homebrew via 'brew install gmp'." >&5
+$as_echo "gmp (optional) not found. Consider installing it with homebrew via 'brew install gmp'." >&6; }
+                fi
+            fi
+
+fi
+
+
+
+fi
+
+
 # Output variables
+
+
 
 
 
@@ -3045,6 +3129,8 @@ ac_config_files="$ac_config_files src/Makevars"
 $as_echo "libsbml found: $LIBSBML_CFLAGS $LIBSBML_LIBS" >&6; }
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: glpk found: $GLPK_CFLAGS $GLPK_LIBS" >&5
 $as_echo "glpk found: $GLPK_CFLAGS $GLPK_LIBS" >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: gmp found: $GMP_CFLAGS $GMP_LIBS" >&5
+$as_echo "gmp found: $GMP_CFLAGS $GMP_LIBS" >&6; }
 
 # Output messages
 cat >confcache <<\_ACEOF
