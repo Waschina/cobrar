@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 library(cobrar)
 ```
 
-## Constriant for a multi-carbon source growth environment
+## Constraint for a multi-carbon source growth environment
 
 Standard FBA models already contain the linear constraints:
 
@@ -74,7 +74,7 @@ getExchanges(mod, sol)
 The results show that as an effect of the second constraint the proton production (`EX_h_e`) is reduced, and all three carbon sources are consumed, including Fumarate.
 
 
-## Adding multiple constriants at once
+## Adding multiple constraints at once
 
 In the above example, both constraints were added to the model successively, each with a separate `addConstraint()` call. You can achieve the same final outcome model by adding both constraints simultaneously:
 
