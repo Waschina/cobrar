@@ -18,7 +18,7 @@ SystemRequirements:
     GLPK (>= 4.65)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 LinkingTo: 
     Rcpp,
     RcppArmadillo
