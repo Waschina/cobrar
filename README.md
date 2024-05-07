@@ -56,33 +56,10 @@ remotes::install_github("Waschina/cobrar")
 
 #### MacOS
 
-*libSBML* can be installed from source:
+*libSBML* and *glpk* can be installed using homebrew:
 
 ``` sh
-curl -LO https://github.com/sbmlteam/libsbml/archive/refs/tags/v5.20.2.tar.gz
-tar -zxf v5.20.2.tar.gz
-cd libsbml-5.20.2
-mkdir build
-cd build
-cmake -DENABLE_FBC=ON -DENABLE_GROUPS=ON ..
-make
-sudo make install 
-```
-
-Install *glpk* either homebrew or MacPorts:
-
-``` sh
-# Homebrew
-brew install glpk
-
-# OR: MacPorts
-sudo port install glpk
-```
-
-Add the the path to libSBML to the library paths that are checked by R.
-
-``` sh
-export R_LD_LIBRARY_PATH="`R RHOME`/lib:/usr/local/lib"
+brew install glpk brewsci/bio/libsbml
 ```
 
 Install cobrar (in *R*):
@@ -90,13 +67,6 @@ Install cobrar (in *R*):
 ``` r
 # install.packages("remotes")
 remotes::install_github("Waschina/cobrar")
-```
-
-Using *cobrar* in R:
-
-``` r
-dyn.load("/usr/local/lib/libsbml.5.20.2.dylib")
-library(cobrar)
 ```
 
 #### Windows
@@ -125,8 +95,8 @@ but without oxygen to simulate an anoxic growth environment.
 library(cobrar)
 #> Loading required package: Matrix
 #> cobrar uses...
-#>  - libSBML (v. 5.19.0)
-#>  - glpk (v. 5.0)
+#>  - libSBML (v. 5.18.0)
+#>  - glpk (v. 4.65)
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)
 
