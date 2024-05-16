@@ -9,6 +9,7 @@
 #'
 #' @return Character vector with reactions IDs.
 #'
+#' @family Model manipulation tools
 #' @export
 geneDel <- function(model, gene) {
 

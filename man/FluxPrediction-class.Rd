@@ -34,3 +34,9 @@ fluxes in \link{pfba}.}
 \item{\code{redCosts}}{Predicted reduced costs (or "\emph{dual value}") for reactions.}
 }}
 
+\seealso{
+Other Flux analysis tools: 
+\code{\link{getExchanges}()},
+\code{\link{show,FluxPrediction-method}}
+}
+\concept{Flux analysis tools}

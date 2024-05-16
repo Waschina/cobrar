@@ -32,3 +32,26 @@ Returns the index(es) of specific gene(s).
 Returns NA for gene IDs not part of the model or if the index is larger
 than the number of genes in the model.
 }
+\seealso{
+Other Model characteristics: 
+\code{\link{checkCompartmentId}()},
+\code{\link{checkGeneId}()},
+\code{\link{checkMetId}()},
+\code{\link{checkReactId}()},
+\code{\link{checkSubsystemId}()},
+\code{\link{comp_num}()},
+\code{\link{comp_pos}()},
+\code{\link{constraint_num}()},
+\code{\link{deadEndMetabolites}()},
+\code{\link{gene_num}()},
+\code{\link{met_num}()},
+\code{\link{met_pos}()},
+\code{\link{modelorg-class}},
+\code{\link{printConstraint}()},
+\code{\link{printReaction}()},
+\code{\link{react_num}()},
+\code{\link{react_pos}()},
+\code{\link{subsys_num}()},
+\code{\link{subsys_pos}()}
+}
+\concept{Model characteristics}

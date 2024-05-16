@@ -7,6 +7,7 @@
 #' objects.
 #'
 #' @import Matrix
+#' @family Model import and export helpers
 #' @export
 readSybilmod <- function(file_path) {
   sybildoc.lst  <- readRDS(normalizePath(file_path))

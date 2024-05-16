@@ -13,6 +13,7 @@
 #' @returns A data.frame that summarizes the predicted metabolite exchange rates
 #' (=fluxes of exchange reactions).
 #'
+#' @family Flux analysis tools
 #' @export
 getExchanges <- function(model, sol) {
 

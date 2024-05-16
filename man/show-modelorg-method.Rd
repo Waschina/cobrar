@@ -13,3 +13,8 @@
 Displays a few key properties of a metabolic network model of class
 \link{modelorg}.
 }
+\seealso{
+Other Object classes: 
+\code{\link{Constraints-class}}
+}
+\concept{Object classes}

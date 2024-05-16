@@ -24,3 +24,20 @@ mod <- readSBMLmod(fpath)
 mod <- addCompartment(mod, id = "p", name = "periplasm")
 
 }
+\seealso{
+Other Model manipulation tools: 
+\code{\link{addConstraint}()},
+\code{\link{addGene}()},
+\code{\link{addMetabolite}()},
+\code{\link{addReact}()},
+\code{\link{addSubsystem}()},
+\code{\link{changeBounds}()},
+\code{\link{geneDel}()},
+\code{\link{rmCompartment}()},
+\code{\link{rmConstraint}()},
+\code{\link{rmGene}()},
+\code{\link{rmMetabolite}()},
+\code{\link{rmReact}()},
+\code{\link{rmSubsystem}()}
+}
+\concept{Model manipulation tools}

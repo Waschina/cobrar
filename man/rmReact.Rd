@@ -25,3 +25,20 @@ This function removes specified reactions from a model.
 If the reaction participates in a user constraint, this constraint is
 removed from the model.
 }
+\seealso{
+Other Model manipulation tools: 
+\code{\link{addCompartment}()},
+\code{\link{addConstraint}()},
+\code{\link{addGene}()},
+\code{\link{addMetabolite}()},
+\code{\link{addReact}()},
+\code{\link{addSubsystem}()},
+\code{\link{changeBounds}()},
+\code{\link{geneDel}()},
+\code{\link{rmCompartment}()},
+\code{\link{rmConstraint}()},
+\code{\link{rmGene}()},
+\code{\link{rmMetabolite}()},
+\code{\link{rmSubsystem}()}
+}
+\concept{Model manipulation tools}

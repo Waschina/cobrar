@@ -50,6 +50,7 @@
 #' models,” Genome Biology, vol. 22, no. 1. Springer Science and Business Media
 #' LLC, Mar. 10, 2021. doi: 10.1186/s13059-021-02295-1.
 #'
+#' @family Flux prediction algorithms
 #' @export
 pfba_heuristic <- function(model, costcoeffw = NULL, costcoefbw = NULL,
                             pFBAcoeff = 1e-6) {

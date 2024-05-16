@@ -19,6 +19,7 @@
 #'
 #' @returns An updated model of class \link{modelorg}
 #'
+#' @family Model manipulation tools
 #' @export
 changeBounds <- function(model, react, lb = NULL, ub = NULL) {
 
@@ -58,6 +59,7 @@ changeBounds <- function(model, react, lb = NULL, ub = NULL) {
 #' If the reaction participates in a user constraint, this constraint is
 #' removed from the model.
 #'
+#' @family Model manipulation tools
 #' @export
 rmReact <- function(model, react, rm_met = TRUE) {
   if(length(react) == 0)
@@ -120,7 +122,7 @@ rmReact <- function(model, react, rm_met = TRUE) {
 #' mod_KO <- rmGene(mod, c("b4152","b0116"))
 #' mod_KO
 #'
-#'
+#' @family Model manipulation tools
 #' @export
 rmGene <- function(model, gene, rm_react = TRUE, rm_met = TRUE) {
   if(length(gene) == 0)
@@ -192,6 +194,7 @@ rmGene <- function(model, gene, rm_react = TRUE, rm_met = TRUE) {
 #' @docType methods
 #' @rdname addConstraint-methods
 #'
+#' @family Model manipulation tools
 #' @export
 setGeneric("addConstraint" ,valueClass = "modelorg", function(model,
                                                               react,
@@ -291,6 +294,7 @@ setMethod("addConstraint", signature(model = "modelorg",
 #'
 #' @seealso [printConstraint()]
 #'
+#' @family Model manipulation tools
 #' @export
 rmConstraint <- function(model, ind) {
   if(length(ind) == 0)
@@ -408,7 +412,7 @@ rmConstraint <- function(model, ind) {
 #'
 #' fba(mod)
 #'
-#'
+#' @family Model manipulation tools
 #' @export
 addReact <- function(model,
                      id,
@@ -555,6 +559,7 @@ addReact <- function(model,
 #' @param CVTerms Character vector for the metabolites' CV-Terms
 #' @param SBOTerm Character vector for the metabolites' SBO-Terms
 #'
+#' @family Model manipulation tools
 #' @export
 addMetabolite <- function(model, id, comp = NA, name = NA, chemicalFormula = NA,
                           charge = NA, CVTerms = NA,
@@ -658,6 +663,7 @@ addMetabolite <- function(model, id, comp = NA, name = NA, chemicalFormula = NA,
 #' If at least one of the provided metabolites still participates in a reaction,
 #' the function stops with an error message.
 #'
+#' @family Model manipulation tools
 #' @export
 rmMetabolite <- function(model, met) {
   if(length(met) == 0)
@@ -699,6 +705,7 @@ rmMetabolite <- function(model, met) {
 #' @param CVTerms Character vector for the genes' CV-Terms
 #' @param SBOTerm Character vector for the genes' SBO-Terms
 #'
+#' @family Model manipulation tools
 #' @export
 addGene <- function(model, id, name = NA, CVTerms = NA,
                     SBOTerm = rep("SBO:0000243",length(id))) {
@@ -776,6 +783,7 @@ addGene <- function(model, id, name = NA, CVTerms = NA,
 #' mod <- readSBMLmod(fpath)
 #' mod <- addCompartment(mod, id = "p", name = "periplasm")
 #'
+#' @family Model manipulation tools
 #' @export
 addCompartment <- function(model, id, name = NA) {
   norig <- comp_num(model)
@@ -837,6 +845,7 @@ addCompartment <- function(model, id, name = NA) {
 #' If at least one of the provided compartments still has metabolites associated
 #' with it, the function stops with an error message.
 #'
+#' @family Model manipulation tools
 #' @export
 rmCompartment <- function(model, comp) {
   if(length(comp) == 0)
@@ -875,6 +884,7 @@ rmCompartment <- function(model, comp) {
 #' mod <- addSubsystem(mod, id = "Bifidoshunt",
 #'                     name = "glucose fermentation to acetate and lactate (Bifidobacteria)")
 #'
+#' @family Model manipulation tools
 #' @export
 addSubsystem <- function(model, id, name = NA) {
   norig <- subsys_num(model)
@@ -938,6 +948,7 @@ addSubsystem <- function(model, id, name = NA) {
 #'
 #' @returns An updated model  of class \link{modelorg}
 #'
+#' @family Model manipulation tools
 #' @export
 rmSubsystem <- function(model, subsystem) {
   if(length(subsystem) == 0)

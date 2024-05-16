@@ -36,3 +36,26 @@ Returns the index(es) of specific compartment(s).
 Returns NA for compartment IDs not part of the model or if the index is larger
 than the number of compartments in the model.
 }
+\seealso{
+Other Model characteristics: 
+\code{\link{checkCompartmentId}()},
+\code{\link{checkGeneId}()},
+\code{\link{checkMetId}()},
+\code{\link{checkReactId}()},
+\code{\link{checkSubsystemId}()},
+\code{\link{comp_num}()},
+\code{\link{constraint_num}()},
+\code{\link{deadEndMetabolites}()},
+\code{\link{gene_num}()},
+\code{\link{gene_pos}()},
+\code{\link{met_num}()},
+\code{\link{met_pos}()},
+\code{\link{modelorg-class}},
+\code{\link{printConstraint}()},
+\code{\link{printReaction}()},
+\code{\link{react_num}()},
+\code{\link{react_pos}()},
+\code{\link{subsys_num}()},
+\code{\link{subsys_pos}()}
+}
+\concept{Model characteristics}

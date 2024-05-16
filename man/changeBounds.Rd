@@ -27,3 +27,20 @@ An updated model of class \link{modelorg}
 The function changes either upper bounds, lower bounds, or both for specific
 reactions.
 }
+\seealso{
+Other Model manipulation tools: 
+\code{\link{addCompartment}()},
+\code{\link{addConstraint}()},
+\code{\link{addGene}()},
+\code{\link{addMetabolite}()},
+\code{\link{addReact}()},
+\code{\link{addSubsystem}()},
+\code{\link{geneDel}()},
+\code{\link{rmCompartment}()},
+\code{\link{rmConstraint}()},
+\code{\link{rmGene}()},
+\code{\link{rmMetabolite}()},
+\code{\link{rmReact}()},
+\code{\link{rmSubsystem}()}
+}
+\concept{Model manipulation tools}

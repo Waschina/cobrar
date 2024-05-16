@@ -22,3 +22,20 @@ This function removes specified compartments from a model.
 If at least one of the provided compartments still has metabolites associated
 with it, the function stops with an error message.
 }
+\seealso{
+Other Model manipulation tools: 
+\code{\link{addCompartment}()},
+\code{\link{addConstraint}()},
+\code{\link{addGene}()},
+\code{\link{addMetabolite}()},
+\code{\link{addReact}()},
+\code{\link{addSubsystem}()},
+\code{\link{changeBounds}()},
+\code{\link{geneDel}()},
+\code{\link{rmConstraint}()},
+\code{\link{rmGene}()},
+\code{\link{rmMetabolite}()},
+\code{\link{rmReact}()},
+\code{\link{rmSubsystem}()}
+}
+\concept{Model manipulation tools}

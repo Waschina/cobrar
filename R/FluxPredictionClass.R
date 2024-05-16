@@ -18,6 +18,7 @@
 #'
 #' @aliases FluxPrediction
 #'
+#' @family Flux analysis tools
 #' @exportClass FluxPrediction
 setClass("FluxPrediction",
          slots = c(
@@ -41,6 +42,7 @@ setClass("FluxPrediction",
 #'
 #' @param object S4-object of class \link{FluxPrediction}.
 #'
+#' @family Flux analysis tools
 #' @export
 setMethod("show", signature(object = "FluxPrediction"),
           function(object) {

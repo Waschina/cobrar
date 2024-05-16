@@ -47,6 +47,7 @@
 #'
 #' @aliases modelorg
 #'
+#' @family Model characteristics
 #' @exportClass modelorg
 setClass("modelorg",
 
@@ -153,6 +154,7 @@ setClass("modelorg",
 #'
 #' @docType methods
 #' @rdname react_num-methods
+#' @family Model characteristics
 #' @export
 setGeneric("react_num", valueClass = "numeric", function(model) {
   standardGeneric("react_num")
@@ -179,6 +181,7 @@ setMethod("react_num", signature(model = "modelorg"),
 #'
 #' @docType methods
 #' @rdname react_pos-methods
+#' @family Model characteristics
 #' @export
 setGeneric("react_pos", valueClass = "numeric", function(model, react) {
   standardGeneric("react_pos")
@@ -214,6 +217,7 @@ setMethod("react_pos", signature(model = "modelorg", react = "missing"),
 #'
 #' @docType methods
 #' @rdname met_num-methods
+#' @family Model characteristics
 #' @export
 setGeneric("met_num", valueClass = "numeric", function(model) {
   standardGeneric("met_num")
@@ -240,6 +244,7 @@ setMethod("met_num", signature(model = "modelorg"),
 #'
 #' @docType methods
 #' @rdname met_pos-methods
+#' @family Model characteristics
 #' @export
 setGeneric("met_pos", valueClass = "numeric", function(model, met) {
   standardGeneric("met_pos")
@@ -274,6 +279,7 @@ setMethod("met_pos", signature(model = "modelorg", met = "missing"),
 #'
 #' @docType methods
 #' @rdname gene_num-methods
+#' @family Model characteristics
 #' @export
 setGeneric("gene_num", valueClass = "numeric", function(model) {
   standardGeneric("gene_num")
@@ -301,6 +307,7 @@ setMethod("gene_num", signature(model = "modelorg"),
 #'
 #' @docType methods
 #' @rdname gene_pos-methods
+#' @family Model characteristics
 #' @export
 setGeneric("gene_pos", valueClass = "numeric", function(model, gene) {
   standardGeneric("gene_pos")
@@ -335,6 +342,7 @@ setMethod("gene_pos", signature(model = "modelorg", gene = "missing"),
 #'
 #' @docType methods
 #' @rdname comp_num-methods
+#' @family Model characteristics
 #' @export
 setGeneric("comp_num", valueClass = "numeric", function(model) {
   standardGeneric("comp_num")
@@ -361,6 +369,7 @@ setMethod("comp_num", signature(model = "modelorg"),
 #'
 #' @docType methods
 #' @rdname comp_pos-methods
+#' @family Model characteristics
 #' @export
 setGeneric("comp_pos", valueClass = "numeric", function(model, comp) {
   standardGeneric("comp_pos")
@@ -402,6 +411,7 @@ setMethod("comp_pos", signature(model = "modelorg", comp = "logical"),
 #'
 #' @docType methods
 #' @rdname constraint_num-methods
+#' @family Model characteristics
 #' @export
 setGeneric("constraint_num", valueClass = "numeric", function(model) {
   standardGeneric("constraint_num")
@@ -422,6 +432,7 @@ setMethod("constraint_num", signature(model = "modelorg"),
 #'
 #' @docType methods
 #' @rdname subsys_num-methods
+#' @family Model characteristics
 #' @export
 setGeneric("subsys_num", valueClass = "numeric", function(model) {
   standardGeneric("subsys_num")
@@ -448,6 +459,7 @@ setMethod("subsys_num", signature(model = "modelorg"),
 #'
 #' @docType methods
 #' @rdname subsys_pos-methods
+#' @family Model characteristics
 #' @export
 setGeneric("subsys_pos", valueClass = "numeric", function(model, subsys) {
   standardGeneric("subsys_pos")
@@ -514,6 +526,7 @@ setMethod("printObjFunc", signature(object = "modelorg"),
 #'
 #' @param object S4-object of class \link{modelorg}.
 #'
+#'@family Object classes
 #' @export
 setMethod("show", signature(object = "modelorg"),
           function(object) {

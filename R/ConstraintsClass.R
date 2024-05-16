@@ -25,6 +25,7 @@
 #'
 #' @aliases Constraints
 #'
+#' @family Object classes
 #' @exportClass Constraints
 setClass("Constraints",
          slots = c(

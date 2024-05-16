@@ -20,6 +20,7 @@
 #'
 #' @seealso [pfba_heuristic()]
 #'
+#' @family Flux prediction algorithms
 #' @export
 pfba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
 

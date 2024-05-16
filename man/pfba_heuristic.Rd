@@ -59,3 +59,10 @@ bacterial metabolic pathways and reconstruction of accurate metabolic
 models,” Genome Biology, vol. 22, no. 1. Springer Science and Business Media
 LLC, Mar. 10, 2021. doi: 10.1186/s13059-021-02295-1.
 }
+\seealso{
+Other Flux prediction algorithms: 
+\code{\link{fba}()},
+\code{\link{fva}()},
+\code{\link{pfba}()}
+}
+\concept{Flux prediction algorithms}

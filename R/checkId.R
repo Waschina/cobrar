@@ -9,6 +9,7 @@
 #'
 #' @return A logical vector; TRUE if ID/index is valid, FALSE otherwise.
 #'
+#' @family Model characteristics
 #' @export
 checkReactId <- function(model, react) {
   if (!is(model, "modelorg")) {
@@ -46,6 +47,7 @@ checkReactId <- function(model, react) {
 #'
 #' @return A logical vector; TRUE if ID/index is valid, FALSE otherwise.
 #'
+#' @family Model characteristics
 #' @export
 checkMetId <- function(model, met) {
   if (!is(model, "modelorg")) {
@@ -83,6 +85,7 @@ checkMetId <- function(model, met) {
 #'
 #' @return A logical vector; TRUE if ID/index is valid, FALSE otherwise.
 #'
+#' @family Model characteristics
 #' @export
 checkGeneId <- function(model, gene) {
   if (!is(model, "modelorg")) {
@@ -119,6 +122,7 @@ checkGeneId <- function(model, gene) {
 #'
 #' @return A logical vector; TRUE if ID/index is valid, FALSE otherwise.
 #'
+#' @family Model characteristics
 #' @export
 checkCompartmentId <- function(model, comp) {
   if (!is(model, "modelorg")) {
@@ -155,6 +159,7 @@ checkCompartmentId <- function(model, comp) {
 #'
 #' @return A logical vector; TRUE if ID/index is valid, FALSE otherwise.
 #'
+#' @family Model characteristics
 #' @export
 checkSubsystemId <- function(model, subsystem) {
   if (!is(model, "modelorg")) {

@@ -37,3 +37,20 @@ The function allows you to add one or more metabolites to a model. When
 providing the ID of an already existing metabolite, you can use this function
 to update metabolite information.
 }
+\seealso{
+Other Model manipulation tools: 
+\code{\link{addCompartment}()},
+\code{\link{addConstraint}()},
+\code{\link{addGene}()},
+\code{\link{addReact}()},
+\code{\link{addSubsystem}()},
+\code{\link{changeBounds}()},
+\code{\link{geneDel}()},
+\code{\link{rmCompartment}()},
+\code{\link{rmConstraint}()},
+\code{\link{rmGene}()},
+\code{\link{rmMetabolite}()},
+\code{\link{rmReact}()},
+\code{\link{rmSubsystem}()}
+}
+\concept{Model manipulation tools}

@@ -20,7 +20,7 @@
 #'               opt.factor = 0.9)
 #' fvares
 #'
-#'
+#' @family Flux prediction algorithms
 #' @export
 fva <- function(model, react = NULL, opt.factor = 1) {
 

@@ -19,3 +19,9 @@ A data.frame that summarizes the predicted metabolite exchange rates
 \description{
 Summarize the predicted fluxes for exchange reactions.
 }
+\seealso{
+Other Flux analysis tools: 
+\code{\link{FluxPrediction-class}},
+\code{\link{show,FluxPrediction-method}}
+}
+\concept{Flux analysis tools}

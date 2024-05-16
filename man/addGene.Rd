@@ -28,3 +28,20 @@ The function allows you to add one or more genes to a model. When
 providing the ID of an already existing genes, you can use this function
 to update the gene's information.
 }
+\seealso{
+Other Model manipulation tools: 
+\code{\link{addCompartment}()},
+\code{\link{addConstraint}()},
+\code{\link{addMetabolite}()},
+\code{\link{addReact}()},
+\code{\link{addSubsystem}()},
+\code{\link{changeBounds}()},
+\code{\link{geneDel}()},
+\code{\link{rmCompartment}()},
+\code{\link{rmConstraint}()},
+\code{\link{rmGene}()},
+\code{\link{rmMetabolite}()},
+\code{\link{rmReact}()},
+\code{\link{rmSubsystem}()}
+}
+\concept{Model manipulation tools}

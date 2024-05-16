@@ -20,6 +20,7 @@
 #' cat(" Growth rate:       ", res_anaero@obj,"\n",
 #'     "Acetate production:", res_anaero@fluxes[mod@react_id == "EX_ac_e"],"\n")
 #'
+#' @family Flux prediction algorithms
 #' @export
 fba <- function(model) {
 

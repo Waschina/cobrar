@@ -30,3 +30,10 @@ cat(" Growth rate:       ", res_anaero@obj,"\n",
     "Acetate production:", res_anaero@fluxes[mod@react_id == "EX_ac_e"],"\n")
 
 }
+\seealso{
+Other Flux prediction algorithms: 
+\code{\link{fva}()},
+\code{\link{pfba}()},
+\code{\link{pfba_heuristic}()}
+}
+\concept{Flux prediction algorithms}

@@ -29,4 +29,10 @@ vol. 6, no. 1. EMBO, Jan. 2010. doi: 10.1038/msb.2010.47.
 }
 \seealso{
 \code{\link[=pfba_heuristic]{pfba_heuristic()}}
+
+Other Flux prediction algorithms: 
+\code{\link{fba}()},
+\code{\link{fva}()},
+\code{\link{pfba_heuristic}()}
 }
+\concept{Flux prediction algorithms}

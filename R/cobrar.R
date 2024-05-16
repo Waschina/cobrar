@@ -61,6 +61,7 @@ NULL
 #' @param value Choose a value to over-write the current parameter.
 #' @param ... TBD.
 #'
+#' @family Setup
 #' @export
 COBRAR_SETTINGS <- function(parm, value, ...) {
 

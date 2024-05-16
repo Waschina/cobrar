@@ -30,5 +30,11 @@ fvares <- fva(mod, react = mod@react_id[grepl("^EX_",mod@react_id)],
               opt.factor = 0.9)
 fvares
 
-
 }
+\seealso{
+Other Flux prediction algorithms: 
+\code{\link{fba}()},
+\code{\link{pfba}()},
+\code{\link{pfba_heuristic}()}
+}
+\concept{Flux prediction algorithms}

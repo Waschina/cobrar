@@ -36,3 +36,8 @@ order as in slot "S" in the corresponding \link{modelorg} object.}
 \item{\code{rtype}}{Character vector stating the constraint type. See details.}
 }}
 
+\seealso{
+Other Object classes: 
+\code{\link{show,modelorg-method}}
+}
+\concept{Object classes}

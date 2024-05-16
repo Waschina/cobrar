@@ -16,3 +16,4 @@ COBRAR_SETTINGS(parm, value, ...)
 \description{
 Manage a set of default parameter settings for cobrar.
 }
+\concept{Setup}

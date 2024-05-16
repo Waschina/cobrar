@@ -21,3 +21,9 @@ mod <- readSBMLmod(fpath)
 mod
 
 }
+\seealso{
+Other Model import and export helpers: 
+\code{\link{readSybilmod}()},
+\code{\link{writeSBMLmod}()}
+}
+\concept{Model import and export helpers}
