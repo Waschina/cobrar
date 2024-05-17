@@ -30,6 +30,15 @@ reference:
       - addReact
       - addSubsystem
       - changeBounds
+      - rmCompartment
+      - rmConstraint
+      - rmGene
+      - rmMetabolite
+      - rmReact
+      - rmSubsystem
+
+  - title: "Model characteristics"
+    contents:
       - checkCompartmentId
       - checkGeneId
       - checkMetId
@@ -38,32 +47,24 @@ reference:
       - comp_num
       - comp_pos
       - constraint_num
-      - rmCompartment
-      - rmConstraint
-      - rmGene
-      - rmMetabolite
-      - rmReact
-      - rmSubsystem
-      - printConstraint
-      - printReaction
-      - react_num
-      - react_pos
-      - subsys_num
-      - subsys_pos
-
-  - title: "Model characteristics"
-    contents:
       - met_num
       - met_pos
       - gene_num
       - gene_pos
+      - geneDel
       - deadEndMetabolites
+      - printConstraint
+      - printReaction
+      - react_num
+      - react_pos
+      - show,modelorg-method
+      - subsys_num
+      - subsys_pos
 
   - title: "Flux prediction algorithms"
     contents:
       - fba
       - fva
-      - geneDel
       - pfba
       - pfba_heuristic
 
@@ -71,7 +72,6 @@ reference:
     contents:
       - getExchanges
       - show,FluxPrediction-method
-      - show,modelorg-method
 
   - title: "Model import and export helpers"
     contents:

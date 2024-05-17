@@ -526,7 +526,7 @@ setMethod("printObjFunc", signature(object = "modelorg"),
 #'
 #' @param object S4-object of class \link{modelorg}.
 #'
-#'@family Object classes
+#' @family Model characteristics
 #' @export
 setMethod("show", signature(object = "modelorg"),
           function(object) {
