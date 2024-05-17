@@ -46,7 +46,6 @@ Collate:
     'fva.R'
     'geneDel.R'
     'io.R'
-    'joinModels.R'
     'model_modifications.R'
     'parseBoolean.R'
     'pfba.R'
