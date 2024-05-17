@@ -5,6 +5,7 @@ template:
 navbar:
   structure:
     left: [home, reference, articles]
+    right: [search, github]
   components:
     reference:
       text: "Reference"
