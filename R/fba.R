@@ -2,7 +2,7 @@
 #'
 #' Performs basic flux balance analysis (fba)
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #'
 #' @returns A list with flux predictions (reaction fluxes 'fluxes', reduced costs 'redCosts'), and optimization status ()
 #'

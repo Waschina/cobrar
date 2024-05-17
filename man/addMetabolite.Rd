@@ -16,7 +16,7 @@ addMetabolite(
 )
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{id}{Character vector with metabolite IDs}
 

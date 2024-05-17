@@ -1,4 +1,4 @@
-#' Structure of modelorg Class
+#' Structure of ModelOrg Class
 #'
 #' This class represents a model organization with various attributes related
 #' to central model structures, metabolites, reactions, and genes.
@@ -45,11 +45,11 @@
 #' (e.g., name and CVTerms) for genes/gene products. Only specific columns are
 #' exported to SBML files. See \link{writeSBMLmod} for details.
 #'
-#' @aliases modelorg
+#' @aliases ModelOrg
 #'
 #' @family Model characteristics
-#' @exportClass modelorg
-setClass("modelorg",
+#' @exportClass ModelOrg
+setClass("ModelOrg",
 
          slots = c(
            # central model structures
@@ -150,7 +150,7 @@ setClass("modelorg",
 #'
 #' Get the total number of reactions of a model
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #'
 #' @docType methods
 #' @rdname react_num-methods
@@ -160,8 +160,8 @@ setGeneric("react_num", valueClass = "numeric", function(model) {
   standardGeneric("react_num")
 })
 #' @rdname react_num-methods
-#' @aliases react_num,modelorg
-setMethod("react_num", signature(model = "modelorg"),
+#' @aliases react_num,ModelOrg
+setMethod("react_num", signature(model = "ModelOrg"),
           function(model) {
             return(length(model@react_id))
           }
@@ -171,7 +171,7 @@ setMethod("react_num", signature(model = "modelorg"),
 #'
 #' Returns the index(es) of specific reaction(s).
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param react Character vector with reaction IDs or Integer vector providing
 #' indexes.
 #'
@@ -187,22 +187,22 @@ setGeneric("react_pos", valueClass = "numeric", function(model, react) {
   standardGeneric("react_pos")
 })
 #' @rdname react_pos-methods
-#' @aliases react_pos,modelorg,character
-setMethod("react_pos", signature(model = "modelorg", react = "character"),
+#' @aliases react_pos,ModelOrg,character
+setMethod("react_pos", signature(model = "ModelOrg", react = "character"),
           function(model, react) {
             return(match(react, model@react_id))
           }
 )
 #' @rdname react_pos-methods
-#' @aliases react_pos,modelorg,numeric
-setMethod("react_pos", signature(model = "modelorg", react = "numeric"),
+#' @aliases react_pos,ModelOrg,numeric
+setMethod("react_pos", signature(model = "ModelOrg", react = "numeric"),
           function(model, react) {
             return(ifelse(react <= react_num(model),react, NA_integer_))
           }
 )
 #' @rdname react_pos-methods
-#' @aliases react_pos,modelorg,missing
-setMethod("react_pos", signature(model = "modelorg", react = "missing"),
+#' @aliases react_pos,ModelOrg,missing
+setMethod("react_pos", signature(model = "ModelOrg", react = "missing"),
           function(model, react) {
             return(NA_integer_)
           }
@@ -213,7 +213,7 @@ setMethod("react_pos", signature(model = "modelorg", react = "missing"),
 #'
 #' Get the total number of metabolites of a model
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #'
 #' @docType methods
 #' @rdname met_num-methods
@@ -223,8 +223,8 @@ setGeneric("met_num", valueClass = "numeric", function(model) {
   standardGeneric("met_num")
 })
 #' @rdname met_num-methods
-#' @aliases met_num,modelorg
-setMethod("met_num", signature(model = "modelorg"),
+#' @aliases met_num,ModelOrg
+setMethod("met_num", signature(model = "ModelOrg"),
           function(model) {
             return(length(model@met_id))
           }
@@ -234,7 +234,7 @@ setMethod("met_num", signature(model = "modelorg"),
 #'
 #' Returns the index(es) of specific metabolite(s).
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param met Character vector with metabolite IDs or Integer vector providing
 #' indexes.
 #'
@@ -250,22 +250,22 @@ setGeneric("met_pos", valueClass = "numeric", function(model, met) {
   standardGeneric("met_pos")
 })
 #' @rdname met_pos-methods
-#' @aliases met_pos,modelorg,character
-setMethod("met_pos", signature(model = "modelorg", met = "character"),
+#' @aliases met_pos,ModelOrg,character
+setMethod("met_pos", signature(model = "ModelOrg", met = "character"),
           function(model, met) {
             return(match(met, model@met_id))
           }
 )
 #' @rdname met_pos-methods
-#' @aliases met_pos,modelorg,numeric
-setMethod("met_pos", signature(model = "modelorg", met = "numeric"),
+#' @aliases met_pos,ModelOrg,numeric
+setMethod("met_pos", signature(model = "ModelOrg", met = "numeric"),
           function(model, met) {
             return(ifelse((met<=met_num(model)), met, NA_integer_))
           }
 )
 #' @rdname met_pos-methods
-#' @aliases met_pos,modelorg,missing
-setMethod("met_pos", signature(model = "modelorg", met = "missing"),
+#' @aliases met_pos,ModelOrg,missing
+setMethod("met_pos", signature(model = "ModelOrg", met = "missing"),
           function(model, met) {
             return(NA_integer_)
           }
@@ -275,7 +275,7 @@ setMethod("met_pos", signature(model = "modelorg", met = "missing"),
 #'
 #' Get the total number of genes of a model
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #'
 #' @docType methods
 #' @rdname gene_num-methods
@@ -285,8 +285,8 @@ setGeneric("gene_num", valueClass = "numeric", function(model) {
   standardGeneric("gene_num")
 })
 #' @rdname gene_num-methods
-#' @aliases gene_num,modelorg
-setMethod("gene_num", signature(model = "modelorg"),
+#' @aliases gene_num,ModelOrg
+setMethod("gene_num", signature(model = "ModelOrg"),
           function(model) {
             return(length(model@allGenes))
           }
@@ -297,7 +297,7 @@ setMethod("gene_num", signature(model = "modelorg"),
 #'
 #' Returns the index(es) of specific gene(s).
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param gene Character vector with gene IDs or Integer vector providing
 #' indexes.
 #'
@@ -313,22 +313,22 @@ setGeneric("gene_pos", valueClass = "numeric", function(model, gene) {
   standardGeneric("gene_pos")
 })
 #' @rdname gene_pos-methods
-#' @aliases gene_pos,modelorg,character
-setMethod("gene_pos", signature(model = "modelorg", gene = "character"),
+#' @aliases gene_pos,ModelOrg,character
+setMethod("gene_pos", signature(model = "ModelOrg", gene = "character"),
           function(model, gene) {
             return(match(gene, model@allGenes))
           }
 )
 #' @rdname gene_pos-methods
-#' @aliases gene_pos,modelorg,numeric
-setMethod("gene_pos", signature(model = "modelorg", gene = "numeric"),
+#' @aliases gene_pos,ModelOrg,numeric
+setMethod("gene_pos", signature(model = "ModelOrg", gene = "numeric"),
           function(model, gene) {
             return(ifelse(gene<=gene_num(model),gene,NA_integer_))
           }
 )
 #' @rdname gene_pos-methods
-#' @aliases gene_pos,modelorg,missing
-setMethod("gene_pos", signature(model = "modelorg", gene = "missing"),
+#' @aliases gene_pos,ModelOrg,missing
+setMethod("gene_pos", signature(model = "ModelOrg", gene = "missing"),
           function(model, gene) {
             return(NA_integer_)
           }
@@ -338,7 +338,7 @@ setMethod("gene_pos", signature(model = "modelorg", gene = "missing"),
 #'
 #' Get the total number of compartments of a model
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #'
 #' @docType methods
 #' @rdname comp_num-methods
@@ -348,8 +348,8 @@ setGeneric("comp_num", valueClass = "numeric", function(model) {
   standardGeneric("comp_num")
 })
 #' @rdname comp_num-methods
-#' @aliases comp_num,modelorg
-setMethod("comp_num", signature(model = "modelorg"),
+#' @aliases comp_num,ModelOrg
+setMethod("comp_num", signature(model = "ModelOrg"),
           function(model) {
             return(length(model@mod_compart))
           }
@@ -359,7 +359,7 @@ setMethod("comp_num", signature(model = "modelorg"),
 #'
 #' Returns the index(es) of specific compartment(s).
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param comp Character vector with compartment IDs or Integer vector providing
 #' indexes.
 #'
@@ -375,29 +375,29 @@ setGeneric("comp_pos", valueClass = "numeric", function(model, comp) {
   standardGeneric("comp_pos")
 })
 #' @rdname comp_pos-methods
-#' @aliases comp_pos,modelorg,character
-setMethod("comp_pos", signature(model = "modelorg", comp = "character"),
+#' @aliases comp_pos,ModelOrg,character
+setMethod("comp_pos", signature(model = "ModelOrg", comp = "character"),
           function(model, comp) {
             return(match(comp, model@mod_compart))
           }
 )
 #' @rdname comp_pos-methods
-#' @aliases comp_pos,modelorg,numeric
-setMethod("comp_pos", signature(model = "modelorg", comp = "numeric"),
+#' @aliases comp_pos,ModelOrg,numeric
+setMethod("comp_pos", signature(model = "ModelOrg", comp = "numeric"),
           function(model, comp) {
             return(ifelse(comp<=comp_num(model),comp,NA_integer_))
           }
 )
 #' @rdname comp_pos-methods
-#' @aliases comp_pos,modelorg,missing
-setMethod("comp_pos", signature(model = "modelorg", comp = "missing"),
+#' @aliases comp_pos,ModelOrg,missing
+setMethod("comp_pos", signature(model = "ModelOrg", comp = "missing"),
           function(model, comp) {
             return(NA_integer_)
           }
 )
 #' @rdname comp_pos-methods
-#' @aliases comp_pos,modelorg,logical
-setMethod("comp_pos", signature(model = "modelorg", comp = "logical"),
+#' @aliases comp_pos,ModelOrg,logical
+setMethod("comp_pos", signature(model = "ModelOrg", comp = "logical"),
           function(model, comp) {
             return(rep(NA_integer_, length(comp)))
           }
@@ -407,7 +407,7 @@ setMethod("comp_pos", signature(model = "modelorg", comp = "logical"),
 #'
 #' Get the total number of constraints of a model
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #'
 #' @docType methods
 #' @rdname constraint_num-methods
@@ -417,8 +417,8 @@ setGeneric("constraint_num", valueClass = "numeric", function(model) {
   standardGeneric("constraint_num")
 })
 #' @rdname constraint_num-methods
-#' @aliases constraint_num,modelorg
-setMethod("constraint_num", signature(model = "modelorg"),
+#' @aliases constraint_num,ModelOrg
+setMethod("constraint_num", signature(model = "ModelOrg"),
           function(model) {
             return(nrow(model@constraints@coeff))
           }
@@ -428,7 +428,7 @@ setMethod("constraint_num", signature(model = "modelorg"),
 #'
 #' Get the total number of subsystems of a model
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #'
 #' @docType methods
 #' @rdname subsys_num-methods
@@ -438,8 +438,8 @@ setGeneric("subsys_num", valueClass = "numeric", function(model) {
   standardGeneric("subsys_num")
 })
 #' @rdname subsys_num-methods
-#' @aliases subsys_num,modelorg
-setMethod("subsys_num", signature(model = "modelorg"),
+#' @aliases subsys_num,ModelOrg
+setMethod("subsys_num", signature(model = "ModelOrg"),
           function(model) {
             return(length(model@subSys_id))
           }
@@ -449,7 +449,7 @@ setMethod("subsys_num", signature(model = "modelorg"),
 #'
 #' Returns the index(es) of specific subsystem(s).
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param subsys Character vector with subsystem IDs or Integer vector providing
 #' indexes.
 #'
@@ -465,29 +465,29 @@ setGeneric("subsys_pos", valueClass = "numeric", function(model, subsys) {
   standardGeneric("subsys_pos")
 })
 #' @rdname subsys_pos-methods
-#' @aliases subsys_pos,modelorg,character
-setMethod("subsys_pos", signature(model = "modelorg", subsys = "character"),
+#' @aliases subsys_pos,ModelOrg,character
+setMethod("subsys_pos", signature(model = "ModelOrg", subsys = "character"),
           function(model, subsys) {
             return(match(subsys, model@subSys_id))
           }
 )
 #' @rdname subsys_pos-methods
-#' @aliases subsys_pos,modelorg,numeric
-setMethod("subsys_pos", signature(model = "modelorg", subsys = "numeric"),
+#' @aliases subsys_pos,ModelOrg,numeric
+setMethod("subsys_pos", signature(model = "ModelOrg", subsys = "numeric"),
           function(model, subsys) {
             return(ifelse(subsys<=subsys_num(model),subsys,NA_integer_))
           }
 )
 #' @rdname subsys_pos-methods
-#' @aliases subsys_pos,modelorg,missing
-setMethod("subsys_pos", signature(model = "modelorg", subsys = "missing"),
+#' @aliases subsys_pos,ModelOrg,missing
+setMethod("subsys_pos", signature(model = "ModelOrg", subsys = "missing"),
           function(model, subsys) {
             return(NA_integer_)
           }
 )
 #' @rdname subsys_pos-methods
-#' @aliases subsys_pos,modelorg,logical
-setMethod("subsys_pos", signature(model = "modelorg", subsys = "logical"),
+#' @aliases subsys_pos,ModelOrg,logical
+setMethod("subsys_pos", signature(model = "ModelOrg", subsys = "logical"),
           function(model, subsys) {
             return(rep(NA_integer_, length(subsys)))
           }
@@ -500,7 +500,7 @@ setMethod("subsys_pos", signature(model = "modelorg", subsys = "logical"),
 setGeneric("printObjFunc", valueClass = "character", function(object) {
   standardGeneric("printObjFunc")
 })
-setMethod("printObjFunc", signature(object = "modelorg"),
+setMethod("printObjFunc", signature(object = "ModelOrg"),
           function(object) {
             cInd <- object@obj_coef != 0
 
@@ -522,13 +522,13 @@ setMethod("printObjFunc", signature(object = "modelorg"),
 #' Print a short summary of a metabolic network model
 #'
 #' Displays a few key properties of a metabolic network model of class
-#' \link{modelorg}.
+#' \link{ModelOrg}.
 #'
-#' @param object S4-object of class \link{modelorg}.
+#' @param object S4-object of class \link{ModelOrg}.
 #'
 #' @family Model characteristics
 #' @export
-setMethod("show", signature(object = "modelorg"),
+setMethod("show", signature(object = "ModelOrg"),
           function(object) {
             cat("model ID:                  ", object@mod_id, "\n")
             cat("model name:                ", object@mod_name, "\n")
@@ -555,7 +555,7 @@ setMethod("show", signature(object = "modelorg"),
 setGeneric("constraint2string" ,valueClass = "character", function(object, ind, ...) {
   standardGeneric("constraint2string")
 })
-setMethod("constraint2string", signature(object = "modelorg", ind = "numeric"),
+setMethod("constraint2string", signature(object = "ModelOrg", ind = "numeric"),
           function(object, ind, digits = 5) {
             nz <- which(object@constraints@coeff[ind,] != 0)
             cnz <- c()
@@ -587,10 +587,10 @@ setMethod("constraint2string", signature(object = "modelorg", ind = "numeric"),
 
 
 # remove duplicate constraints
-setGeneric("rmDuplicateConstraints", valueClass = "modelorg", function(object) {
+setGeneric("rmDuplicateConstraints", valueClass = "ModelOrg", function(object) {
   standardGeneric("rmDuplicateConstraints")
 })
-setMethod("rmDuplicateConstraints", signature(object = "modelorg"),
+setMethod("rmDuplicateConstraints", signature(object = "ModelOrg"),
           function(object) {
             ccstr <- sapply(1:constraint_num(object), function(i) constraint2string(object , i, digits = Inf))
 

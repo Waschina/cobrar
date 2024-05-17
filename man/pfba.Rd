@@ -7,7 +7,7 @@
 pfba(model, costcoeffw = NULL, costcoefbw = NULL)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{costcoeffw, costcoefbw}{A numeric vector containing cost coefficients
 for all variables/reactions (forward direction: 'costcoeffw'; backward
@@ -28,11 +28,11 @@ computed optimal growth from genome‐scale models,” Molecular Systems Biology
 vol. 6, no. 1. EMBO, Jan. 2010. doi: 10.1038/msb.2010.47.
 }
 \seealso{
-\code{\link[=pfba_heuristic]{pfba_heuristic()}}
+\code{\link[=pfbaHeuristic]{pfbaHeuristic()}}
 
 Other Flux prediction algorithms: 
 \code{\link{fba}()},
 \code{\link{fva}()},
-\code{\link{pfba_heuristic}()}
+\code{\link{pfbaHeuristic}()}
 }
 \concept{Flux prediction algorithms}

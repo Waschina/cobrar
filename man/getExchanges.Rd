@@ -7,7 +7,7 @@
 getExchanges(model, sol)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{sol}{Flux prediction results as an object of class
 \link{FluxPrediction}.}

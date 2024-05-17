@@ -3,7 +3,7 @@
 #' Performs a heuristic version of the parsimonious FBA algorithm. See
 #' details.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param costcoeffw,costcoefbw A numeric vector containing cost coefficients
 #' for all variables/reactions (forward direction: 'costcoeffw'; backward
 #' direction: 'costcoefbw'). If set to NULL, all cost coefficients are set to 1,
@@ -52,8 +52,8 @@
 #'
 #' @family Flux prediction algorithms
 #' @export
-pfba_heuristic <- function(model, costcoeffw = NULL, costcoefbw = NULL,
-                            pFBAcoeff = 1e-6) {
+pfbaHeuristic <- function(model, costcoeffw = NULL, costcoefbw = NULL,
+                          pFBAcoeff = 1e-6) {
 
   if(!is.null(costcoeffw) && !is.numeric(costcoeffw))
     stop("Argument 'costcoeffw' must be a numeric vector")

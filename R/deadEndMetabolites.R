@@ -3,7 +3,7 @@
 #' Searches a metabolic network for metabolites that can be produced but not
 #' consumed, and vice versa.
 #'
-#' @param object Model of class \link{modelorg}
+#' @param object Model of class \link{ModelOrg}
 #'
 #' @returns A list with two elements: "dem" is a character vector with the IDs
 #' of identified dead end metabolites. "der" is a character vector with IDs of

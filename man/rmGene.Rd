@@ -7,7 +7,7 @@
 rmGene(model, gene, rm_react = TRUE, rm_met = TRUE)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{gene}{A character vector stating the reaction IDs in a model or a
 numeric vector providing the reaction indices.}
@@ -19,7 +19,7 @@ gene knock outs, be deleted as well?}
 reaction removal, be deleted as well?}
 }
 \value{
-An updated model of class \link{modelorg}
+An updated model of class \link{ModelOrg}
 }
 \description{
 This function removes specified genes from a model, and optionally also

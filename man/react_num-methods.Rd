@@ -3,22 +3,23 @@
 \docType{methods}
 \name{react_num}
 \alias{react_num}
-\alias{react_num,modelorg-method}
-\alias{react_num,modelorg}
+\alias{react_num,ModelOrg-method}
+\alias{react_num,ModelOrg}
 \title{Number of reactions}
 \usage{
 react_num(model)
 
-\S4method{react_num}{modelorg}(model)
+\S4method{react_num}{ModelOrg}(model)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 }
 \description{
 Get the total number of reactions of a model
 }
 \seealso{
 Other Model characteristics: 
+\code{\link{ModelOrg-class}},
 \code{\link{checkCompartmentId}()},
 \code{\link{checkGeneId}()},
 \code{\link{checkMetId}()},
@@ -32,10 +33,10 @@ Other Model characteristics:
 \code{\link{gene_pos}()},
 \code{\link{met_num}()},
 \code{\link{met_pos}()},
-\code{\link{modelorg-class}},
 \code{\link{printConstraint}()},
 \code{\link{printReaction}()},
 \code{\link{react_pos}()},
+\code{\link{show,ModelOrg-method}},
 \code{\link{subsys_num}()},
 \code{\link{subsys_pos}()}
 }

@@ -19,7 +19,7 @@ reference:
     contents:
       - Constraints-class
       - FluxPrediction-class
-      - modelorg-class
+      - ModelOrg-class
 
   - title: "Model manipulation tools"
     contents:
@@ -57,7 +57,7 @@ reference:
       - printReaction
       - react_num
       - react_pos
-      - show,modelorg-method
+      - show,ModelOrg-method
       - subsys_num
       - subsys_pos
 
@@ -66,7 +66,7 @@ reference:
       - fba
       - fva
       - pfba
-      - pfba_heuristic
+      - pfbaHeuristic
 
   - title: "Flux analysis tools"
     contents:

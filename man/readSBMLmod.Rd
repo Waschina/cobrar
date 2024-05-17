@@ -2,7 +2,7 @@
 % Please edit documentation in R/sbml_io.R
 \name{readSBMLmod}
 \alias{readSBMLmod}
-\title{Reads an SBML file and constructs an object of class 'modelorg'}
+\title{Reads an SBML file and constructs an object of class 'ModelOrg'}
 \usage{
 readSBMLmod(file_path)
 }
@@ -10,10 +10,10 @@ readSBMLmod(file_path)
 \item{file_path}{Path to SBML file.}
 }
 \value{
-A \link{modelorg-class} object.
+A \link{ModelOrg-class} object.
 }
 \description{
-Reads an SBML file and constructs an object of class 'modelorg'
+Reads an SBML file and constructs an object of class 'ModelOrg'
 }
 \examples{
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")

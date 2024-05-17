@@ -7,13 +7,13 @@
 rmSubsystem(model, subsystem)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{subsystem}{A character vector stating the subsystem IDs in a model or a
 numeric vector providing the subsystem indices.}
 }
 \value{
-An updated model  of class \link{modelorg}
+An updated model  of class \link{ModelOrg}
 }
 \description{
 This function removes specified subsystems from a model.

@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------#
-# Functions to modify the structure / properties of a modelorg                 #
+# Functions to modify the structure / properties of a ModelOrg                 #
 #------------------------------------------------------------------------------#
 
 #' Change flux bounds
@@ -7,7 +7,7 @@
 #' The function changes either upper bounds, lower bounds, or both for specific
 #' reactions.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param react A character vector stating the reaction IDs in a model or a
 #' numeric vector providing the reaction indices.
 #' @param lb A numeric vector giving the new lower flux bounds for reactions
@@ -17,7 +17,7 @@
 #' \code{react}. If \code{ub} is of length 1, the same value will be used for
 #' all reactions.
 #'
-#' @returns An updated model of class \link{modelorg}
+#' @returns An updated model of class \link{ModelOrg}
 #'
 #' @family Model manipulation tools
 #' @export
@@ -47,13 +47,13 @@ changeBounds <- function(model, react, lb = NULL, ub = NULL) {
 #'
 #' This function removes specified reactions from a model.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param react A character vector stating the reaction IDs in a model or a
 #' numeric vector providing the reaction indices.
 #' @param rm_met Logical. Should metabolites, which are singletons after the
 #' reaction removal, be deleted as well?
 #'
-#' @returns An updated model of class \link{modelorg}
+#' @returns An updated model of class \link{ModelOrg}
 #'
 #' @note
 #' If the reaction participates in a user constraint, this constraint is
@@ -103,7 +103,7 @@ rmReact <- function(model, react, rm_met = TRUE) {
 #' This function removes specified genes from a model, and optionally also
 #' reactions and metabolites inaccessible after gene knock outs.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param gene A character vector stating the reaction IDs in a model or a
 #' numeric vector providing the reaction indices.
 #' @param rm_react Logical. Should reaction, which are inaccessible after the
@@ -111,7 +111,7 @@ rmReact <- function(model, react, rm_met = TRUE) {
 #' @param rm_met Logical. Should metabolites, which are singletons after the
 #' reaction removal, be deleted as well?
 #'
-#' @returns An updated model of class \link{modelorg}
+#' @returns An updated model of class \link{ModelOrg}
 #'
 #' @examples
 #' fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
@@ -154,7 +154,7 @@ rmGene <- function(model, gene, rm_react = TRUE, rm_met = TRUE) {
 #'
 #' Add linear reaction flux constraints to a metabolic network.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param react Character vector or a list of character vectors containing the
 #' model's reactions IDs that are part of the respective constraint.
 #' @param coeff Numeric vector or list of numeric vectors defining the
@@ -196,7 +196,7 @@ rmGene <- function(model, gene, rm_react = TRUE, rm_met = TRUE) {
 #'
 #' @family Model manipulation tools
 #' @export
-setGeneric("addConstraint" ,valueClass = "modelorg", function(model,
+setGeneric("addConstraint" ,valueClass = "ModelOrg", function(model,
                                                               react,
                                                               coeff,
                                                               rtype,
@@ -205,8 +205,8 @@ setGeneric("addConstraint" ,valueClass = "modelorg", function(model,
   standardGeneric("addConstraint")
 })
 #' @rdname addConstraint-methods
-#' @aliases addConstraint,modelorg,character,numeric,character
-setMethod("addConstraint", signature(model = "modelorg",
+#' @aliases addConstraint,ModelOrg,character,numeric,character
+setMethod("addConstraint", signature(model = "ModelOrg",
                                      react = "character",
                                      coeff = "numeric",
                                      rtype = "character"),
@@ -220,8 +220,8 @@ setMethod("addConstraint", signature(model = "modelorg",
           }
 )
 #' @rdname addConstraint-methods
-#' @aliases addConstraint,modelorg,list,list,character
-setMethod("addConstraint", signature(model = "modelorg",
+#' @aliases addConstraint,ModelOrg,list,list,character
+setMethod("addConstraint", signature(model = "ModelOrg",
                                      react = "list",
                                      coeff = "list",
                                      rtype = "character"),
@@ -289,7 +289,7 @@ setMethod("addConstraint", signature(model = "modelorg",
 #'
 #' Remove specific user constraints from a metabolic model.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param ind Integer vector with the indices of the constraints to be removed
 #'
 #' @seealso [printConstraint()]
@@ -318,7 +318,7 @@ rmConstraint <- function(model, ind) {
 #'
 #' The function can be used to add or modify a reaction in an existing model.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param id Character for the reaction ID
 #' @param met Character vector providing the IDs of metabolites that participate
 #' in the reaction
@@ -550,7 +550,7 @@ addReact <- function(model,
 #' providing the ID of an already existing metabolite, you can use this function
 #' to update metabolite information.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param id Character vector with metabolite IDs
 #' @param comp Character vector of the metabolites' compartment IDs
 #' @param name Character vector for metabolite names
@@ -653,11 +653,11 @@ addMetabolite <- function(model, id, comp = NA, name = NA, chemicalFormula = NA,
 #'
 #' This function removes specified metabolites from a model.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param met A character vector stating the metabolite IDs in a model or a
 #' numeric vector providing the metabolite indices.
 #'
-#' @returns An updated model of class \link{modelorg}
+#' @returns An updated model of class \link{ModelOrg}
 #'
 #' @note
 #' If at least one of the provided metabolites still participates in a reaction,
@@ -699,7 +699,7 @@ rmMetabolite <- function(model, met) {
 #' providing the ID of an already existing genes, you can use this function
 #' to update the gene's information.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param id Character vector with gene IDs
 #' @param name Character vector for gene names
 #' @param CVTerms Character vector for the genes' CV-Terms
@@ -774,7 +774,7 @@ addGene <- function(model, id, name = NA, CVTerms = NA,
 #' providing the ID of an already existing compartment, you can use this
 #' function to update the compartment's name.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param id Character vector with compartment IDs
 #' @param name Character vector for compartment names
 #'
@@ -835,11 +835,11 @@ addCompartment <- function(model, id, name = NA) {
 #'
 #' This function removes specified compartments from a model.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param comp A character vector stating the compartment IDs in a model or a
 #' numeric vector providing the compartment indices.
 #'
-#' @returns An updated model of class \link{modelorg}
+#' @returns An updated model of class \link{ModelOrg}
 #'
 #' @note
 #' If at least one of the provided compartments still has metabolites associated
@@ -874,7 +874,7 @@ rmCompartment <- function(model, comp) {
 #' providing the ID of an already existing subsystem, you can use this
 #' function to update the subsystem's name.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param id Character vector with subsystem IDs
 #' @param name Character vector for subsystem names
 #'
@@ -942,11 +942,11 @@ addSubsystem <- function(model, id, name = NA) {
 #'
 #' This function removes specified subsystems from a model.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param subsystem A character vector stating the subsystem IDs in a model or a
 #' numeric vector providing the subsystem indices.
 #'
-#' @returns An updated model  of class \link{modelorg}
+#' @returns An updated model  of class \link{ModelOrg}
 #'
 #' @family Model manipulation tools
 #' @export

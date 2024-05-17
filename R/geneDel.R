@@ -3,7 +3,7 @@
 #' This function identifies reactions, which cannot be catalyzed anymore when
 #' a specified set of genes is deleted from a model.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param gene Character or numeric vector providing the IDs or indices of genes
 #' to be deleted from 'model'.
 #'

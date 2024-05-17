@@ -7,7 +7,7 @@
 fva(model, react = NULL, opt.factor = 1)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{react}{Character vector of reaction IDs tested for flux variability. If
 NULL, all reactions are tested.}
@@ -35,6 +35,6 @@ fvares
 Other Flux prediction algorithms: 
 \code{\link{fba}()},
 \code{\link{pfba}()},
-\code{\link{pfba_heuristic}()}
+\code{\link{pfbaHeuristic}()}
 }
 \concept{Flux prediction algorithms}

@@ -3,7 +3,7 @@
 #' Perform Flux Variability Analysis with or without relaxed optimality
 #' constraint
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param react Character vector of reaction IDs tested for flux variability. If
 #' NULL, all reactions are tested.
 #' @param opt.factor Numeric value > 0 to define the required fraction of the

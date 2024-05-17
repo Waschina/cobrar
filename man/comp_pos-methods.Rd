@@ -3,28 +3,28 @@
 \docType{methods}
 \name{comp_pos}
 \alias{comp_pos}
-\alias{comp_pos,modelorg,character-method}
-\alias{comp_pos,modelorg,character}
-\alias{comp_pos,modelorg,numeric-method}
-\alias{comp_pos,modelorg,numeric}
-\alias{comp_pos,modelorg,missing-method}
-\alias{comp_pos,modelorg,missing}
-\alias{comp_pos,modelorg,logical-method}
-\alias{comp_pos,modelorg,logical}
+\alias{comp_pos,ModelOrg,character-method}
+\alias{comp_pos,ModelOrg,character}
+\alias{comp_pos,ModelOrg,numeric-method}
+\alias{comp_pos,ModelOrg,numeric}
+\alias{comp_pos,ModelOrg,missing-method}
+\alias{comp_pos,ModelOrg,missing}
+\alias{comp_pos,ModelOrg,logical-method}
+\alias{comp_pos,ModelOrg,logical}
 \title{Index of compartment(s)}
 \usage{
 comp_pos(model, comp)
 
-\S4method{comp_pos}{modelorg,character}(model, comp)
+\S4method{comp_pos}{ModelOrg,character}(model, comp)
 
-\S4method{comp_pos}{modelorg,numeric}(model, comp)
+\S4method{comp_pos}{ModelOrg,numeric}(model, comp)
 
-\S4method{comp_pos}{modelorg,missing}(model, comp)
+\S4method{comp_pos}{ModelOrg,missing}(model, comp)
 
-\S4method{comp_pos}{modelorg,logical}(model, comp)
+\S4method{comp_pos}{ModelOrg,logical}(model, comp)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{comp}{Character vector with compartment IDs or Integer vector providing
 indexes.}
@@ -38,6 +38,7 @@ than the number of compartments in the model.
 }
 \seealso{
 Other Model characteristics: 
+\code{\link{ModelOrg-class}},
 \code{\link{checkCompartmentId}()},
 \code{\link{checkGeneId}()},
 \code{\link{checkMetId}()},
@@ -50,11 +51,11 @@ Other Model characteristics:
 \code{\link{gene_pos}()},
 \code{\link{met_num}()},
 \code{\link{met_pos}()},
-\code{\link{modelorg-class}},
 \code{\link{printConstraint}()},
 \code{\link{printReaction}()},
 \code{\link{react_num}()},
 \code{\link{react_pos}()},
+\code{\link{show,ModelOrg-method}},
 \code{\link{subsys_num}()},
 \code{\link{subsys_pos}()}
 }

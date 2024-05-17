@@ -3,7 +3,7 @@
 #' Checks whether reaction IDs or indices are part of (valid) for a specific
 #' model.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param react A character vector specifying the reaction IDs or a integer
 #' vector providing the reaction indices in the model.
 #'
@@ -12,8 +12,8 @@
 #' @family Model characteristics
 #' @export
 checkReactId <- function(model, react) {
-  if (!is(model, "modelorg")) {
-    stop("Argument 'model' needs an model of class 'modelorg'.")
+  if (!is(model, "ModelOrg")) {
+    stop("Argument 'model' needs an model of class 'ModelOrg'.")
   }
 
   if(!(is.numeric(react) && all(react %% 1 == 0) && all(react > 0) || is.character(react))) {
@@ -41,7 +41,7 @@ checkReactId <- function(model, react) {
 #' Checks whether metabolite IDs or indices are part of (valid) for a specific
 #' model.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param met A character vector specifying the metabolite IDs or a integer
 #' vector providing the metabolite indices in the model.
 #'
@@ -50,8 +50,8 @@ checkReactId <- function(model, react) {
 #' @family Model characteristics
 #' @export
 checkMetId <- function(model, met) {
-  if (!is(model, "modelorg")) {
-    stop("Argument 'model' needs an model of class 'modelorg'.")
+  if (!is(model, "ModelOrg")) {
+    stop("Argument 'model' needs an model of class 'ModelOrg'.")
   }
 
   if(!(is.numeric(met) && all(met %% 1 == 0) && all(met > 0) || is.character(met))) {
@@ -79,7 +79,7 @@ checkMetId <- function(model, met) {
 #' Checks whether gene IDs or indices are part of (valid) for a specific
 #' model.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param gene A character vector specifying the gene IDs or a integer
 #' vector providing the gene indices in the model.
 #'
@@ -88,8 +88,8 @@ checkMetId <- function(model, met) {
 #' @family Model characteristics
 #' @export
 checkGeneId <- function(model, gene) {
-  if (!is(model, "modelorg")) {
-    stop("Argument 'model' needs an model of class 'modelorg'.")
+  if (!is(model, "ModelOrg")) {
+    stop("Argument 'model' needs an model of class 'ModelOrg'.")
   }
 
   if(!(is.numeric(gene) && all(gene %% 1 == 0) && all(gene > 0) || is.character(gene))) {
@@ -116,7 +116,7 @@ checkGeneId <- function(model, gene) {
 #' Checks whether compartment IDs or indices are part of (valid) for a specific
 #' model.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param comp A character vector specifying the compartment IDs or a integer
 #' vector providing the compartment indices in the model.
 #'
@@ -125,8 +125,8 @@ checkGeneId <- function(model, gene) {
 #' @family Model characteristics
 #' @export
 checkCompartmentId <- function(model, comp) {
-  if (!is(model, "modelorg")) {
-    stop("Argument 'model' needs an model of class 'modelorg'.")
+  if (!is(model, "ModelOrg")) {
+    stop("Argument 'model' needs an model of class 'ModelOrg'.")
   }
 
   if(!(is.numeric(comp) && all(comp %% 1 == 0) && all(comp > 0) || is.character(comp))) {
@@ -153,7 +153,7 @@ checkCompartmentId <- function(model, comp) {
 #' Checks whether subsystem IDs or indices are part of (valid) for a specific
 #' model.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param subsystem A character vector specifying the subsystem IDs or a integer
 #' vector providing the subsystem indices in the model.
 #'
@@ -162,8 +162,8 @@ checkCompartmentId <- function(model, comp) {
 #' @family Model characteristics
 #' @export
 checkSubsystemId <- function(model, subsystem) {
-  if (!is(model, "modelorg")) {
-    stop("Argument 'model' needs an model of class 'modelorg'.")
+  if (!is(model, "ModelOrg")) {
+    stop("Argument 'model' needs an model of class 'ModelOrg'.")
   }
 
   if(!(is.numeric(subsystem) && all(subsystem %% 1 == 0) && all(subsystem > 0) || is.character(subsystem))) {

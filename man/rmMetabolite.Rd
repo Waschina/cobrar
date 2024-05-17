@@ -7,13 +7,13 @@
 rmMetabolite(model, met)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{met}{A character vector stating the metabolite IDs in a model or a
 numeric vector providing the metabolite indices.}
 }
 \value{
-An updated model of class \link{modelorg}
+An updated model of class \link{ModelOrg}
 }
 \description{
 This function removes specified metabolites from a model.

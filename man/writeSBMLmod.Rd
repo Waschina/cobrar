@@ -7,7 +7,7 @@
 writeSBMLmod(model, file_path = NULL)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{file_path}{SBML file name for exporting the model. Default is the
 model's ID with ".xml" suffix.}
@@ -17,7 +17,7 @@ TRUE if file export was successful.
 }
 \description{
 Export a constraint-based metabolic network model from a S4 object of class
-\link{modelorg} to a SBML file.
+\link{ModelOrg} to a SBML file.
 }
 \details{
 Exported SBML files are of level 3, version 2. FBC-package version 2.

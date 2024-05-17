@@ -3,24 +3,24 @@
 \docType{methods}
 \name{react_pos}
 \alias{react_pos}
-\alias{react_pos,modelorg,character-method}
-\alias{react_pos,modelorg,character}
-\alias{react_pos,modelorg,numeric-method}
-\alias{react_pos,modelorg,numeric}
-\alias{react_pos,modelorg,missing-method}
-\alias{react_pos,modelorg,missing}
+\alias{react_pos,ModelOrg,character-method}
+\alias{react_pos,ModelOrg,character}
+\alias{react_pos,ModelOrg,numeric-method}
+\alias{react_pos,ModelOrg,numeric}
+\alias{react_pos,ModelOrg,missing-method}
+\alias{react_pos,ModelOrg,missing}
 \title{Index of reaction(s)}
 \usage{
 react_pos(model, react)
 
-\S4method{react_pos}{modelorg,character}(model, react)
+\S4method{react_pos}{ModelOrg,character}(model, react)
 
-\S4method{react_pos}{modelorg,numeric}(model, react)
+\S4method{react_pos}{ModelOrg,numeric}(model, react)
 
-\S4method{react_pos}{modelorg,missing}(model, react)
+\S4method{react_pos}{ModelOrg,missing}(model, react)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{react}{Character vector with reaction IDs or Integer vector providing
 indexes.}
@@ -34,6 +34,7 @@ the number of reactions in the model.
 }
 \seealso{
 Other Model characteristics: 
+\code{\link{ModelOrg-class}},
 \code{\link{checkCompartmentId}()},
 \code{\link{checkGeneId}()},
 \code{\link{checkMetId}()},
@@ -47,10 +48,10 @@ Other Model characteristics:
 \code{\link{gene_pos}()},
 \code{\link{met_num}()},
 \code{\link{met_pos}()},
-\code{\link{modelorg-class}},
 \code{\link{printConstraint}()},
 \code{\link{printReaction}()},
 \code{\link{react_num}()},
+\code{\link{show,ModelOrg-method}},
 \code{\link{subsys_num}()},
 \code{\link{subsys_pos}()}
 }

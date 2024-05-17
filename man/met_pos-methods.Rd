@@ -3,24 +3,24 @@
 \docType{methods}
 \name{met_pos}
 \alias{met_pos}
-\alias{met_pos,modelorg,character-method}
-\alias{met_pos,modelorg,character}
-\alias{met_pos,modelorg,numeric-method}
-\alias{met_pos,modelorg,numeric}
-\alias{met_pos,modelorg,missing-method}
-\alias{met_pos,modelorg,missing}
+\alias{met_pos,ModelOrg,character-method}
+\alias{met_pos,ModelOrg,character}
+\alias{met_pos,ModelOrg,numeric-method}
+\alias{met_pos,ModelOrg,numeric}
+\alias{met_pos,ModelOrg,missing-method}
+\alias{met_pos,ModelOrg,missing}
 \title{Index of metabolite(s)}
 \usage{
 met_pos(model, met)
 
-\S4method{met_pos}{modelorg,character}(model, met)
+\S4method{met_pos}{ModelOrg,character}(model, met)
 
-\S4method{met_pos}{modelorg,numeric}(model, met)
+\S4method{met_pos}{ModelOrg,numeric}(model, met)
 
-\S4method{met_pos}{modelorg,missing}(model, met)
+\S4method{met_pos}{ModelOrg,missing}(model, met)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{met}{Character vector with metabolite IDs or Integer vector providing
 indexes.}
@@ -34,6 +34,7 @@ than the number of metabolites in the model.
 }
 \seealso{
 Other Model characteristics: 
+\code{\link{ModelOrg-class}},
 \code{\link{checkCompartmentId}()},
 \code{\link{checkGeneId}()},
 \code{\link{checkMetId}()},
@@ -46,11 +47,11 @@ Other Model characteristics:
 \code{\link{gene_num}()},
 \code{\link{gene_pos}()},
 \code{\link{met_num}()},
-\code{\link{modelorg-class}},
 \code{\link{printConstraint}()},
 \code{\link{printReaction}()},
 \code{\link{react_num}()},
 \code{\link{react_pos}()},
+\code{\link{show,ModelOrg-method}},
 \code{\link{subsys_num}()},
 \code{\link{subsys_pos}()}
 }

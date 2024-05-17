@@ -7,7 +7,7 @@
 checkCompartmentId(model, comp)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{comp}{A character vector specifying the compartment IDs or a integer
 vector providing the compartment indices in the model.}
@@ -21,6 +21,7 @@ model.
 }
 \seealso{
 Other Model characteristics: 
+\code{\link{ModelOrg-class}},
 \code{\link{checkGeneId}()},
 \code{\link{checkMetId}()},
 \code{\link{checkReactId}()},
@@ -33,11 +34,11 @@ Other Model characteristics:
 \code{\link{gene_pos}()},
 \code{\link{met_num}()},
 \code{\link{met_pos}()},
-\code{\link{modelorg-class}},
 \code{\link{printConstraint}()},
 \code{\link{printReaction}()},
 \code{\link{react_num}()},
 \code{\link{react_pos}()},
+\code{\link{show,ModelOrg-method}},
 \code{\link{subsys_num}()},
 \code{\link{subsys_pos}()}
 }

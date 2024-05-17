@@ -3,7 +3,7 @@
 \name{readSybilmod}
 \alias{readSybilmod}
 \title{Reads a sybil model file and constructs an object of cobrar's class
-'modelorg'}
+'ModelOrg'}
 \usage{
 readSybilmod(file_path)
 }
@@ -11,12 +11,12 @@ readSybilmod(file_path)
 \item{file_path}{Path to sybil model(s) saved as RDS file.}
 }
 \value{
-A \link{modelorg-class} object or a list with \link{modelorg-class}
+A \link{ModelOrg-class} object or a list with \link{ModelOrg-class}
 objects.
 }
 \description{
 Reads a sybil model file and constructs an object of cobrar's class
-'modelorg'
+'ModelOrg'
 }
 \seealso{
 Other Model import and export helpers: 

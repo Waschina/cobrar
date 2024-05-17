@@ -7,7 +7,7 @@
 changeBounds(model, react, lb = NULL, ub = NULL)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{react}{A character vector stating the reaction IDs in a model or a
 numeric vector providing the reaction indices.}
@@ -21,7 +21,7 @@ all reactions.}
 all reactions.}
 }
 \value{
-An updated model of class \link{modelorg}
+An updated model of class \link{ModelOrg}
 }
 \description{
 The function changes either upper bounds, lower bounds, or both for specific

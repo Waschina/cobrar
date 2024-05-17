@@ -7,7 +7,7 @@
 rmReact(model, react, rm_met = TRUE)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{react}{A character vector stating the reaction IDs in a model or a
 numeric vector providing the reaction indices.}
@@ -16,7 +16,7 @@ numeric vector providing the reaction indices.}
 reaction removal, be deleted as well?}
 }
 \value{
-An updated model of class \link{modelorg}
+An updated model of class \link{ModelOrg}
 }
 \description{
 This function removes specified reactions from a model.

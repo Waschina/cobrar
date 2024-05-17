@@ -3,20 +3,20 @@
 \docType{methods}
 \name{addConstraint}
 \alias{addConstraint}
-\alias{addConstraint,modelorg,character,numeric,character-method}
-\alias{addConstraint,modelorg,character,numeric,character}
-\alias{addConstraint,modelorg,list,list,character-method}
-\alias{addConstraint,modelorg,list,list,character}
+\alias{addConstraint,ModelOrg,character,numeric,character-method}
+\alias{addConstraint,ModelOrg,character,numeric,character}
+\alias{addConstraint,ModelOrg,list,list,character-method}
+\alias{addConstraint,ModelOrg,list,list,character}
 \title{Add constraints to model}
 \usage{
 addConstraint(model, react, coeff, rtype, lb = NULL, ub = NULL)
 
-\S4method{addConstraint}{modelorg,character,numeric,character}(model, react, coeff, rtype, lb = NULL, ub = NULL)
+\S4method{addConstraint}{ModelOrg,character,numeric,character}(model, react, coeff, rtype, lb = NULL, ub = NULL)
 
-\S4method{addConstraint}{modelorg,list,list,character}(model, react, coeff, rtype, lb = NULL, ub = NULL)
+\S4method{addConstraint}{ModelOrg,list,list,character}(model, react, coeff, rtype, lb = NULL, ub = NULL)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{react}{Character vector or a list of character vectors containing the
 model's reactions IDs that are part of the respective constraint.}

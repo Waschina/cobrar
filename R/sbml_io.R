@@ -1,8 +1,8 @@
-#' Reads an SBML file and constructs an object of class 'modelorg'
+#' Reads an SBML file and constructs an object of class 'ModelOrg'
 #'
 #' @param file_path Path to SBML file.
 #'
-#' @returns A \link{modelorg-class} object.
+#' @returns A \link{ModelOrg-class} object.
 #'
 #' @examples
 #' fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
@@ -80,7 +80,7 @@ readSBMLmod <- function(file_path) {
   gpr_sbo <- getGeneProductSBOTerms(modelPtr)
 
   return(
-    new("modelorg",
+    new("ModelOrg",
         mod_id = mod_id,
         mod_desc = mod_id,
         mod_name = mod_name,
@@ -127,9 +127,9 @@ sboterm2int <- function(sbo) {
 #' Exports a Metabolic Network in SBML Format
 #'
 #' Export a constraint-based metabolic network model from a S4 object of class
-#' \link{modelorg} to a SBML file.
+#' \link{ModelOrg} to a SBML file.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param file_path SBML file name for exporting the model. Default is the
 #' model's ID with ".xml" suffix.
 #'

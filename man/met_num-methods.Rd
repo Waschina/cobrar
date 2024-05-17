@@ -3,22 +3,23 @@
 \docType{methods}
 \name{met_num}
 \alias{met_num}
-\alias{met_num,modelorg-method}
-\alias{met_num,modelorg}
+\alias{met_num,ModelOrg-method}
+\alias{met_num,ModelOrg}
 \title{Number of metabolites}
 \usage{
 met_num(model)
 
-\S4method{met_num}{modelorg}(model)
+\S4method{met_num}{ModelOrg}(model)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 }
 \description{
 Get the total number of metabolites of a model
 }
 \seealso{
 Other Model characteristics: 
+\code{\link{ModelOrg-class}},
 \code{\link{checkCompartmentId}()},
 \code{\link{checkGeneId}()},
 \code{\link{checkMetId}()},
@@ -31,11 +32,11 @@ Other Model characteristics:
 \code{\link{gene_num}()},
 \code{\link{gene_pos}()},
 \code{\link{met_pos}()},
-\code{\link{modelorg-class}},
 \code{\link{printConstraint}()},
 \code{\link{printReaction}()},
 \code{\link{react_num}()},
 \code{\link{react_pos}()},
+\code{\link{show,ModelOrg-method}},
 \code{\link{subsys_num}()},
 \code{\link{subsys_pos}()}
 }

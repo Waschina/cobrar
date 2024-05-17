@@ -7,13 +7,13 @@
 rmCompartment(model, comp)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{comp}{A character vector stating the compartment IDs in a model or a
 numeric vector providing the compartment indices.}
 }
 \value{
-An updated model of class \link{modelorg}
+An updated model of class \link{ModelOrg}
 }
 \description{
 This function removes specified compartments from a model.

@@ -1,13 +1,13 @@
 #' Structure of Constraints Class
 #'
 #' This class represents user constraints that can be added to a model of class
-#' \link{modelorg} in addition to the stationarity constraint (\eqn{S v = 0})
+#' \link{ModelOrg} in addition to the stationarity constraint (\eqn{S v = 0})
 #' and flux bounds.
 #'
 #' @slot coeff A sparse numeric matrix of \link[Matrix]{dgCMatrix-class}
 #' representing the coefficients for each reaction in the model. Each row
 #' denotes a user constraint, each column a reaction in the model in the same
-#' order as in slot "S" in the corresponding \link{modelorg} object.
+#' order as in slot "S" in the corresponding \link{ModelOrg} object.
 #' @slot lb Numeric vector providing the lower bound for each constraint.
 #' @slot ub Numeric vector providing the lower bound for each constraint.
 #' @slot rtype Character vector stating the constraint type. See details.

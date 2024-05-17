@@ -7,7 +7,7 @@
 \title{Structure of Constraints Class}
 \description{
 This class represents user constraints that can be added to a model of class
-\link{modelorg} in addition to the stationarity constraint (\eqn{S v = 0})
+\link{ModelOrg} in addition to the stationarity constraint (\eqn{S v = 0})
 and flux bounds.
 }
 \details{
@@ -27,7 +27,7 @@ their effects are:\tabular{clc}{
 \item{\code{coeff}}{A sparse numeric matrix of \link[Matrix]{dgCMatrix-class}
 representing the coefficients for each reaction in the model. Each row
 denotes a user constraint, each column a reaction in the model in the same
-order as in slot "S" in the corresponding \link{modelorg} object.}
+order as in slot "S" in the corresponding \link{ModelOrg} object.}
 
 \item{\code{lb}}{Numeric vector providing the lower bound for each constraint.}
 
@@ -36,8 +36,4 @@ order as in slot "S" in the corresponding \link{modelorg} object.}
 \item{\code{rtype}}{Character vector stating the constraint type. See details.}
 }}
 
-\seealso{
-Other Object classes: 
-\code{\link{show,modelorg-method}}
-}
 \concept{Object classes}

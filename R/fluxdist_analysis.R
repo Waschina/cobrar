@@ -6,7 +6,7 @@
 #'
 #' Summarize the predicted fluxes for exchange reactions.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param sol Flux prediction results as an object of class
 #' \link{FluxPrediction}.
 #'

@@ -2,7 +2,7 @@
 #'
 #' Print the equations of reactions.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param react A character vector specifying the reaction IDs or a integer
 #' vector providing the reaction indices in the model.
 #' @param use.ids Boolean. Indicating whether metabolite IDs should be printed
@@ -82,7 +82,7 @@ printReaction <- function(model, react, use.ids = FALSE) {
 #'
 #' Generate strings to summarize metabolic model constraints.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param ind Integer vector with the indices of the constraints to be printed
 #'
 #' @family Model characteristics

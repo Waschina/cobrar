@@ -7,7 +7,7 @@
 printConstraint(model, ind = NULL)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{ind}{Integer vector with the indices of the constraints to be printed}
 }
@@ -16,6 +16,7 @@ Generate strings to summarize metabolic model constraints.
 }
 \seealso{
 Other Model characteristics: 
+\code{\link{ModelOrg-class}},
 \code{\link{checkCompartmentId}()},
 \code{\link{checkGeneId}()},
 \code{\link{checkMetId}()},
@@ -29,10 +30,10 @@ Other Model characteristics:
 \code{\link{gene_pos}()},
 \code{\link{met_num}()},
 \code{\link{met_pos}()},
-\code{\link{modelorg-class}},
 \code{\link{printReaction}()},
 \code{\link{react_num}()},
 \code{\link{react_pos}()},
+\code{\link{show,ModelOrg-method}},
 \code{\link{subsys_num}()},
 \code{\link{subsys_pos}()}
 }

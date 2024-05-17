@@ -7,7 +7,7 @@
 fba(model)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 }
 \value{
 A list with flux predictions (reaction fluxes 'fluxes', reduced costs 'redCosts'), and optimization status ()
@@ -34,6 +34,6 @@ cat(" Growth rate:       ", res_anaero@obj,"\n",
 Other Flux prediction algorithms: 
 \code{\link{fva}()},
 \code{\link{pfba}()},
-\code{\link{pfba_heuristic}()}
+\code{\link{pfbaHeuristic}()}
 }
 \concept{Flux prediction algorithms}

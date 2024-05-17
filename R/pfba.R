@@ -2,7 +2,7 @@
 #'
 #' Performs parsimonious FBA as describe by Lewis et al. 2010.
 #'
-#' @param model Model of class \link{modelorg}
+#' @param model Model of class \link{ModelOrg}
 #' @param costcoeffw,costcoefbw A numeric vector containing cost coefficients
 #' for all variables/reactions (forward direction: 'costcoeffw'; backward
 #' direction: 'costcoefbw'). If set to NULL, all cost coefficients are set to 1,
@@ -18,7 +18,7 @@
 #' computed optimal growth from genome‐scale models,” Molecular Systems Biology,
 #' vol. 6, no. 1. EMBO, Jan. 2010. doi: 10.1038/msb.2010.47.
 #'
-#' @seealso [pfba_heuristic()]
+#' @seealso [pfbaHeuristic()]
 #'
 #' @family Flux prediction algorithms
 #' @export

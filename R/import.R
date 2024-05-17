@@ -1,9 +1,9 @@
 #' Reads a sybil model file and constructs an object of cobrar's class
-#' 'modelorg'
+#' 'ModelOrg'
 #'
 #' @param file_path Path to sybil model(s) saved as RDS file.
 #'
-#' @returns A \link{modelorg-class} object or a list with \link{modelorg-class}
+#' @returns A \link{ModelOrg-class} object or a list with \link{ModelOrg-class}
 #' objects.
 #'
 #' @import Matrix
@@ -25,7 +25,7 @@ readSybilmod <- function(file_path) {
                        ub = numeric(0),
                        rtype = character(0))
 
-    mod <- new("modelorg",
+    mod <- new("ModelOrg",
                mod_id = sybildoc@mod_id,
                mod_desc = sybildoc@mod_desc,
                mod_name = sybildoc@mod_name,

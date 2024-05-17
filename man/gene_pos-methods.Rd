@@ -3,24 +3,24 @@
 \docType{methods}
 \name{gene_pos}
 \alias{gene_pos}
-\alias{gene_pos,modelorg,character-method}
-\alias{gene_pos,modelorg,character}
-\alias{gene_pos,modelorg,numeric-method}
-\alias{gene_pos,modelorg,numeric}
-\alias{gene_pos,modelorg,missing-method}
-\alias{gene_pos,modelorg,missing}
+\alias{gene_pos,ModelOrg,character-method}
+\alias{gene_pos,ModelOrg,character}
+\alias{gene_pos,ModelOrg,numeric-method}
+\alias{gene_pos,ModelOrg,numeric}
+\alias{gene_pos,ModelOrg,missing-method}
+\alias{gene_pos,ModelOrg,missing}
 \title{Index of gene(s)}
 \usage{
 gene_pos(model, gene)
 
-\S4method{gene_pos}{modelorg,character}(model, gene)
+\S4method{gene_pos}{ModelOrg,character}(model, gene)
 
-\S4method{gene_pos}{modelorg,numeric}(model, gene)
+\S4method{gene_pos}{ModelOrg,numeric}(model, gene)
 
-\S4method{gene_pos}{modelorg,missing}(model, gene)
+\S4method{gene_pos}{ModelOrg,missing}(model, gene)
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{gene}{Character vector with gene IDs or Integer vector providing
 indexes.}
@@ -34,6 +34,7 @@ than the number of genes in the model.
 }
 \seealso{
 Other Model characteristics: 
+\code{\link{ModelOrg-class}},
 \code{\link{checkCompartmentId}()},
 \code{\link{checkGeneId}()},
 \code{\link{checkMetId}()},
@@ -46,11 +47,11 @@ Other Model characteristics:
 \code{\link{gene_num}()},
 \code{\link{met_num}()},
 \code{\link{met_pos}()},
-\code{\link{modelorg-class}},
 \code{\link{printConstraint}()},
 \code{\link{printReaction}()},
 \code{\link{react_num}()},
 \code{\link{react_pos}()},
+\code{\link{show,ModelOrg-method}},
 \code{\link{subsys_num}()},
 \code{\link{subsys_pos}()}
 }

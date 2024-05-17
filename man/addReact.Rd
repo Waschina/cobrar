@@ -26,7 +26,7 @@ addReact(
 )
 }
 \arguments{
-\item{model}{Model of class \link{modelorg}}
+\item{model}{Model of class \link{ModelOrg}}
 
 \item{id}{Character for the reaction ID}
 
