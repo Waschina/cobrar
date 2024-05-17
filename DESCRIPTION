@@ -9,6 +9,7 @@ Authors@R:
       person("Sina", "Zimmermann", role = c("aut"),
              comment = c(ORCID = "0009-0005-0537-4970"))
       )
+URL: https://github.com/Waschina/cobrar, https://waschina.github.io/cobrar/
 Description: Structures and functions to perform constraint-based metabolic network analysis, e.g., the prediction of metabolic fluxes using Flux Balance Analysis (FBA).
 Depends:
     Matrix
@@ -30,3 +31,24 @@ Suggests:
     rmarkdown,
     ggplot2
 VignetteBuilder: knitr
+Collate: 
+    'ConstraintsClass.R'
+    'FluxPredictionClass.R'
+    'LPproblemClass.R'
+    'LPproblem_glpkClass.R'
+    'ModelOrgClass.R'
+    'ModelCommClass.R'
+    'RcppExports.R'
+    'checkId.R'
+    'cobrar.R'
+    'deadEndMetabolites.R'
+    'fba.R'
+    'fluxdist_analysis.R'
+    'fva.R'
+    'geneDel.R'
+    'io.R'
+    'model_modifications.R'
+    'parseBoolean.R'
+    'pfba.R'
+    'pfba_heuristic.R'
+    'printers.R'

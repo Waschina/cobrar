@@ -1,6 +1,6 @@
 #' Structure of ModelOrg Class
 #'
-#' This class represents a model organization with various attributes related
+#' This class represents a model organism with various attributes related
 #' to central model structures, metabolites, reactions, and genes.
 #'
 #' @slot mod_id A character vector representing the model identifier.
