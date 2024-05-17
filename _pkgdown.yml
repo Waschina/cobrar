@@ -1,0 +1,80 @@
+# _pkgdown.yml
+template:
+  bootstrap: 5
+
+navbar:
+  structure:
+    left: [home, reference, articles]
+  components:
+    reference:
+      text: "Reference"
+      href: reference/index.html
+
+reference:
+  - title: "Setup"
+    contents:
+      - COBRAR_SETTINGS
+
+  - title: "Object classes"
+    contents:
+      - Constraints-class
+      - FluxPrediction-class
+      - modelorg-class
+
+  - title: "Model manipulation tools"
+    contents:
+      - addCompartment
+      - addConstraint
+      - addGene
+      - addMetabolite
+      - addReact
+      - addSubsystem
+      - changeBounds
+      - checkCompartmentId
+      - checkGeneId
+      - checkMetId
+      - checkReactId
+      - checkSubsystemId
+      - comp_num
+      - comp_pos
+      - constraint_num
+      - rmCompartment
+      - rmConstraint
+      - rmGene
+      - rmMetabolite
+      - rmReact
+      - rmSubsystem
+      - printConstraint
+      - printReaction
+      - react_num
+      - react_pos
+      - subsys_num
+      - subsys_pos
+
+  - title: "Model characteristics"
+    contents:
+      - met_num
+      - met_pos
+      - gene_num
+      - gene_pos
+      - deadEndMetabolites
+
+  - title: "Flux prediction algorithms"
+    contents:
+      - fba
+      - fva
+      - geneDel
+      - pfba
+      - pfba_heuristic
+
+  - title: "Flux analysis tools"
+    contents:
+      - getExchanges
+      - show,FluxPrediction-method
+      - show,modelorg-method
+
+  - title: "Model import and export helpers"
+    contents:
+      - readSBMLmod
+      - readSybilmod
+      - writeSBMLmod
