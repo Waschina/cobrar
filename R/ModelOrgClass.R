@@ -47,7 +47,7 @@
 #'
 #' @aliases ModelOrg
 #'
-#' @family Model characteristics
+#' @family Object classes
 #' @exportClass ModelOrg
 setClass("ModelOrg",
 

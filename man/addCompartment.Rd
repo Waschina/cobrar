@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_modifications.R
 \name{addCompartment}
 \alias{addCompartment}
-\title{Add Compartments or update their data}
+\title{Add compartments or update their data}
 \usage{
 addCompartment(model, id, name = NA)
 }
@@ -32,7 +32,6 @@ Other Model manipulation tools:
 \code{\link{addReact}()},
 \code{\link{addSubsystem}()},
 \code{\link{changeBounds}()},
-\code{\link{geneDel}()},
 \code{\link{rmCompartment}()},
 \code{\link{rmConstraint}()},
 \code{\link{rmGene}()},

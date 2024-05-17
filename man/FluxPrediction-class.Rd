@@ -4,7 +4,7 @@
 \name{FluxPrediction-class}
 \alias{FluxPrediction-class}
 \alias{FluxPrediction}
-\title{Class for flux prediction results}
+\title{Structure of FluxPrediction Class}
 \description{
 This class represents a flux prediction results, e.g., from Flux Balance
 Analysis or derived methods.
@@ -35,8 +35,8 @@ fluxes in \link{pfba}.}
 }}
 
 \seealso{
-Other Flux analysis tools: 
-\code{\link{getExchanges}()},
-\code{\link{show,FluxPrediction-method}}
+Other Object classes: 
+\code{\link{Constraints-class}},
+\code{\link{ModelOrg-class}}
 }
-\concept{Flux analysis tools}
+\concept{Object classes}

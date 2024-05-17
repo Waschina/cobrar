@@ -15,7 +15,6 @@ Displays a summary of the results obtained from a metabolic flux prediction
 }
 \seealso{
 Other Flux analysis tools: 
-\code{\link{FluxPrediction-class}},
 \code{\link{getExchanges}()}
 }
 \concept{Flux analysis tools}

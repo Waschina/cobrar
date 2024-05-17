@@ -20,19 +20,26 @@ This function identifies reactions, which cannot be catalyzed anymore when
 a specified set of genes is deleted from a model.
 }
 \seealso{
-Other Model manipulation tools: 
-\code{\link{addCompartment}()},
-\code{\link{addConstraint}()},
-\code{\link{addGene}()},
-\code{\link{addMetabolite}()},
-\code{\link{addReact}()},
-\code{\link{addSubsystem}()},
-\code{\link{changeBounds}()},
-\code{\link{rmCompartment}()},
-\code{\link{rmConstraint}()},
-\code{\link{rmGene}()},
-\code{\link{rmMetabolite}()},
-\code{\link{rmReact}()},
-\code{\link{rmSubsystem}()}
+Other Model characteristics: 
+\code{\link{checkCompartmentId}()},
+\code{\link{checkGeneId}()},
+\code{\link{checkMetId}()},
+\code{\link{checkReactId}()},
+\code{\link{checkSubsystemId}()},
+\code{\link{comp_num}()},
+\code{\link{comp_pos}()},
+\code{\link{constraint_num}()},
+\code{\link{deadEndMetabolites}()},
+\code{\link{gene_num}()},
+\code{\link{gene_pos}()},
+\code{\link{met_num}()},
+\code{\link{met_pos}()},
+\code{\link{printConstraint}()},
+\code{\link{printReaction}()},
+\code{\link{react_num}()},
+\code{\link{react_pos}()},
+\code{\link{show,ModelOrg-method}},
+\code{\link{subsys_num}()},
+\code{\link{subsys_pos}()}
 }
-\concept{Model manipulation tools}
+\concept{Model characteristics}

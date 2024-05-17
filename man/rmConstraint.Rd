@@ -25,7 +25,6 @@ Other Model manipulation tools:
 \code{\link{addReact}()},
 \code{\link{addSubsystem}()},
 \code{\link{changeBounds}()},
-\code{\link{geneDel}()},
 \code{\link{rmCompartment}()},
 \code{\link{rmGene}()},
 \code{\link{rmMetabolite}()},

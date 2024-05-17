@@ -21,7 +21,6 @@ model.
 }
 \seealso{
 Other Model characteristics: 
-\code{\link{ModelOrg-class}},
 \code{\link{checkCompartmentId}()},
 \code{\link{checkGeneId}()},
 \code{\link{checkMetId}()},
@@ -30,6 +29,7 @@ Other Model characteristics:
 \code{\link{comp_pos}()},
 \code{\link{constraint_num}()},
 \code{\link{deadEndMetabolites}()},
+\code{\link{geneDel}()},
 \code{\link{gene_num}()},
 \code{\link{gene_pos}()},
 \code{\link{met_num}()},

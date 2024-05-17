@@ -768,7 +768,7 @@ addGene <- function(model, id, name = NA, CVTerms = NA,
   return(model)
 }
 
-#' Add Compartments or update their data
+#' Add compartments or update their data
 #'
 #' The function allows you to add one or more compartments to a model. When
 #' providing the ID of an already existing compartment, you can use this

@@ -148,7 +148,6 @@ Other Model manipulation tools:
 \code{\link{addMetabolite}()},
 \code{\link{addSubsystem}()},
 \code{\link{changeBounds}()},
-\code{\link{geneDel}()},
 \code{\link{rmCompartment}()},
 \code{\link{rmConstraint}()},
 \code{\link{rmGene}()},

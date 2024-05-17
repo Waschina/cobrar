@@ -1,4 +1,4 @@
-#' Class for flux prediction results
+#' Structure of FluxPrediction Class
 #'
 #' This class represents a flux prediction results, e.g., from Flux Balance
 #' Analysis or derived methods.
@@ -18,7 +18,7 @@
 #'
 #' @aliases FluxPrediction
 #'
-#' @family Flux analysis tools
+#' @family Object classes
 #' @exportClass FluxPrediction
 setClass("FluxPrediction",
          slots = c(
