@@ -31,6 +31,9 @@
     <loc>/reference/FluxPrediction-class.html</loc>
   </url>
   <url>
+    <loc>/reference/ModelOrg-class.html</loc>
+  </url>
+  <url>
     <loc>/reference/addCompartment.html</loc>
   </url>
   <url>
@@ -106,13 +109,10 @@
     <loc>/reference/met_pos-methods.html</loc>
   </url>
   <url>
-    <loc>/reference/modelorg-class.html</loc>
-  </url>
-  <url>
     <loc>/reference/pfba.html</loc>
   </url>
   <url>
-    <loc>/reference/pfba_heuristic.html</loc>
+    <loc>/reference/pfbaHeuristic.html</loc>
   </url>
   <url>
     <loc>/reference/printConstraint.html</loc>
@@ -154,7 +154,7 @@
     <loc>/reference/show-FluxPrediction-method.html</loc>
   </url>
   <url>
-    <loc>/reference/show-modelorg-method.html</loc>
+    <loc>/reference/show-ModelOrg-method.html</loc>
   </url>
   <url>
     <loc>/reference/subsys_num-methods.html</loc>
