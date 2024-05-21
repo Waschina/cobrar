@@ -462,7 +462,12 @@ addReact <- function(model,
     # extend data structures
 
     # S and obj.-coeff.
-    model@S <- cbind(model@S, rep(0, met_num(model)))
+    newcol <- as(as(as(Matrix(data=0, nrow = nrow(model@S), ncol = 1,
+                              sparse = TRUE),
+                       "dMatrix"),
+                    "generalMatrix"),
+                 "CsparseMatrix")
+    model@S <- cbind(model@S, newcol)
     model@obj_coef <- append(model@obj_coef, 0)
 
     # reaction slots
@@ -538,7 +543,7 @@ addReact <- function(model,
     # in case the GPR involves new genes
     newgenes <- gpr_new$gene[!(gpr_new$gene %in% model@allGenes) & gpr_new$gene != ""]
     if(length(newgenes) > 0)
-      model <- addGene(model, newgenes) # TODO
+      model <- addGene(model, newgenes)
   }
 
   return(model)
@@ -611,7 +616,11 @@ addMetabolite <- function(model, id, comp = NA, name = NA, chemicalFormula = NA,
     # extent metabolite-related model structures
 
     # S
-    model@S <- rbind(model@S, matrix(0, nrow = nnew, ncol = react_num(model)))
+    newrows <- as(as(as(Matrix(data=0, nrow = nnew, ncol = ncol(model@S), sparse = TRUE),
+                        "dMatrix"),
+                     "generalMatrix"),
+                  "CsparseMatrix")
+    model@S <- rbind(model@S, newrows)
 
     # metabolite slots
     model@met_attr[norig+nnew,] <- NA
