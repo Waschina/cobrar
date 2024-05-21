@@ -32,7 +32,7 @@ printReaction <- function(model, react, use.ids = FALSE) {
 
   cind <- react_pos(model, react)
   mat <- model@S[, cind, drop = FALSE]
-  nnz <- apply(mat, 2, "!=", 0)
+  nnz <- as.matrix(apply(mat, 2, "!=", 0))
   reaction <- character(length(cind))
 
   for (j in seq(along = cind)) {
