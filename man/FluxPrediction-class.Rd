@@ -37,6 +37,7 @@ fluxes in \link{pfba}.}
 \seealso{
 Other Object classes: 
 \code{\link{Constraints-class}},
+\code{\link{ModelComm-class}},
 \code{\link{ModelOrg-class}}
 }
 \concept{Object classes}

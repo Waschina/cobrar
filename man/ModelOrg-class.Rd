@@ -6,7 +6,7 @@
 \alias{ModelOrg}
 \title{Structure of ModelOrg Class}
 \description{
-This class represents a model organization with various attributes related
+This class represents a model organism with various attributes related
 to central model structures, metabolites, reactions, and genes.
 }
 \section{Slots}{
@@ -81,6 +81,7 @@ exported to SBML files. See \link{writeSBMLmod} for details.}
 \seealso{
 Other Object classes: 
 \code{\link{Constraints-class}},
-\code{\link{FluxPrediction-class}}
+\code{\link{FluxPrediction-class}},
+\code{\link{ModelComm-class}}
 }
 \concept{Object classes}

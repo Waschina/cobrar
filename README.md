@@ -129,6 +129,8 @@ cat("[Aerobic growth]\n",
 - cobrar is fully functional from reading SBML files until optimisation
   of linear programs, without the need of additional packages such as
   *sybilSBML* or *glpkAPI*.
+- cobrar links to libsbml via libsbml’s C++ API, not the C API as the
+  *sybilSBML* package.
 - The GNU glpk library is a system requirement. There are no
   links/references to IBM’s CPLEX in the *cobrar* package, which were
   one reason why *sybil* was discontinued on CRAN.

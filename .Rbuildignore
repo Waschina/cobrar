@@ -8,3 +8,5 @@
 config.log
 config.status
 ^src/Makevars$
+_pkgdown.yml
+aclocal.m4

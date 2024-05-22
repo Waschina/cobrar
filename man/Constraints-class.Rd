@@ -39,6 +39,7 @@ order as in slot "S" in the corresponding \link{ModelOrg} object.}
 \seealso{
 Other Object classes: 
 \code{\link{FluxPrediction-class}},
+\code{\link{ModelComm-class}},
 \code{\link{ModelOrg-class}}
 }
 \concept{Object classes}

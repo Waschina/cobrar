@@ -89,6 +89,8 @@ rmReact <- function(model, react, rm_met = TRUE) {
   if(length(rmconstr) > 0)
     model <- rmConstraint(model, rmconstr)
 
+  model@constraints@coeff <- model@constraints@coeff[,-react, drop = FALSE]
+
   if(rm_met) {
     metrm <- which(apply(model@S,1,function(x) all(x == 0))) # identifies unused mets
     if(length(metrm) > 0)
