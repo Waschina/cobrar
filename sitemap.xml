@@ -31,6 +31,9 @@
     <loc>/reference/FluxPrediction-class.html</loc>
   </url>
   <url>
+    <loc>/reference/ModelComm-class.html</loc>
+  </url>
+  <url>
     <loc>/reference/ModelOrg-class.html</loc>
   </url>
   <url>
@@ -101,6 +104,9 @@
   </url>
   <url>
     <loc>/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/joinModels.html</loc>
   </url>
   <url>
     <loc>/reference/met_num-methods.html</loc>
