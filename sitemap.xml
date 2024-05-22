@@ -88,6 +88,9 @@
     <loc>/reference/fba.html</loc>
   </url>
   <url>
+    <loc>/reference/fixBMRatios.html</loc>
+  </url>
+  <url>
     <loc>/reference/fva.html</loc>
   </url>
   <url>
@@ -101,6 +104,9 @@
   </url>
   <url>
     <loc>/reference/getExchanges.html</loc>
+  </url>
+  <url>
+    <loc>/reference/guessBMReaction-methods.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
