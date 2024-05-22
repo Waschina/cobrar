@@ -62,6 +62,7 @@ reference:
       - show,ModelOrg-method
       - subsys_num
       - subsys_pos
+      - guessBMReaction
 
   - title: "Flux prediction algorithms"
     contents:
@@ -75,12 +76,13 @@ reference:
       - getExchanges
       - show,FluxPrediction-method
 
+  - title: "Community model functions"
+    contents:
+      - joinModels
+      - fixBMRatios
+
   - title: "Model import and export helpers"
     contents:
       - readSBMLmod
       - readSybilmod
       - writeSBMLmod
-
-  - title: "Community model functions"
-    contents:
-      - joinModels

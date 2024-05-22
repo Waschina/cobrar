@@ -18,13 +18,11 @@
 #' upper bounds of the organism exchange reactions, that connect the respective
 #' organism to the shared extracellular space. "open" removes any constraints on
 #' organism-specific exchange reactions. "open_lb" and "open_ub" removes only
-#' bounds for lower or upper limites, respectively.
+#' bounds for lower or upper limits, respectively.
 #' @param abun Numeric vector to define the relative abundance of the model
 #' organisms in the community. Entries of the vector should ideally sum up to 1.
 #'
 #' @importFrom stats aggregate
-#'
-#' @family Community model functions
 #'
 #' @export
 joinModels <- function(models, mergeLB = "none", mergeUB = "none",

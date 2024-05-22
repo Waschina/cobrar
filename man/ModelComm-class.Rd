@@ -8,6 +8,9 @@
 \description{
 This class represents a community of model organisms.
 }
+\details{
+Contains all slots from \link{ModelOrg-class}.
+}
 \section{Slots}{
 
 \describe{

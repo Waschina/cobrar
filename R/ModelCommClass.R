@@ -4,6 +4,9 @@
 #'
 #' @slot community A data.frame
 #'
+#' @details
+#' Contains all slots from \link{ModelOrg-class}.
+#'
 #' @aliases ModelComm
 #'
 #' @include ModelOrgClass.R

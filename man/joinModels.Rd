@@ -27,7 +27,7 @@ organism-specific exchange reactions. "keep" does not alter the lower or
 upper bounds of the organism exchange reactions, that connect the respective
 organism to the shared extracellular space. "open" removes any constraints on
 organism-specific exchange reactions. "open_lb" and "open_ub" removes only
-bounds for lower or upper limites, respectively.}
+bounds for lower or upper limits, respectively.}
 
 \item{abun}{Numeric vector to define the relative abundance of the model
 organisms in the community. Entries of the vector should ideally sum up to 1.}
@@ -39,4 +39,3 @@ extracellular space (i.e., environment), from where the organisms can take up
 nutrients an release metabolic by-products. Exchange reactions are attached
 to the new (shared) extracelluar compartment.
 }
-\concept{Community model functions}
