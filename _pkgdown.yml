@@ -21,6 +21,7 @@ reference:
       - Constraints-class
       - FluxPrediction-class
       - ModelOrg-class
+      - ModelComm-class
 
   - title: "Model manipulation tools"
     contents:
