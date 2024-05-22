@@ -79,3 +79,7 @@ reference:
       - readSBMLmod
       - readSybilmod
       - writeSBMLmod
+
+  - title: "Community model functions"
+    contents:
+      - joinModels
