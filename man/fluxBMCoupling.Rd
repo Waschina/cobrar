@@ -25,5 +25,29 @@ Resets the absolute flux bounds of reactions proportional to the flux through
 the biomass reaction.
 }
 \details{
-See (and cite) Heinken et al. (2013) Gut Microbes (doi: 10.4161/gmic.22370).
+The idea of flux coupling in flux balance models of multi-species communities
+was first introduced by Heinken et al. (2013). The idea is to limit the
+reactions fluxes in order to prevent that a reaction in one organism is
+solely used (i.e., carries a non-zero flux) to benefit another organism in
+the community and not the organism that produced the enzyme for the specific
+reaction. Therefore, new linear constraints are added to the flux balance
+model where the absolute reaction flux bounds of organism \emph{j} is proportional
+to the biomass formation of organism \emph{j}. The coupling constraints are
+defined as:
+
+\deqn{-c v_{b,j} - u \leq v_{i,j} \leq c v_{b,j} + u}
+
+where \eqn{v_{i,j}} is the flux through reaction \emph{i} in organism \emph{j},
+\eqn{v_{b,j}} the biomass reaction of organism \emph{j}. \emph{c} and \emph{u} are
+parameters for the coupling constraints that define intercept (\emph{u}) and slope
+(\emph{c}) (see figure).
+
+\figure{coupling_constraints.svg}
+}
+\references{
+\itemize{
+\item Heinken A, Sahoo S, Fleming RMT, Thiele I. Systems-level characterization
+of a host-microbe metabolic symbiosis in the mammalian gut. Vol. 4, Gut
+Microbes; 2013. \url{http://dx.doi.org/10.4161/gmic.22370}
+}
 }
