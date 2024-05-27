@@ -228,7 +228,6 @@ setMethod("addConstraint", signature(model = "ModelOrg",
                                      coeff = "list",
                                      rtype = "character"),
           function(model, react, coeff, rtype, lb = NULL, ub = NULL) {
-
             nc <- length(react)
 
             if(is.null(lb))
@@ -259,31 +258,30 @@ setMethod("addConstraint", signature(model = "ModelOrg",
             lb[indtmp] <- ub[indtmp]
             indtmp <- which(rtype == "E" & is.na(ub))
             ub[indtmp] <- lb[indtmp]
-
             if(any(unlist(lapply(react, length)) != unlist(lapply(coeff, length))))
               stop("List elementes of 'react' must have the same length as the corresponding list elements in 'coeff'.")
-
             if(any(unlist(lapply(react, duplicated))))
               stop("'react' IDs cannot be duplicated within a constraint definition.")
-
-            if(any(unlist(lapply(react, function(x) !(x %in% model@react_id)))))
+            if(any(!(unique(unlist(react)) %in% model@react_id)))
               stop("Not all reaction IDs in 'react' are part of the model.")
 
-            I <- matrix(c(rep(1:nc, unlist(lapply(react, length))),
-                          unlist(lapply(react, function(x) match(x, model@react_id)))),
+            lookup_table <- setNames(1:react_num(model), model@react_id)
+            creacts <- unlist(lapply(react, function(x) x))
+            creactsIdx <- lookup_table[creacts]
+            I <- matrix(c(rep(1:nc, lengths(react)), creactsIdx),
                         ncol = 2)
-
 
             out <- Matrix(0, nrow = nc, ncol = react_num(model), sparse = T)
             out[I] <- unlist(coeff)
 
             model@constraints@coeff <- rbind(model@constraints@coeff,
-                                              out)
+                                             out)
+
             model@constraints@lb <- c(model@constraints@lb, lb)
             model@constraints@ub <- c(model@constraints@ub, ub)
             model@constraints@rtype <- c(model@constraints@rtype, rtype)
 
-            return(rmDuplicateConstraints(model))
+            return(model)
           }
 )
 

@@ -25,21 +25,9 @@ Other Model characteristics:
 \code{\link{checkGeneId}()},
 \code{\link{checkMetId}()},
 \code{\link{checkSubsystemId}()},
-\code{\link{comp_num}()},
-\code{\link{comp_pos}()},
-\code{\link{constraint_num}()},
 \code{\link{deadEndMetabolites}()},
 \code{\link{geneDel}()},
-\code{\link{gene_num}()},
-\code{\link{gene_pos}()},
-\code{\link{met_num}()},
-\code{\link{met_pos}()},
 \code{\link{printConstraint}()},
-\code{\link{printReaction}()},
-\code{\link{react_num}()},
-\code{\link{react_pos}()},
-\code{\link{show,ModelOrg-method}},
-\code{\link{subsys_num}()},
-\code{\link{subsys_pos}()}
+\code{\link{printReaction}()}
 }
 \concept{Model characteristics}

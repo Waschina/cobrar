@@ -47,7 +47,6 @@
 #'
 #' @aliases ModelOrg
 #'
-#' @family Object classes
 #' @exportClass ModelOrg
 setClass("ModelOrg",
 
@@ -154,7 +153,6 @@ setClass("ModelOrg",
 #'
 #' @docType methods
 #' @rdname react_num-methods
-#' @family Model characteristics
 #' @export
 setGeneric("react_num", valueClass = "numeric", function(model) {
   standardGeneric("react_num")
@@ -181,7 +179,6 @@ setMethod("react_num", signature(model = "ModelOrg"),
 #'
 #' @docType methods
 #' @rdname react_pos-methods
-#' @family Model characteristics
 #' @export
 setGeneric("react_pos", valueClass = "numeric", function(model, react) {
   standardGeneric("react_pos")
@@ -217,7 +214,6 @@ setMethod("react_pos", signature(model = "ModelOrg", react = "missing"),
 #'
 #' @docType methods
 #' @rdname met_num-methods
-#' @family Model characteristics
 #' @export
 setGeneric("met_num", valueClass = "numeric", function(model) {
   standardGeneric("met_num")
@@ -244,7 +240,6 @@ setMethod("met_num", signature(model = "ModelOrg"),
 #'
 #' @docType methods
 #' @rdname met_pos-methods
-#' @family Model characteristics
 #' @export
 setGeneric("met_pos", valueClass = "numeric", function(model, met) {
   standardGeneric("met_pos")
@@ -279,7 +274,6 @@ setMethod("met_pos", signature(model = "ModelOrg", met = "missing"),
 #'
 #' @docType methods
 #' @rdname gene_num-methods
-#' @family Model characteristics
 #' @export
 setGeneric("gene_num", valueClass = "numeric", function(model) {
   standardGeneric("gene_num")
@@ -307,7 +301,6 @@ setMethod("gene_num", signature(model = "ModelOrg"),
 #'
 #' @docType methods
 #' @rdname gene_pos-methods
-#' @family Model characteristics
 #' @export
 setGeneric("gene_pos", valueClass = "numeric", function(model, gene) {
   standardGeneric("gene_pos")
@@ -342,7 +335,6 @@ setMethod("gene_pos", signature(model = "ModelOrg", gene = "missing"),
 #'
 #' @docType methods
 #' @rdname comp_num-methods
-#' @family Model characteristics
 #' @export
 setGeneric("comp_num", valueClass = "numeric", function(model) {
   standardGeneric("comp_num")
@@ -369,7 +361,6 @@ setMethod("comp_num", signature(model = "ModelOrg"),
 #'
 #' @docType methods
 #' @rdname comp_pos-methods
-#' @family Model characteristics
 #' @export
 setGeneric("comp_pos", valueClass = "numeric", function(model, comp) {
   standardGeneric("comp_pos")
@@ -411,7 +402,6 @@ setMethod("comp_pos", signature(model = "ModelOrg", comp = "logical"),
 #'
 #' @docType methods
 #' @rdname constraint_num-methods
-#' @family Model characteristics
 #' @export
 setGeneric("constraint_num", valueClass = "numeric", function(model) {
   standardGeneric("constraint_num")
@@ -432,7 +422,6 @@ setMethod("constraint_num", signature(model = "ModelOrg"),
 #'
 #' @docType methods
 #' @rdname subsys_num-methods
-#' @family Model characteristics
 #' @export
 setGeneric("subsys_num", valueClass = "numeric", function(model) {
   standardGeneric("subsys_num")
@@ -459,7 +448,6 @@ setMethod("subsys_num", signature(model = "ModelOrg"),
 #'
 #' @docType methods
 #' @rdname subsys_pos-methods
-#' @family Model characteristics
 #' @export
 setGeneric("subsys_pos", valueClass = "numeric", function(model, subsys) {
   standardGeneric("subsys_pos")
@@ -526,16 +514,17 @@ setMethod("printObjFunc", signature(object = "ModelOrg"),
 #'
 #' @param object S4-object of class \link{ModelOrg}.
 #'
-#' @family Model characteristics
 #' @export
 setMethod("show", signature(object = "ModelOrg"),
           function(object) {
             cat("model ID:                  ", object@mod_id, "\n")
             cat("model name:                ", object@mod_name, "\n")
             cat("number of compartments:    ", length(object@mod_compart), "\n")
-            for(i in 1:length(object@mod_compart)) {
-              cat("                           ", object@mod_compart[i], " (",
-                  object@mod_compart_name[i], ")\n")
+            if(comp_num(object) > 0 && comp_num(object) <= 10) {
+              for(i in 1:length(object@mod_compart)) {
+                cat("                           ", object@mod_compart[i], " (",
+                    object@mod_compart_name[i], ")\n")
+              }
             }
             cat("number of reactions:       ", react_num(object), "\n")
             cat("number of metabolites:     ", met_num(object), "\n")

@@ -171,6 +171,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// scaleSimplexProb
+SEXP scaleSimplexProb(SEXP xp);
+RcppExport SEXP _cobrar_scaleSimplexProb(SEXP xpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type xp(xpSEXP);
+    rcpp_result_gen = Rcpp::wrap(scaleSimplexProb(xp));
+    return rcpp_result_gen;
+END_RCPP
+}
 // getObjVal
 SEXP getObjVal(SEXP xp);
 RcppExport SEXP _cobrar_getObjVal(SEXP xpSEXP) {
@@ -657,6 +668,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_cobrar_getColsPrimalLP", (DL_FUNC) &_cobrar_getColsPrimalLP, 1},
     {"_cobrar_solveSimplex", (DL_FUNC) &_cobrar_solveSimplex, 1},
     {"_cobrar_solveSimplexExact", (DL_FUNC) &_cobrar_solveSimplexExact, 1},
+    {"_cobrar_scaleSimplexProb", (DL_FUNC) &_cobrar_scaleSimplexProb, 1},
     {"_cobrar_getObjVal", (DL_FUNC) &_cobrar_getObjVal, 1},
     {"_cobrar_solveInterior", (DL_FUNC) &_cobrar_solveInterior, 1},
     {"_cobrar_getObjValIpt", (DL_FUNC) &_cobrar_getObjValIpt, 1},

@@ -18,9 +18,3 @@ objects.
 Reads a sybil model file and constructs an object of cobrar's class
 'ModelOrg'
 }
-\seealso{
-Other Model import and export helpers: 
-\code{\link{readSBMLmod}()},
-\code{\link{writeSBMLmod}()}
-}
-\concept{Model import and export helpers}

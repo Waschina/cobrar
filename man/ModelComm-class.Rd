@@ -20,7 +20,6 @@ Contains all slots from \link{ModelOrg-class}.
 \seealso{
 Other Object classes: 
 \code{\link{Constraints-class}},
-\code{\link{FluxPrediction-class}},
-\code{\link{ModelOrg-class}}
+\code{\link{FluxPrediction-class}}
 }
 \concept{Object classes}

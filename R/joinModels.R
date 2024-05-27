@@ -118,7 +118,6 @@ joinModels <- function(models, mergeLB = "none", mergeUB = "none",
   })
 
   for(i in 1:length(inds)) {
-    print(i)
     indstmp <- inds[[i]]
     indstmp[,"row"] <- indstmp[,"row"]+metoffset[i]
     indstmp[,"col"] <- indstmp[,"col"]+rxnoffset[i]
@@ -247,7 +246,6 @@ joinModels <- function(models, mergeLB = "none", mergeUB = "none",
   })
 
   for(i in 1:length(inds)) {
-    print(i)
     indstmp <- inds[[i]]
     indstmp[,"row"] <- indstmp[,"row"]+constroffset[i]
     indstmp[,"col"] <- indstmp[,"col"]+rxnoffset[i]

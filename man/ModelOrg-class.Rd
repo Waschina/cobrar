@@ -78,10 +78,3 @@ gene products associated to the respective reaction.}
 exported to SBML files. See \link{writeSBMLmod} for details.}
 }}
 
-\seealso{
-Other Object classes: 
-\code{\link{Constraints-class}},
-\code{\link{FluxPrediction-class}},
-\code{\link{ModelComm-class}}
-}
-\concept{Object classes}

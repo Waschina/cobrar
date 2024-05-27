@@ -247,12 +247,14 @@ setMethod("solveLp", signature(lp = "LPproblem_glpk"),
                      out <- solveInterior(lp@ptr)
                    },
                    "exact" = {
+                     invisible(scaleSimplexProb(lp@ptr))
                      out <- solveSimplexExact(lp@ptr)
                    },
                    "mip" = {
                      out <- solveMIP(lp@ptr)
                    },
                    {
+                     scaleSimplexProb(lp@ptr)
                      out <- solveSimplex(lp@ptr)
                    }
             )

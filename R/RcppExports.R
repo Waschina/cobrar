@@ -53,6 +53,10 @@ solveSimplexExact <- function(xp) {
     .Call(`_cobrar_solveSimplexExact`, xp)
 }
 
+scaleSimplexProb <- function(xp) {
+    .Call(`_cobrar_scaleSimplexProb`, xp)
+}
+
 getObjVal <- function(xp) {
     .Call(`_cobrar_getObjVal`, xp)
 }

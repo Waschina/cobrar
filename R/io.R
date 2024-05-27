@@ -10,7 +10,6 @@
 #' mod
 #'
 #' @import Matrix
-#' @family Model import and export helpers
 #' @export
 readSBMLmod <- function(file_path) {
 
@@ -142,7 +141,6 @@ sboterm2int <- function(sbo) {
 #'
 #' @returns TRUE if file export was successful.
 #'
-#' @family Model import and export helpers
 #' @export
 writeSBMLmod <- function(model, file_path = NULL) {
 
@@ -287,7 +285,6 @@ writeSBMLmod <- function(model, file_path = NULL) {
 #' objects.
 #'
 #' @import Matrix
-#' @family Model import and export helpers
 #' @export
 readSybilmod <- function(file_path) {
   sybildoc.lst  <- readRDS(normalizePath(file_path))

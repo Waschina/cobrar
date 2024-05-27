@@ -36,27 +36,3 @@ Returns the index(es) of specific subsystem(s).
 Returns NA for subsystem IDs not part of the model or if the index is larger
 than the number of subsystems in the model.
 }
-\seealso{
-Other Model characteristics: 
-\code{\link{checkCompartmentId}()},
-\code{\link{checkGeneId}()},
-\code{\link{checkMetId}()},
-\code{\link{checkReactId}()},
-\code{\link{checkSubsystemId}()},
-\code{\link{comp_num}()},
-\code{\link{comp_pos}()},
-\code{\link{constraint_num}()},
-\code{\link{deadEndMetabolites}()},
-\code{\link{geneDel}()},
-\code{\link{gene_num}()},
-\code{\link{gene_pos}()},
-\code{\link{met_num}()},
-\code{\link{met_pos}()},
-\code{\link{printConstraint}()},
-\code{\link{printReaction}()},
-\code{\link{react_num}()},
-\code{\link{react_pos}()},
-\code{\link{show,ModelOrg-method}},
-\code{\link{subsys_num}()}
-}
-\concept{Model characteristics}
