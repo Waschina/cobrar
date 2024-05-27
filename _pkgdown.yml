@@ -80,6 +80,7 @@ reference:
     contents:
       - joinModels
       - fixBMRatios
+      - fluxBMCoupling
 
   - title: "Model import and export helpers"
     contents:
