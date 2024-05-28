@@ -2,8 +2,8 @@ pandoc: 3.1.11
 pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
-  1_FVA: 1_FVA.html
-  2_additional_constraints: 2_additional_constraints.html
-  3_Community-models: 3_Community-models.html
-last_built: 2024-05-28T14:31Z
+  Additional_constraints: Additional_constraints.html
+  Community_models: Community_models.html
+  FVA: FVA.html
+last_built: 2024-05-28T15:08Z
 
