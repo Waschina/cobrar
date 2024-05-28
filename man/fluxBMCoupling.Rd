@@ -42,7 +42,8 @@ where \eqn{v_{i,j}} is the flux through reaction \emph{i} in organism \emph{j},
 parameters for the coupling constraints that define intercept (\emph{u}) and slope
 (\emph{c}) (see figure).
 
-\figure{coupling_constraints.svg}
+\if{html}{\figure{coupling_constraints.svg}{options: width=300 alt="Coupling Constraints"}}
+\if{latex}{\figure{coupling_constraints.pdf}{options: width=1.5in}}
 }
 \references{
 \itemize{

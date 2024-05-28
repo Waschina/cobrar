@@ -26,7 +26,8 @@
 #' parameters for the coupling constraints that define intercept (*u*) and slope
 #' (*c*) (see figure).
 #'
-#' \figure{coupling_constraints.svg}
+#' \if{html}{\figure{coupling_constraints.svg}{options: width=300 alt="Coupling Constraints"}}
+#' \if{latex}{\figure{coupling_constraints.pdf}{options: width=1.5in}}
 #'
 #' @references
 #' - Heinken A, Sahoo S, Fleming RMT, Thiele I. Systems-level characterization

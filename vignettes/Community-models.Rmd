@@ -1,0 +1,106 @@
+---
+title: "Community models"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Community models}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(cobrar)
+```
+
+## Merge models of organisms to construct community metabolic models
+
+### Background
+Microbial cells in multi-species communities frequently engage in metabolite exchange interactions[^1].
+
+### Workflow
+
+First, we load the wild type *E. coli* core metabolic model.
+
+```{r}
+fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
+mod <- readSBMLmod(fpath)
+```
+
+Next, two single-gene knockout genotypes are generated. For the example here, we chose the two genes *b0720* (citrate synthase, cs) and *b0767* (6-phosphogluconolactonase, pgl).
+
+```{r}
+mod_dCS  <- rmGene(mod, "b0720")
+mod_dPGL <- rmGene(mod, "b0767")
+```
+
+Now we are ready to generate a community metabolic model by joining the two models `mod_dCS` and `mod_dPGL`.
+
+```{r}
+cmod <- joinModels(list(mod_dCS, mod_dPGL))
+cmod
+```
+The merged model contains five compartments: an extracellular space and a cytosol for each organism model M1 ("&Delta;cs") and M2 ("&Delta;pgl")), plus a new shared extracellular space `e` via which both genotypes can in principle exchange metabolites (see figure).
+
+![**Figure**: Commumnity model](community.svg)
+
+Before we predict reaction and exchange fluxes for the community, we add some additional constraints to the community model, namely flux coupling constraints. These constraints have the effect, that the absolute reaction flux bounds of organism x are proportional to the biomass formation of organism x. For more information on flux coupling, please see the documentation of the function `fluxBMCoupling()`.
+
+```{r}
+cmod <- fluxBMCoupling(cmod, cpl_c = 200, cpl_u = 0.01)
+```
+
+All set. We can now predict the flux distribution within the community metabolic model, e.g. via the heuristic parsimonious FBA and store the results in the variable `sol`.
+
+```{r}
+sol <- pfbaHeuristic(cmod)
+```
+
+To inspect the predicted growth rate per genotype, we can run:
+
+```{r}
+BMrxn <- guessBMReaction(cmod) # identify the biomass reactions within the community
+growth <- sol@fluxes[react_pos(cmod,BMrxn)]
+names(growth) <- BMrxn
+growth
+```
+
+Please note, that the organisms within the community are numbered consecutively in the same order as the models are supplied to the `joinModels(...)` function. 
+
+### Analysis of metabolic interchange
+
+Finally, we are interested in the metabolic interactions between both genotypes. To extract cross-feeding information from the flux prediction, we can inspect the flux rates of the organism exchange reactions (see figure above). Metabolites, which have non-zero flux rates for both respective organism exchange reactions and where the signs of predicted fluxes are different, are metabolites that are exchanged between both community members.
+
+First, a data frame is constructed that contains all organism exchange reaction IDs, names, predicted fluxes, and the corresponding organism Index (M1 or M2).
+
+```{r}
+dfCF <- data.frame(exrxn = cmod@react_id[grepl("^M[1|2]_EX_", cmod@react_id)])
+dfCF$model <- substr(dfCF$exrxn,1,2)
+dfCF$rxnname <- cmod@react_name[react_pos(cmod, dfCF$exrxn)]
+dfCF$flux <- sol@fluxes[react_pos(cmod, dfCF$exrxn)]
+```
+
+Next we split the data frame by organism:
+
+```{r}
+dfCF_M1 <- dfCF[dfCF$model == "M1", c("rxnname","flux")]
+dfCF_M2 <- dfCF[dfCF$model == "M2", c("rxnname","flux")]
+```
+
+Finally, both data frames are merged in a way, that each row represents a metabolite and with two flux columns, one for the exchange reaction rates for each genotype. The re-organised data frame makes it easy to spot cross-fed metabolites.
+
+```{r}
+dfCF <- merge(dfCF_M1, dfCF_M2, by = "rxnname", suffixes = c(".dCS",".dPGL"))
+
+dfCF
+```
+
+The output shows, that the "&Delta;cs" genotype produces acetate and consumes 2-oxoglutarate, while the "&Delta;pgl" consumes acetate and produced 2-oxoglutarate.
+
+### References
+[^1]: D’Souza, G., Shitut, S., Preussger, D., Yousif, G., Waschina, S. & Kost, C. Ecology and evolution of metabolic cross-feeding interactions in bacteria. Nat. Prod. Rep. 35, 455–488 (2018).
