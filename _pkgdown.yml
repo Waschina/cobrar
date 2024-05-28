@@ -87,3 +87,11 @@ reference:
       - readSBMLmod
       - readSybilmod
       - writeSBMLmod
+
+articles:
+- title: Tutorials
+  navbar: ~
+  contents:
+  - FVA
+  - additional-constraints
+  - Community-models
