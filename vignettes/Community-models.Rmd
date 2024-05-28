@@ -49,7 +49,7 @@ The merged model contains five compartments: an extracellular space and a cytoso
 
 ![**Figure**: Commumnity model](community.svg)
 
-Before we predict reaction and exchange fluxes for the community, we add some additional constraints to the community model, namely flux coupling constraints. These constraints have the effect, that the absolute reaction flux bounds of organism x are proportional to the biomass formation of organism x. For more information on flux coupling, please see the documentation of the function `fluxBMCoupling()`.
+Before we predict reaction and exchange fluxes for the community, we add some additional constraints to the community model, namely flux coupling constraints. These constraints have the effect, that the absolute reaction flux bounds of organism x are proportional to the biomass formation of organism x. For more information on flux coupling, please see the documentation of the function `fluxBMCoupling()` and the paper by Heinken et al. (2013)[^2].
 
 ```{r}
 cmod <- fluxBMCoupling(cmod, cpl_c = 200, cpl_u = 0.01)
@@ -102,5 +102,6 @@ dfCF
 
 The output shows, that the "&Delta;cs" genotype produces acetate and consumes 2-oxoglutarate, while the "&Delta;pgl" consumes acetate and produced 2-oxoglutarate.
 
-### References
-[^1]: D’Souza, G., Shitut, S., Preussger, D., Yousif, G., Waschina, S. & Kost, C. Ecology and evolution of metabolic cross-feeding interactions in bacteria. Nat. Prod. Rep. 35, 455–488 (2018).
+
+[^1]: D’Souza, G., Shitut, S., Preussger, D., Yousif, G., Waschina, S. & Kost, C. Ecology and evolution of metabolic cross-feeding interactions in bacteria. Nat. Prod. Rep. 35, 455–488 (2018). https://doi.org/10.1039/C8NP00009C
+[^2]: Heinken, A., Sahoo, S., Fleming, R. M. T. & Thiele, I. Systems-level characterization of a host-microbe metabolic symbiosis in the mammalian gut. Gut Microbes 4, 28–40 (2013). http://dx.doi.org/10.4161/gmic.22370
