@@ -1,8 +1,8 @@
 ---
-title: "Working with additional constraints"
+title: "Additional constraints"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Working with additional constraints}
+  %\VignetteIndexEntry{Additional constraints}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
