@@ -35,19 +35,3 @@ mod_KO <- rmGene(mod, c("b4152","b0116"))
 mod_KO
 
 }
-\seealso{
-Other Model manipulation tools: 
-\code{\link{addCompartment}()},
-\code{\link{addConstraint}()},
-\code{\link{addGene}()},
-\code{\link{addMetabolite}()},
-\code{\link{addReact}()},
-\code{\link{addSubsystem}()},
-\code{\link{changeBounds}()},
-\code{\link{rmCompartment}()},
-\code{\link{rmConstraint}()},
-\code{\link{rmMetabolite}()},
-\code{\link{rmReact}()},
-\code{\link{rmSubsystem}()}
-}
-\concept{Model manipulation tools}

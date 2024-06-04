@@ -22,7 +22,6 @@
 #' # print multiple reactions at once
 #' printReaction(mod, react = c(2,8))
 #'
-#' @family Model characteristics
 #' @export
 printReaction <- function(model, react, use.ids = FALSE) {
   check <- checkReactId(model, react = react)
@@ -85,7 +84,6 @@ printReaction <- function(model, react, use.ids = FALSE) {
 #' @param model Model of class \link{ModelOrg}
 #' @param ind Integer vector with the indices of the constraints to be printed
 #'
-#' @family Model characteristics
 #' @export
 printConstraint <- function(model, ind = NULL) {
   if(is.null(ind) && constraint_num(model) == 0)

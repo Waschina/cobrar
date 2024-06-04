@@ -19,15 +19,3 @@ A logical vector; TRUE if ID/index is valid, FALSE otherwise.
 Checks whether metabolite IDs or indices are part of (valid) for a specific
 model.
 }
-\seealso{
-Other Model characteristics: 
-\code{\link{checkCompartmentId}()},
-\code{\link{checkGeneId}()},
-\code{\link{checkReactId}()},
-\code{\link{checkSubsystemId}()},
-\code{\link{deadEndMetabolites}()},
-\code{\link{geneDel}()},
-\code{\link{printConstraint}()},
-\code{\link{printReaction}()}
-}
-\concept{Model characteristics}

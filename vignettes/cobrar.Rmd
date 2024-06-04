@@ -1,0 +1,31 @@
+---
+title: "Introduction to cobrar"
+description: >
+  Learn how to make the first steps with cobrar.
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to cobrar}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(cobrar)
+```
+
+
+First, we load the wild type *E. coli* core metabolic model.
+
+```{r}
+fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
+mod <- readSBMLmod(fpath)
+```
+
+TODO

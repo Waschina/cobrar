@@ -13,8 +13,3 @@
 Displays a summary of the results obtained from a metabolic flux prediction
 (e.g., FBA or pFBA).
 }
-\seealso{
-Other Flux analysis tools: 
-\code{\link{getExchanges}()}
-}
-\concept{Flux analysis tools}

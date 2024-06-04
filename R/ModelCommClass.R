@@ -4,14 +4,10 @@
 #'
 #' @slot community A data.frame
 #'
-#' @details
-#' Contains all slots from \link{ModelOrg-class}.
-#'
 #' @aliases ModelComm
 #'
 #' @include ModelOrgClass.R
 #'
-#' @family Object classes
 #' @exportClass ModelComm
 setClass("ModelComm",
          slots = c(community = "data.frame"),

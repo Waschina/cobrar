@@ -16,19 +16,4 @@ Remove specific user constraints from a metabolic model.
 }
 \seealso{
 \code{\link[=printConstraint]{printConstraint()}}
-
-Other Model manipulation tools: 
-\code{\link{addCompartment}()},
-\code{\link{addConstraint}()},
-\code{\link{addGene}()},
-\code{\link{addMetabolite}()},
-\code{\link{addReact}()},
-\code{\link{addSubsystem}()},
-\code{\link{changeBounds}()},
-\code{\link{rmCompartment}()},
-\code{\link{rmGene}()},
-\code{\link{rmMetabolite}()},
-\code{\link{rmReact}()},
-\code{\link{rmSubsystem}()}
 }
-\concept{Model manipulation tools}

@@ -32,15 +32,3 @@ mod <- readSBMLmod(fpath)
 deadEndMetabolites(mod)
 
 }
-\seealso{
-Other Model characteristics: 
-\code{\link{checkCompartmentId}()},
-\code{\link{checkGeneId}()},
-\code{\link{checkMetId}()},
-\code{\link{checkReactId}()},
-\code{\link{checkSubsystemId}()},
-\code{\link{geneDel}()},
-\code{\link{printConstraint}()},
-\code{\link{printReaction}()}
-}
-\concept{Model characteristics}

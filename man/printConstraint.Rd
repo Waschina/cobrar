@@ -14,15 +14,3 @@ printConstraint(model, ind = NULL)
 \description{
 Generate strings to summarize metabolic model constraints.
 }
-\seealso{
-Other Model characteristics: 
-\code{\link{checkCompartmentId}()},
-\code{\link{checkGeneId}()},
-\code{\link{checkMetId}()},
-\code{\link{checkReactId}()},
-\code{\link{checkSubsystemId}()},
-\code{\link{deadEndMetabolites}()},
-\code{\link{geneDel}()},
-\code{\link{printReaction}()}
-}
-\concept{Model characteristics}

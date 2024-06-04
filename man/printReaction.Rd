@@ -34,15 +34,3 @@ printReaction(mod, react = "PFL", use.ids = TRUE)
 printReaction(mod, react = c(2,8))
 
 }
-\seealso{
-Other Model characteristics: 
-\code{\link{checkCompartmentId}()},
-\code{\link{checkGeneId}()},
-\code{\link{checkMetId}()},
-\code{\link{checkReactId}()},
-\code{\link{checkSubsystemId}()},
-\code{\link{deadEndMetabolites}()},
-\code{\link{geneDel}()},
-\code{\link{printConstraint}()}
-}
-\concept{Model characteristics}

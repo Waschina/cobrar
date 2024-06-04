@@ -34,9 +34,3 @@ fluxes in \link{pfba}.}
 \item{\code{redCosts}}{Predicted reduced costs (or "\emph{dual value}") for reactions.}
 }}
 
-\seealso{
-Other Object classes: 
-\code{\link{Constraints-class}},
-\code{\link{ModelComm-class}}
-}
-\concept{Object classes}

@@ -22,7 +22,6 @@
 #' take into account the possibility that an irreversible reaction is defined in
 #' the direction RHS to LHS (lower bound > 0 and upper bound = 0).
 #'
-#' @family Model characteristics
 #' @export
 deadEndMetabolites <- function(object) {
 

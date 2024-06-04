@@ -520,11 +520,9 @@ setMethod("show", signature(object = "ModelOrg"),
             cat("model ID:                  ", object@mod_id, "\n")
             cat("model name:                ", object@mod_name, "\n")
             cat("number of compartments:    ", length(object@mod_compart), "\n")
-            if(comp_num(object) > 0 && comp_num(object) <= 10) {
-              for(i in 1:length(object@mod_compart)) {
-                cat("                           ", object@mod_compart[i], " (",
-                    object@mod_compart_name[i], ")\n")
-              }
+            for(i in 1:length(object@mod_compart)) {
+              cat("                           ", object@mod_compart[i], " (",
+                  object@mod_compart_name[i], ")\n")
             }
             cat("number of reactions:       ", react_num(object), "\n")
             cat("number of metabolites:     ", met_num(object), "\n")

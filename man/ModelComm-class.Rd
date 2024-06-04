@@ -8,18 +8,9 @@
 \description{
 This class represents a community of model organisms.
 }
-\details{
-Contains all slots from \link{ModelOrg-class}.
-}
 \section{Slots}{
 
 \describe{
 \item{\code{community}}{A data.frame}
 }}
 
-\seealso{
-Other Object classes: 
-\code{\link{Constraints-class}},
-\code{\link{FluxPrediction-class}}
-}
-\concept{Object classes}

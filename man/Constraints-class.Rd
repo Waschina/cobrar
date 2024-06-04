@@ -36,9 +36,3 @@ order as in slot "S" in the corresponding \link{ModelOrg} object.}
 \item{\code{rtype}}{Character vector stating the constraint type. See details.}
 }}
 
-\seealso{
-Other Object classes: 
-\code{\link{FluxPrediction-class}},
-\code{\link{ModelComm-class}}
-}
-\concept{Object classes}

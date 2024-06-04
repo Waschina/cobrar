@@ -19,15 +19,3 @@ A logical vector; TRUE if ID/index is valid, FALSE otherwise.
 Checks whether compartment IDs or indices are part of (valid) for a specific
 model.
 }
-\seealso{
-Other Model characteristics: 
-\code{\link{checkGeneId}()},
-\code{\link{checkMetId}()},
-\code{\link{checkReactId}()},
-\code{\link{checkSubsystemId}()},
-\code{\link{deadEndMetabolites}()},
-\code{\link{geneDel}()},
-\code{\link{printConstraint}()},
-\code{\link{printReaction}()}
-}
-\concept{Model characteristics}

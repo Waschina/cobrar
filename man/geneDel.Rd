@@ -19,15 +19,3 @@ Character vector with reactions IDs.
 This function identifies reactions, which cannot be catalyzed anymore when
 a specified set of genes is deleted from a model.
 }
-\seealso{
-Other Model characteristics: 
-\code{\link{checkCompartmentId}()},
-\code{\link{checkGeneId}()},
-\code{\link{checkMetId}()},
-\code{\link{checkReactId}()},
-\code{\link{checkSubsystemId}()},
-\code{\link{deadEndMetabolites}()},
-\code{\link{printConstraint}()},
-\code{\link{printReaction}()}
-}
-\concept{Model characteristics}
