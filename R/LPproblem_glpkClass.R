@@ -64,20 +64,6 @@ setMethod(f = "initialize",
           }
 )
 
-# function for cplex could look something like this:
-# setMethod(f = "initialize",
-#           signature = "LPproblem_cplex",
-#           definition = function(.Object,
-#                                 name,
-#                                 dir = COBRAR_SETTINGS("OPT_DIRECTION")) {
-#
-#             .Object@ptr <- cobrarCPLEX::initProb(name, dir)
-#             .Object@solver = "cplex"
-#
-#             return(.Object)
-#           }
-# )
-
 #' @export
 setMethod("loadLPprob", signature(lp = "LPproblem_glpk"),
 
