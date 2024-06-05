@@ -78,7 +78,7 @@ setMethod(f = "initialize",
 #           }
 # )
 
-
+#' @export
 setMethod("loadLPprob", signature(lp = "LPproblem_glpk"),
 
           function(lp, nCols, nRows, mat, ub, lb, obj, rlb, rtype, lpdir,
@@ -151,25 +151,25 @@ setMethod("loadLPprob", signature(lp = "LPproblem_glpk"),
 
           }
 )
-
+#' @export
 setMethod("setObjDirection", signature(lp = "LPproblem_glpk"),
           function(lp, lpdir) {
             setObjDirLP(lp@ptr, lpdir)
           }
 )
-
+#' @export
 setMethod("addCols", signature(lp = "LPproblem_glpk"),
           function(lp, ncols) {
             addColsLP(lp@ptr, as.integer(ncols))
           }
 )
-
+#' @export
 setMethod("addRows", signature(lp = "LPproblem_glpk"),
           function(lp, nrows) {
             addRowsLP(lp@ptr, as.integer(nrows))
           }
 )
-
+#' @export
 setMethod("loadMatrix", signature(lp = "LPproblem_glpk"),
           function(lp, ne, ia, ja, ra) {
             loadMatrixLP(lp@ptr,
@@ -179,7 +179,7 @@ setMethod("loadMatrix", signature(lp = "LPproblem_glpk"),
                          as.numeric(ra))
           }
 )
-
+#' @export
 setMethod("setColsBndsObjCoefs", signature(lp = "LPproblem_glpk"),
           function(lp, j, lb, ub, obj_coef, type = NULL) {
 
@@ -199,7 +199,7 @@ setMethod("setColsBndsObjCoefs", signature(lp = "LPproblem_glpk"),
                                   as.numeric(obj_coef))
           }
 )
-
+#' @export
 setMethod("setColsKind", signature(lp = "LPproblem_glpk"),
           function(lp, j, kind) {
             setColsKindLP(lp@ptr,
@@ -208,7 +208,7 @@ setMethod("setColsKind", signature(lp = "LPproblem_glpk"),
           }
 )
 
-
+#' @export
 setMethod("setRowsBnds", signature(lp = "LPproblem_glpk"),
           function(lp, i, lb, ub , type) {
 
@@ -237,7 +237,7 @@ setMethod("setRowsBnds", signature(lp = "LPproblem_glpk"),
 
           }
 )
-
+#' @export
 setMethod("solveLp", signature(lp = "LPproblem_glpk"),
           function(lp) {
             out          <- FALSE
@@ -288,7 +288,7 @@ setMethod("solveLp", signature(lp = "LPproblem_glpk"),
                         term = term))
           }
 )
-
+#' @export
 setMethod("getObjValue", signature(lp = "LPproblem_glpk"),
           function(lp) {
             switch(EXPR = lp@method,
@@ -305,7 +305,7 @@ setMethod("getObjValue", signature(lp = "LPproblem_glpk"),
 
           }
 )
-
+#' @export
 setMethod("getSolStat", signature(lp = "LPproblem_glpk"),
           function(lp) {
 
@@ -326,7 +326,7 @@ setMethod("getSolStat", signature(lp = "LPproblem_glpk"),
                         term = term))
           }
 )
-
+#' @export
 setMethod("getColsPrimal", signature(lp = "LPproblem_glpk"),
           function(lp) {
 
@@ -335,7 +335,7 @@ setMethod("getColsPrimal", signature(lp = "LPproblem_glpk"),
             return(out)
           }
 )
-
+#' @export
 setMethod("getRedCosts", signature(lp = "LPproblem_glpk"),
           function(lp) {
 
@@ -349,7 +349,7 @@ setMethod("getRedCosts", signature(lp = "LPproblem_glpk"),
             return(out)
           }
 )
-
+#' @export
 setMethod("addSingleConstraint", signature(lp = "LPproblem_glpk"),
           function(lp, coeffs, lb, ub, type) {
 
@@ -376,7 +376,7 @@ setMethod("addSingleConstraint", signature(lp = "LPproblem_glpk"),
 
           }
 )
-
+#' @export
 setMethod("fvaJob", signature(lp = "LPproblem_glpk"),
           function(lp, ind) {
 
