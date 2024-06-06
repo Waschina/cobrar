@@ -301,7 +301,7 @@ setMethod("getSolStat", signature(lp = "LPproblem_glpk"),
             term <- switch(EXPR = out,
                            "solution is undefined",
                            "solution is feasible",
-                           "olution is infeasible",
+                           "solution is infeasible",
                            "problem has no feasible solution",
                            "solution is optimal",
                            "problem has unbounded solution")

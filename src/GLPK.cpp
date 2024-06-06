@@ -576,7 +576,7 @@ Rcpp::DataFrame fvaLP(SEXP xp, SEXP ind) {
     // Minimize the variable
     glp_simplex(lp, &parmS);
 
-    // Store the maximum value
+    // Store the minimum value
     minVals[i] = glp_get_obj_val(lp);
 
     // Reset the objective coefficient to 0
