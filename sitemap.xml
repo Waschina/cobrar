@@ -37,10 +37,19 @@
     <loc>/reference/FluxPrediction-class.html</loc>
   </url>
   <url>
+    <loc>/reference/LPproblem-class.html</loc>
+  </url>
+  <url>
+    <loc>/reference/LPproblem_glpk-class.html</loc>
+  </url>
+  <url>
     <loc>/reference/ModelComm-class.html</loc>
   </url>
   <url>
     <loc>/reference/ModelOrg-class.html</loc>
+  </url>
+  <url>
+    <loc>/reference/addCols-methods.html</loc>
   </url>
   <url>
     <loc>/reference/addCompartment.html</loc>
@@ -56,6 +65,12 @@
   </url>
   <url>
     <loc>/reference/addReact.html</loc>
+  </url>
+  <url>
+    <loc>/reference/addRows-methods.html</loc>
+  </url>
+  <url>
+    <loc>/reference/addSingleConstraint-methods.html</loc>
   </url>
   <url>
     <loc>/reference/addSubsystem.html</loc>
@@ -103,6 +118,9 @@
     <loc>/reference/fva.html</loc>
   </url>
   <url>
+    <loc>/reference/fvaJob-methods.html</loc>
+  </url>
+  <url>
     <loc>/reference/geneDel.html</loc>
   </url>
   <url>
@@ -112,7 +130,19 @@
     <loc>/reference/gene_pos-methods.html</loc>
   </url>
   <url>
+    <loc>/reference/getColsPrimal-methods.html</loc>
+  </url>
+  <url>
     <loc>/reference/getExchanges.html</loc>
+  </url>
+  <url>
+    <loc>/reference/getObjValue-methods.html</loc>
+  </url>
+  <url>
+    <loc>/reference/getRedCosts-methods.html</loc>
+  </url>
+  <url>
+    <loc>/reference/getSolStat-methods.html</loc>
   </url>
   <url>
     <loc>/reference/guessBMReaction-methods.html</loc>
@@ -122,6 +152,12 @@
   </url>
   <url>
     <loc>/reference/joinModels.html</loc>
+  </url>
+  <url>
+    <loc>/reference/loadLPprob-methods.html</loc>
+  </url>
+  <url>
+    <loc>/reference/loadMatrix-methods.html</loc>
   </url>
   <url>
     <loc>/reference/met_num-methods.html</loc>
@@ -172,10 +208,25 @@
     <loc>/reference/rmSubsystem.html</loc>
   </url>
   <url>
+    <loc>/reference/setColsBndsObjCoefs-methods.html</loc>
+  </url>
+  <url>
+    <loc>/reference/setColsKind-methods.html</loc>
+  </url>
+  <url>
+    <loc>/reference/setObjDirection-methods.html</loc>
+  </url>
+  <url>
+    <loc>/reference/setRowsBnds-methods.html</loc>
+  </url>
+  <url>
     <loc>/reference/show-FluxPrediction-method.html</loc>
   </url>
   <url>
     <loc>/reference/show-ModelOrg-method.html</loc>
+  </url>
+  <url>
+    <loc>/reference/solveLp-methods.html</loc>
   </url>
   <url>
     <loc>/reference/subsys_num-methods.html</loc>
