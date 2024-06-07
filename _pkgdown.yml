@@ -106,6 +106,7 @@ reference:
       - setRowsBnds
       - solveLp
       - LPproblem-class
+      - LPproblem_glpk-class
 
 articles:
 - title: Tutorials
