@@ -42,6 +42,12 @@ glpkPar <- list(
 
 )
 
+#' Structure of LPproblem_glpk Class
+#'
+#' A class structure to link LP problem C++ object. Class is derived from
+#' \link{LPproblem}
+#'
+#' @exportClass LPproblem_glpk
 setClass(Class = "LPproblem_glpk",
          contains = "LPproblem"
 )
@@ -64,7 +70,20 @@ setMethod(f = "initialize",
           }
 )
 
-#' @export
+#' @param nCols Number of columns/variables
+#' @param nRows Number of rows/constraints
+#' @param mat constraint-X-variable coefficient matrix
+#' @param ub Variable values' upper bounds
+#' @param lb Variable values' lower bounds
+#' @param obj Linear objective coefficients for variables
+#' @param rlb Constraints' lower bounds
+#' @param rtype Constraint types
+#' @param lpdir Objective direction ("max" or "min")
+#' @param rub Constraints' upper bounds
+#' @param ctype Variable types
+#'
+#' @rdname loadLPprob-methods
+#' @aliases loadLPprob,LPproblem_glpk
 setMethod("loadLPprob", signature(lp = "LPproblem_glpk"),
 
           function(lp, nCols, nRows, mat, ub, lb, obj, rlb, rtype, lpdir,
@@ -137,24 +156,47 @@ setMethod("loadLPprob", signature(lp = "LPproblem_glpk"),
 
           }
 )
+
+#' @param lpdir Objective direction ("max" or "min")
+#'
+#' @rdname setObjDirection-methods
+#' @aliases setObjDirection,LPproblem_glpk
 #' @export
 setMethod("setObjDirection", signature(lp = "LPproblem_glpk"),
           function(lp, lpdir) {
             setObjDirLP(lp@ptr, lpdir)
           }
 )
+
+#' @param ncols Number of columns to add
+#'
+#' @rdname addCols-methods
+#' @aliases addCols,LPproblem_glpk
 #' @export
 setMethod("addCols", signature(lp = "LPproblem_glpk"),
           function(lp, ncols) {
             addColsLP(lp@ptr, as.integer(ncols))
           }
 )
+
+#' @param nrows Number of rows to add
+#'
+#' @rdname addRows-methods
+#' @aliases addRows,LPproblem_glpk
 #' @export
 setMethod("addRows", signature(lp = "LPproblem_glpk"),
           function(lp, nrows) {
             addRowsLP(lp@ptr, as.integer(nrows))
           }
 )
+
+#' @param ne Number of nonzero coefficients
+#' @param ia row indices of nonzero coefficients
+#' @param ja column indices of nonzero coefficients
+#' @param ra nonzero values of respective entries
+#'
+#' @rdname loadMatrix-methods
+#' @aliases loadMatrix,LPproblem_glpk
 #' @export
 setMethod("loadMatrix", signature(lp = "LPproblem_glpk"),
           function(lp, ne, ia, ja, ra) {
@@ -165,6 +207,15 @@ setMethod("loadMatrix", signature(lp = "LPproblem_glpk"),
                          as.numeric(ra))
           }
 )
+
+#' @param j Indices of variables to be updated
+#' @param lb New lower bound of variable
+#' @param ub New upper bound of variable
+#' @param obj_coef New object coefficient of variable
+#' @param type New type of column/variable
+#'
+#' @rdname setColsBndsObjCoefs-methods
+#' @aliases setColsBndsObjCoefs,LPproblem_glpk
 #' @export
 setMethod("setColsBndsObjCoefs", signature(lp = "LPproblem_glpk"),
           function(lp, j, lb, ub, obj_coef, type = NULL) {
@@ -185,6 +236,12 @@ setMethod("setColsBndsObjCoefs", signature(lp = "LPproblem_glpk"),
                                   as.numeric(obj_coef))
           }
 )
+
+#' @param j Indices of columns
+#' @param kind Type of respective columns
+#'
+#' @rdname setColsKind-methods
+#' @aliases setColsKind,LPproblem_glpk
 #' @export
 setMethod("setColsKind", signature(lp = "LPproblem_glpk"),
           function(lp, j, kind) {
@@ -194,6 +251,13 @@ setMethod("setColsKind", signature(lp = "LPproblem_glpk"),
           }
 )
 
+#' @param i Indices of rows/constraints
+#' @param lb Lower bounds of constraints
+#' @param ub Upper bound of constraints
+#' @param type Type of constraint bounds
+#'
+#' @rdname setRowsBnds-methods
+#' @aliases setRowsBnds,LPproblem_glpk
 #' @export
 setMethod("setRowsBnds", signature(lp = "LPproblem_glpk"),
           function(lp, i, lb, ub , type) {
@@ -223,6 +287,9 @@ setMethod("setRowsBnds", signature(lp = "LPproblem_glpk"),
 
           }
 )
+
+#' @rdname solveLp-methods
+#' @aliases solveLp,LPproblem_glpk
 #' @export
 setMethod("solveLp", signature(lp = "LPproblem_glpk"),
           function(lp) {
@@ -274,6 +341,9 @@ setMethod("solveLp", signature(lp = "LPproblem_glpk"),
                         term = term))
           }
 )
+
+#' @rdname getObjValue-methods
+#' @aliases getObjValue,LPproblem_glpk
 #' @export
 setMethod("getObjValue", signature(lp = "LPproblem_glpk"),
           function(lp) {
@@ -291,6 +361,9 @@ setMethod("getObjValue", signature(lp = "LPproblem_glpk"),
 
           }
 )
+
+#' @rdname getSolStat-methods
+#' @aliases getSolStat,LPproblem_glpk
 #' @export
 setMethod("getSolStat", signature(lp = "LPproblem_glpk"),
           function(lp) {
@@ -312,6 +385,9 @@ setMethod("getSolStat", signature(lp = "LPproblem_glpk"),
                         term = term))
           }
 )
+
+#' @rdname getColsPrimal-methods
+#' @aliases getColsPrimal,LPproblem_glpk
 #' @export
 setMethod("getColsPrimal", signature(lp = "LPproblem_glpk"),
           function(lp) {
@@ -321,6 +397,9 @@ setMethod("getColsPrimal", signature(lp = "LPproblem_glpk"),
             return(out)
           }
 )
+
+#' @rdname getRedCosts-methods
+#' @aliases getRedCosts,LPproblem_glpk
 #' @export
 setMethod("getRedCosts", signature(lp = "LPproblem_glpk"),
           function(lp) {
@@ -335,6 +414,14 @@ setMethod("getRedCosts", signature(lp = "LPproblem_glpk"),
             return(out)
           }
 )
+
+#' @param coeffs Linear coefficients for variables
+#' @param lb Lower bound of constraint
+#' @param ub Upper bound of constraint
+#' @param type Constraint type
+#'
+#' @rdname addSingleConstraint-methods
+#' @aliases addSingleConstraint,LPproblem_glpk
 #' @export
 setMethod("addSingleConstraint", signature(lp = "LPproblem_glpk"),
           function(lp, coeffs, lb, ub, type) {
@@ -362,6 +449,11 @@ setMethod("addSingleConstraint", signature(lp = "LPproblem_glpk"),
 
           }
 )
+
+#' @param ind Indices of variables to be tested in FVA
+#'
+#' @rdname fvaJob-methods
+#' @aliases fvaJob,LPproblem_glpk
 #' @export
 setMethod("fvaJob", signature(lp = "LPproblem_glpk"),
           function(lp, ind) {

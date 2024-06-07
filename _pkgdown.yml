@@ -88,6 +88,25 @@ reference:
       - readSybilmod
       - writeSBMLmod
 
+  -title: "Internal LP solver connectors"
+   contents:
+     - addCols
+     - addRows
+     - addSingleConstraint
+     - fvaJob
+     - getColsPrimal
+     - getObjValue
+     - getRedCosts
+     - getSolStat
+     - loadLPprob
+     - loadMatrix
+     - setColsBndsObjCoefs
+     - setColsKind
+     - setObjDirection
+     - setRowsBnds
+     - solveLp
+     - LPproblem-class
+
 articles:
 - title: Tutorials
   navbar: ~
