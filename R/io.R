@@ -12,9 +12,22 @@
 #' @import Matrix
 #' @export
 readSBMLmod <- function(file_path) {
+  is_compressed <- FALSE
+
+  file_path <- normalizePath(file_path)
+
+  if(grepl("\\.gz$",file_path)) {
+    is_compressed <- TRUE
+    fileconn <- gzfile(file_path)
+    tmpfile <- tempfile(fileext = ".xml")
+    writeLines(readLines(fileconn), tmpfile)
+    close(fileconn)
+    sbmldoc  <- readSBMLfile(tmpfile)
+  } else {
+    sbmldoc  <- readSBMLfile(file_path)
+  }
 
   # Pointers to SBML document and model (libSBML objects)
-  sbmldoc  <- readSBMLfile(normalizePath(file_path))
   modelPtr <- getModelObj(sbmldoc)
 
   #---------------#
@@ -77,6 +90,9 @@ readSBMLmod <- function(file_path) {
     paste(x, collapse = ";")
   })
   gpr_sbo <- getGeneProductSBOTerms(modelPtr)
+
+  if(is_compressed)
+    file.remove(tmpfile)
 
   return(
     new("ModelOrg",
@@ -143,6 +159,13 @@ sboterm2int <- function(sbo) {
 #'
 #' @export
 writeSBMLmod <- function(model, file_path = NULL) {
+
+  compress <- FALSE
+  if(grepl("\\.gz$",file_path)) {
+    compress <- TRUE
+    out_file <- file_path
+    file_path <- gsub("\\.gz$","", file_path)
+  }
 
   if(is.null(file_path))
     file_path <- paste0(model@mod_id, ".xml")
@@ -271,6 +294,16 @@ writeSBMLmod <- function(model, file_path = NULL) {
     # Objective
     obj_coef = model@obj_coef
   )
+
+  if(compress) {
+    input_conn <- file(file_path, "r")
+    output_conn <- gzfile(out_file, "w")
+    file_content <- readLines(input_conn)
+    writeLines(file_content, output_conn)
+    close(input_conn)
+    close(output_conn)
+    file.remove(file_path)
+  }
 
   return(out)
 }
