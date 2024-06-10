@@ -97,13 +97,193 @@
 <span><span class="co">#&gt; cobrar uses...</span></span>
 <span><span class="co">#&gt;  - libSBML (v. 5.19.0)</span></span>
 <span><span class="co">#&gt;  - glpk (v. 5.0)</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="performing-flux-balance-analysis-fba">Performing Flux Balance Analysis (FBA)<a class="anchor" aria-label="anchor" href="#performing-flux-balance-analysis-fba"></a>
+</h2>
+<p>The following (very brief) example illustrates how to use
+<code>cobrar</code> to perform flux balance analysis for a core
+metabolism model of <em>Escherichia coli</em>. In a first simulation,
+fluxes and growth are predicted for the default constraints of the
+model, which represents a minimal medium with glucose as the sole carbon
+source and the presence of oxygen. The second simulation performs the
+same flux balance analysis but without oxygen to simulate an anoxic
+growth environment.</p>
 <p>First, we load the wild type <em>E. coli</em> core metabolic
 model.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fpath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"e_coli_core.xml"</span>, package<span class="op">=</span><span class="st">"cobrar"</span><span class="op">)</span></span>
 <span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readSBMLmod.html">readSBMLmod</a></span><span class="op">(</span><span class="va">fpath</span><span class="op">)</span></span></code></pre></div>
-<p>TODO</p>
-  </main>
+<p>Next, FBA is performed to predict the model’s growth rate and
+reaction fluxes.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sol</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fba.html">fba</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span><span class="va">sol</span></span>
+<span><span class="co">#&gt; algorithm:              FBA </span></span>
+<span><span class="co">#&gt; generic status:         solution is optimal </span></span>
+<span><span class="co">#&gt; solver status message:  optimization process was successful </span></span>
+<span><span class="co">#&gt; Objective fct. value:   0.8739215 </span></span>
+<span><span class="co">#&gt; Secondary objective:    NA</span></span></code></pre></div>
+<p>We can also inspect the metabolite consumption and production by
+looking at the predicted fluxes for all exchange reactions.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/getExchanges.html">getExchanges</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">sol</span><span class="op">)</span></span>
+<span><span class="co">#&gt;             ID                    name          flux</span></span>
+<span><span class="co">#&gt; 1      EX_ac_e        Acetate exchange  0.000000e+00</span></span>
+<span><span class="co">#&gt; 2   EX_acald_e   Acetaldehyde exchange  0.000000e+00</span></span>
+<span><span class="co">#&gt; 3     EX_akg_e 2-Oxoglutarate exchange  0.000000e+00</span></span>
+<span><span class="co">#&gt; 4     EX_co2_e            CO2 exchange  2.280983e+01</span></span>
+<span><span class="co">#&gt; 5    EX_etoh_e        Ethanol exchange  0.000000e+00</span></span>
+<span><span class="co">#&gt; 6     EX_for_e        Formate exchange -6.804571e-13</span></span>
+<span><span class="co">#&gt; 7     EX_fru_e     D-Fructose exchange  0.000000e+00</span></span>
+<span><span class="co">#&gt; 8     EX_fum_e       Fumarate exchange  0.000000e+00</span></span>
+<span><span class="co">#&gt; 9  EX_glc__D_e      D-Glucose exchange -1.000000e+01</span></span>
+<span><span class="co">#&gt; 10 EX_gln__L_e    L-Glutamine exchange  0.000000e+00</span></span>
+<span><span class="co">#&gt; 11 EX_glu__L_e    L-Glutamate exchange  0.000000e+00</span></span>
+<span><span class="co">#&gt; 12      EX_h_e             H+ exchange  1.753087e+01</span></span>
+<span><span class="co">#&gt; 13    EX_h2o_e            H2O exchange  2.917583e+01</span></span>
+<span><span class="co">#&gt; 14 EX_lac__D_e      D-lactate exchange  0.000000e+00</span></span>
+<span><span class="co">#&gt; 15 EX_mal__L_e       L-Malate exchange  0.000000e+00</span></span>
+<span><span class="co">#&gt; 16    EX_nh4_e        Ammonia exchange -4.765319e+00</span></span>
+<span><span class="co">#&gt; 17     EX_o2_e             O2 exchange -2.179949e+01</span></span>
+<span><span class="co">#&gt; 18     EX_pi_e      Phosphate exchange -3.214895e+00</span></span>
+<span><span class="co">#&gt; 19    EX_pyr_e       Pyruvate exchange  0.000000e+00</span></span>
+<span><span class="co">#&gt; 20   EX_succ_e      Succinate exchange  0.000000e+00</span></span></code></pre></div>
+<p>This table indicates that the organism is growing aerobically,
+because oxygen is consumed (reaction “EX_o2_e” has a flux below 0).</p>
+<p>To simulate anaerobic growth, the lower bound of the exchange
+reaction “EX_o2_e” can be set to 0.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mod_anaero</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/changeBounds.html">changeBounds</a></span><span class="op">(</span><span class="va">mod</span>, react <span class="op">=</span> <span class="st">"EX_o2_e"</span>, lb <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<p>Now, the growth rate and reaction fluxes can be predicted for
+anaerobic growth.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sol_anaero</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fba.html">fba</a></span><span class="op">(</span><span class="va">mod_anaero</span><span class="op">)</span></span>
+<span><span class="va">sol_anaero</span></span>
+<span><span class="co">#&gt; algorithm:              FBA </span></span>
+<span><span class="co">#&gt; generic status:         solution is optimal </span></span>
+<span><span class="co">#&gt; solver status message:  optimization process was successful </span></span>
+<span><span class="co">#&gt; Objective fct. value:   0.2116629 </span></span>
+<span><span class="co">#&gt; Secondary objective:    NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/getExchanges.html">getExchanges</a></span><span class="op">(</span><span class="va">mod_anaero</span>, <span class="va">sol_anaero</span><span class="op">)</span></span>
+<span><span class="co">#&gt;             ID                    name        flux</span></span>
+<span><span class="co">#&gt; 1      EX_ac_e        Acetate exchange   8.5035853</span></span>
+<span><span class="co">#&gt; 2   EX_acald_e   Acetaldehyde exchange   0.0000000</span></span>
+<span><span class="co">#&gt; 3     EX_akg_e 2-Oxoglutarate exchange   0.0000000</span></span>
+<span><span class="co">#&gt; 4     EX_co2_e            CO2 exchange  -0.3781782</span></span>
+<span><span class="co">#&gt; 5    EX_etoh_e        Ethanol exchange   8.2794554</span></span>
+<span><span class="co">#&gt; 6     EX_for_e        Formate exchange  17.8046742</span></span>
+<span><span class="co">#&gt; 7     EX_fru_e     D-Fructose exchange   0.0000000</span></span>
+<span><span class="co">#&gt; 8     EX_fum_e       Fumarate exchange   0.0000000</span></span>
+<span><span class="co">#&gt; 9  EX_glc__D_e      D-Glucose exchange -10.0000000</span></span>
+<span><span class="co">#&gt; 10 EX_gln__L_e    L-Glutamine exchange   0.0000000</span></span>
+<span><span class="co">#&gt; 11 EX_glu__L_e    L-Glutamate exchange   0.0000000</span></span>
+<span><span class="co">#&gt; 12      EX_h_e             H+ exchange  30.5542183</span></span>
+<span><span class="co">#&gt; 13    EX_h2o_e            H2O exchange  -7.1157960</span></span>
+<span><span class="co">#&gt; 14 EX_lac__D_e      D-lactate exchange   0.0000000</span></span>
+<span><span class="co">#&gt; 15 EX_mal__L_e       L-Malate exchange   0.0000000</span></span>
+<span><span class="co">#&gt; 16    EX_nh4_e        Ammonia exchange  -1.1541557</span></span>
+<span><span class="co">#&gt; 17     EX_o2_e             O2 exchange   0.0000000</span></span>
+<span><span class="co">#&gt; 18     EX_pi_e      Phosphate exchange  -0.7786445</span></span>
+<span><span class="co">#&gt; 19    EX_pyr_e       Pyruvate exchange   0.0000000</span></span>
+<span><span class="co">#&gt; 20   EX_succ_e      Succinate exchange   0.0000000</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="editing-a-metabolic-network-model">Editing a metabolic network model<a class="anchor" aria-label="anchor" href="#editing-a-metabolic-network-model"></a>
+</h2>
+<p>This example adds the 4-aminobutyrate degradation pathway to the
+<em>E. coli</em> core metabolic model, which was already loaded above
+and is stored in the object named <code>mod</code>.</p>
+<p>First, the transporter reaction is added to the model, that can
+import 4-aminobutyrate (ID: <code>4abut</code>).</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/addReact.html">addReact</a></span><span class="op">(</span><span class="va">mod</span>, id <span class="op">=</span> <span class="st">"ABUTt"</span>, Scoef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,</span>
+<span>                met <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"4abut_e"</span>,<span class="st">"h_e"</span>,<span class="st">"4abut_c"</span>,<span class="st">"h_c"</span><span class="op">)</span>, reversible <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                lb <span class="op">=</span> <span class="op">-</span><span class="fl">1000</span>, ub <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>                reactName <span class="op">=</span> <span class="st">"4-aminobutyrate transport in via proton symport"</span>,</span>
+<span>                metName <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"4-aminobutyrate"</span>,<span class="cn">NA</span>, <span class="st">"4-aminobutyrate"</span>,<span class="cn">NA</span><span class="op">)</span>,</span>
+<span>                metComp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"e"</span>,<span class="st">"e"</span>,<span class="st">"c"</span>,<span class="st">"c"</span><span class="op">)</span>, metCharge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="cn">NA</span>,<span class="fl">0</span>,<span class="cn">NA</span><span class="op">)</span>,</span>
+<span>                metChemicalFormula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C4H9NO2"</span>,<span class="cn">NA</span>,<span class="st">"C4H9NO2"</span>,<span class="cn">NA</span><span class="op">)</span>,</span>
+<span>                SBOTerm <span class="op">=</span> <span class="st">"SBO:0000185"</span><span class="op">)</span></span></code></pre></div>
+<p>Next, we add the exchange reaction for 4-aminobutyrate.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/addReact.html">addReact</a></span><span class="op">(</span><span class="va">mod</span>, id <span class="op">=</span> <span class="st">"EX_4abut_e"</span>, Scoef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>, met <span class="op">=</span> <span class="st">"4abut_e"</span>,</span>
+<span>                lb <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, ub <span class="op">=</span> <span class="fl">1000</span>, reactName <span class="op">=</span> <span class="st">"4-aminobutyrate exchange"</span>,</span>
+<span>                SBOTerm <span class="op">=</span> <span class="st">"SBO:0000627"</span><span class="op">)</span></span></code></pre></div>
+<p>The lower bound of this exchange reaction is set to -1.5
+mmol/(gDW*hr) to simulate the availability of the metabolite.</p>
+<p>As a next step, the reaction 4-aminobutyrate amninotransferase (EC <a href="https://www.rhea-db.org/rhea/23352" class="external-link">2.6.1.19</a>) is added to the
+model, which transfers the amino group of 4-aminobutyrate to
+alpha-ketoglutarate (ID <code>akg_c</code>) and forms L-glutamate (ID
+<code>glu__L_c</code>) and succinic semialdehyde (ID
+<code>sucsal_c</code>).</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/addReact.html">addReact</a></span><span class="op">(</span><span class="va">mod</span>, id <span class="op">=</span> <span class="st">"ABTA"</span>, Scoef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,</span>
+<span>                met <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"4abut_c"</span>,<span class="st">"akg_c"</span>,<span class="st">"glu__L_c"</span>,<span class="st">"sucsal_c"</span><span class="op">)</span>,</span>
+<span>                lb <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>                reactName <span class="op">=</span> <span class="st">"4-aminobutyrate transaminase"</span>,</span>
+<span>                metName <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="st">"Succinic semialdehyde"</span><span class="op">)</span>,</span>
+<span>                metComp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="st">"c"</span><span class="op">)</span>, metCharge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="op">-</span><span class="fl">1</span><span class="op">)</span>,</span>
+<span>                metChemicalFormula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="st">"C4H5O3"</span><span class="op">)</span>,</span>
+<span>                subsystem <span class="op">=</span> <span class="st">"GABAdegr"</span>, subsystemName <span class="op">=</span> <span class="st">"4-aminobutyrate degradation"</span>,</span>
+<span>                CVTerms <span class="op">=</span> <span class="st">"bqbiol_is;http://identifiers.org/ec-code/2.6.1.19"</span>,</span>
+<span>                gprAssoc <span class="op">=</span> <span class="st">"b2662 | b1302"</span><span class="op">)</span></span></code></pre></div>
+<p>Finally, the reaction Succinate-semialdehyde dehydrogenase (EC
+1.2.1.24) is added, which oxidises succinic semialdehyde to form
+succinate (ID <code>succ_c</code>).</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/addReact.html">addReact</a></span><span class="op">(</span><span class="va">mod</span>, id <span class="op">=</span> <span class="st">"SSALx"</span>, Scoef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,</span>
+<span>                met <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"h2o_c"</span>,<span class="st">"nad_c"</span>,<span class="st">"sucsal_c"</span>,<span class="st">"h_c"</span>,<span class="st">"nadh_c"</span>,<span class="st">"succ_c"</span><span class="op">)</span>,</span>
+<span>                lb <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>                reactName <span class="op">=</span> <span class="st">"Succinate-semialdehyde dehydrogenase (NAD)"</span>,</span>
+<span>                subsystem <span class="op">=</span> <span class="st">"GABAdegr"</span>,</span>
+<span>                CVTerms <span class="op">=</span> <span class="st">"bqbiol_is;http://identifiers.org/ec-code/1.2.1.24"</span>,</span>
+<span>                gprAssoc <span class="op">=</span> <span class="st">"b1525"</span><span class="op">)</span></span></code></pre></div>
+<p>All new reaction can be printed as equations:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/printReaction.html">printReaction</a></span><span class="op">(</span><span class="va">mod</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"EX_4abut_e"</span>,<span class="st">"ABUTt"</span>,<span class="st">"ABTA"</span>,<span class="st">"SSALx"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "(1) 4-aminobutyrate &lt;==&gt; "                                                               </span></span>
+<span><span class="co">#&gt; [2] "(1) H+ + (1) 4-aminobutyrate &lt;==&gt; (1) H+ + (1) 4-aminobutyrate"                          </span></span>
+<span><span class="co">#&gt; [3] "(1) 2-Oxoglutarate + (1) 4-aminobutyrate --&gt; (1) L-Glutamate + (1) Succinic semialdehyde"</span></span>
+<span><span class="co">#&gt; [4] "(1) H2O + (1) NAD + (1) Succinic semialdehyde --&gt; (2) H+ + (1) NADH + (1) Succinate"</span></span></code></pre></div>
+<p>By performing an FBA on the updated model, we can see that the growth
+rate increased with the new pathway and that 4-aminobutyrate is indeed
+consumed by <em>E. coli</em>.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sol</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fba.html">fba</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span><span class="va">sol</span></span>
+<span><span class="co">#&gt; algorithm:              FBA </span></span>
+<span><span class="co">#&gt; generic status:         solution is optimal </span></span>
+<span><span class="co">#&gt; solver status message:  optimization process was successful </span></span>
+<span><span class="co">#&gt; Objective fct. value:   0.9674959 </span></span>
+<span><span class="co">#&gt; Secondary objective:    NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/getExchanges.html">getExchanges</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">sol</span><span class="op">)</span></span>
+<span><span class="co">#&gt;             ID                     name       flux</span></span>
+<span><span class="co">#&gt; 1      EX_ac_e         Acetate exchange   0.000000</span></span>
+<span><span class="co">#&gt; 2   EX_acald_e    Acetaldehyde exchange   0.000000</span></span>
+<span><span class="co">#&gt; 3     EX_akg_e  2-Oxoglutarate exchange   0.000000</span></span>
+<span><span class="co">#&gt; 4     EX_co2_e             CO2 exchange  24.827727</span></span>
+<span><span class="co">#&gt; 5    EX_etoh_e         Ethanol exchange   0.000000</span></span>
+<span><span class="co">#&gt; 6     EX_for_e         Formate exchange   0.000000</span></span>
+<span><span class="co">#&gt; 7     EX_fru_e      D-Fructose exchange   0.000000</span></span>
+<span><span class="co">#&gt; 8     EX_fum_e        Fumarate exchange   0.000000</span></span>
+<span><span class="co">#&gt; 9  EX_glc__D_e       D-Glucose exchange -10.000000</span></span>
+<span><span class="co">#&gt; 10 EX_gln__L_e     L-Glutamine exchange   0.000000</span></span>
+<span><span class="co">#&gt; 11 EX_glu__L_e     L-Glutamate exchange   0.000000</span></span>
+<span><span class="co">#&gt; 12      EX_h_e              H+ exchange  17.907968</span></span>
+<span><span class="co">#&gt; 13    EX_h2o_e             H2O exchange  30.375354</span></span>
+<span><span class="co">#&gt; 14 EX_lac__D_e       D-lactate exchange   0.000000</span></span>
+<span><span class="co">#&gt; 15 EX_mal__L_e        L-Malate exchange   0.000000</span></span>
+<span><span class="co">#&gt; 16    EX_nh4_e         Ammonia exchange  -3.775562</span></span>
+<span><span class="co">#&gt; 17     EX_o2_e              O2 exchange -24.459205</span></span>
+<span><span class="co">#&gt; 18     EX_pi_e       Phosphate exchange  -3.559127</span></span>
+<span><span class="co">#&gt; 19    EX_pyr_e        Pyruvate exchange   0.000000</span></span>
+<span><span class="co">#&gt; 20   EX_succ_e       Succinate exchange   0.000000</span></span>
+<span><span class="co">#&gt; 21  EX_4abut_e 4-aminobutyrate exchange  -1.500000</span></span></code></pre></div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
