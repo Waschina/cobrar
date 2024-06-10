@@ -61,6 +61,8 @@ NULL
 #' @param value Choose a value to over-write the current parameter.
 #' @param ... TBD.
 #'
+#' @importFrom methods existsMethod
+#'
 #' @export
 COBRAR_SETTINGS <- function(parm, value, ...) {
 
@@ -86,8 +88,6 @@ COBRAR_SETTINGS <- function(parm, value, ...) {
          },
 
          "SOLVER" = {
-           if(value != "glpk")
-             warning("Currently, only glpk is supported as solver.")
            .COBRARenv$settings[["SOLVER"]] <- as.character(value)
          },
 
