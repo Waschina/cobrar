@@ -82,46 +82,25 @@ TODO
 The full documentation including illustrative examples is available
 [here](https://waschina.github.io/cobrar/).
 
-The following (very brief) example illustrates how to use `cobrar` to
-perform flux balance analysis for a core metabolism model of
-*Escherichia coli*. In a first simulation, fluxes and growth are
-predicted for the default constraints of the model, which represents a
-minimal medium with glucose as the sole carbon source and the presence
-of oxygen. The second simulation performs the same flux balance analysis
-but without oxygen to simulate an anoxic growth environment.
+A simple Flux Balance Analysis (FBA) for the core metabolism of
+*Escherichia coli*:
 
 ``` r
-# First, load the cobrar package and the metabolic model:
 library(cobrar)
 #> Loading required package: Matrix
 #> cobrar uses...
-#>  - libSBML (v. 5.18.0)
-#>  - glpk (v. 4.65)
+#>  - libSBML (v. 5.19.0)
+#>  - glpk (v. 5.0)
+
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)
 
-# Next, perform simulation 1: Aerobic growth of E. coli
-res_aero <- fba(mod)
-
-# Finally, simulation 2: Anaerobic growth of E. coli
-mod <- changeBounds(mod, react = "EX_o2_e", lb = 0) # before: -1000
-res_anaero <- fba(mod)
-
-# Report simulation results (i.e., growth and acetate production)
-cat("[Aerobic growth]\n",
-    " Growth rate:        ", res_aero@obj,"\n",
-    " Acetate production: ", res_aero@fluxes[mod@react_id == "EX_ac_e"],"\n\n",
-    "[Anaerobic growth]\n",
-    " Growth rate:        ", res_anaero@obj,"\n",
-    " Acetate prodcution: ", res_anaero@fluxes[mod@react_id == "EX_ac_e"],"\n",
-    sep = "")
-#> [Aerobic growth]
-#>  Growth rate:        0.8739215
-#>  Acetate production: 0
-#> 
-#> [Anaerobic growth]
-#>  Growth rate:        0.2116629
-#>  Acetate prodcution: 8.503585
+fba(mod)
+#> algorithm:              FBA 
+#> generic status:         solution is optimal 
+#> solver status message:  optimization process was successful 
+#> Objective fct. value:   0.8739215 
+#> Secondary objective:    NA
 ```
 
 ## Key differences to sybil
@@ -163,8 +142,9 @@ cat("[Aerobic growth]\n",
 - *cobrar* exports SBML files level 3 version 2 with `fbc` version 3 and
   `groups` version 1.
 - Group assignments are only supported for reactions.
-- currently only glpk is supported as solver. A plugin for IBM’s ILOG
-  CPLEX is planned.
+- GLPK is the default solver and is required to build the package. A
+  plugin for IBM’s ILOG CPLEX is available
+  [here](https://github.com/Waschina/cobrarCPLEX).
 - *Multiple objectives*. The SBML standard with its `fbc` extension
   allows to specify more than one objective (class `ListOfObjectives`).
   However, *cobrar* can only handle one current objective function per
