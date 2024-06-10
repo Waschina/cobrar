@@ -20,6 +20,9 @@ knitr::opts_chunk$set(
 library(cobrar)
 ```
 
+## Performing Flux Balance Analysis (FBA)
+
+The following (very brief) example illustrates how to use `cobrar` to perform flux balance analysis for a core metabolism model of *Escherichia coli*. In a first simulation, fluxes and growth are predicted for the default constraints of the model, which represents a minimal medium with glucose as the sole carbon source and the presence of oxygen. The second simulation performs the same flux balance analysis but without oxygen to simulate an anoxic growth environment.
 
 First, we load the wild type *E. coli* core metabolic model.
 
@@ -28,4 +31,98 @@ fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)
 ```
 
-TODO
+Next, FBA is performed to predict the model's growth rate and reaction fluxes.
+
+```{r}
+sol <- fba(mod)
+sol
+```
+
+We can also inspect the metabolite consumption and production by looking at the predicted fluxes for all exchange reactions.
+
+```{r}
+getExchanges(mod, sol)
+```
+
+This table indicates that the organism is growing aerobically, because oxygen is consumed (reaction "EX_o2_e" has a flux below 0).
+
+To simulate anaerobic growth, the lower bound of the exchange reaction "EX_o2_e" can be set to 0.
+
+```{r}
+mod_anaero <- changeBounds(mod, react = "EX_o2_e", lb = 0)
+```
+
+Now, the growth rate and reaction fluxes can be predicted for anaerobic growth.
+
+```{r}
+sol_anaero <- fba(mod_anaero)
+sol_anaero
+getExchanges(mod_anaero, sol_anaero)
+```
+
+## Editing a metabolic network model
+
+This example adds the 4-aminobutyrate degradation pathway to the *E. coli* core metabolic model, which was already loaded above and is stored in the object named `mod`.
+
+First, the transporter reaction is added to the model, that can import 4-aminobutyrate (ID: `4abut`).
+
+```{r}
+mod <- addReact(mod, id = "ABUTt", Scoef = c(-1,-1,1,1),
+                met = c("4abut_e","h_e","4abut_c","h_c"), reversible = TRUE,
+                lb = -1000, ub = 1000,
+                reactName = "4-aminobutyrate transport in via proton symport",
+                metName = c("4-aminobutyrate",NA, "4-aminobutyrate",NA),
+                metComp = c("e","e","c","c"), metCharge = c(0,NA,0,NA),
+                metChemicalFormula = c("C4H9NO2",NA,"C4H9NO2",NA),
+                SBOTerm = "SBO:0000185")
+```
+
+Next, we add the exchange reaction for 4-aminobutyrate.
+
+```{r}
+mod <- addReact(mod, id = "EX_4abut_e", Scoef = c(-1), met = "4abut_e",
+                lb = -1.5, ub = 1000, reactName = "4-aminobutyrate exchange",
+                SBOTerm = "SBO:0000627")
+```
+
+The lower bound of this exchange reaction is set to -1.5 mmol/(gDW*hr) to simulate the availability of the metabolite.
+
+As a next step, the reaction 4-aminobutyrate amninotransferase (EC [2.6.1.19](https://www.rhea-db.org/rhea/23352)) is added to the model, which transfers the amino group of 4-aminobutyrate to alpha-ketoglutarate (ID `akg_c`) and forms L-glutamate (ID `glu__L_c`) and succinic semialdehyde (ID `sucsal_c`).
+
+```{r}
+mod <- addReact(mod, id = "ABTA", Scoef = c(-1,-1,1,1),
+                met = c("4abut_c","akg_c","glu__L_c","sucsal_c"),
+                lb = 0,
+                reactName = "4-aminobutyrate transaminase",
+                metName = c(NA,NA,NA,"Succinic semialdehyde"),
+                metComp = c(NA,NA,NA,"c"), metCharge = c(NA,NA,NA,-1),
+                metChemicalFormula = c(NA,NA,NA,"C4H5O3"),
+                subsystem = "GABAdegr", subsystemName = "4-aminobutyrate degradation",
+                CVTerms = "bqbiol_is;http://identifiers.org/ec-code/2.6.1.19",
+                gprAssoc = "b2662 | b1302")
+```
+
+Finally, the reaction Succinate-semialdehyde dehydrogenase (EC 1.2.1.24) is added, which oxidises succinic semialdehyde to form succinate (ID `succ_c`).
+
+```{r}
+mod <- addReact(mod, id = "SSALx", Scoef = c(-1,-1,-1,2,1,1),
+                met = c("h2o_c","nad_c","sucsal_c","h_c","nadh_c","succ_c"),
+                lb = 0,
+                reactName = "Succinate-semialdehyde dehydrogenase (NAD)",
+                subsystem = "GABAdegr",
+                CVTerms = "bqbiol_is;http://identifiers.org/ec-code/1.2.1.24",
+                gprAssoc = "b1525")
+```
+
+All new reaction can be printed as equations:
+```{r}
+printReaction(mod, c("EX_4abut_e","ABUTt","ABTA","SSALx"))
+```
+
+By performing an FBA on the updated model, we can see that the growth rate increased with the new pathway and that 4-aminobutyrate is indeed consumed by *E. coli*.
+
+```{r}
+sol <- fba(mod)
+sol
+getExchanges(mod, sol)
+```
