@@ -194,9 +194,6 @@ writeSBMLmod <- function(model, file_path = NULL) {
     model@genes_attr$CVTerms <- ifelse(is.na(model@genes_attr$CVTerms),
                                        "",model@genes_attr$CVTerms)
 
-  if(is.na(model@mod_desc))
-    model@mod_desc <- ""
-
   # Stoichiometry lists
   lReaMets <- apply(model@S, 2, FUN = function(x) model@met_id[which(abs(x)>0)])
   lReaStoich <- apply(model@S, 2, FUN = function(x) x[which(abs(x)>0)])
@@ -239,7 +236,7 @@ writeSBMLmod <- function(model, file_path = NULL) {
     gpr <- gsub("\\&", "and", gpr)
     gpr <- gsub("\\|", "or", gpr)
   }
-  print(gpr)
+  #print(gpr)
 
   # Let's export
   out <- writeSBML(
