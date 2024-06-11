@@ -161,7 +161,7 @@ sboterm2int <- function(sbo) {
 writeSBMLmod <- function(model, file_path = NULL) {
 
   compress <- FALSE
-  if(grepl("\\.gz$",file_path)) {
+  if(!is.null(file_path) && grepl("\\.gz$",file_path)) {
     compress <- TRUE
     out_file <- file_path
     file_path <- gsub("\\.gz$","", file_path)
@@ -194,6 +194,9 @@ writeSBMLmod <- function(model, file_path = NULL) {
     model@genes_attr$CVTerms <- ifelse(is.na(model@genes_attr$CVTerms),
                                        "",model@genes_attr$CVTerms)
 
+  if(is.na(model@mod_desc))
+    model@mod_desc <- ""
+
   # Stoichiometry lists
   lReaMets <- apply(model@S, 2, FUN = function(x) model@met_id[which(abs(x)>0)])
   lReaStoich <- apply(model@S, 2, FUN = function(x) x[which(abs(x)>0)])
@@ -217,7 +220,7 @@ writeSBMLmod <- function(model, file_path = NULL) {
   bndgrp_para <- bndgrp_para[order(bndgrp_para$bnd),]
 
   # gpr string for libSBML
-  gpr <- c()
+  gpr <- character(0L)
   if(react_num(model)>0) {
     for(i in 1:length(model@react_id)) {
       x <- model@gprRules[[i]]
@@ -236,7 +239,7 @@ writeSBMLmod <- function(model, file_path = NULL) {
     gpr <- gsub("\\&", "and", gpr)
     gpr <- gsub("\\|", "or", gpr)
   }
-  #print(gpr)
+  print(gpr)
 
   # Let's export
   out <- writeSBML(
