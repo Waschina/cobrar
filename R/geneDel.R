@@ -31,7 +31,7 @@ geneDel <- function(model, gene) {
       return(TRUE)
     x <- gpr_i$genes
     # return(x)
-    x <- !(x %in% KOgenes)
+    x <- !(x %in% KOgenes | is.na(x))
     return(eval(parse(text=gpr_i$gpr)))
   }))
 

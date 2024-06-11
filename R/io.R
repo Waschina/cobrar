@@ -222,6 +222,7 @@ writeSBMLmod <- function(model, file_path = NULL) {
     for(i in 1:length(model@react_id)) {
       x <- model@gprRules[[i]]
       y <- model@genes[[i]]
+      y <- ifelse(y == "G_NA","false",y)
 
       if(length(y) == 0) {
         gpr <- append(gpr, "")

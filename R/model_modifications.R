@@ -143,8 +143,15 @@ rmGene <- function(model, gene, rm_react = TRUE, rm_met = TRUE) {
                         function(x) ifelse(x %in% gene_ids, NA_character_,x))
 
   # rm reaction (and metabolites)
-  if(rm_react)
+  if(rm_react) {
     model <- rmReact(model, rmReactions, rm_met)
+  } else {
+    rmReaIds <- react_pos(model, rmReactions)
+    if(length(rmReaIds) > 0) {
+      model@gprRules[rmReaIds] <- rep("",length(rmReaIds))
+      model@genes[rmReaIds] <- rep(list(character(0L)), length(rmReaIds))
+    }
+  }
 
   return(model)
 }
