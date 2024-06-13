@@ -1213,7 +1213,7 @@ bool writeSBML(
   }
 
   /*
-   * Obective
+   * Objective
    */
   Objective* obj = mplugin->createObjective();
   for(unsigned int i = 0; i<nr; i++) {
@@ -1223,6 +1223,9 @@ bool writeSBML(
       fobj->setCoefficient(obj_coef[i]);
     }
   }
+  obj->setId("obj");
+  obj->setType("maximize");
+  mplugin->setActiveObjectiveId("obj");
 
   /*
    * Subsystems (or Pathways)
