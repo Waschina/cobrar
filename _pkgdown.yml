@@ -12,16 +12,11 @@ navbar:
       href: reference/index.html
 
 reference:
-  - title: "Setup"
+  - title: "Model import and export helpers"
     contents:
-      - COBRAR_SETTINGS
-
-  - title: "Object classes"
-    contents:
-      - Constraints-class
-      - FluxPrediction-class
-      - ModelOrg-class
-      - ModelComm-class
+      - readSBMLmod
+      - readSybilmod
+      - writeSBMLmod
 
   - title: "Model manipulation tools"
     contents:
@@ -32,6 +27,7 @@ reference:
       - addReact
       - addSubsystem
       - changeBounds
+      - setObjDir
       - rmCompartment
       - rmConstraint
       - rmGene
@@ -82,11 +78,16 @@ reference:
       - fixBMRatios
       - fluxBMCoupling
 
-  - title: "Model import and export helpers"
+  - title: "Object classes"
     contents:
-      - readSBMLmod
-      - readSybilmod
-      - writeSBMLmod
+      - Constraints-class
+      - FluxPrediction-class
+      - ModelOrg-class
+      - ModelComm-class
+
+  - title: "Setup"
+    contents:
+      - COBRAR_SETTINGS
 
   - title: "Internal LP solver connectors"
     contents:
