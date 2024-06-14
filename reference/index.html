@@ -52,7 +52,7 @@
     </div>
 
     <div class="section level2">
-      <h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a></h2>
+      <h2 id="model-import-and-export-helpers">Model import and export helpers<a class="anchor" aria-label="anchor" href="#model-import-and-export-helpers"></a></h2>
       
       
 
@@ -64,40 +64,19 @@
 
       <dl><dt>
           
-          <code><a href="COBRAR_SETTINGS.html">COBRAR_SETTINGS()</a></code> 
+          <code><a href="readSBMLmod.html">readSBMLmod()</a></code> 
         </dt>
-        <dd>Set and get central cobrar parameters</dd>
-      </dl></div><div class="section level2">
-      <h2 id="object-classes">Object classes<a class="anchor" aria-label="anchor" href="#object-classes"></a></h2>
-      
-      
-
-      
-    </div><div id="" class="section level2">
-      
-      
-      
-
-      <dl><dt>
-          
-          <code><a href="Constraints-class.html">Constraints-class</a></code> <code><a href="Constraints-class.html">Constraints</a></code> 
-        </dt>
-        <dd>Structure of Constraints Class</dd>
+        <dd>Reads an SBML file and constructs an object of class 'ModelOrg'</dd>
       </dl><dl><dt>
           
-          <code><a href="FluxPrediction-class.html">FluxPrediction-class</a></code> <code><a href="FluxPrediction-class.html">FluxPrediction</a></code> 
+          <code><a href="readSybilmod.html">readSybilmod()</a></code> 
         </dt>
-        <dd>Structure of FluxPrediction Class</dd>
+        <dd>Reads a sybil model file and constructs an object of cobrar's class 'ModelOrg'</dd>
       </dl><dl><dt>
           
-          <code><a href="ModelOrg-class.html">ModelOrg-class</a></code> <code><a href="ModelOrg-class.html">ModelOrg</a></code> 
+          <code><a href="writeSBMLmod.html">writeSBMLmod()</a></code> 
         </dt>
-        <dd>Structure of ModelOrg Class</dd>
-      </dl><dl><dt>
-          
-          <code><a href="ModelComm-class.html">ModelComm-class</a></code> <code><a href="ModelComm-class.html">ModelComm</a></code> 
-        </dt>
-        <dd>Structure of ModelComm Class</dd>
+        <dd>Exports a Metabolic Network in SBML Format</dd>
       </dl></div><div class="section level2">
       <h2 id="model-manipulation-tools">Model manipulation tools<a class="anchor" aria-label="anchor" href="#model-manipulation-tools"></a></h2>
       
@@ -144,6 +123,11 @@
           <code><a href="changeBounds.html">changeBounds()</a></code> 
         </dt>
         <dd>Change flux bounds</dd>
+      </dl><dl><dt>
+          
+          <code><a href="setObjDir.html">setObjDir()</a></code> 
+        </dt>
+        <dd>Set objective direction</dd>
       </dl><dl><dt>
           
           <code><a href="rmCompartment.html">rmCompartment()</a></code> 
@@ -374,7 +358,7 @@
         </dt>
         <dd>Couple reaction flux bounds to biomass production</dd>
       </dl></div><div class="section level2">
-      <h2 id="model-import-and-export-helpers">Model import and export helpers<a class="anchor" aria-label="anchor" href="#model-import-and-export-helpers"></a></h2>
+      <h2 id="object-classes">Object classes<a class="anchor" aria-label="anchor" href="#object-classes"></a></h2>
       
       
 
@@ -386,19 +370,40 @@
 
       <dl><dt>
           
-          <code><a href="readSBMLmod.html">readSBMLmod()</a></code> 
+          <code><a href="Constraints-class.html">Constraints-class</a></code> <code><a href="Constraints-class.html">Constraints</a></code> 
         </dt>
-        <dd>Reads an SBML file and constructs an object of class 'ModelOrg'</dd>
+        <dd>Structure of Constraints Class</dd>
       </dl><dl><dt>
           
-          <code><a href="readSybilmod.html">readSybilmod()</a></code> 
+          <code><a href="FluxPrediction-class.html">FluxPrediction-class</a></code> <code><a href="FluxPrediction-class.html">FluxPrediction</a></code> 
         </dt>
-        <dd>Reads a sybil model file and constructs an object of cobrar's class 'ModelOrg'</dd>
+        <dd>Structure of FluxPrediction Class</dd>
       </dl><dl><dt>
           
-          <code><a href="writeSBMLmod.html">writeSBMLmod()</a></code> 
+          <code><a href="ModelOrg-class.html">ModelOrg-class</a></code> <code><a href="ModelOrg-class.html">ModelOrg</a></code> 
         </dt>
-        <dd>Exports a Metabolic Network in SBML Format</dd>
+        <dd>Structure of ModelOrg Class</dd>
+      </dl><dl><dt>
+          
+          <code><a href="ModelComm-class.html">ModelComm-class</a></code> <code><a href="ModelComm-class.html">ModelComm</a></code> 
+        </dt>
+        <dd>Structure of ModelComm Class</dd>
+      </dl></div><div class="section level2">
+      <h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="COBRAR_SETTINGS.html">COBRAR_SETTINGS()</a></code> 
+        </dt>
+        <dd>Set and get central cobrar parameters</dd>
       </dl></div><div class="section level2">
       <h2 id="internal-lp-solver-connectors">Internal LP solver connectors<a class="anchor" aria-label="anchor" href="#internal-lp-solver-connectors"></a></h2>
       
