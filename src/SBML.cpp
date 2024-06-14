@@ -238,7 +238,11 @@ Rcpp::NumericVector getObjectiveFunction(SEXP model_ptr) {
   ListOfReactions* reaList = model->getListOfReactions();
 
   if(objList->getNumObjectives() > 0) {
-    Objective* objFunc = objList->get(0); // only first objective is retrieved
+    Objective* objFunc;
+    objFunc = mplugin->getActiveObjective();
+    if (objFunc == nullptr) {
+      objFunc = objList->get(0); // only first objective is retrieved if no active objective is defined
+    }
     ListOfFluxObjectives* objFluxes = objFunc->getListOfFluxObjectives();
     for(unsigned int i = 0; i < objFluxes->getNumFluxObjectives(); i++) {
       FluxObjective* flxObj = objFluxes->get(i);

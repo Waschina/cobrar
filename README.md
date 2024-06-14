@@ -89,8 +89,11 @@ A simple Flux Balance Analysis (FBA) for the core metabolism of
 library(cobrar)
 #> Loading required package: Matrix
 #> cobrar uses...
-#>  - libSBML (v. 5.19.0)
-#>  - glpk (v. 5.0)
+#>  - libSBML (v. 5.18.0)
+#>  - glpk (v. 4.65)
+```
+
+``` r
 
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)
@@ -143,15 +146,16 @@ fba(mod)
   `groups` version 1.
 - Group assignments are only supported for reactions.
 - GLPK is the default solver and is required to build the package. A
-  plugin for IBM’s ILOG CPLEX is available
-  [here](https://github.com/Waschina/cobrarCPLEX).
+  plugin for IBM’s ILOG CPLEX is available [here
+  (cobrarCPLEX)](https://github.com/Waschina/cobrarCPLEX).
 - *Multiple objectives*. The SBML standard with its `fbc` extension
   allows to specify more than one objective (class `ListOfObjectives`).
   However, *cobrar* can only handle one current objective function per
   model, which is defined as an objective coefficient vector in slot
   `obj_coef` of an object of class `modelorg`. Note that when reading
-  SBML models, *cobrar* will only use the first objective defined in the
-  SBML document.
+  SBML models, *cobrar* will only use the objective, which is defined as
+  `activeObjective` in the SBML file, or the first objective if no
+  active objective is defined.
 
 ## References
 
