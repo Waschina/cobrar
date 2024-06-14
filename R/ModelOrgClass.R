@@ -13,6 +13,7 @@
 #' additional information about the model.
 #' @slot S A sparse numeric matrix of \link[Matrix]{dgCMatrix-class} representing the Stoichiometric matrix.
 #' @slot obj_coef A numeric vector containing coefficients for the objective function.
+#' @slot obj_dir Character specifying the objective direction. Either "maximize" or "minimize".
 #' @slot subSys A sparse Boolean matrix of \link[Matrix]{lgCMatrix-class} defining subsystems.
 #' @slot subSys_id A character vector representing subsystem identifiers.
 #' @slot subSys_name A character vector containing the subsystem names.
@@ -61,6 +62,7 @@ setClass("ModelOrg",
            mod_notes = "character",
            S = "dgCMatrix",
            obj_coef = "numeric",
+           obj_dir = "character",
            subSys = "lgCMatrix",
            subSys_id = "character",
            subSys_name = "character",
@@ -100,6 +102,7 @@ setClass("ModelOrg",
                      "generalMatrix"),
                   "CsparseMatrix"),
            obj_coef = numeric(0L),
+           obj_dir = "maximize",
            subSys = as(as(as(Matrix(nrow = 0, ncol = 0, sparse = TRUE),
                              "lMatrix"),
                           "generalMatrix"),
@@ -536,6 +539,7 @@ setMethod("show", signature(object = "ModelOrg"),
             cat("number of subsystems:      ", subsys_num(object), "\n")
             cat("\n")
             cat("objective function:        ", printObjFunc(object), "\n")
+            cat("objective direction:       ", object@obj_dir, "\n")
           }
 )
 

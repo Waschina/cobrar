@@ -209,7 +209,7 @@ getGPRs <- function(model_ptr) {
     .Call(`_cobrar_getGPRs`, model_ptr)
 }
 
-writeSBML <- function(file_path, mod_id, mod_name, mod_desc, mod_cvterms, mod_notes, mod_sbo, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, met_sbo, subsys, subsys_id, subsys_name, gene_id, gene_name, gene_cvterms, gene_sbo, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev, react_cvterms, react_sbo, gpr, obj_coef) {
-    .Call(`_cobrar_writeSBML`, file_path, mod_id, mod_name, mod_desc, mod_cvterms, mod_notes, mod_sbo, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, met_sbo, subsys, subsys_id, subsys_name, gene_id, gene_name, gene_cvterms, gene_sbo, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev, react_cvterms, react_sbo, gpr, obj_coef)
+writeSBML <- function(file_path, mod_id, mod_name, mod_desc, mod_cvterms, mod_notes, mod_sbo, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, met_sbo, subsys, subsys_id, subsys_name, gene_id, gene_name, gene_cvterms, gene_sbo, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev, react_cvterms, react_sbo, gpr, obj_coef, obj_dir) {
+    .Call(`_cobrar_writeSBML`, file_path, mod_id, mod_name, mod_desc, mod_cvterms, mod_notes, mod_sbo, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, met_sbo, subsys, subsys_id, subsys_name, gene_id, gene_name, gene_cvterms, gene_sbo, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev, react_cvterms, react_sbo, gpr, obj_coef, obj_dir)
 }
 

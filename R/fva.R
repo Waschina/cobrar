@@ -51,7 +51,7 @@ fva <- function(model, react = NULL, opt.factor = 1) {
                        model@constraints@lb),
              rtype = c(rep("E", met_num(model)),
                        model@constraints@rtype),
-             lpdir = COBRAR_SETTINGS("OPT_DIRECTION"),
+             lpdir = substr(model@obj_dir,1,3),
              rub   = c(rep(NA, met_num(model)),
                        model@constraints@ub),
              ctype = NULL

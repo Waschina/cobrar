@@ -46,7 +46,7 @@ readSBMLmod <- function(file_path) {
                                   mod_compartments$name)
   mod_cvterms <- paste(getModelCVTerms(modelPtr), collapse = ";")
   mod_notes <- getModelNotes(modelPtr)
-  obj_coeff <- getObjectiveFunction(modelPtr)
+  obj <- getObjectiveFunction(modelPtr)
   constraints <- new("Constraints",
                      coeff = as(Matrix(nrow = 0, ncol = ncol(S), sparse = TRUE),
                                 "dMatrix"),
@@ -104,7 +104,9 @@ readSBMLmod <- function(file_path) {
         mod_attr = data.frame(CVTerms = mod_cvterms, SBOTerm = mod_sbo),
         mod_notes = mod_notes,
         S = S,
-        obj_coef = obj_coeff,
+        obj_coef = obj$coeff,
+        obj_dir = ifelse(!(obj$dir %in% c("minimize","maximize")),
+                         "maximize", obj$dir),
         subSys = as(subSys$subSys, "lMatrix"),
         subSys_id = subSys$subSys_ids,
         subSys_name = subSys$subSys_names,
@@ -169,6 +171,8 @@ writeSBMLmod <- function(model, file_path = NULL) {
 
   if(is.null(file_path))
     file_path <- paste0(model@mod_id, ".xml")
+
+  file_path <- path.expand(file_path)
 
   # small corrections before export
   if(!all(grepl("^R_",model@react_id)))
@@ -293,7 +297,8 @@ writeSBMLmod <- function(model, file_path = NULL) {
     gpr = gpr,
 
     # Objective
-    obj_coef = model@obj_coef
+    obj_coef = model@obj_coef,
+    obj_dir = model@obj_dir
   )
 
   if(compress) {
@@ -348,6 +353,7 @@ readSybilmod <- function(file_path) {
                                   "</p>\n  </html>\n</notes>"),
                S = sybildoc@S,
                obj_coef = sybildoc@obj_coef,
+               obj_dir = "maximize",
                subSys = sybildoc@subSys,
                subSys_id = colnames(sybildoc@subSys),
                subSys_name = colnames(sybildoc@subSys),

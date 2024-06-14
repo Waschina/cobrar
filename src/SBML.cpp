@@ -222,7 +222,7 @@ Rcpp::String getModelNotes(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::NumericVector getObjectiveFunction(SEXP model_ptr) {
+Rcpp::List getObjectiveFunction(SEXP model_ptr) {
   // Get the Model object
   Model* model = Rcpp::XPtr<Model>(model_ptr);
 
@@ -237,12 +237,15 @@ Rcpp::NumericVector getObjectiveFunction(SEXP model_ptr) {
   ListOfObjectives* objList = mplugin->getListOfObjectives();
   ListOfReactions* reaList = model->getListOfReactions();
 
+  std::string objdir;
+
   if(objList->getNumObjectives() > 0) {
     Objective* objFunc;
     objFunc = mplugin->getActiveObjective();
     if (objFunc == nullptr) {
       objFunc = objList->get(0); // only first objective is retrieved if no active objective is defined
     }
+    objdir = objFunc->getType();
     ListOfFluxObjectives* objFluxes = objFunc->getListOfFluxObjectives();
     for(unsigned int i = 0; i < objFluxes->getNumFluxObjectives(); i++) {
       FluxObjective* flxObj = objFluxes->get(i);
@@ -264,7 +267,10 @@ Rcpp::NumericVector getObjectiveFunction(SEXP model_ptr) {
     }
   }
 
-  return(objCoeff);
+  Rcpp::List objOut;
+  objOut["coeff"] = Rcpp::NumericVector(objCoeff);
+  objOut["dir"] = objdir;
+  return(objOut);
 }
 
 // [[Rcpp::export]]
@@ -927,7 +933,8 @@ bool writeSBML(
     IntegerVector react_sbo,
     StringVector gpr,
 
-    NumericVector obj_coef) {
+    NumericVector obj_coef,
+    String obj_dir) {
 
   bool out = false;
 
@@ -1228,7 +1235,7 @@ bool writeSBML(
     }
   }
   obj->setId("obj");
-  obj->setType("maximize");
+  obj->setType(obj_dir);
   mplugin->setActiveObjectiveId("obj");
 
   /*

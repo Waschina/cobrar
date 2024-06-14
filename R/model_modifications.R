@@ -951,7 +951,7 @@ addSubsystem <- function(model, id, name = NA) {
 #' @param subsystem A character vector stating the subsystem IDs in a model or a
 #' numeric vector providing the subsystem indices.
 #'
-#' @returns An updated model  of class \link{ModelOrg}
+#' @returns An updated model of class \link{ModelOrg}
 #'
 #' @export
 rmSubsystem <- function(model, subsystem) {
@@ -968,6 +968,25 @@ rmSubsystem <- function(model, subsystem) {
   model@subSys      <- model@subSys[,-subsystem]
   model@subSys_id   <- model@subSys_id[-subsystem]
   model@subSys_name <- model@subSys_name[-subsystem]
+
+  return(model)
+}
+
+#' Set objective direction
+#'
+#' Set the objective direction to either maximize or minimize
+#'
+#' @param model Model of class \link{ModelOrg}
+#' @param dir Character. Either "maximize" or "minimize".
+#'
+#' @returns An updated model of class \link{ModelOrg}
+#'
+#' @export
+setObjDir <- function(model, dir) {
+  if(!(dir %in% c("maximize","minimize")))
+    stop("'dir' must be either\"maximize\" or \"minimize\"")
+
+  model@obj_dir <- dir
 
   return(model)
 }

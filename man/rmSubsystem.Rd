@@ -13,7 +13,7 @@ rmSubsystem(model, subsystem)
 numeric vector providing the subsystem indices.}
 }
 \value{
-An updated model  of class \link{ModelOrg}
+An updated model of class \link{ModelOrg}
 }
 \description{
 This function removes specified subsystems from a model.

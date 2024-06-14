@@ -90,9 +90,9 @@ pfbaHeuristic <- function(model, costcoeffw = NULL, costcoefbw = NULL,
   newUB <- c(aUB,bUB)
 
   # define new objective function (combined original objevtive with factorized mtf)
-  if(COBRAR_SETTINGS("OPT_DIRECTION") == "max")
+  if(model@obj_dir == "maximize")
     newObj <- c(model@obj_coef, -model@obj_coef) - pFBAcoeff * c(fw, bw)
-  if(COBRAR_SETTINGS("OPT_DIRECTION") == "min")
+  if(model@obj_dir == "min")
     newObj <- c(model@obj_coef, -model@obj_coef) + pFBAcoeff * c(fw, bw)
 
   # new user constraint matrix
@@ -112,7 +112,7 @@ pfbaHeuristic <- function(model, costcoeffw = NULL, costcoefbw = NULL,
              obj   = newObj,
              rlb   = c(rep(0, nr), model@constraints@lb),
              rtype = c(rep("E", nr), model@constraints@rtype),
-             lpdir = COBRAR_SETTINGS("OPT_DIRECTION"),
+             lpdir = substr(model@obj_dir,1,3),
              rub   = c(rep(NA, met_num(model)),
                        model@constraints@ub)
   )

@@ -31,6 +31,8 @@ additional information about the model.}
 
 \item{\code{obj_coef}}{A numeric vector containing coefficients for the objective function.}
 
+\item{\code{obj_dir}}{Character specifying the objective direction. Either "maximize" or "minimize".}
+
 \item{\code{subSys}}{A sparse Boolean matrix of \link[Matrix]{lgCMatrix-class} defining subsystems.}
 
 \item{\code{subSys_id}}{A character vector representing subsystem identifiers.}

@@ -23,7 +23,6 @@ NULL
     TOLERANCE        = 1E-6,
     MAXIMUM          = 1000,
     ALGORITHM        = "fba",
-    OPT_DIRECTION    = "max",
     USE_NAMES        = FALSE,
     PATH_TO_MODEL    = ".",
     SOLVER_CTRL_PARM = as.data.frame(NA)
@@ -119,15 +118,6 @@ COBRAR_SETTINGS <- function(parm, value, ...) {
 
          "ALGORITHM" = {
            .COBRARenv$settings[["ALGORITHM"]] <- as.character(value)
-         },
-
-         "OPT_DIRECTION" = {
-           if ( (value == "max") || (value == "min") ) {
-             .COBRARenv$settings[["OPT_DIRECTION"]] <- as.character(value)
-           }
-           else {
-             stop("OPT_DIRECTION can be either 'max' or 'min'")
-           }
          },
 
          "USE_NAMES" = {
