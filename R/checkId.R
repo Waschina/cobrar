@@ -169,7 +169,7 @@ checkSubsystemId <- function(model, subsystem) {
 
   # Indices provided
   if(is.numeric(subsystem)) {
-    checkRes <- subsystem <= comp_num(model)
+    checkRes <- subsystem <= subsys_num(model)
   }
 
   # IDs provided
