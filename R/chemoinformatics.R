@@ -79,6 +79,60 @@ countElements <- function(formulas, multiplier = 1) {
   return(eleMarkup)
 }
 
-tmp <- countElements(c("C6H12O6","FeO",NA,"CH"), multiplier = c(1,-1,3,2))
+#' Data frame of elements and their average weights
+#'
+#' Gets a data.frame with all elements, their symbol, name, atomic number and
+#' their abridged standard atomic weight according to the International Union of
+#' Pure and Applied Chemistry (IUPAC).
+#'
+#' @references
+#' Prohaska T, Irrgeher J, Benefield J, Böhlke JK, Chesson LA, Coplen TB, et al.
+#' Standard atomic weights of the elements 2021 (IUPAC Technical Report). Vol.
+#' 94, Pure and Applied Chemistry. 2022. p. 573–600.
+#' http://dx.doi.org/10.1515/pac-2019-0603
+#'
+#' @export
+elements <- function() {
+  return(.COBRARenv$elements)
+}
 
+
+#' Calculate molar mass of molecules
+#'
+#' Calculates the average molar mass of compounds based on their chemical
+#' formulas.
+#'
+#' @param formulas Character vector of chemical formulas.
+#'
+#' @examples
+#' mass(c("C6H12O6","C48H72CoN11O8","HCOOH"))
+#'
+#' @export
+mass <- function(formulas) {
+  makeup <- countElements(formulas)
+
+  ele <- elements()
+  eleMasses <- ele$AvgWeight
+  names(eleMasses) <- ele$Symbol
+
+  # are there any unknown/unstable elements in the makeup matrix?
+  indNoElement <- which(!(colnames(makeup) %in% ele$Symbol))
+  indUnstableElement <- which(colnames(makeup) %in% ele$Symbol[is.na(ele$AvgWeight)])
+
+  if(length(indNoElement)>0)
+    warning(paste0("Some element symbols in the formulas are not known: ",
+                   paste(colnames(makeup)[indNoElement],collapse = ", "),
+                   ". Omitting those symbols in mass calculation."))
+
+  if(length(indUnstableElement)>0)
+    warning(paste0("Some elements in the formulas do not have stable nuclides: ",
+                   paste(colnames(makeup)[indUnstableElement],collapse = ", "),
+                   ". Omitting those elements in mass calculation."))
+
+  colkeep <- !((1:ncol(makeup)) %in% c(indNoElement,indUnstableElement))
+  makeup <- makeup[, colkeep, drop = FALSE]
+  masses <- (makeup %*% eleMasses[colnames(makeup)])[,1]
+
+  return(masses)
+}
 

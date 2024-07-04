@@ -50,6 +50,9 @@ NULL
   # algorithms simulation genetic perturbations
   .COBRARenv$algorithm[["pert"]] <- c("fba")
 
+  .COBRARenv$elements <- read.table(system.file("extdata/elements.tsv",
+                                                package = "cobrar"),
+                                    sep = "\t", header = TRUE)
 }
 
 #' Set and get central cobrar parameters

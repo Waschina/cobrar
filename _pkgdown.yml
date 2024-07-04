@@ -81,6 +81,8 @@ reference:
   - title: "Chemoinformatics"
     contents:
       - countElements
+      - elements
+      - mass
 
   - title: "Object classes"
     contents:

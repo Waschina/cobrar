@@ -45,7 +45,7 @@
 #' computed optimal growth from genome‐scale models,” Molecular Systems Biology,
 #' vol. 6, no. 1. EMBO, Jan. 2010. doi: 10.1038/msb.2010.47.
 #'
-#' Zimmermann, C. Kaleta, and S. Waschina, “gapseq: informed prediction of
+#' J. Zimmermann, C. Kaleta, and S. Waschina, “gapseq: informed prediction of
 #' bacterial metabolic pathways and reconstruction of accurate metabolic
 #' models,” Genome Biology, vol. 22, no. 1. Springer Science and Business Media
 #' LLC, Mar. 10, 2021. doi: 10.1186/s13059-021-02295-1.
