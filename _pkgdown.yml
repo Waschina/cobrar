@@ -78,6 +78,10 @@ reference:
       - fixBMRatios
       - fluxBMCoupling
 
+  - title: "Chemoinformatics"
+    contents:
+      - elementCounts
+
   - title: "Object classes"
     contents:
       - Constraints-class

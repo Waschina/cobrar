@@ -353,7 +353,8 @@ rmConstraint <- function(model, ind) {
 #' @param metChemicalFormula A character vector of the same length as `met`
 #' defining the chemical formulas for the metabolites given in argument `met`.
 #' @param CVTerms Cross-references to other resources.
-#' @param SBOTerm A termID from the Systems Biology Ontology.
+#' @param SBOTerm A term ID from the Systems Biology Ontology. If 'guess', the
+#' SBO will be inferred from the reaction details.
 #'
 #' @details
 #' If you want to use the function to update data of a pre-existing reaction but
@@ -382,13 +383,11 @@ rmConstraint <- function(model, ind) {
 #'                 reactName = "4-aminobutyrate transport in via proton symport",
 #'                 metName = c("4-aminobutyrate",NA, "4-aminobutyrate",NA),
 #'                 metComp = c("e","e","c","c"), metCharge = c(0,NA,0,NA),
-#'                 metChemicalFormula = c("C4H9NO2",NA,"C4H9NO2",NA),
-#'                 SBOTerm = "SBO:0000185")
+#'                 metChemicalFormula = c("C4H9NO2",NA,"C4H9NO2",NA))
 #'
 #' # exchange reaction for 4abut (with 1.5 mmol/gDW/hr availability)
 #' mod <- addReact(mod, id = "EX_4abut_e", Scoef = c(-1), met = "4abut_e",
-#'                 lb = -1.5, ub = 1000, reactName = "4-aminobutyrate exchange",
-#'                 SBOTerm = "SBO:0000627")
+#'                 lb = -1.5, ub = 1000, reactName = "4-aminobutyrate exchange")
 #'
 #' # 4abut amninotransferase (EC 2.6.1.19)
 #' mod <- addReact(mod, id = "ABTA", Scoef = c(-1,-1,1,1),
@@ -433,7 +432,7 @@ addReact <- function(model,
                      metCharge = NA,
                      metChemicalFormula = NA,
                      CVTerms = NA,
-                     SBOTerm = "SBO:0000176") {
+                     SBOTerm = "guess") {
 
   #--------------#
   # basic checks #
@@ -523,7 +522,7 @@ addReact <- function(model,
     model@react_name[indR] <- reactName
   if(!is.na(CVTerms))
     model@react_attr$CVTerms[indR] <- CVTerms
-  if(!is.na(SBOTerm))
+  if(!is.na(SBOTerm) && SBOTerm != "guess")
     model@react_attr$SBOTerm[indR] <- SBOTerm
 
   # bounds
@@ -546,6 +545,16 @@ addReact <- function(model,
     newgenes <- gpr_new$gene[!(gpr_new$gene %in% model@allGenes) & gpr_new$gene != ""]
     if(length(newgenes) > 0)
       model <- addGene(model, newgenes)
+  }
+
+  # guess SBO Term
+  if(SBOTerm == "guess") {
+    SBOTerm <- guessReactionSBOTerm(model@react_id[indR],
+                                    model@met_id[indMs],
+                                    model@S[matrix(c(indMs, rep(indR,length(indMs))),ncol = 2)],
+                                    model@met_comp[indMs],
+                                    model@met_attr$chemicalFormula[indMs])
+    model@react_attr$SBOTerm[indR] <- SBOTerm
   }
 
   return(model)

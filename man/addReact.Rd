@@ -22,7 +22,7 @@ addReact(
   metCharge = NA,
   metChemicalFormula = NA,
   CVTerms = NA,
-  SBOTerm = "SBO:0000176"
+  SBOTerm = "guess"
 )
 }
 \arguments{
@@ -74,7 +74,8 @@ defining the chemical formulas for the metabolites given in argument \code{met}.
 
 \item{CVTerms}{Cross-references to other resources.}
 
-\item{SBOTerm}{A termID from the Systems Biology Ontology.}
+\item{SBOTerm}{A term ID from the Systems Biology Ontology. If 'guess', the
+SBO will be inferred from the reaction details.}
 }
 \description{
 The function can be used to add or modify a reaction in an existing model.
@@ -106,13 +107,11 @@ mod <- addReact(mod, id = "ABUTt", Scoef = c(-1,-1,1,1),
                 reactName = "4-aminobutyrate transport in via proton symport",
                 metName = c("4-aminobutyrate",NA, "4-aminobutyrate",NA),
                 metComp = c("e","e","c","c"), metCharge = c(0,NA,0,NA),
-                metChemicalFormula = c("C4H9NO2",NA,"C4H9NO2",NA),
-                SBOTerm = "SBO:0000185")
+                metChemicalFormula = c("C4H9NO2",NA,"C4H9NO2",NA))
 
 # exchange reaction for 4abut (with 1.5 mmol/gDW/hr availability)
 mod <- addReact(mod, id = "EX_4abut_e", Scoef = c(-1), met = "4abut_e",
-                lb = -1.5, ub = 1000, reactName = "4-aminobutyrate exchange",
-                SBOTerm = "SBO:0000627")
+                lb = -1.5, ub = 1000, reactName = "4-aminobutyrate exchange")
 
 # 4abut amninotransferase (EC 2.6.1.19)
 mod <- addReact(mod, id = "ABTA", Scoef = c(-1,-1,1,1),
