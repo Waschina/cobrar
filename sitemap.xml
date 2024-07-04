@@ -109,6 +109,9 @@
     <loc>/reference/deadEndMetabolites.html</loc>
   </url>
   <url>
+    <loc>/reference/elements.html</loc>
+  </url>
+  <url>
     <loc>/reference/fba.html</loc>
   </url>
   <url>
@@ -161,6 +164,9 @@
   </url>
   <url>
     <loc>/reference/loadMatrix-methods.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mass.html</loc>
   </url>
   <url>
     <loc>/reference/met_num-methods.html</loc>
