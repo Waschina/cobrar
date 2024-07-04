@@ -80,7 +80,7 @@ reference:
 
   - title: "Chemoinformatics"
     contents:
-      - elementCounts
+      - countElements
 
   - title: "Object classes"
     contents:
