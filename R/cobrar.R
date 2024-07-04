@@ -64,6 +64,7 @@ NULL
 #' @param ... TBD.
 #'
 #' @importFrom methods existsMethod
+#' @importFrom utils read.table
 #'
 #' @export
 COBRAR_SETTINGS <- function(parm, value, ...) {
