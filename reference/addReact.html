@@ -77,7 +77,7 @@
 <span>  metCharge <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  metChemicalFormula <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  CVTerms <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  SBOTerm <span class="op">=</span> <span class="st">"SBO:0000176"</span></span>
+<span>  SBOTerm <span class="op">=</span> <span class="st">"guess"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -164,7 +164,8 @@ defining the chemical formulas for the metabolites given in argument <code>met</
 
 
 <dt>SBOTerm</dt>
-<dd><p>A termID from the Systems Biology Ontology.</p></dd>
+<dd><p>A term ID from the Systems Biology Ontology. If 'guess', the
+SBO will be inferred from the reaction details.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -202,13 +203,11 @@ added.</p>
 <span class="r-in"><span>                reactName <span class="op">=</span> <span class="st">"4-aminobutyrate transport in via proton symport"</span>,</span></span>
 <span class="r-in"><span>                metName <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"4-aminobutyrate"</span>,<span class="cn">NA</span>, <span class="st">"4-aminobutyrate"</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                metComp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"e"</span>,<span class="st">"e"</span>,<span class="st">"c"</span>,<span class="st">"c"</span><span class="op">)</span>, metCharge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="cn">NA</span>,<span class="fl">0</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                metChemicalFormula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C4H9NO2"</span>,<span class="cn">NA</span>,<span class="st">"C4H9NO2"</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                SBOTerm <span class="op">=</span> <span class="st">"SBO:0000185"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                metChemicalFormula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C4H9NO2"</span>,<span class="cn">NA</span>,<span class="st">"C4H9NO2"</span>,<span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># exchange reaction for 4abut (with 1.5 mmol/gDW/hr availability)</span></span></span>
 <span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">addReact</span><span class="op">(</span><span class="va">mod</span>, id <span class="op">=</span> <span class="st">"EX_4abut_e"</span>, Scoef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>, met <span class="op">=</span> <span class="st">"4abut_e"</span>,</span></span>
-<span class="r-in"><span>                lb <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, ub <span class="op">=</span> <span class="fl">1000</span>, reactName <span class="op">=</span> <span class="st">"4-aminobutyrate exchange"</span>,</span></span>
-<span class="r-in"><span>                SBOTerm <span class="op">=</span> <span class="st">"SBO:0000627"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                lb <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, ub <span class="op">=</span> <span class="fl">1000</span>, reactName <span class="op">=</span> <span class="st">"4-aminobutyrate exchange"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># 4abut amninotransferase (EC 2.6.1.19)</span></span></span>
 <span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">addReact</span><span class="op">(</span><span class="va">mod</span>, id <span class="op">=</span> <span class="st">"ABTA"</span>, Scoef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,</span></span>
