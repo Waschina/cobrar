@@ -73,16 +73,14 @@ mod <- addReact(mod, id = "ABUTt", Scoef = c(-1,-1,1,1),
                 reactName = "4-aminobutyrate transport in via proton symport",
                 metName = c("4-aminobutyrate",NA, "4-aminobutyrate",NA),
                 metComp = c("e","e","c","c"), metCharge = c(0,NA,0,NA),
-                metChemicalFormula = c("C4H9NO2",NA,"C4H9NO2",NA),
-                SBOTerm = "SBO:0000185")
+                metChemicalFormula = c("C4H9NO2",NA,"C4H9NO2",NA))
 ```
 
 Next, we add the exchange reaction for 4-aminobutyrate.
 
 ```{r}
 mod <- addReact(mod, id = "EX_4abut_e", Scoef = c(-1), met = "4abut_e",
-                lb = -1.5, ub = 1000, reactName = "4-aminobutyrate exchange",
-                SBOTerm = "SBO:0000627")
+                lb = -1.5, ub = 1000, reactName = "4-aminobutyrate exchange")
 ```
 
 The lower bound of this exchange reaction is set to -1.5 mmol/(gDW*hr) to simulate the availability of the metabolite.
