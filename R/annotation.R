@@ -27,8 +27,8 @@ guessReactionSBOTerm <- function(id, met, Scoef, metComp, metChemicalFormula) {
     isMassBalanced <- TRUE
 
     # check for any biochemical transformation
-    LHSm <- gsub("_[^_]*$","",met[Scoef < 0])
-    RHSm <- gsub("_[^_]*$","",met[Scoef > 0])
+    LHSm <- gsub("_[^_]*$|\\[.+\\]$","",met[Scoef < 0])
+    RHSm <- gsub("_[^_]*$|\\[.+\\]$","",met[Scoef > 0])
     if(setequal(LHSm, RHSm))
       isTranformation <- FALSE
 
