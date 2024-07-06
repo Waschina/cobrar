@@ -183,6 +183,18 @@ writeSBMLmod <- function(model, file_path = NULL) {
     model@allGenes <- paste0("G_",model@allGenes)
     model@genes <- lapply(model@genes, function(x) paste0("G_",x))
   }
+  colnames(model@subSys) <- NULL
+  model@subSys_id <- gsub("-","_",model@subSys_id)
+  if(!all(grepl("^subsys_",model@subSys_id)))
+    model@subSys_id <- paste0("subsys_",model@subSys_id)
+  model@met_id <- sub("\\[(.*)\\]$", "_\\1", model@met_id)
+
+  # libSBML seems not to allow "." in gene IDs... replacing them here
+  if(any(grepl("\\.",model@allGenes))) {
+    model@allGenes <- gsub("\\.","_",model@allGenes)
+    model@genes <- lapply(model@genes, FUN = function(x) gsub("\\.","_",x))
+    warning("Some gene IDs contain dots ('.'). Replacing them with underscores ('_').")
+  }
 
 
   if(is.na(model@mod_attr$CVTerms[1]))
@@ -323,7 +335,6 @@ writeSBMLmod <- function(model, file_path = NULL) {
 #' @returns A \link{ModelOrg-class} object or a list with \link{ModelOrg-class}
 #' objects.
 #'
-#' @import Matrix
 #' @export
 readSybilmod <- function(file_path) {
   sybildoc.lst  <- readRDS(normalizePath(file_path))

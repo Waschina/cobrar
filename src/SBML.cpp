@@ -1252,6 +1252,7 @@ bool writeSBML(
       grpi->setKind(GROUP_KIND_PARTONOMY);
       grpi->setId(Rcpp::as<std::string>(subsys_id[i]));
       grpi->setName(Rcpp::as<std::string>(subsys_name[i]));
+      grpi->setSBOTerm(633); // SBO ID of subsystems
 
       for(unsigned int j = 0; j<subsys[i].size(); j++) {
         Member* membi = grpi->createMember();
