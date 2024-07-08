@@ -13,10 +13,16 @@
 #' latter are exchange reactions, that connect extracellular metabolites of the
 #' organism metabolic network models with the shared extracellular space.
 #'
+#' @docType methods
+#'
+#' @rdname findExchReact-methods
+#'
 #' @export
 setGeneric("findExchReact" ,valueClass = "data.frame", function(model) {
   standardGeneric("findExchReact")
 })
+#' @rdname findExchReact-methods
+#' @aliases findExchReact,ModelOrg
 setMethod("findExchReact", signature(model = "ModelOrg"),
           function(model) {
             ex_id <- model@react_id[grep("^EX_",model@react_id)]
@@ -34,6 +40,8 @@ setMethod("findExchReact", signature(model = "ModelOrg"),
                               lb = model@lowbnd[ex_pos],
                               ub = model@uppbnd[ex_pos]))
           })
+#' @rdname findExchReact-methods
+#' @aliases findExchReact,ModelComm
 setMethod("findExchReact", signature(model = "ModelComm"),
           function(model) {
             ex_id <- model@react_id[grep("^EX_",model@react_id)]
