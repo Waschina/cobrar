@@ -27,6 +27,7 @@ reference:
       - addReact
       - addSubsystem
       - changeBounds
+      - changeObjFunc
       - setObjDir
       - rmCompartment
       - rmConstraint
@@ -51,6 +52,7 @@ reference:
       - gene_pos
       - geneDel
       - deadEndMetabolites
+      - findExchReact
       - printConstraint
       - printReaction
       - react_num

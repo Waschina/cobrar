@@ -45,6 +45,7 @@ Collate:
     'cobrar.R'
     'deadEndMetabolites.R'
     'fba.R'
+    'findExchReact.R'
     'fixBMRatios.R'
     'fluxBMCoupling.R'
     'fluxdist_analysis.R'

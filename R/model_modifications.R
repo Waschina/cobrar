@@ -999,3 +999,36 @@ setObjDir <- function(model, dir) {
 
   return(model)
 }
+
+#' Change the objective function
+#'
+#' Changes the objective function of a model.
+#'
+#' @param model Model of class \link{ModelOrg}
+#' @param react Character vector containing the model's reactions IDs, that are
+#' part of the new objective function
+#' @param obj_coef Numeric vector with the objective coefficients of the
+#' reactions in the vector 'react'.
+#'
+#' @details
+#' Reactions not listed in 'react' are assigned an objective coefficient of
+#' zero.
+#'
+#' @returns An updated model of class \link{ModelOrg}
+#'
+#' @export
+changeObjFunc <- function(model, react, obj_coef = rep(1, length(react))) {
+  if(length(react) != length(obj_coef))
+    stop("The arguments 'react' and 'obj_coef' should be vectors of the same length.")
+
+  if(!all(checkReactId(model, react))) {
+    stop("Please check your reaction IDs/indices in argument 'react'.")
+  }
+
+  react.idx <- react_pos(model, react)
+
+  model@obj_coef <- rep(0, react_num(model))
+  model@obj_coef[react.idx] <- obj_coef
+
+  return(model)
+}
