@@ -193,7 +193,7 @@ writeSBMLmod <- function(model, file_path = NULL) {
   if(any(grepl("\\.",model@allGenes))) {
     model@allGenes <- gsub("\\.","_",model@allGenes)
     model@genes <- lapply(model@genes, FUN = function(x) gsub("\\.","_",x))
-    warning("Some gene IDs contain dots ('.'). Replacing them with underscores ('_').")
+    # warning("Some gene IDs contain dots ('.'). Replacing them with underscores ('_').")
   }
 
 
