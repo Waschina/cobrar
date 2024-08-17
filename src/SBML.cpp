@@ -11,8 +11,8 @@
 
 using namespace Rcpp;
 
-// Check if the g++ version is 12 or higher
-#if (__GNUC__ > 11) || (__GNUC__ == 11 && __GNUC_MINOR__ >= 0)
+#if LIBSBML_VERSION >= 52004
+// For libSBML version 5.20.4 and above, use the libsbml namespace
 using namespace libsbml;
 #endif
 
