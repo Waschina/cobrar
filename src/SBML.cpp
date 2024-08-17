@@ -11,6 +11,12 @@
 
 using namespace Rcpp;
 
+// Check the version of libSBML
+#if LIBSBML_VERSION >= 52000
+// For libSBML version 5.20.0 and above, use the libsbml namespace
+using namespace libsbml;
+#endif
+
 /*
  * Get libSBML version number
  */
