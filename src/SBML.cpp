@@ -11,11 +11,7 @@
 
 using namespace Rcpp;
 
-#if LIBSBML_VERSION >= 52004
-// For libSBML version 5.20.4 and above, use the libsbml namespace
-using namespace libsbml;
-#endif
-
+LIBSBML_CPP_NAMESPACE_USE
 
 /*
  * Get libSBML version number
