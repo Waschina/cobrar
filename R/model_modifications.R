@@ -442,7 +442,7 @@ addReact <- function(model,
   if(length(met) == 0)
     stop("Reaction needs at least one participating metabolite.")
   if(length(Scoef) != length(met))
-    stop("Mismatch of number of metabolites and provides stoichiometrix coefficients.")
+    stop("Mismatch of number of metabolites and provided stoichiometrix coefficients.")
 
   #--------------------------------------#
   # Check if reaction addition or update #
