@@ -270,7 +270,7 @@ SEXP getColsPrimalLP(SEXP xp) {
 
   // in case of infeasible solution
   stat = glp_get_status(lp);
-  if(stat != 2 || stat != 5) {
+  if(stat != 2 && stat != 5) {
     return DoubleVector(nc, DoubleVector::get_na());
   }
 
@@ -379,7 +379,7 @@ SEXP getObjVal(SEXP xp) {
 
   // in case of infeasible solution
   stat = glp_get_status(lp);
-  if(stat != 2 || stat != 5) {
+  if(stat != 2 && stat != 5) {
     return DoubleVector(1, DoubleVector::get_na());
   }
 
@@ -493,7 +493,7 @@ SEXP getColsDualLP(SEXP xp) {
 
   // in case of infeasible solution
   stat = glp_get_status(lp);
-  if(stat != 2 || stat != 5) {
+  if(stat != 2 && stat != 5) {
     return DoubleVector(num_cols, DoubleVector::get_na());
   }
 
