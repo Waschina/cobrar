@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cobrar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +65,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Introduction to cobrar</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Waschina/cobrar/blob/v0.1.0/vignettes/cobrar.Rmd" class="external-link"><code>vignettes/cobrar.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Waschina/cobrar/blob/main/vignettes/cobrar.Rmd" class="external-link"><code>vignettes/cobrar.Rmd</code></a></small>
       <div class="d-none name"><code>cobrar.Rmd</code></div>
     </div>
 
@@ -98,9 +98,9 @@ reaction fluxes.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sol</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fba.html">fba</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="va">sol</span></span>
-<span><span class="co">#&gt; algorithm:              FBA </span></span>
-<span><span class="co">#&gt; generic status:         solution is optimal </span></span>
-<span><span class="co">#&gt; solver status message:  optimization process was successful </span></span>
+<span><span class="co">#&gt; Algorithm:              FBA </span></span>
+<span><span class="co">#&gt; Solver status:          solution is optimal </span></span>
+<span><span class="co">#&gt; Optimization status:    optimization process was successful </span></span>
 <span><span class="co">#&gt; Objective fct. value:   0.8739215 </span></span>
 <span><span class="co">#&gt; Secondary objective:    NA</span></span></code></pre></div>
 <p>We can also inspect the metabolite consumption and production by
@@ -139,9 +139,9 @@ anaerobic growth.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sol_anaero</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fba.html">fba</a></span><span class="op">(</span><span class="va">mod_anaero</span><span class="op">)</span></span>
 <span><span class="va">sol_anaero</span></span>
-<span><span class="co">#&gt; algorithm:              FBA </span></span>
-<span><span class="co">#&gt; generic status:         solution is optimal </span></span>
-<span><span class="co">#&gt; solver status message:  optimization process was successful </span></span>
+<span><span class="co">#&gt; Algorithm:              FBA </span></span>
+<span><span class="co">#&gt; Solver status:          solution is optimal </span></span>
+<span><span class="co">#&gt; Optimization status:    optimization process was successful </span></span>
 <span><span class="co">#&gt; Objective fct. value:   0.2116629 </span></span>
 <span><span class="co">#&gt; Secondary objective:    NA</span></span>
 <span><span class="fu"><a href="../reference/getExchanges.html">getExchanges</a></span><span class="op">(</span><span class="va">mod_anaero</span>, <span class="va">sol_anaero</span><span class="op">)</span></span>
@@ -229,9 +229,9 @@ consumed by <em>E. coli</em>.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sol</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fba.html">fba</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="va">sol</span></span>
-<span><span class="co">#&gt; algorithm:              FBA </span></span>
-<span><span class="co">#&gt; generic status:         solution is optimal </span></span>
-<span><span class="co">#&gt; solver status message:  optimization process was successful </span></span>
+<span><span class="co">#&gt; Algorithm:              FBA </span></span>
+<span><span class="co">#&gt; Solver status:          solution is optimal </span></span>
+<span><span class="co">#&gt; Optimization status:    optimization process was successful </span></span>
 <span><span class="co">#&gt; Objective fct. value:   0.9674959 </span></span>
 <span><span class="co">#&gt; Secondary objective:    NA</span></span>
 <span><span class="fu"><a href="../reference/getExchanges.html">getExchanges</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">sol</span><span class="op">)</span></span>
