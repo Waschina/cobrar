@@ -22,13 +22,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // initProb
-SEXP initProb(const char* name);
-RcppExport SEXP _cobrar_initProb(SEXP nameSEXP) {
+SEXP initProb(const char* name, double tol_bnd);
+RcppExport SEXP _cobrar_initProb(SEXP nameSEXP, SEXP tol_bndSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const char* >::type name(nameSEXP);
-    rcpp_result_gen = Rcpp::wrap(initProb(name));
+    Rcpp::traits::input_parameter< double >::type tol_bnd(tol_bndSEXP);
+    rcpp_result_gen = Rcpp::wrap(initProb(name, tol_bnd));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -657,7 +658,7 @@ RcppExport SEXP _rcpp_module_boot_sbml_module();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_cobrar_getGLPKVersion", (DL_FUNC) &_cobrar_getGLPKVersion, 0},
-    {"_cobrar_initProb", (DL_FUNC) &_cobrar_initProb, 1},
+    {"_cobrar_initProb", (DL_FUNC) &_cobrar_initProb, 2},
     {"_cobrar_setObjDirLP", (DL_FUNC) &_cobrar_setObjDirLP, 2},
     {"_cobrar_addColsLP", (DL_FUNC) &_cobrar_addColsLP, 2},
     {"_cobrar_addRowsLP", (DL_FUNC) &_cobrar_addRowsLP, 2},

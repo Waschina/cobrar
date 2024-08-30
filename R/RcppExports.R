@@ -5,8 +5,8 @@ getGLPKVersion <- function() {
     .Call(`_cobrar_getGLPKVersion`)
 }
 
-initProb <- function(name) {
-    .Call(`_cobrar_initProb`, name)
+initProb <- function(name, tol_bnd) {
+    .Call(`_cobrar_initProb`, name, tol_bnd)
 }
 
 setObjDirLP <- function(xp, dir) {

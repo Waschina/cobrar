@@ -63,6 +63,21 @@ pfba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
   objRes <- getObjValue(LPprob)
   redCosts <- getRedCosts(LPprob)
 
+  if(is.na(objRes)) {
+    # warning(paste0("No feasible FBA solution. Solver status: \"",
+    #                lp_stat$term,"\""))
+    return(new("FluxPrediction",
+               algorithm = "pFBA",
+               ok = lp_ok$code,
+               ok_term = lp_ok$term,
+               stat = lp_stat$code,
+               stat_term = lp_stat$term,
+               obj = objRes,
+               obj_sec = NA_real_,
+               fluxes = rep(NA_real_, react_num(model)),
+               redCosts = redCosts))
+  }
+
   #----------------------------------------------------------------------------#
   # New LP for minimalization of total flux                                    #
   #----------------------------------------------------------------------------#
@@ -136,7 +151,7 @@ pfba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
   objResMTF <- getObjValue(LPprobNew)
   lp_fluxes <- getColsPrimal(LPprobNew)
   fwflx <- lp_fluxes[1:nc]; bwflx <- lp_fluxes[(nc+1):(nc*2)]
-  lp_fluxes <- ifelse(bwflx > fwflx, -bwflx, fwflx)
+  lp_fluxes <- as.numeric(ifelse(bwflx > fwflx, -bwflx, fwflx))
 
   return(new("FluxPrediction",
              algorithm = "pFBA",

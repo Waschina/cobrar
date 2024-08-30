@@ -5,6 +5,8 @@
 #' @slot ptr External pointer to LP problem C++ object
 #' @slot solver Solver used for the LP problem
 #' @slot method Specific algorithm used by the LP solver
+#' @slot tol_bnd Numeric value determining how closely the solution must
+#' satisfy the bounds on variables.
 #'
 #' @aliases LPproblem
 #'
@@ -13,7 +15,8 @@ setClass("LPproblem",
          slots = c(
            ptr = "externalptr",
            solver = "character",
-           method = "character"
+           method = "character",
+           tol_bnd = "numeric"
          )
 )
 

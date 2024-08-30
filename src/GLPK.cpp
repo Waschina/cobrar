@@ -28,7 +28,7 @@ void lpXPtrFinalizer(SEXP lp_ptr) {
 }
 
 // [[Rcpp::export]]
-SEXP initProb(const char* name)
+SEXP initProb(const char* name, double tol_bnd)
 {
   glp_prob *lp;
 
@@ -39,6 +39,9 @@ SEXP initProb(const char* name)
   parmS.msg_lev = GLP_MSG_ERR;
   parmI.msg_lev = GLP_MSG_ERR;
   parmM.msg_lev = GLP_MSG_ERR;
+
+  // set feasibility/bound tolerance for simplex
+  parmS.tol_bnd = tol_bnd;
 
   lp = glp_create_prob();
 
@@ -259,10 +262,17 @@ SEXP getSolStatLP(SEXP xp) {
 SEXP getColsPrimalLP(SEXP xp) {
 
   std::vector<double> prim;
+  int stat = 0;
 
   glp_prob* lp = (glp_prob*)R_ExternalPtrAddr(xp);
 
   unsigned int nc = glp_get_num_cols(lp);
+
+  // in case of infeasible solution
+  stat = glp_get_status(lp);
+  if(stat != 2 || stat != 5) {
+    return DoubleVector(nc, DoubleVector::get_na());
+  }
 
   for(unsigned int i=1; i <= nc; i++) {
     prim.push_back(glp_get_col_prim(lp, i));
@@ -363,9 +373,17 @@ SEXP getObjVal(SEXP xp) {
 
   SEXP out = R_NilValue;
   double obj_val = 0;
+  int stat = 0;
 
   glp_prob* lp = (glp_prob*)R_ExternalPtrAddr(xp);
 
+  // in case of infeasible solution
+  stat = glp_get_status(lp);
+  if(stat != 2 || stat != 5) {
+    return DoubleVector(1, DoubleVector::get_na());
+  }
+
+  //in case of feasible/optimal
   obj_val = glp_get_obj_val(lp);
 
   out = Rf_ScalarReal(obj_val);
@@ -465,6 +483,7 @@ SEXP getColsDualLP(SEXP xp) {
 
   SEXP out = R_NilValue;
   double col_dual = 0;
+  int stat = 0;
 
   int num_cols, k;
 
@@ -472,6 +491,13 @@ SEXP getColsDualLP(SEXP xp) {
 
   num_cols = glp_get_num_cols(lp);
 
+  // in case of infeasible solution
+  stat = glp_get_status(lp);
+  if(stat != 2 || stat != 5) {
+    return DoubleVector(num_cols, DoubleVector::get_na());
+  }
+
+  // in case of feasible/optimal solution
   out = Rf_allocVector(REALSXP, num_cols);
   for (k = 1; k <= num_cols; k++) {
     col_dual = glp_get_col_dual(lp, k);

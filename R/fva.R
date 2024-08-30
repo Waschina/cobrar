@@ -64,6 +64,10 @@ fva <- function(model, react = NULL, opt.factor = 1) {
   # get solution (objective value)
   objRes <- getObjValue(LPprob)
 
+  if(is.na(objRes)) {
+    stop(paste("There is no feasible FBA solution and no flux variablity can be calculated. Solver status:", lp_stat$term))
+  }
+
   #----------------------------------------------------------------------------#
   # Preparation for FVA: fix range of value of objective function as new       #
   # constraint (=row)                                                          #

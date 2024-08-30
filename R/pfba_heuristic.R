@@ -126,7 +126,7 @@ pfbaHeuristic <- function(model, costcoeffw = NULL, costcoefbw = NULL,
 
   lp_fluxes <- getColsPrimal(LPprob)
   fwflx <- lp_fluxes[1:nc]; bwflx <- lp_fluxes[(nc+1):(nc*2)]
-  lp_fluxes <- ifelse(bwflx > fwflx, -bwflx, fwflx)
+  lp_fluxes <- as.numeric(ifelse(bwflx > fwflx, -bwflx, fwflx))
 
   objRes    <- as.numeric(lp_fluxes %*% model@obj_coef)
   redCosts  <- getRedCosts(LPprob)

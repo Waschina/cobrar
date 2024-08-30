@@ -62,7 +62,7 @@ setMethod(f = "initialize",
                                 name,
                                 method) {
 
-            .Object@ptr <- initProb(name)
+            .Object@ptr <- initProb(name, COBRAR_SETTINGS("TOLERANCE"))
             .Object@solver = "glpk"
             .Object@method = method
 

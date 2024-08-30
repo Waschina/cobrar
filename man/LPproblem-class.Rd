@@ -16,5 +16,8 @@ A class structure to link LP problem C++ object.
 \item{\code{solver}}{Solver used for the LP problem}
 
 \item{\code{method}}{Specific algorithm used by the LP solver}
+
+\item{\code{tol_bnd}}{Numeric value determining how closely the solution must
+satisfy the bounds on variables.}
 }}
 

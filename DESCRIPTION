@@ -1,6 +1,6 @@
 Package: cobrar
 Title: Constraint-Based Metabolic Network Analysis in R
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     c(person("Silvio", "Waschina", email = "s.waschina@nutrinf.uni-kiel.de", role = c("aut", "cre"),
              comment = c(ORCID = "0000-0002-6290-3593")),
@@ -19,7 +19,7 @@ SystemRequirements:
     GLPK (>= 4.65)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 LinkingTo: 
     Rcpp,
     RcppArmadillo

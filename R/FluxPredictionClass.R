@@ -44,9 +44,9 @@ setClass("FluxPrediction",
 #' @export
 setMethod("show", signature(object = "FluxPrediction"),
           function(object) {
-            cat("algorithm:             ", object@algorithm, "\n")
-            cat("generic status:        ", object@stat_term, "\n")
-            cat("solver status message: ", object@ok_term, "\n")
+            cat("Algorithm:             ", object@algorithm, "\n")
+            cat("Solver status:         ", object@stat_term, "\n")
+            cat("Optimization status:   ", object@ok_term, "\n")
             cat("Objective fct. value:  ", object@obj, "\n")
             cat("Secondary objective:   ", object@obj_sec, "\n")
           }
