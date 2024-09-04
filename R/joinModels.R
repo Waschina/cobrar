@@ -173,7 +173,7 @@ joinModels <- function(models, mergeLB = "none", mergeUB = "none",
   cmod@react_id <- c(cmod@react_id, dtexNew$exrxn)
   cmod@react_name <- c(cmod@react_name,paste(dtexNew$cpd.name, "exchange"))
   cmod@react_comp <- c(cmod@react_comp, rep("e",nrow(dtexNew)))
-  cmod@react_attr <- rbind(cmod@react_attr,
+  cmod@react_attr <- rbind(cmod@react_attr[,c("CVTerms","SBOTerm")],
                            data.frame(CVTerms = rep("",nrow(dtexNew)),
                                       SBOTerm = rep("http://identifiers.org/SBO:0000627",
                                                     nrow(dtexNew))))
