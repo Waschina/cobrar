@@ -4,8 +4,10 @@
 # cobrar <img src="man/figures/logo.svg" align="right" />
 
 <!-- badges: start -->
-
 [![R-CMD-check](https://github.com/Waschina/cobrar/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Waschina/cobrar/actions/workflows/R-CMD-check.yaml)
+
+[![Anaconda-Server Badge](https://anaconda.org/bioconda/r-cobrar/badges/version.svg?branch=master&kill_cache=1)](https://anaconda.org/bioconda/r-cobrar)
+[![Anaconda-Server Badge](https://anaconda.org/bioconda/r-cobrar/badges/downloads.svg?branch=master&kill_cache=1)](https://anaconda.org/bioconda/r-cobrar)
 <!-- badges: end -->
 
 The R package *cobrar* provides structures and functions for
