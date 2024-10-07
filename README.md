@@ -4,10 +4,12 @@
 # cobrar <img src="man/figures/logo.svg" align="right" />
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/Waschina/cobrar/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Waschina/cobrar/actions/workflows/R-CMD-check.yaml)
 
-[![Anaconda-Server Badge](https://anaconda.org/bioconda/r-cobrar/badges/version.svg?branch=master&kill_cache=1)](https://anaconda.org/bioconda/r-cobrar)
-[![Anaconda-Server Badge](https://anaconda.org/bioconda/r-cobrar/badges/downloads.svg?branch=master&kill_cache=1)](https://anaconda.org/bioconda/r-cobrar)
+[![R-CMD-check](https://github.com/Waschina/cobrar/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Waschina/cobrar/actions/workflows/R-CMD-check.yaml)
+[![Anaconda-Server
+Badge](https://anaconda.org/bioconda/r-cobrar/badges/version.svg?branch=master&kill_cache=1)](https://anaconda.org/bioconda/r-cobrar)
+[![Anaconda-Server
+Badge](https://anaconda.org/bioconda/r-cobrar/badges/downloads.svg?branch=master&kill_cache=1)](https://anaconda.org/bioconda/r-cobrar)
 <!-- badges: end -->
 
 The R package *cobrar* provides structures and functions for
@@ -73,11 +75,16 @@ remotes::install_github("Waschina/cobrar")
 
 #### Windows
 
-TODO
+*cobrar* is currently not available for Windows.
 
 #### Conda
 
-TODO
+Releases of *cobrar* for linux-64 and osx-64 systems are available via
+[bioconda](https://bioconda.github.io/recipes/r-cobrar/README.html#package-r-cobrar).
+
+``` sh
+conda install bioconda::r-cobrar
+```
 
 ## Usage
 
@@ -93,17 +100,14 @@ library(cobrar)
 #> cobrar uses...
 #>  - libSBML (v. 5.18.0)
 #>  - glpk (v. 4.65)
-```
-
-``` r
 
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)
 
 fba(mod)
-#> algorithm:              FBA 
-#> generic status:         solution is optimal 
-#> solver status message:  optimization process was successful 
+#> Algorithm:              FBA 
+#> Solver status:          solution is optimal 
+#> Optimization status:    optimization process was successful 
 #> Objective fct. value:   0.8739215 
 #> Secondary objective:    NA
 ```
