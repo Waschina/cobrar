@@ -31,6 +31,8 @@ fva <- function(model, react = NULL, opt.factor = 1) {
     stop("Please check your reaction IDs/indices in argument 'react'.")
   }
 
+  model <- enforceMaxFlux(model)
+
   #----------------------------------------------------------------------------#
   # First: Basic FBA to find objective value                                   #
   #----------------------------------------------------------------------------#

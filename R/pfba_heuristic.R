@@ -60,6 +60,7 @@ pfbaHeuristic <- function(model, costcoeffw = NULL, costcoefbw = NULL,
   if(!is.null(costcoefbw) && !is.numeric(costcoefbw))
     stop("Argument 'costcoefbw' must be a numeric vector")
 
+  model <- enforceMaxFlux(model)
 
   nc <- react_num(model)
   nr <- met_num(model)

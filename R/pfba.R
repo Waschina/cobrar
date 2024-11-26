@@ -29,6 +29,8 @@ pfba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
   if(!is.null(costcoefbw) && !is.numeric(costcoefbw))
     stop("Argument 'costcoefbw' must be a numeric vector")
 
+  model <- enforceMaxFlux(model)
+
   #----------------------------------------------------------------------------#
   # First: Basic FBA to find objective value                                   #
   #----------------------------------------------------------------------------#

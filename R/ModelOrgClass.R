@@ -599,3 +599,32 @@ setMethod("rmDuplicateConstraints", signature(object = "ModelOrg"),
             return(object)
           }
 )
+
+# Enforce maximum absolute flux values defined in central settings
+setGeneric("enforceMaxFlux", valueClass = "ModelOrg", function(object) {
+  standardGeneric("enforceMaxFlux")
+})
+setMethod("enforceMaxFlux", signature(object = "ModelOrg"),
+          function(object) {
+            belowMin <- which(object@lowbnd < -COBRAR_SETTINGS("MAXIMUM"))
+            aboveMax <- which(object@uppbnd > COBRAR_SETTINGS("MAXIMUM"))
+
+            if(length(belowMin) > 0) {
+              warning(paste0(
+                "Lower bound(s) below the global minumum of ",
+                -COBRAR_SETTINGS("MAXIMUM")
+              ))
+              object@lowbnd[belowMin] <- -COBRAR_SETTINGS("MAXIMUM")
+            }
+
+            if(length(aboveMax) > 0) {
+              warning(paste0(
+                "Upper bound(s) above the global maximum of ",
+                COBRAR_SETTINGS("MAXIMUM")
+              ))
+              object@uppbnd[aboveMax] <- COBRAR_SETTINGS("MAXIMUM")
+            }
+
+            return(object)
+          }
+)
