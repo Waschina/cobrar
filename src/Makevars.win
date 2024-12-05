@@ -1,8 +1,8 @@
-LIB_SBML=C:/rtools44/mingw64
+LIB_SBML=C:/rtools44/ucrt64
 
 PKG_CPPFLAGS=-D_R_=1 -DUSE_R=1 -DHAVE_FBC_PLUGIN=1 -DHAVE_GROUPS_PLUGIN=1 -I"$(LIB_SBML)/include" -DCHECK_GLPK_ARGS
 
-PKG_LIBS=-L"$(LIB_SBML)/bin" -lglpk -lgmp -lstdc++
+PKG_LIBS=-L"$(LIB_SBML)/bin" -lglpk -lgmp -lstdc++ -lsbml
 
 all: $(SHLIB)
 	mkdir -p "$(R_PACKAGE_DIR)/libs$(R_ARCH)"
