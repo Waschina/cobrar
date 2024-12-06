@@ -37,30 +37,24 @@ SEXP readSBMLfile(std::string file_path) {
 
   // Convert SBML Level 2 to SBML Level 3 with FBC extension
   if(document->getLevel() == 2) {
-    std::cout << "Converting COBRA-style SBML Level 2 model to SBML Level 3 using the Flux Balance Constraints (FBC)." << std::endl;
-
     ConversionProperties props;
     props.addOption("convert cobra", true, "Convert Cobra model to FBC");
     int result = document->convert(props);
 
     if (result != LIBSBML_OPERATION_SUCCESS) {
-      std::cout<< "SBML level conversion failed ... " << std::endl;
-      exit(0);
+      Rcpp::stop("Failed to convert SBML document to Level 3.");
     }
   }
 
   // Convert FBC v1 to FBC v2
   FbcSBMLDocumentPlugin* dplugin = static_cast<FbcSBMLDocumentPlugin*>(document->getPlugin("fbc"));
   if(dplugin->getPackageVersion() == 1) {
-    std::cout << "Converting FBC V1 to FBC V2." << std::endl;
-
     ConversionProperties propsFBC;
     propsFBC.addOption("convert fbc v1 to fbc v2");
     int result = document->convert(propsFBC);
 
     if (result != LIBSBML_OPERATION_SUCCESS) {
-      std::cout<< "FBC conversion failed ... " << std::endl;
-      exit(0);
+      Rcpp::stop("Failed to convert FBC v1 to FBC v2.");
     }
   }
 
