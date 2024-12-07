@@ -156,7 +156,7 @@ fba(mod)
 
 ## Notes
 
-- *cobrar* exports SBML files level 3 version 2 with `fbc` version 3 and
+- *cobrar* exports SBML files level 3 version 2 with `fbc` version 2 and
   `groups` version 1.
 - Group assignments are only supported for reactions.
 - GLPK is the default solver and is required to build the package. A
