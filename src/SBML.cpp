@@ -37,6 +37,7 @@ SEXP readSBMLfile(std::string file_path) {
 
   // Convert SBML Level 2 to SBML Level 3 with FBC extension
   if(document->getLevel() == 2) {
+    Rcpp::warning("Converting cobra-style SBML level 2 to level 3 incl. fbc extension.");
     ConversionProperties props;
     props.addOption("convert cobra", true, "Convert Cobra model to FBC");
     int result = document->convert(props);
@@ -49,6 +50,7 @@ SEXP readSBMLfile(std::string file_path) {
   // Convert FBC v1 to FBC v2
   FbcSBMLDocumentPlugin* dplugin = static_cast<FbcSBMLDocumentPlugin*>(document->getPlugin("fbc"));
   if(dplugin->getPackageVersion() == 1) {
+    Rcpp::warning("Loading SBML with fbc v1. It is recommended to encode flux blance contraints (fbc) in fbc v2.");
     ConversionProperties propsFBC;
     propsFBC.addOption("convert fbc v1 to fbc v2");
     int result = document->convert(propsFBC);
