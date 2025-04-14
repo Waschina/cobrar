@@ -1,7 +1,7 @@
-PKG_CPPFLAGS=-D_R_=1 -DUSE_R=1 -DHAVE_FBC_PLUGIN=1 -DHAVE_GROUPS_PLUGIN=1 -DCHECK_GLPK_ARGS -I$(LIBSBML_PATH)$(R_ARCH)/include -I$(LIBSBML_PATH)$(R_ARCH)/include/expat -I$(R_HOME)/include -DLIBSBML3
+PKG_CPPFLAGS=-D_R_=1 -DUSE_R=1 -DHAVE_FBC_PLUGIN=1 -DHAVE_GROUPS_PLUGIN=1 -DCHECK_GLPK_ARGS -I$(LIBSBML_PATH)/include -I$(LIBSBML_PATH)/include/expat -I$(R_HOME)/include -DLIBSBML3
 
-PKG_LIBS=-L$(LIBSBML_PATH)$(R_ARCH)/bin -lglpk -lgmp -lstdc++ -lsbml
+PKG_LIBS=-L$(LIBSBML_PATH)/bin -lglpk -lgmp -lstdc++ -lsbml
 
 all: $(SHLIB)
 	mkdir -p $(R_PACKAGE_DIR)/libs$(R_ARCH)
-	cp ${LIBSBML_PATH}${R_ARCH}/bin/*.dll ${R_PACKAGE_DIR}/libs/${R_ARCH}
+	cp ${LIBSBML_PATH}/bin/*.dll ${R_PACKAGE_DIR}/libs/${R_ARCH}
