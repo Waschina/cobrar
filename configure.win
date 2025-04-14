@@ -1,4 +1,1 @@
-#!/bin/sh
 
-mkdir $DPKG/libs
-cp $LIBSBML_PATH/bin/*.dll $DPKG/libs
