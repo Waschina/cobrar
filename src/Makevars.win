@@ -4,4 +4,4 @@ PKG_LIBS=-L$(LIBSBML_PATH)/bin -lglpk -lgmp -lstdc++ -lsbml
 
 all: $(SHLIB)
 	mkdir -p $(R_PACKAGE_DIR)/libs$(R_ARCH)
-	cp ${LIBSBML_PATH}/bin/*.dll "${R_PACKAGE_DIR}/libs/${R_ARCH}"
+	cp "${LIBSBML_PATH}/bin/"*.dll "${R_PACKAGE_DIR}/libs/${R_ARCH}"
