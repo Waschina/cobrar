@@ -36,7 +36,7 @@ to central model structures, metabolites, reactions, and genes."><meta property=
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Structure of ModelOrg Class</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Waschina/cobrar/blob/v0.1.2/R/ModelOrgClass.R" class="external-link"><code>R/ModelOrgClass.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Waschina/cobrar/blob/main/R/ModelOrgClass.R" class="external-link"><code>R/ModelOrgClass.R</code></a></small>
       <div class="d-none name"><code>ModelOrg-class.Rd</code></div>
     </div>
 
@@ -171,6 +171,12 @@ gene products associated to the respective reaction.</p></dd>
 <dd><p>A data.frame that enables the storage of additional data
 (e.g., name and CVTerms) for genes/gene products. Only specific columns are
 exported to SBML files. See <a href="writeSBMLmod.html">writeSBMLmod</a> for details.</p></dd>
+
+
+<dt><code>metadata</code></dt>
+<dd><p>A list, which can be used to include any arbitrary content
+describing the metabolic model. Important: No content of 'metadata' is
+written to SBML exports of the model.</p></dd>
 
 
 </dl></div>
