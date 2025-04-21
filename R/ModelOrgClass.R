@@ -46,6 +46,10 @@
 #' (e.g., name and CVTerms) for genes/gene products. Only specific columns are
 #' exported to SBML files. See \link{writeSBMLmod} for details.
 #'
+#' @slot metadata A list, which can be used to include any arbitrary content
+#' describing the metabolic model. Important: No content of 'metadata' is
+#' written to SBML exports of the model.
+#'
 #' @aliases ModelOrg
 #'
 #' @exportClass ModelOrg
@@ -86,7 +90,10 @@ setClass("ModelOrg",
            gprRules = "character",
            genes = "list",
            allGenes = "character",
-           genes_attr = "data.frame"
+           genes_attr = "data.frame",
+
+           # metadata
+           metadata = "list"
          ),
          prototype = list(
            # model slots
@@ -140,7 +147,10 @@ setClass("ModelOrg",
            allGenes = character(0L),
            genes_attr = data.frame(name = character(0L),
                                    CVTerms = character(0L),
-                                   SBOTerm = character(0L))
+                                   SBOTerm = character(0L)),
+
+           # metadata
+           metadata = list()
          ))
 
 

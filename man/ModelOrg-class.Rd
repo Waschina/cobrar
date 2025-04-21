@@ -78,5 +78,9 @@ gene products associated to the respective reaction.}
 \item{\code{genes_attr}}{A data.frame that enables the storage of additional data
 (e.g., name and CVTerms) for genes/gene products. Only specific columns are
 exported to SBML files. See \link{writeSBMLmod} for details.}
+
+\item{\code{metadata}}{A list, which can be used to include any arbitrary content
+describing the metabolic model. Important: No content of 'metadata' is
+written to SBML exports of the model.}
 }}
 
