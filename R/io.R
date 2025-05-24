@@ -189,13 +189,14 @@ writeSBMLmod <- function(model, file_path = NULL) {
     model@subSys_id <- paste0("subsys_",model@subSys_id)
   model@met_id <- sub("\\[(.*)\\]$", "_\\1", model@met_id)
 
-  # libSBML seems not to allow ".", ":", "-" in gene IDs... replacing them here
+  # libSBML seems not to allow ".", ":", "-" in gene and model IDs... replacing them here
   # with underscores
   regrepl <- "\\.|\\:|-"
   if(any(grepl(regrepl,model@allGenes))) {
     model@allGenes <- gsub(regrepl,"_",model@allGenes)
     model@genes <- lapply(model@genes, FUN = function(x) gsub(regrepl,"_",x))
     model@genes_attr$name <- gsub(regrepl, "_", model@genes_attr$name)
+    model@mod_id <- gsub(regrepl,"_", model@mod_id)
     # warning("Some gene IDs contain dots ('.'). Replacing them with underscores ('_').")
   }
 
