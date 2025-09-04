@@ -31,8 +31,6 @@ fva <- function(model, react = NULL, opt.factor = 1) {
     stop("Please check your reaction IDs/indices in argument 'react'.")
   }
 
-  model <- enforceMaxFlux(model)
-
   #----------------------------------------------------------------------------#
   # First: Basic FBA to find objective value                                   #
   #----------------------------------------------------------------------------#
@@ -46,8 +44,12 @@ fva <- function(model, react = NULL, opt.factor = 1) {
              nCols = react_num(model),
              nRows = met_num(model)+constraint_num(model),
              mat   = rbind(model@S, model@constraints@coeff),
-             ub    = model@uppbnd,
-             lb    = model@lowbnd,
+             ub    = ifelse(abs(model@uppbnd)>COBRAR_SETTINGS("MAXIMUM"),
+                            sign(model@uppbnd)*COBRAR_SETTINGS("MAXIMUM"),
+                            model@uppbnd),
+             lb    = ifelse(abs(model@lowbnd)>COBRAR_SETTINGS("MAXIMUM"),
+                            sign(model@lowbnd)*COBRAR_SETTINGS("MAXIMUM"),
+                            model@lowbnd),
              obj   = model@obj_coef,
              rlb   = c(rep(0, met_num(model)),
                        model@constraints@lb),

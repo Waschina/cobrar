@@ -1,12 +1,12 @@
 Package: cobrar
 Title: Constraint-Based Metabolic Network Analysis in R
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: 
     c(person("Silvio", "Waschina", email = "s.waschina@nutrinf.uni-kiel.de", role = c("aut", "cre"),
              comment = c(ORCID = "0000-0002-6290-3593")),
       person("Johannes", "Zimmermann", role = c("aut"),
              comment = c(ORCID = "0000-0002-5041-1954")),
-      person("Sina", "Zimmermann", role = c("aut"),
+      person("Sina", "Froitzheim", role = c("aut"),
              comment = c(ORCID = "0009-0005-0537-4970"))
       )
 URL: https://github.com/Waschina/cobrar, https://waschina.github.io/cobrar/
@@ -19,7 +19,7 @@ SystemRequirements:
     GLPK (>= 4.65)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 LinkingTo: 
     Rcpp,
     RcppArmadillo

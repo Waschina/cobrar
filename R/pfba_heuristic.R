@@ -60,8 +60,6 @@ pfbaHeuristic <- function(model, costcoeffw = NULL, costcoefbw = NULL,
   if(!is.null(costcoefbw) && !is.numeric(costcoefbw))
     stop("Argument 'costcoefbw' must be a numeric vector")
 
-  model <- enforceMaxFlux(model)
-
   nc <- react_num(model)
   nr <- met_num(model)
 
@@ -108,8 +106,12 @@ pfbaHeuristic <- function(model, costcoeffw = NULL, costcoefbw = NULL,
              nCols = ncol(newS),
              nRows = nr+constraint_num(model),
              mat   = rbind(newS, newConstrMat),
-             ub    = newUB,
-             lb    = newLB,
+             ub    = ifelse(abs(newUB)>COBRAR_SETTINGS("MAXIMUM"),
+                            sign(newUB)*COBRAR_SETTINGS("MAXIMUM"),
+                            newUB),
+             lb    = ifelse(abs(newLB)>COBRAR_SETTINGS("MAXIMUM"),
+                            sign(newLB)*COBRAR_SETTINGS("MAXIMUM"),
+                            newLB),
              obj   = newObj,
              rlb   = c(rep(0, nr), model@constraints@lb),
              rtype = c(rep("E", nr), model@constraints@rtype),

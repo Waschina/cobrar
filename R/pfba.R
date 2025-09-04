@@ -29,8 +29,6 @@ pfba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
   if(!is.null(costcoefbw) && !is.numeric(costcoefbw))
     stop("Argument 'costcoefbw' must be a numeric vector")
 
-  model <- enforceMaxFlux(model)
-
   #----------------------------------------------------------------------------#
   # First: Basic FBA to find objective value                                   #
   #----------------------------------------------------------------------------#
@@ -44,8 +42,12 @@ pfba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
              nCols = react_num(model),
              nRows = met_num(model)+constraint_num(model),
              mat   = rbind(model@S, model@constraints@coeff),
-             ub    = model@uppbnd,
-             lb    = model@lowbnd,
+             ub    = ifelse(abs(model@uppbnd)>COBRAR_SETTINGS("MAXIMUM"),
+                            sign(model@uppbnd)*COBRAR_SETTINGS("MAXIMUM"),
+                            model@uppbnd),
+             lb    = ifelse(abs(model@lowbnd)>COBRAR_SETTINGS("MAXIMUM"),
+                            sign(model@lowbnd)*COBRAR_SETTINGS("MAXIMUM"),
+                            model@lowbnd),
              obj   = model@obj_coef,
              rlb   = c(rep(0, met_num(model)),
                        model@constraints@lb),
