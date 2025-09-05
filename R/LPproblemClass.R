@@ -233,3 +233,19 @@ setGeneric("addSingleConstraint", function(lp, ...) {
 setGeneric("fvaJob", function(lp, ...) {
   standardGeneric("fvaJob")
 })
+
+
+#' Delete an LP problem
+#'
+#' Deletes an existing \link{LPproblem} and frees associated memory.
+#'
+#' @param lp Object of class \link{LPproblem}
+#' @param ... Additional parameters passed on to the specific method instance.
+#'
+#' @docType methods
+#' @rdname deleteLP-methods
+#' @export
+setGeneric("deleteLP", function(lp, ...) {
+  standardGeneric("deleteLP")
+})
+

@@ -66,6 +66,10 @@ fba <- function(model) {
 
   redCosts <- getRedCosts(LPprob)
 
+  #----------------------------------------------------------------------------#
+  # Delete LP-Problem and free associated memory                               #
+  #----------------------------------------------------------------------------#
+  deleteLP(LPprob)
 
   return(new("FluxPrediction",
              algorithm = "FBA",

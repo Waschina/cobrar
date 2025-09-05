@@ -5,6 +5,10 @@ getGLPKVersion <- function() {
     .Call(`_cobrar_getGLPKVersion`)
 }
 
+lpXPtrFinalizer <- function(lp_ptr) {
+    invisible(.Call(`_cobrar_lpXPtrFinalizer`, lp_ptr))
+}
+
 initProb <- function(name, tol_bnd) {
     .Call(`_cobrar_initProb`, name, tol_bnd)
 }

@@ -22,9 +22,11 @@ Rcpp::CharacterVector getGLPKVersion() {
 struct glp_prob;
 
 // Delete GLP problem
+// [[Rcpp::export]]
 void lpXPtrFinalizer(SEXP lp_ptr) {
   glp_prob* lp = (glp_prob*)R_ExternalPtrAddr(lp_ptr);
   glp_delete_prob(lp);
+  R_ClearExternalPtr(lp_ptr);
 }
 
 // [[Rcpp::export]]
@@ -59,7 +61,7 @@ SEXP initProb(const char* name, double tol_bnd)
   // }
 
   SEXP xp = R_MakeExternalPtr(lp, R_NilValue, R_NilValue);
-  R_RegisterCFinalizer(xp, lpXPtrFinalizer);
+  // R_RegisterCFinalizer(xp, lpXPtrFinalizer);
 
   return xp;
 }

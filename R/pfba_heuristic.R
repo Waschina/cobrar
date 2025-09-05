@@ -134,6 +134,11 @@ pfbaHeuristic <- function(model, costcoeffw = NULL, costcoefbw = NULL,
   objRes    <- as.numeric(lp_fluxes %*% model@obj_coef)
   redCosts  <- getRedCosts(LPprob)
 
+  #----------------------------------------------------------------------------#
+  # Delete LP-Problem and free associated memory                               #
+  #----------------------------------------------------------------------------#
+  deleteLP(LPprob)
+
 
   return(new("FluxPrediction",
              algorithm = "pFBA (heuristic)",

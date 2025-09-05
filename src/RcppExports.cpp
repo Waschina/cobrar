@@ -21,6 +21,16 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// lpXPtrFinalizer
+void lpXPtrFinalizer(SEXP lp_ptr);
+RcppExport SEXP _cobrar_lpXPtrFinalizer(SEXP lp_ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type lp_ptr(lp_ptrSEXP);
+    lpXPtrFinalizer(lp_ptr);
+    return R_NilValue;
+END_RCPP
+}
 // initProb
 SEXP initProb(const char* name, double tol_bnd);
 RcppExport SEXP _cobrar_initProb(SEXP nameSEXP, SEXP tol_bndSEXP) {
@@ -658,6 +668,7 @@ RcppExport SEXP _rcpp_module_boot_sbml_module();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_cobrar_getGLPKVersion", (DL_FUNC) &_cobrar_getGLPKVersion, 0},
+    {"_cobrar_lpXPtrFinalizer", (DL_FUNC) &_cobrar_lpXPtrFinalizer, 1},
     {"_cobrar_initProb", (DL_FUNC) &_cobrar_initProb, 2},
     {"_cobrar_setObjDirLP", (DL_FUNC) &_cobrar_setObjDirLP, 2},
     {"_cobrar_addColsLP", (DL_FUNC) &_cobrar_addColsLP, 2},

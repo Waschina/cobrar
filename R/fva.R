@@ -102,6 +102,11 @@ fva <- function(model, react = NULL, opt.factor = 1) {
   }
 
   res <- do.call("rbind",res)
-  return(res)
 
+  #----------------------------------------------------------------------------#
+  # Delete LP-Problem and free associated memory                               #
+  #----------------------------------------------------------------------------#
+  deleteLP(LPprob)
+
+  return(res)
 }

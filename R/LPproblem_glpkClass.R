@@ -464,3 +464,17 @@ setMethod("fvaJob", signature(lp = "LPproblem_glpk"),
             return(fvares)
           }
 )
+
+#' @rdname deleteLP-methods
+#' @aliases deleteLP,LPproblem_glpk
+#' @export
+setMethod("deleteLP", signature(lp = "LPproblem_glpk"),
+          function(lp) {
+
+            out <- TRUE
+
+            lpXPtrFinalizer(lp@ptr)
+
+            return(out)
+          }
+)
