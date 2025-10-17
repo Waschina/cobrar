@@ -931,7 +931,7 @@ bool writeSBML(
 
     StringVector met_id,
     StringVector met_name,
-    NumericVector met_charge,
+    IntegerVector met_charge,
     StringVector met_formula,
     StringVector met_comp,
     Rcpp::ListOf<StringVector> met_cvterms,
@@ -1067,12 +1067,13 @@ bool writeSBML(
     Species* sp =  model->createSpecies();
 
     FbcSpeciesPlugin* splugin = static_cast<FbcSpeciesPlugin*>(sp->getPlugin("fbc"));
+    int ch = met_charge[i];
 
     sp->setId(Rcpp::as<std::string>(met_id[i]));
     sp->setMetaId(sp->getId());
     sp->setName(Rcpp::as<std::string>(met_name[i]));
     splugin->setChemicalFormula(Rcpp::as<std::string>(met_formula[i]));
-    splugin->setCharge(met_charge[i]);
+    splugin->setCharge(ch);
     sp->setConstant(false);
     sp->setCompartment(Rcpp::as<std::string>(met_comp[i]));
     sp->setHasOnlySubstanceUnits(false);
