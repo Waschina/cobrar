@@ -120,6 +120,20 @@ fba(mod)
 #> Secondary objective:    NA
 ```
 
+## FROG analysis (quick start)
+
+```r
+library(cobrar)
+f <- system.file("extdata","e_coli_core.xml", package="cobrar")
+mod <- readSBMLmod(f)
+
+res <- frog_run(mod, obj_rxn = "BIOMASS_Ecoli_core_w_GAM", sense = "max",
+                fva_frac = 1.0, ko_threads = 1)
+
+frog_export(res, out_dir = "FROG_report", make_omex = TRUE)
+```
+
+
 ## Key differences to sybil
 
 - cobrar is fully functional from reading SBML files until optimisation
