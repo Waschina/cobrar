@@ -26,10 +26,14 @@ LinkingTo:
 Imports: 
     Rcpp,
     methods
-Suggests: 
+Suggests:
     knitr,
     rmarkdown,
-    ggplot2
+    ggplot2,
+    testthat (>= 3.0.0),
+    covr,
+    lintr
+Config/testthat/edition: 3
 VignetteBuilder: knitr
 Collate: 
     'ConstraintsClass.R'
