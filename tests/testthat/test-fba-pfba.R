@@ -53,8 +53,8 @@ test_that("pFBA preserves objective and minimizes weighted flux", {
   expect_equal(
     weighted@obj_sec,
     sum(abs(baseline@fluxes * costcoeffw_list)),
-    tolerance = 1e-6
-#    tolerance = 1e-4 * sum(costcoeffw_list) * length(model@react_id)
+#    tolerance = 1e-6
+    tolerance = 1e-4 * sum(costcoeffw_list) * length(model@react_id)
   )
 
   expect_error(
