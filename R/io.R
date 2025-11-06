@@ -12,10 +12,10 @@
 #' @import Matrix
 #' @export
 readSBMLmod <- function(file_path) {
+  if(!file.exists(file_path)) stop ("File not found") 
   is_compressed <- FALSE
-
   file_path <- normalizePath(file_path)
-
+ 
   if(grepl("\\.gz$",file_path)) {
     is_compressed <- TRUE
     fileconn <- gzfile(file_path)
