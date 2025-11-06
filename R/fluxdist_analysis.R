@@ -16,7 +16,8 @@
 #' @export
 getExchanges <- function(model, sol) {
 
-  exind <- which(grepl("^EX_", model@react_id))
+  exind <- which(grepl("^EX_", model@react_id)) #here it should be using its own 
+                                           #function to find Exch. reactions.
 
   df <- data.frame(ID = model@react_id[exind],
                    name = model@react_name[exind],
