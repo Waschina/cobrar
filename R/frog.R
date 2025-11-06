@@ -26,22 +26,24 @@
 #' frog_export(res, out_dir = "FROG_report", make_omex = TRUE)
 #' }
 #' @export
-frog_run <- function(mod, obj_rxn = NULL, sense = c("max","min"),
+
+frog_run <- function(mod, obj_rxn = NULL, sense = "max",
                      fva_frac = 1.0, ko_threads = 1) {
   if (!requireNamespace("cobrar", quietly = TRUE)) {
     stop("Package 'cobrar' is required.")
   }
+  
   sense <- match.arg(sense)
-
+  
   # set objective if requested (non-destructive: work on a copy)
   if (!is.null(obj_rxn)) {
     rid <- tryCatch(cobrar::react_pos(mod, obj_rxn), error=function(e) integer())
     if (length(rid) != 1L) stop("Objective reaction not found: ", obj_rxn)
     obj <- rep(0, tryCatch(cobrar::react_num(mod), error=function(e) 0L))
     obj[rid] <- 1
-    mod <- cobrar::changeObjFunc(mod, obj)
+    mod <- cobrar::changeObjFunc(mod, obj_rxn)
   }
-  mod <- cobrar::setObjDir(mod, ifelse(sense=="max", "max", "min"))
+  mod <- cobrar::setObjDir(mod, ifelse(sense=="max", "maximize", "minimize"))
 
   # FBA reference
   fba_res <- suppressMessages(cobrar::fba(mod))
@@ -77,31 +79,37 @@ frog_run <- function(mod, obj_rxn = NULL, sense = c("max","min"),
 #' Run Flux Variability Analysis for FROG
 #' @param mod CobraR model
 #' @param fba_res Optional FBA result to reuse
-#' @param fraction_of_opt Fraction of optimal objective (0,1]
+#' @param fva_frac Fraction of optimal objective (0,1]
 #' @return data.frame with columns: reaction, min, max
 #' @export
-frog_fva <- function(mod, fba_res = NULL, fraction_of_opt = 1.0) {
-  if (!is.numeric(fraction_of_opt) || fraction_of_opt <= 0 || fraction_of_opt > 1)
-    stop("fraction_of_opt must be in (0,1].")
-  if (is.null(fba_res)) fba_res <- cobrar::fba(mod)
+frog_fva <- function(mod, fba_res = NULL, fva_frac = 1.0) {
+  if (!is.numeric(fva_frac) || fva_frac <= 0 || fva_frac > 1) 
+    stop("fva_frac must be in (0,1].")
+    if (is.null(fba_res)) fba_res <- cobrar::fba(mod)
   if (is.na(fba_res@obj)) stop("No optimal solution for FVA baseline")
   suppressMessages({
-    fv <- cobrar::fva(mod, fraction_of_optimum = fraction_of_opt)
-  })
+    fv <- cobrar::fva(mod, opt.factor = fva_frac)})
+  if(!all(mod@react_id == fv$react)) stop ('Reaction ids in fva dont match reaction ids in fba')
   data.frame(
-    reaction = fv$reaction,
-    min = fv$min,
-    max = fv$max,
+    model =   mod@mod_id,
+    objective = 'obj',
+    reaction = fv$react,
+    flux = fba_res@fluxes,
+    status = fba_res@stat_term,
+    minimum = fv$min,
+    maximum = fv$max,
+    fraction_optimum = fva_frac,
     stringsAsFactors = FALSE
   )
 }
 
 frog_tidy_fba <- function(fba_res) {
   data.frame(
-    reaction = names(fba_res@fluxes),
-    flux = as.numeric(fba_res@fluxes),
-    objective = fba_res@obj,
-    solver_status = fba_res@stat,
+    model = mod@mod_id,
+    # reaction = names(fba_res@fluxes),
+    # flux = as.numeric(fba_res@fluxes),
+    solver_status = fba_res@stat_term,
+    value = fba_res@obj,
     stringsAsFactors = FALSE
   )
 }
@@ -112,8 +120,10 @@ frog_tidy_fba <- function(fba_res) {
 #' @return data.frame: reaction, objective, lethal
 #' @export
 frog_reaction_deletion <- function(mod, ko_threads = 1) {
-  rxns <- tryCatch(cobrar::react_pos(mod), error=function(e) integer())
-  base_obj <- tryCatch(cobrar::fba(mod)@obj, error=function(e) NA_real_)
+  #rxns <- tryCatch(cobrar::react_pos(mod), error=function(e) integer())
+  rxns <- mod@react_id
+  #base_obj <- tryCatch(cobrar::fba(mod)@obj, error=function(e) NA_real_)
+  base_obj <- suppressMessages(cobrar::fba(mod))@obj
   worker <- function(i) {
     m <- mod
     # KO by fixing bounds to 0
@@ -136,35 +146,61 @@ frog_reaction_deletion <- function(mod, ko_threads = 1) {
 }
 
 #' Gene single-deletion scan (via GPR where available)
+
+####Do we want to include unique genes?
+# if (uniqueGene == 1)
+#   
+#   % detect whether there are alternate transcripts
+# transcriptsPresent = false;
+# if any(~cellfun(@isempty, regexp(model.genes,'\.[0-9]+$'))) %If there are any genes that end on a transcript.
+# transcriptsPresent = true;
+# [geneList,rem] = strtok(geneList,'.');
+# geneList = unique(geneList);
+# nGenes = length(geneList);
+# nDelGenes = length(geneList);
+# else
+#   nGenes = length(model.genes);
+# nDelGenes = length(geneList);
+
 #' @param mod CobraR model
 #' @param ko_threads parallel workers (Unix only)
 #' @return data.frame: gene, objective, lethal
 #' @export
-frog_gene_deletion <- function(mod, ko_threads = 1) {
-  g_ids <- tryCatch(cobrar::gene_pos(mod, to = "id"), error=function(e) character())
-  # Preferred mapping via cobrar::geneDel() if available
-  gmap <- tryCatch(cobrar::geneDel(mod), error=function(e) NULL)
 
+
+frog_gene_deletion <- function(mod, ko_threads = 1) {
+  #g_ids <- tryCatch(cobrar::gene_pos(mod, to = "id"), error=function(e) character())
+  g_ids <- mod@allGenes
+  # Preferred mapping via cobrar::geneDel() if available
+  # For each gene, get the affected reactions when it's deleted
+  gene_reaction_map <- lapply(g_ids, function(g) {
+    tryCatch(geneDel(mod, g), error = function(e) character())  # in case gene_del fails
+  })
+  
+  # Name each element of the list by its gene
+  names(gene_reaction_map) <- g_ids
+  
   base_obj <- tryCatch(cobrar::fba(mod)@obj, error=function(e) NA_real_)
+  # Define worker function using the gene_reaction_map
   worker <- function(g) {
     m <- mod
-    affected <- character()
-    if (!is.null(gmap)) {
-      # expect data.frame with columns $gene and $reaction; be permissive
-      gg <- tryCatch(gmap$gene, error=function(e) NULL)
-      rr <- tryCatch(gmap$reaction, error=function(e) NULL)
-      if (!is.null(gg) && !is.null(rr)) {
-        affected <- unique(rr[gg == g])
-      }
-    }
+    affected <- gene_reaction_map[[g]]
+    # Knock out affected reactions if any
     if (length(affected) > 0) {
-      m <- cobrar::changeBounds(m, cobrar::react_pos(m, affected), lb = 0, ub = 0)
+      m <- tryCatch(
+        cobrar::changeBounds(m, cobrar::react_pos(m, affected), lb = 0, ub = 0),
+        error = function(e) m
+      )
     }
-    fr <- suppressMessages(cobrar::fba(m))
+    
+    # Run FBA
+    fr <- tryCatch(suppressMessages(cobrar::fba(m)), error = function(e) NULL)
+    
+    # Return result row
     data.frame(
       gene = g,
-      objective = ifelse(is.na(fr@obj), NA_real_, fr@obj),
-      lethal = ifelse(is.na(fr@obj) || is.na(base_obj), NA, fr@obj < 1e-9 & base_obj > 1e-9),
+      objective = if (!is.null(fr)) fr@obj else NA_real_,
+      lethal = if (is.null(fr) || is.na(base_obj)) NA else (fr@obj < 1e-9 & base_obj > 1e-9),
       stringsAsFactors = FALSE
     )
   }
@@ -190,7 +226,7 @@ frog_objective_checks <- function(mod, fba_res = NULL) {
   list(
     feasible = !is.na(obj),
     objective_value = obj,
-    objective_direction = tryCatch(cobrar::COBRAR_SETTINGS()$obj_dir, error=function(e) NA),
+    objective_direction = tryCatch(mod@obj_dir, error=function(e) NA),
     nonzero_flux_at_objective = any(abs(fba_res@fluxes) > 1e-12),
     biomass_guess = tryCatch({
       bm <- cobrar::guessBMReaction(mod)
@@ -205,8 +241,8 @@ frog_metadata <- function(mod) {
     cobrar_version = tryCatch(as.character(utils::packageVersion("cobrar")), error=function(e) NA),
     sbml_level = 3, sbml_version = 2, fbc_version = 2,
     model = list(
-      id = tryCatch(attr(mod, "id"), error=function(e) NA),
-      name = tryCatch(attr(mod, "name"), error=function(e) NA),
+      id = tryCatch(mod@mod_id, error=function(e) NA),
+      name = tryCatch(mod@mod_name, error=function(e) NA),
       reactions = tryCatch(cobrar::react_num(mod), error=function(e) NA),
       metabolites = tryCatch(cobrar::met_num(mod), error=function(e) NA),
       genes = tryCatch(cobrar::gene_num(mod), error=function(e) NA)
