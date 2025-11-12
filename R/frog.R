@@ -106,6 +106,7 @@ frog_fva <- function(mod, fba_res = NULL, fva_frac = 1.0) {
 frog_tidy_fba <- function(fba_res) {
   data.frame(
     model = mod@mod_id,
+    objective = 'obj',
     # reaction = names(fba_res@fluxes),
     # flux = as.numeric(fba_res@fluxes),
     solver_status = fba_res@stat_term,
@@ -126,17 +127,17 @@ frog_reaction_deletion <- function(mod, ko_threads = 1) {
   base_obj <- suppressMessages(cobrar::fba(mod))@obj
   worker <- function(i) {
     m <- mod
-    # KO by fixing bounds to 0
-    m <- cobrar::changeBounds(m, i, lb = 0, ub = 0)
+    m <- cobrar::rmReact(m, i)
     fr <- suppressMessages(cobrar::fba(m))
     data.frame(
       reaction = tryCatch(cobrar::react_pos(mod, i, to = "id"), error=function(e) as.character(i)),
       objective = ifelse(is.na(fr@obj), NA_real_, fr@obj),
+      solver_status = fr@stat_term,
       lethal = ifelse(is.na(fr@obj) || is.na(base_obj), NA, fr@obj < 1e-9 & base_obj > 1e-9),
       stringsAsFactors = FALSE
     )
   }
-  if (length(rxns) == 0L) return(data.frame(reaction=character(), objective=numeric(), lethal=logical()))
+  if (length(rxns) == 0L) return(data.frame(reaction=character(), objective=numeric(), solver_status =character(), lethal=logical()))
   if (.Platform$OS.type != "windows" && ko_threads > 1 && requireNamespace("parallel", quietly = TRUE)) {
     parts <- parallel::mclapply(rxns, worker, mc.cores = ko_threads)
   } else {
@@ -145,9 +146,14 @@ frog_reaction_deletion <- function(mod, ko_threads = 1) {
   do.call(rbind, parts)
 }
 
-#' Gene single-deletion scan (via GPR where available)
 
-####Do we want to include unique genes?
+
+#' @param mod CobraR model
+#' @param ko_threads parallel workers (Unix only)
+#' @return data.frame: gene, objective, lethal
+#' @export
+
+####Do we want to include unique genes? (below code from MATLAB)
 # if (uniqueGene == 1)
 #   
 #   % detect whether there are alternate transcripts
@@ -162,36 +168,17 @@ frog_reaction_deletion <- function(mod, ko_threads = 1) {
 #   nGenes = length(model.genes);
 # nDelGenes = length(geneList);
 
-#' @param mod CobraR model
-#' @param ko_threads parallel workers (Unix only)
-#' @return data.frame: gene, objective, lethal
-#' @export
-
-
 frog_gene_deletion <- function(mod, ko_threads = 1) {
-  #g_ids <- tryCatch(cobrar::gene_pos(mod, to = "id"), error=function(e) character())
   g_ids <- mod@allGenes
-  # Preferred mapping via cobrar::geneDel() if available
-  # For each gene, get the affected reactions when it's deleted
-  gene_reaction_map <- lapply(g_ids, function(g) {
-    tryCatch(geneDel(mod, g), error = function(e) character())  # in case gene_del fails
-  })
-  
-  # Name each element of the list by its gene
-  names(gene_reaction_map) <- g_ids
-  
+ 
   base_obj <- tryCatch(cobrar::fba(mod)@obj, error=function(e) NA_real_)
   # Define worker function using the gene_reaction_map
   worker <- function(g) {
     m <- mod
-    affected <- gene_reaction_map[[g]]
-    # Knock out affected reactions if any
-    if (length(affected) > 0) {
-      m <- tryCatch(
-        cobrar::changeBounds(m, cobrar::react_pos(m, affected), lb = 0, ub = 0),
+     m <- tryCatch(
+        cobrar::rmGene(m, g),
         error = function(e) m
       )
-    }
     
     # Run FBA
     fr <- tryCatch(suppressMessages(cobrar::fba(m)), error = function(e) NULL)
@@ -200,12 +187,13 @@ frog_gene_deletion <- function(mod, ko_threads = 1) {
     data.frame(
       gene = g,
       objective = if (!is.null(fr)) fr@obj else NA_real_,
+      solver_status = fr@stat_term,
       lethal = if (is.null(fr) || is.na(base_obj)) NA else (fr@obj < 1e-9 & base_obj > 1e-9),
       stringsAsFactors = FALSE
     )
   }
   if (length(g_ids) == 0L) {
-    return(data.frame(gene=character(), objective=numeric(), lethal=logical()))
+    return(data.frame(gene=character(), objective=numeric(), solver_status = character() ,lethal=logical()))
   }
   if (.Platform$OS.type != "windows" && ko_threads > 1 && requireNamespace("parallel", quietly = TRUE)) {
     parts <- parallel::mclapply(g_ids, worker, mc.cores = ko_threads)
@@ -304,16 +292,33 @@ frog_export <- function(frog, out_dir = "FROG_report", make_omex = TRUE) {
     '</omexManifest>\n'
   )
   writeLines(manifest, file.path(out_dir, "omex-manifest.xml"))
-
   if (isTRUE(make_omex)) {
-    omex <- file.path(normalizePath(file.path(out_dir, "..")), "FROG.omex")
+    omex_name <- "FROG.omex"
+    omex_tmp_path <- file.path(tempdir(), omex_name)
+    omex_final_path <- normalizePath(file.path(out_dir, omex_name), mustWork = FALSE)
+    
     old <- getwd(); on.exit(setwd(old), add = TRUE)
     setwd(out_dir)
-    utils::zip(zipfile = omex, files = c("frog.json","fba.csv","fva.csv",
-                                         "reaction_deletion.csv","gene_deletion.csv",
-                                         "objective_checks.csv","omex-manifest.xml"))
-    message("Wrote ", omex)
-    return(invisible(omex))
+    
+    # Create OMEX archive inside tempdir
+    utils::zip(zipfile = omex_tmp_path,
+               files = c("frog.json","fba.csv","fva.csv",
+                         "reaction_deletion.csv","gene_deletion.csv",
+                         "objective_checks.csv","omex-manifest.xml"))
+    
+    # Restore working directory
+    setwd(old)
+    
+    # Clean report folder
+    unlink(list.files(out_dir, full.names = TRUE))
+    
+    # Move OMEX into report folder
+    file.copy(omex_tmp_path, omex_final_path, overwrite = TRUE)
+    unlink(omex_tmp_path)
+    
+    message("Wrote ", omex_final_path)
+    return(invisible(omex_final_path))
   }
   invisible(out_dir)
+
 }
