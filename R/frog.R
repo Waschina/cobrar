@@ -224,8 +224,9 @@ frog_objective_checks <- function(mod, fba_res = NULL) {
 }
 
 frog_metadata <- function(mod) {
+  now <- Sys.time(); attr(now, "tzone") <- "UTC"
   list(
-    timestamp_utc = as.character(Sys.time()),
+    timestamp_utc = format(now, "%Y-%m-%d %H:%M:%S %Z"),
     cobrar_version = tryCatch(as.character(utils::packageVersion("cobrar")), error=function(e) NA),
     sbml_level = 3, sbml_version = 2, fbc_version = 2,
     model = list(
