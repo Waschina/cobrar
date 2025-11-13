@@ -1,0 +1,188 @@
+# Add or modify a reaction
+
+The function can be used to add or modify a reaction in an existing
+model.
+
+## Usage
+
+``` r
+addReact(
+  model,
+  id,
+  met,
+  Scoef,
+  reversible = FALSE,
+  lb = 0,
+  ub = COBRAR_SETTINGS("MAXIMUM"),
+  obj = 0,
+  subsystem = NA,
+  subsystemName = NA,
+  gprAssoc = NA,
+  reactName = NA,
+  metName = NA,
+  metComp = NA,
+  metCharge = NA,
+  metChemicalFormula = NA,
+  CVTerms = NA,
+  SBOTerm = "guess"
+)
+```
+
+## Arguments
+
+- model:
+
+  Model of class [ModelOrg](ModelOrg-class.md)
+
+- id:
+
+  Character for the reaction ID
+
+- met:
+
+  Character vector providing the IDs of metabolites that participate in
+  the reaction
+
+- Scoef:
+
+  Numeric vector (same length as `met`) of stoichiometric coefficients
+  for the metabolites in `met`. The value in `Scoef[i]` is the
+  stoichiometric coefficient of the metabolite in `met[i]`.
+
+- reversible:
+
+  This option has now effect and is only here for legacy reasons.
+  Whether a reaction is reversible or not is inferred by cobrar based on
+  the lower and upper bounds.
+
+- lb, ub:
+
+  Single numeric values that define the lower and upper flux limits,
+  respectively.
+
+- obj:
+
+  Single numeric value for the coefficient of the reaction in the
+  objective function.
+
+- subsystem:
+
+  A vector of character strings containing the sub system IDs to which
+  the reaction belongs.
+
+- subsystemName:
+
+  A character vector (same length as `subsystem`) for the names of the
+  subsystems. If the subsystem is already part of the model and you do
+  not want to change its name, just use NA the corresponding entry.
+
+- gprAssoc:
+
+  A single character string giving the Gene-Product-Reaction (GPR)
+  association for the reaction. If NA, no GRP association is created.
+
+- reactName:
+
+  A single character string giving the name for the reaction. If NA, the
+  value of argument `id` is used.
+
+- metName:
+
+  A vector of character strings of the same length as `met` containing
+  the metabolites names for the metabolites given in argument `met`.
+
+- metComp:
+
+  A vector of character strings of the same length as `met` specifying
+  the compartment IDs for the metabolites given in argument `met`.
+
+- metCharge:
+
+  A numeric vector of the same length as `met` defining the charges for
+  the metabolites given in argument `met`.
+
+- metChemicalFormula:
+
+  A character vector of the same length as `met` defining the chemical
+  formulas for the metabolites given in argument `met`.
+
+- CVTerms:
+
+  Cross-references to other resources.
+
+- SBOTerm:
+
+  A term ID from the Systems Biology Ontology. If 'guess', the SBO will
+  be inferred from the reaction details.
+
+## Details
+
+If you want to use the function to update data of a pre-existing
+reaction but not its stoichiometry, use NA for the parameters 'met' and
+'Scoeff'. If the reaction is already part of the model, any reaction
+value (e.g., lb, ub, reactName), that is set to NA has the effect that
+the old value will be used. If the reaction is already part of the
+model, and values for the parameter `subsystem` are provided, all
+previous set subsystem associations of the reaction will be removed. If
+metabolites or subsystems are not part of the model yet, they will be
+added.
+
+## Examples
+
+``` r
+# This example adds the 4-aminobutyrate degradation pathway to the E. coli
+# core metabolic model
+fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
+mod <- readSBMLmod(fpath)
+
+fba(mod)
+#> Algorithm:              FBA 
+#> Solver status:          solution is optimal 
+#> Optimization status:    optimization process was successful 
+#> Objective fct. value:   0.8739215 
+#> Secondary objective:    NA 
+
+# 4abut transport: 4abut_e + h_e <=> 4abut_c + h_c
+mod <- addReact(mod, id = "ABUTt", Scoef = c(-1,-1,1,1),
+                met = c("4abut_e","h_e","4abut_c","h_c"), reversible = TRUE,
+                lb = -1000, ub = 1000,
+                reactName = "4-aminobutyrate transport in via proton symport",
+                metName = c("4-aminobutyrate",NA, "4-aminobutyrate",NA),
+                metComp = c("e","e","c","c"), metCharge = c(0,NA,0,NA),
+                metChemicalFormula = c("C4H9NO2",NA,"C4H9NO2",NA))
+
+# exchange reaction for 4abut (with 1.5 mmol/gDW/hr availability)
+mod <- addReact(mod, id = "EX_4abut_e", Scoef = c(-1), met = "4abut_e",
+                lb = -1.5, ub = 1000, reactName = "4-aminobutyrate exchange")
+
+# 4abut amninotransferase (EC 2.6.1.19)
+mod <- addReact(mod, id = "ABTA", Scoef = c(-1,-1,1,1),
+                met = c("4abut_c","akg_c","glu__L_c","sucsal_c"),
+                lb = 0,
+                reactName = "4-aminobutyrate transaminase",
+                metName = c(NA,NA,NA,"Succinic semialdehyde"),
+                metComp = c(NA,NA,NA,"c"), metCharge = c(NA,NA,NA,-1),
+                metChemicalFormula = c(NA,NA,NA,"C4H5O3"),
+                subsystem = "GABAdegr", subsystemName = "4-aminobutyrate degradation",
+                CVTerms = "bqbiol_is;http://identifiers.org/ec-code/2.6.1.19",
+                gprAssoc = "b2662 | b1302")
+
+# Succinate-semialdehyde dehydrogenase (NAD) (EC 1.2.1.24)
+mod <- addReact(mod, id = "SSALx", Scoef = c(-1,-1,-1,2,1,1),
+                met = c("h2o_c","nad_c","sucsal_c","h_c","nadh_c","succ_c"),
+                lb = 0,
+                reactName = "Succinate-semialdehyde dehydrogenase (NAD)",
+                subsystem = "GABAdegr",
+                CVTerms = "bqbiol_is;http://identifiers.org/ec-code/1.2.1.24",
+                gprAssoc = "b1525")
+
+printReaction(mod, "SSALx")
+#> [1] "(1) H2O + (1) NAD + (1) Succinic semialdehyde --> (2) H+ + (1) NADH + (1) Succinate"
+
+fba(mod)
+#> Algorithm:              FBA 
+#> Solver status:          solution is optimal 
+#> Optimization status:    optimization process was successful 
+#> Objective fct. value:   0.9674959 
+#> Secondary objective:    NA 
+```

@@ -1,0 +1,49 @@
+# Join multiple metabolic models to form a community
+
+Merges multiple metabolic models into one model where each organisms is
+within an own compartment. Organism compartments are connected by a
+shared extracellular space (i.e., environment), from where the organisms
+can take up nutrients an release metabolic by-products. Exchange
+reactions are attached to the new (shared) extracelluar compartment.
+
+## Usage
+
+``` r
+joinModels(
+  models,
+  mergeLB = "none",
+  mergeUB = "none",
+  origExchangeBounds = "open",
+  abun = rep(1/length(models), length(models))
+)
+```
+
+## Arguments
+
+- models:
+
+  A list of objects of class [ModelOrg](ModelOrg-class.md)
+
+- mergeLB, mergeUB:
+
+  Method to use in cases where the individual models differ in the
+  lower/upper bound values for the same exchange reactions. Option "min"
+  uses the minimum LB/UB values found among the individual models for
+  the exchange reactions in the final merged model. "max" acts
+  analogously. "none" will cause the method to stop with an error, if
+  boundaries differ between input models. Further options:
+  "median","mean".
+
+- origExchangeBounds:
+
+  Method to keep/open the flux boundaries of organism-specific exchange
+  reactions. "keep" does not alter the lower or upper bounds of the
+  organism exchange reactions, that connect the respective organism to
+  the shared extracellular space. "open" removes any constraints on
+  organism-specific exchange reactions. "open_lb" and "open_ub" removes
+  only bounds for lower or upper limits, respectively.
+
+- abun:
+
+  Numeric vector to define the relative abundance of the model organisms
+  in the community. Entries of the vector should ideally sum up to 1.

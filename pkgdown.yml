@@ -1,9 +1,9 @@
 pandoc: 3.1.11
-pkgdown: 2.1.3
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   Additional_constraints: Additional_constraints.html
   cobrar: cobrar.html
   Community_models: Community_models.html
   FVA: FVA.html
-last_built: 2025-10-17T12:59Z
+last_built: 2025-11-13T23:33Z

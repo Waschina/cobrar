@@ -1,0 +1,316 @@
+# cobrar
+
+The R package *cobrar* provides structures and functions for
+constraint-based metabolic network analysis, e.g. the prediction of
+metabolic fluxes using fluxes using Flux Balance Analysis (FBA).
+*cobrar* is inspired by the former CRAN R package *sybil*[(1)](#R1).
+
+## Installation
+
+Please note that *cobrar* requires the two system libraries *libSBML*
+and *glpk*. The following installation instructions for different
+operating systems install the dependencies first, then *cobrar*. If you
+already have *libSBML* and *glpk* installed, you can skip to the last
+part of the instructions.
+
+*cobrar* is under development and the installation instructions
+described will install the latest development version.
+
+#### Ubuntu/Debian/Mint
+
+Install *libSBML* and *glpk*:
+
+``` sh
+sudo apt install libsbml-dev libglpk-dev
+```
+
+Install cobrar (in *R*):
+
+``` r
+# install.packages("remotes")
+remotes::install_github("Waschina/cobrar", build_vignettes = TRUE)
+```
+
+#### Centos/Fedora/RHEL
+
+Install *libSBML* and *glpk*:
+
+``` sh
+sudo yum install libsbml-devel glpk-devel
+```
+
+Install cobrar (in *R*):
+
+``` r
+# install.packages("remotes")
+remotes::install_github("Waschina/cobrar")
+```
+
+#### MacOS
+
+*libSBML* and *glpk* can be installed using homebrew:
+
+``` sh
+brew install glpk brewsci/bio/libsbml
+```
+
+Install cobrar (in *R*):
+
+``` r
+# install.packages("remotes")
+remotes::install_github("Waschina/cobrar")
+```
+
+#### Windows
+
+*cobrar* is currently not available for Windows.
+
+#### Conda
+
+Releases of *cobrar* for linux-64 and osx-64 systems are available via
+[bioconda](https://bioconda.github.io/recipes/r-cobrar/README.html#package-r-cobrar).
+
+``` sh
+conda install bioconda::r-cobrar
+```
+
+## Usage
+
+The full documentation including illustrative examples is available
+[here](https://waschina.github.io/cobrar/).
+
+The vignettes of the package can also be accessed:
+
+``` r
+library(cobrar)
+vignette(package = "cobrar")
+vignette(topic = "cobrar")
+```
+
+A simple Flux Balance Analysis (FBA) for the core metabolism of
+*Escherichia coli*:
+
+``` r
+library(cobrar)
+#> Loading required package: Matrix
+#> cobrar uses...
+#>  - libSBML (v. 5.20.4)
+#>  - glpk (v. 5.0)
+
+fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
+mod <- readSBMLmod(fpath)
+
+fba(mod)
+#> Algorithm:              FBA 
+#> Solver status:          solution is optimal 
+#> Optimization status:    optimization process was successful 
+#> Objective fct. value:   0.8739215 
+#> Secondary objective:    NA
+```
+
+## Key differences to sybil
+
+- cobrar is fully functional from reading SBML files until optimisation
+  of linear programs, without the need of additional packages such as
+  *sybilSBML* or *glpkAPI*.
+- cobrar links to libsbml via libsbml’s C++ API, not the C API as the
+  *sybilSBML* package.
+- The GNU glpk library is a system requirement. There are no
+  links/references to IBM’s CPLEX in the *cobrar* package, which were
+  one reason why *sybil* was discontinued on CRAN.
+- [roxygen2](https://roxygen2.r-lib.org/) is used for documenting
+  functions and classes.
+- Feature trim: A range of functions in *sybil* are not part of
+  *cobrar*.
+- In *cobrar*, R’s garbage collector handles memory management,
+  including memory associated to C++-objects and the pointers to these.
+- Simplifications in class and function architecture
+  - No more Class “SysBiolAlg” nor sub-classes. Different algorithms
+    have their own function and detailed documentation of their return
+    values
+- In *sybil*, columns named “annotation” were actually concatenated
+  CVTerms
+  (<https://synonym.caltech.edu/software/libsbml/5.20.0/cpp-api/class_c_v_term.html>).
+  To avoid confusion with other levels of annotation, the columns
+  (e.g. in `react_attr` or `met_attr`) are named ‘CVTerms’ in *cobrar*.
+- *cobrar* allows to assign SBOTerms to reactions, metabolites, genes.
+- Performance (i.e., computation time) improvements in certain
+  procedures:
+  - identification of dead-end metabolites
+  - reading/exporting SBML files,
+  - pFBA algorithm (a.k.a MTF ‘Minimization of Total Flux’).
+
+## Notes
+
+- *cobrar* exports SBML files level 3 version 2 with `fbc` version 2 and
+  `groups` version 1.
+- Group assignments are only supported for reactions.
+- GLPK is the default solver and is required to build the package. A
+  plugin for IBM’s ILOG CPLEX is available [here
+  (cobrarCPLEX)](https://github.com/Waschina/cobrarCPLEX).
+- *Multiple objectives*. The SBML standard with its `fbc` extension
+  allows to specify more than one objective (class `ListOfObjectives`).
+  However, *cobrar* can only handle one current objective function per
+  model, which is defined as an objective coefficient vector in slot
+  `obj_coef` of an object of class `modelorg`. Note that when reading
+  SBML models, *cobrar* will only use the objective, which is defined as
+  `activeObjective` in the SBML file, or the first objective if no
+  active objective is defined.
+
+## References
+
+1.  Gelius-Dietrich, G., Desouki, A.A., Fritzemeier, C.J., Lercher, M.J.
+    sybil – Efficient constraint-based modelling in R. BMC Syst Biol 7,
+    125 (2013). <https://doi.org/10.1186/1752-0509-7-125>
+
+# Package index
+
+## Model import and export helpers
+
+- [`readSBMLmod()`](readSBMLmod.md) : Reads an SBML file and constructs
+  an object of class 'ModelOrg'
+- [`readSybilmod()`](readSybilmod.md) : Reads a sybil model file and
+  constructs an object of cobrar's class 'ModelOrg'
+- [`writeSBMLmod()`](writeSBMLmod.md) : Exports a Metabolic Network in
+  SBML Format
+
+## Model manipulation tools
+
+- [`addCompartment()`](addCompartment.md) : Add compartments or update
+  their data
+- [`addConstraint()`](addConstraint-methods.md) : Add constraints to
+  model
+- [`addGene()`](addGene.md) : Add genes or update their data
+- [`addMetabolite()`](addMetabolite.md) : Add metabolites or update
+  their data
+- [`addReact()`](addReact.md) : Add or modify a reaction
+- [`addSubsystem()`](addSubsystem.md) : Add subsystems or update their
+  data
+- [`changeBounds()`](changeBounds.md) : Change flux bounds
+- [`changeObjFunc()`](changeObjFunc.md) : Change the objective function
+- [`setObjDir()`](setObjDir.md) : Set objective direction
+- [`rmCompartment()`](rmCompartment.md) : Remove compartments from a
+  model
+- [`rmConstraint()`](rmConstraint.md) : Remove constraints
+- [`rmGene()`](rmGene.md) : Remove genes from a model
+- [`rmMetabolite()`](rmMetabolite.md) : Remove metabolites from a model
+- [`rmReact()`](rmReact.md) : Remove reactions from a model
+- [`rmSubsystem()`](rmSubsystem.md) : Remove subsystems from a model
+
+## Model characteristics
+
+- [`checkCompartmentId()`](checkCompartmentId.md) : Check compartment
+  IDs and Indices
+- [`checkGeneId()`](checkGeneId.md) : Check gene IDs and Indices
+- [`checkMetId()`](checkMetId.md) : Check metabolite IDs and Indices
+- [`checkReactId()`](checkReactId.md) : Check reaction IDs and Indices
+- [`checkSubsystemId()`](checkSubsystemId.md) : Check subsystem IDs and
+  Indices
+- [`comp_num()`](comp_num-methods.md) : Number of compartments
+- [`comp_pos()`](comp_pos-methods.md) : Index of compartment(s)
+- [`constraint_num()`](constraint_num-methods.md) : Number of
+  constraints
+- [`met_num()`](met_num-methods.md) : Number of metabolites
+- [`met_pos()`](met_pos-methods.md) : Index of metabolite(s)
+- [`gene_num()`](gene_num-methods.md) : Number of genes
+- [`gene_pos()`](gene_pos-methods.md) : Index of gene(s)
+- [`geneDel()`](geneDel.md) : Identify reactions affected by gene
+  knockouts
+- [`deadEndMetabolites()`](deadEndMetabolites.md) : Identify dead end
+  metabolites
+- [`findExchReact()`](findExchReact-methods.md) : Find exchange
+  reactions
+- [`printConstraint()`](printConstraint.md) : Print Constraint(s)
+- [`printReaction()`](printReaction.md) : Print reaction(s)
+- [`react_num()`](react_num-methods.md) : Number of reactions
+- [`react_pos()`](react_pos-methods.md) : Index of reaction(s)
+- [`show(`*`<ModelOrg>`*`)`](show-ModelOrg-method.md) : Print a short
+  summary of a metabolic network model
+- [`subsys_num()`](subsys_num-methods.md) : Number of subsystems
+- [`subsys_pos()`](subsys_pos-methods.md) : Index of subsystem(s)
+- [`guessBMReaction()`](guessBMReaction-methods.md) : Guess biomass
+  reaction(s)
+
+## Flux prediction algorithms
+
+- [`fba()`](fba.md) : Flux Balance Analysis
+- [`fva()`](fva.md) : Flux Variability Analysis (FVA)
+- [`pfba()`](pfba.md) : Parsimonious Flux Balance Analysis (pFBA)
+- [`pfbaHeuristic()`](pfbaHeuristic.md) : Heuristic parsimonious Flux
+  Balance Analysis (pFBA)
+
+## Flux analysis tools
+
+- [`getExchanges()`](getExchanges.md) : Get metabolite exchange rates
+- [`show(`*`<FluxPrediction>`*`)`](show-FluxPrediction-method.md) :
+  Print a short summary of a flux prediction result
+
+## Community model functions
+
+- [`joinModels()`](joinModels.md) : Join multiple metabolic models to
+  form a community
+- [`fixBMRatios()`](fixBMRatios.md) : Fixate biomass ratios
+- [`fluxBMCoupling()`](fluxBMCoupling.md) : Couple reaction flux bounds
+  to biomass production
+
+## Chemoinformatics
+
+- [`countElements()`](countElements.md) : Count elements in formulas
+- [`elements()`](elements.md) : Data frame of elements and their average
+  weights
+- [`mass()`](mass.md) : Calculate molar mass of molecules
+
+## Object classes
+
+- [`Constraints-class`](Constraints-class.md)
+  [`Constraints`](Constraints-class.md) : Structure of Constraints Class
+- [`FluxPrediction-class`](FluxPrediction-class.md)
+  [`FluxPrediction`](FluxPrediction-class.md) : Structure of
+  FluxPrediction Class
+- [`ModelOrg-class`](ModelOrg-class.md) [`ModelOrg`](ModelOrg-class.md)
+  : Structure of ModelOrg Class
+- [`ModelComm-class`](ModelComm-class.md)
+  [`ModelComm`](ModelComm-class.md) : Structure of ModelComm Class
+
+## Setup
+
+- [`COBRAR_SETTINGS()`](COBRAR_SETTINGS.md) : Set and get central cobrar
+  parameters
+
+## Internal LP solver connectors
+
+- [`addCols()`](addCols-methods.md) : Add columns to LP problem
+- [`addRows()`](addRows-methods.md) : Add rows to LP problem
+- [`addSingleConstraint()`](addSingleConstraint-methods.md) : Add single
+  constraint
+- [`deleteLP()`](deleteLP-methods.md) : Delete an LP problem
+- [`fvaJob()`](fvaJob-methods.md) : Wrapper function for efficient FVA
+- [`getColsPrimal()`](getColsPrimal-methods.md) : Retrieve column primal
+  value
+- [`getObjValue()`](getObjValue-methods.md) : Get the objective value of
+  a solved LP problem
+- [`getRedCosts()`](getRedCosts-methods.md) : Retrieve column reduced
+  costs
+- [`getSolStat()`](getSolStat-methods.md) : Get the solver status
+- [`loadLPprob()`](loadLPprob-methods.md) : Initialize a LP problem
+- [`loadMatrix()`](loadMatrix-methods.md) : Populate a
+  constraint-X-variable matrix
+- [`setColsBndsObjCoefs()`](setColsBndsObjCoefs-methods.md) : Set column
+  bounds and objective coefficients
+- [`setColsKind()`](setColsKind-methods.md) : Set column types
+- [`setObjDirection()`](setObjDirection-methods.md) : Set objective
+  direction
+- [`setRowsBnds()`](setRowsBnds-methods.md) : Set row bounds
+- [`solveLp()`](solveLp-methods.md) : Solve an LP problem
+- [`LPproblem-class`](LPproblem-class.md)
+  [`LPproblem`](LPproblem-class.md) : Structure of LPproblem Class
+- [`LPproblem_glpk-class`](LPproblem_glpk-class.md) : Structure of
+  LPproblem_glpk Class
+
+# Articles
+
+### Tutorials
+
+- [Flux Variability Analysis (FVA)](FVA.md):
+- [Additional constraints](Additional_constraints.md):
+- [Community models](Community_models.md):
