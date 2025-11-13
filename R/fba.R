@@ -24,6 +24,9 @@
 #' @export
 fba <- function(model) {
 
+  if(all(model@obj_coef == 0))
+    warning("No objective function defined in the model.")
+  
   #----------------------------------------------------------------------------#
   # Initializing and defining LP problem                                       #
   #----------------------------------------------------------------------------#

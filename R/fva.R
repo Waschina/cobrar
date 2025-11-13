@@ -30,6 +30,9 @@ fva <- function(model, react = NULL, opt.factor = 1) {
   if(!all(checkReactId(model, react))) {
     stop("Please check your reaction IDs/indices in argument 'react'.")
   }
+  
+  if(all(model@obj_coef == 0))
+    warning("No objective function defined in the model.")
 
   #----------------------------------------------------------------------------#
   # First: Basic FBA to find objective value                                   #
