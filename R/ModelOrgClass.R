@@ -154,6 +154,48 @@ setClass("ModelOrg",
          ))
 
 
+setValidity("ModelOrg", function(object) {
+  if (length(object@mod_id) != 1) {
+    "@mod_id must be of lenght 1"
+  } else if (length(object@mod_name) != 1) {
+    "@mod_name must be of lenght 1"
+  } else if (length(object@mod_desc) != 1) {
+    "@mod_desc must be of lenght 1"
+  } else if (length(object@mod_compart) != length(object@mod_compart_name)) {
+    "@mod_compart and @mod_compart_name must be same length"
+  } else if (nrow(object@S) != length(object@met_id)) {
+    "@S must have the same number of rows as the length of @met_id"
+  } else if (ncol(object@S) != length(object@react_id)) {
+    "@S must have the same number of columns as the length of @react_id"
+  } else if (length(object@met_id) != length(object@met_name)) {
+    "@met_id and @met_name must be same length"
+  } else if (length(object@met_id) != length(object@met_comp)) {
+    "@met_id and @met_comp must be same length"
+  } else if (length(object@met_id) != nrow(object@met_attr)) {
+    "@met_id must be same length as the number of rows in @met_attr"
+  } else if (length(object@react_id) != length(object@react_name)) {
+    "@react_id and @react_name must be same length"
+  } else if (length(object@react_id) != length(object@react_comp)) {
+    "@react_id and @react_comp must be same length"
+  } else if (length(object@react_id) != length(object@lowbnd)) {
+    "@react_id and @lowbnd must be same length"
+  } else if (length(object@react_id) != length(object@uppbnd)) {
+    "@react_id and @uppbnd must be same length"
+  } else if (length(object@react_id) != nrow(object@react_attr)) {
+    "@react_id must be same length as the number of rows in @react_attr"
+  } else if (length(object@react_id) != length(object@gprRules)) {
+    "@react_id and @gprRules must be same length"
+  } else if (length(object@react_id) != length(object@genes)) {
+    "@react_id and @genes must be same length"
+  } else if (length(object@allGenes) != nrow(object@genes_attr)) {
+    "@allGenes must be same length as the number of rows in @genes_attr"
+  } else if(!all(unlist(object@genes) %in% object@allGenes)) {
+    "All genes in @genes must be part of @allGenes"
+  } else {
+    TRUE
+  }
+})
+
 #------------------------------------------------------------------------------#
 # setters and getters                                                          #
 #------------------------------------------------------------------------------#
