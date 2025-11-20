@@ -156,11 +156,11 @@ setClass("ModelOrg",
 
 setValidity("ModelOrg", function(object) {
   if (length(object@mod_id) != 1) {
-    "@mod_id must be of lenght 1"
+    "@mod_id must be of length 1"
   } else if (length(object@mod_name) != 1) {
-    "@mod_name must be of lenght 1"
+    "@mod_name must be of length 1"
   } else if (length(object@mod_desc) != 1) {
-    "@mod_desc must be of lenght 1"
+    "@mod_desc must be of length 1"
   } else if (length(object@mod_compart) != length(object@mod_compart_name)) {
     "@mod_compart and @mod_compart_name must be same length"
   } else if (nrow(object@S) != length(object@met_id)) {
@@ -173,6 +173,8 @@ setValidity("ModelOrg", function(object) {
     "@met_id and @met_comp must be same length"
   } else if (length(object@met_id) != nrow(object@met_attr)) {
     "@met_id must be same length as the number of rows in @met_attr"
+  } else if (!all(c("chemicalFormula","charge","CVTerms","SBOTerm") %in% colnames(object@met_attr))) {
+    "The data.frame @met_attr must have the columns 'chemicalFormula','charge','CVTerms', and 'SBOTerm'"
   } else if (length(object@react_id) != length(object@react_name)) {
     "@react_id and @react_name must be same length"
   } else if (length(object@react_id) != length(object@react_comp)) {
@@ -183,6 +185,8 @@ setValidity("ModelOrg", function(object) {
     "@react_id and @uppbnd must be same length"
   } else if (length(object@react_id) != nrow(object@react_attr)) {
     "@react_id must be same length as the number of rows in @react_attr"
+  } else if (!all(c("CVTerms","SBOTerm") %in% colnames(object@react_attr))) {
+    "The data.frame @react_attr must have the columns 'CVTerms' and 'SBOTerm'"
   } else if (length(object@react_id) != length(object@gprRules)) {
     "@react_id and @gprRules must be same length"
   } else if (length(object@react_id) != length(object@genes)) {
@@ -191,6 +195,10 @@ setValidity("ModelOrg", function(object) {
     "@allGenes must be same length as the number of rows in @genes_attr"
   } else if(!all(unlist(object@genes) %in% object@allGenes)) {
     "All genes in @genes must be part of @allGenes"
+  } else if(ncol(object@S) != ncol(object@constraints@coeff)) {
+    "Matrix @constraints@S must have the number of columns as the stoichiometric matrix @S"
+  } else if (!validObject(object@constraints)) {
+    ""
   } else {
     TRUE
   }

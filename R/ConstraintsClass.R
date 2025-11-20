@@ -34,3 +34,15 @@ setClass("Constraints",
            rtype = "character"
          )
 )
+
+setValidity("Constraints", function(object) {
+  if (nrow(object@coeff) != length(object@lb)) {
+    "Length of @lb must be equal to the number of columns in matrix @coeff"
+  } else if (nrow(object@coeff) != length(object@ub)) {
+    "Length of @ub must be equal to the number of columns in matrix @coeff"
+  } else if (nrow(object@coeff) != length(object@rtype)) {
+    "Length of @rtype must be equal to the number of columns in matrix @coeff"
+  } else {
+    TRUE
+  }
+})
