@@ -31,8 +31,13 @@ SEXP readSBMLfile(std::string file_path) {
   SBMLReader reader;
   SBMLDocument* document = reader.readSBML(file_path);
 
+  if (document->getErrorLog()->getNumFailsWithSeverity(LIBSBML_SEV_ERROR) > 0) {
+    // document->printErrors();
+    Rcpp::stop("Failed reading SBML document. Please check your SBML file.");
+  }
+
   if (document == nullptr) {
-    Rcpp::stop("Error reading SBML document.");
+    Rcpp::stop("Failed reading SBML document. Please check your SBML file.");
   }
 
   // Convert SBML Level 2 to SBML Level 3 with FBC extension
