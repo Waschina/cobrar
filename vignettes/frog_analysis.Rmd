@@ -1,0 +1,38 @@
+---
+title: "FROG analysis with CobraR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{FROG analysis with CobraR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```r
+# install.packages(c("cobrar","jsonlite"))
+library(cobrar)
+```
+## Load the demo model
+```r
+f <- system.file("extdata","e_coli_core.xml", package="cobrar")
+stopifnot(file.exists(f))
+mod <- readSBMLmod(f)
+```
+## Run FROG
+```r
+res <- frog_run(mod,
+                obj_rxn  = "BIOMASS_Ecoli_core_w_GAM",
+                sense    = "max",
+                fva_frac = 1.0,
+                ko_threads = 1)
+```
+## Inspect results
+```r
+head(res$fba); head(res$fva)
+head(res$reaction_deletion); head(res$gene_deletion)
+res$objective_checks
+```
+## Export a portable FROG report
+```r
+frog_export(res, out_dir = "FROG_report", make_omex = TRUE)
+# Creates FROG_report/ with CSVs + frog.json and FROG.omex one level above.
+```

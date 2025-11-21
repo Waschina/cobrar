@@ -1,0 +1,62 @@
+{
+  "name": "FROG report schema (placeholder)",
+  "version": "0.1",
+  "description": "Minimal fields for frog.json meta section",
+  "properties": {
+    "schema": {
+      "type": "string"
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "timestamp_utc": {
+          "type": "string"
+        },
+        "cobrar_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reactions": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "metabolites": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "genes": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            }
+          }
+        },
+        "checksums": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

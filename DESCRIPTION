@@ -29,7 +29,9 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown,
-    ggplot2
+    ggplot2,
+    jsonlite,
+    testthat
 VignetteBuilder: knitr
 Collate: 
     'ConstraintsClass.R'
@@ -59,3 +61,5 @@ Collate:
     'pfba.R'
     'pfba_heuristic.R'
     'printers.R'
+    'frog.R'
+Config/testthat/edition: 3
