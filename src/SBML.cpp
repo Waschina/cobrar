@@ -32,8 +32,7 @@ SEXP readSBMLfile(std::string file_path) {
   SBMLDocument* document = reader.readSBML(file_path);
 
   if (document->getErrorLog()->getNumFailsWithSeverity(LIBSBML_SEV_ERROR) > 0) {
-    // document->printErrors();
-    Rcpp::stop("Failed reading SBML document. Please check your SBML file.");
+    Rcpp::stop(document->getErrorWithSeverity(0, LIBSBML_SEV_ERROR)->getMessage());
   }
 
   if (document == nullptr) {
