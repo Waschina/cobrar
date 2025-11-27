@@ -28,6 +28,8 @@ pfba <- function(model, costcoeffw = NULL, costcoefbw = NULL) {
     stop("Argument 'costcoeffw' must be a numeric vector")
   if(!is.null(costcoefbw) && !is.numeric(costcoefbw))
     stop("Argument 'costcoefbw' must be a numeric vector")
+  if(all(model@obj_coef == 0))
+    warning("No objective function defined in the model.")
 
   #----------------------------------------------------------------------------#
   # First: Basic FBA to find objective value                                   #
