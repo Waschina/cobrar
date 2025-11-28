@@ -11,3 +11,4 @@ config.log
 config.status
 docs/
 pkgdown/
+configure~
