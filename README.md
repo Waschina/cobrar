@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# cobrar <img src="man/figures/logo.svg" align="right" />
+# cobrar <img src="man/figures/logo.svg" align="right"/>
 
 <!-- badges: start -->
 
@@ -10,6 +10,7 @@
 Badge](https://anaconda.org/bioconda/r-cobrar/badges/version.svg?branch=master&kill_cache=1)](https://anaconda.org/bioconda/r-cobrar)
 [![Anaconda-Server
 Badge](https://anaconda.org/bioconda/r-cobrar/badges/downloads.svg?branch=master&kill_cache=1)](https://anaconda.org/bioconda/r-cobrar)
+
 <!-- badges: end -->
 
 The R package *cobrar* provides structures and functions for
@@ -75,7 +76,9 @@ remotes::install_github("Waschina/cobrar")
 
 #### Windows
 
-*cobrar* is currently not available for Windows.
+Installation of *cobrar* in Windows requires reconfiguration of the R
+environment for package building and installation of *Rtools*. Detailed
+instructions can be found in [README_WIN.md](README_WIN.md).
 
 #### Conda
 
