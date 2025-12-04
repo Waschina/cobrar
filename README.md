@@ -109,7 +109,7 @@ A simple Flux Balance Analysis (FBA) for the core metabolism of
 library(cobrar)
 #> Loading required package: Matrix
 #> cobrar uses...
-#>  - libSBML (v. 5.20.4)
+#>  - libSBML (v. 5.19.0)
 #>  - glpk (v. 5.0)
 
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
@@ -144,10 +144,9 @@ fba(mod)
     have their own function and detailed documentation of their return
     values
 - In *sybil*, columns named “annotation” were actually concatenated
-  CVTerms
-  (<https://synonym.caltech.edu/software/libsbml/5.20.0/cpp-api/class_c_v_term.html>).
-  To avoid confusion with other levels of annotation, the columns
-  (e.g. in `react_attr` or `met_attr`) are named ‘CVTerms’ in *cobrar*.
+  CVTerms (<https://doi.org/10.2390/biecoll-jib-2015-266>). To avoid
+  confusion with other levels of annotation, the columns (e.g. in
+  `react_attr` or `met_attr`) are named ‘CVTerms’ in *cobrar*.
 - *cobrar* allows to assign SBOTerms to reactions, metabolites, genes.
 - Performance (i.e., computation time) improvements in certain
   procedures:

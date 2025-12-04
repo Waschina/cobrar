@@ -119,7 +119,7 @@ fba(mod)
 -   In *cobrar*, R's garbage collector handles memory management, including memory associated to C++-objects and the pointers to these.
 -   Simplifications in class and function architecture
     -   No more Class "SysBiolAlg" nor sub-classes. Different algorithms have their own function and detailed documentation of their return values
--   In *sybil*, columns named "annotation" were actually concatenated CVTerms (<https://synonym.caltech.edu/software/libsbml/5.20.0/cpp-api/class_c_v_term.html>). To avoid confusion with other levels of annotation, the columns (e.g. in `react_attr` or `met_attr`) are named 'CVTerms' in *cobrar*.
+-   In *sybil*, columns named "annotation" were actually concatenated CVTerms (<https://doi.org/10.2390/biecoll-jib-2015-266>). To avoid confusion with other levels of annotation, the columns (e.g. in `react_attr` or `met_attr`) are named 'CVTerms' in *cobrar*.
 -   *cobrar* allows to assign SBOTerms to reactions, metabolites, genes.
 -   Performance (i.e., computation time) improvements in certain procedures:
     -   identification of dead-end metabolites
