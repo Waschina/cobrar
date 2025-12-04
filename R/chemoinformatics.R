@@ -3,7 +3,7 @@
 #' Counts the number of elements in molecules based on their chemical formulas.
 #'
 #' @param formulas Character vector of chemical formulas.
-#' @param multiplier Multiplier for the element coutns in each molecule
+#' @param multiplier Multiplier for the element counts in each molecule
 #'
 #' @returns A numeric matrix with named columns for individual elements. Rows
 #' contain the counts of elements for each formula in the same order as formulas

@@ -1,4 +1,6 @@
 # _pkgdown.yml
+url: https://waschina.github.io/cobrar/
+
 template:
   bootstrap: 5
 
