@@ -15,7 +15,6 @@ make_minimal_flux_model <- function(import_bound = 10) {
     ncol = length(react_ids),
     byrow = FALSE,
     sparse = TRUE,
-    dimnames = list(met_ids, react_ids)
   )
   S <- as(S, "generalMatrix")
 
@@ -86,12 +85,12 @@ make_minimal_flux_model <- function(import_bound = 10) {
 }
 
 make_dead_end_model <- function() {
-  react_ids <- c("EX_a", "a_to_b", "b_to_a_rev", "a_to_c")
+  react_ids <- c("EX_a", "a_to_b", "EX_b", "a_to_c")
   met_ids <- c("a", "b", "c")
 
   S <- Matrix::Matrix(
     c(
-      1, -1,  1, -1,
+      1, -1,  0, -1,
       0,  1, -1,  0,
       0,  0,  0,  1
     ),
@@ -99,7 +98,6 @@ make_dead_end_model <- function() {
     ncol = length(react_ids),
     byrow = TRUE,
     sparse = TRUE,
-    dimnames = list(met_ids, react_ids)
   )
   S <- as(S, "generalMatrix")
 
