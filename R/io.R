@@ -13,6 +13,9 @@
 #' @export
 readSBMLmod <- function(file_path) {
   is_compressed <- FALSE
+  
+  if(!file.exists(file_path))
+    stop(paste0("SBML file '",file_path,"' does not exist."))
 
   file_path <- normalizePath(file_path)
 

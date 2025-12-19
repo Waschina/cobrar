@@ -362,7 +362,7 @@ SEXP scaleSimplexProb(SEXP xp) {
   glp_prob* lp = (glp_prob*)R_ExternalPtrAddr(xp);
 
   glp_term_hook(hook, NULL); // redirects output to somewhere NULL
-  glp_scale_prob(lp, GLP_SF_SKIP);
+  glp_scale_prob(lp, GLP_SF_AUTO);
   glp_term_hook(NULL, NULL); // get output back to console
 
   return out;

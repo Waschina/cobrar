@@ -9,4 +9,6 @@ config.log
 config.status
 ^src/Makevars$
 _pkgdown.yml
+pkgdown
 aclocal.m4
+README_WIN.md

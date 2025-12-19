@@ -141,14 +141,18 @@ joinModels <- function(models, mergeLB = "none", mergeUB = "none",
                                  function(idx) paste0(idx,"_",
                                                       models[[idx]]@react_id)))
   cmod@react_name <- unlist(lapply(models, function(x) x@react_name))
-  cmod@react_comp <- unlist(lapply(models, function(x) x@react_comp))
+  cmod@react_comp <- unlist(lapply(indeces,
+                                   function(idx) paste0(idx,"_",
+                                                        models[[idx]]@react_comp)))
   cmod@react_attr <- do.call("rbind",lapply(models, function(x) x@react_attr))
 
   cmod@met_id <- unlist(lapply(indeces,
                                function(idx) paste0(idx,"_",
                                                     models[[idx]]@met_id)))
   cmod@met_name <- unlist(lapply(models, function(x) x@met_name))
-  cmod@met_comp <- unlist(lapply(models, function(x) x@met_comp))
+  cmod@met_comp <- unlist(lapply(indeces,
+                                 function(idx) paste0(idx,"_",
+                                                      models[[idx]]@met_comp)))
   cmod@met_attr <- do.call("rbind",lapply(models, function(x) x@met_attr))
 
   #

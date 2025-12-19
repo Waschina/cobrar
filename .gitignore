@@ -10,4 +10,4 @@ aclocal.m4
 config.log
 config.status
 docs/
-pkgdown/
+configure~

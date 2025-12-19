@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# cobrar <img src="man/figures/logo.svg" align="right" />
+# cobrar <img src="man/figures/logo.svg" align="right"/>
 
 <!-- badges: start -->
 
@@ -10,6 +10,7 @@
 Badge](https://anaconda.org/bioconda/r-cobrar/badges/version.svg?branch=master&kill_cache=1)](https://anaconda.org/bioconda/r-cobrar)
 [![Anaconda-Server
 Badge](https://anaconda.org/bioconda/r-cobrar/badges/downloads.svg?branch=master&kill_cache=1)](https://anaconda.org/bioconda/r-cobrar)
+
 <!-- badges: end -->
 
 The R package *cobrar* provides structures and functions for
@@ -75,7 +76,9 @@ remotes::install_github("Waschina/cobrar")
 
 #### Windows
 
-*cobrar* is currently not available for Windows.
+Installation of *cobrar* in Windows requires reconfiguration of the R
+environment for package building and installation of *Rtools*. Detailed
+instructions can be found in [README_WIN.md](README_WIN.md).
 
 #### Conda
 
@@ -106,7 +109,7 @@ A simple Flux Balance Analysis (FBA) for the core metabolism of
 library(cobrar)
 #> Loading required package: Matrix
 #> cobrar uses...
-#>  - libSBML (v. 5.20.4)
+#>  - libSBML (v. 5.19.0)
 #>  - glpk (v. 5.0)
 
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
@@ -141,10 +144,9 @@ fba(mod)
     have their own function and detailed documentation of their return
     values
 - In *sybil*, columns named “annotation” were actually concatenated
-  CVTerms
-  (<https://synonym.caltech.edu/software/libsbml/5.20.0/cpp-api/class_c_v_term.html>).
-  To avoid confusion with other levels of annotation, the columns
-  (e.g. in `react_attr` or `met_attr`) are named ‘CVTerms’ in *cobrar*.
+  CVTerms (<https://doi.org/10.2390/biecoll-jib-2015-266>). To avoid
+  confusion with other levels of annotation, the columns (e.g. in
+  `react_attr` or `met_attr`) are named ‘CVTerms’ in *cobrar*.
 - *cobrar* allows to assign SBOTerms to reactions, metabolites, genes.
 - Performance (i.e., computation time) improvements in certain
   procedures:
