@@ -4,9 +4,6 @@ test_that("deadEndMetabolites identifies blocked metabolites", {
   result <- deadEndMetabolites(model)
 
   expect_named(result, c("dem", "der"))
-  write(result$dem, stderr())
-  write("", stderr())
-  write(result$der, stderr())
   expect_equal(result$dem, "c")
   expect_equal(result$der, "a_to_c")
 })

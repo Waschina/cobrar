@@ -22,6 +22,8 @@ test_that("SBML export/import round-trips toy model", {
 
   expect_true(writeSBMLmod(toy, tmp))
   expect_true(file.exists(tmp))
+  
+  sol <- fba(toy)
 
   roundtrip <- readSBMLmod(tmp)
 
@@ -33,4 +35,8 @@ test_that("SBML export/import round-trips toy model", {
   expect_equal(roundtrip@obj_coef, toy@obj_coef)
   expect_equal(roundtrip@react_id, toy@react_id)
   expect_equal(roundtrip@met_id,   toy@met_id)
+  
+  rt_sol <- fba(roundtrip)
+  expect_equal(rt_sol@obj, sol@obj)
+  expect_identical(rt_sol@ok, sol@ok)
 })
