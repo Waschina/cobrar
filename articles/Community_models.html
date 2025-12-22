@@ -6,6 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Community models • cobrar</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -20,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cobrar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,10 +85,10 @@ models<a class="anchor" aria-label="anchor" href="#merge-models-of-organisms-to-
 <h3 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
 </h3>
 <p>Microbial cells in multi-species communities frequently engage in
-metabolite exchange interactions<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;D’Souza, G., Shitut, S., Preussger, D., Yousif, G.,
+metabolite exchange interactions<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;D’Souza, G., Shitut, S., Preussger, D., Yousif, G.,
 Waschina, S. &amp;amp; Kost, C. Ecology and evolution of metabolic
 cross-feeding interactions in bacteria. Nat. Prod. Rep. 35, 455–488
-(2018). &lt;a href="https://doi.org/10.1039/C8NP00009C" class="external-link uri"&gt;https://doi.org/10.1039/C8NP00009C&lt;/a&gt;&lt;/p&gt;'><sup>1</sup></a>.</p>
+(2018).&lt;/p&gt;"><sup>1</sup></a>.</p>
 </div>
 <div class="section level3">
 <h3 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
@@ -125,8 +130,8 @@ and a cytosol for each organism model M1 (“Δcs”) and M2 (“Δpgl”)), plu
 a new shared extracellular space <code>e</code> via which both genotypes
 can in principle exchange metabolites (see figure).</p>
 <div class="float">
-<img src="community.svg" alt="Figure: Commumnity model"><div class="figcaption">
-<strong>Figure</strong>: Commumnity model</div>
+<img src="community.svg" alt="Figure: Community model"><div class="figcaption">
+<strong>Figure</strong>: Community model</div>
 </div>
 <p>Before we predict reaction and exchange fluxes for the community, we
 add some additional constraints to the community model, namely flux
@@ -134,9 +139,9 @@ coupling constraints. These constraints have the effect, that the
 absolute reaction flux bounds of organism x are proportional to the
 biomass formation of organism x. For more information on flux coupling,
 please see the documentation of the function
-<code><a href="../reference/fluxBMCoupling.html">fluxBMCoupling()</a></code> and the paper by Heinken et al. (2013)<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;Heinken, A., Sahoo, S., Fleming, R. M. T. &amp;amp; Thiele,
+<code><a href="../reference/fluxBMCoupling.html">fluxBMCoupling()</a></code> and the paper by Heinken et al. (2013)<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Heinken, A., Sahoo, S., Fleming, R. M. T. &amp;amp; Thiele,
 I. Systems-level characterization of a host-microbe metabolic symbiosis
-in the mammalian gut. Gut Microbes 4, 28–40 (2013). &lt;a href="http://dx.doi.org/10.4161/gmic.22370" class="external-link uri"&gt;http://dx.doi.org/10.4161/gmic.22370&lt;/a&gt;&lt;/p&gt;'><sup>2</sup></a>.</p>
+in the mammalian gut. Gut Microbes 4, 28–40 (2013).&lt;/p&gt;"><sup>2</sup></a>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cmod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fluxBMCoupling.html">fluxBMCoupling</a></span><span class="op">(</span><span class="va">cmod</span>, cpl_c <span class="op">=</span> <span class="fl">200</span>, cpl_u <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span></code></pre></div>
 <p>All set. We can now predict the flux distribution within the
@@ -186,27 +191,27 @@ easy to spot cross-fed metabolites.</p>
 <code class="sourceCode R"><span><span class="va">dfCF</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="va">dfCF_M1</span>, <span class="va">dfCF_M2</span>, by <span class="op">=</span> <span class="st">"rxnname"</span>, suffixes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">".dCS"</span>,<span class="st">".dPGL"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">dfCF</span></span>
-<span><span class="co">#&gt;                    rxnname   flux.dCS     flux.dPGL</span></span>
-<span><span class="co">#&gt; 1  2-Oxoglutarate exchange  -1.299013  1.299013e+00</span></span>
-<span><span class="co">#&gt; 2    Acetaldehyde exchange   0.000000  0.000000e+00</span></span>
-<span><span class="co">#&gt; 3         Acetate exchange   5.224706 -5.224706e+00</span></span>
-<span><span class="co">#&gt; 4         Ammonia exchange  -2.471824 -2.060519e+00</span></span>
-<span><span class="co">#&gt; 5             CO2 exchange  11.864378  1.276368e+01</span></span>
-<span><span class="co">#&gt; 6      D-Fructose exchange   0.000000  0.000000e+00</span></span>
-<span><span class="co">#&gt; 7       D-Glucose exchange  -5.851613 -4.148387e+00</span></span>
-<span><span class="co">#&gt; 8       D-lactate exchange   0.000000  0.000000e+00</span></span>
-<span><span class="co">#&gt; 9         Ethanol exchange   0.000000  0.000000e+00</span></span>
-<span><span class="co">#&gt; 10        Formate exchange   0.000000  0.000000e+00</span></span>
-<span><span class="co">#&gt; 11       Fumarate exchange   0.000000  0.000000e+00</span></span>
-<span><span class="co">#&gt; 12             H+ exchange  11.720134  4.953649e+00</span></span>
-<span><span class="co">#&gt; 13            H2O exchange  12.568463  1.811436e+01</span></span>
-<span><span class="co">#&gt; 14    L-Glutamate exchange   0.000000  8.881784e-16</span></span>
-<span><span class="co">#&gt; 15    L-Glutamine exchange   0.000000  0.000000e+00</span></span>
-<span><span class="co">#&gt; 16       L-Malate exchange   0.000000  0.000000e+00</span></span>
-<span><span class="co">#&gt; 17             O2 exchange -10.041290 -1.362582e+01</span></span>
-<span><span class="co">#&gt; 18      Phosphate exchange  -1.667602 -1.390117e+00</span></span>
-<span><span class="co">#&gt; 19       Pyruvate exchange   0.000000  0.000000e+00</span></span>
-<span><span class="co">#&gt; 20      Succinate exchange   0.000000  0.000000e+00</span></span></code></pre></div>
+<span><span class="co">#&gt;                    rxnname   flux.dCS  flux.dPGL</span></span>
+<span><span class="co">#&gt; 1  2-Oxoglutarate exchange  -1.299013   1.299013</span></span>
+<span><span class="co">#&gt; 2    Acetaldehyde exchange   0.000000   0.000000</span></span>
+<span><span class="co">#&gt; 3         Acetate exchange   5.224706  -5.224706</span></span>
+<span><span class="co">#&gt; 4         Ammonia exchange  -2.471824  -2.060519</span></span>
+<span><span class="co">#&gt; 5             CO2 exchange  11.864378  12.763680</span></span>
+<span><span class="co">#&gt; 6      D-Fructose exchange   0.000000   0.000000</span></span>
+<span><span class="co">#&gt; 7       D-Glucose exchange  -5.851613  -4.148387</span></span>
+<span><span class="co">#&gt; 8       D-lactate exchange   0.000000   0.000000</span></span>
+<span><span class="co">#&gt; 9         Ethanol exchange   0.000000   0.000000</span></span>
+<span><span class="co">#&gt; 10        Formate exchange   0.000000   0.000000</span></span>
+<span><span class="co">#&gt; 11       Fumarate exchange   0.000000   0.000000</span></span>
+<span><span class="co">#&gt; 12             H+ exchange  11.720134   4.953649</span></span>
+<span><span class="co">#&gt; 13            H2O exchange  12.568463  18.114355</span></span>
+<span><span class="co">#&gt; 14    L-Glutamate exchange   0.000000   0.000000</span></span>
+<span><span class="co">#&gt; 15    L-Glutamine exchange   0.000000   0.000000</span></span>
+<span><span class="co">#&gt; 16       L-Malate exchange   0.000000   0.000000</span></span>
+<span><span class="co">#&gt; 17             O2 exchange -10.041290 -13.625823</span></span>
+<span><span class="co">#&gt; 18      Phosphate exchange  -1.667602  -1.390117</span></span>
+<span><span class="co">#&gt; 19       Pyruvate exchange   0.000000   0.000000</span></span>
+<span><span class="co">#&gt; 20      Succinate exchange   0.000000   0.000000</span></span></code></pre></div>
 <p>The output shows, that the “Δcs” genotype produces acetate and
 consumes 2-oxoglutarate, while the “Δpgl” consumes acetate and produced
 2-oxoglutarate.</p>

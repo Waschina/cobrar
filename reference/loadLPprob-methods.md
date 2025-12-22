@@ -1,7 +1,7 @@
 # Initialize a LP problem
 
 Transfers variables, constraints and objectives to
-[LPproblem](LPproblem-class.md).
+[LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md).
 
 ## Usage
 
@@ -29,7 +29,8 @@ loadLPprob(
 
 - lp:
 
-  Object of class [LPproblem](LPproblem-class.md)
+  Object of class
+  [LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md)
 
 - ...:
 

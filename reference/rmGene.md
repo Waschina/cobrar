@@ -13,7 +13,8 @@ rmGene(model, gene, rm_react = TRUE, rm_met = TRUE)
 
 - model:
 
-  Model of class [ModelOrg](ModelOrg-class.md)
+  Model of class
+  [ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
 
 - gene:
 
@@ -32,7 +33,8 @@ rmGene(model, gene, rm_react = TRUE, rm_met = TRUE)
 
 ## Value
 
-An updated model of class [ModelOrg](ModelOrg-class.md)
+An updated model of class
+[ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
 
 ## Examples
 

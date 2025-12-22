@@ -34,7 +34,7 @@ Analysis or derived methods.
 - `obj_sec`:
 
   Value of secondary objective function. E.g.: Summed absolute fluxes in
-  [pfba](pfba.md).
+  [pfba](https://waschina.github.io/cobrar/reference/pfba.md).
 
 - `fluxes`:
 

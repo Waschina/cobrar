@@ -1,6 +1,7 @@
 # Solve an LP problem
 
-Solves an [LPproblem](LPproblem-class.md).
+Solves an
+[LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md).
 
 ## Usage
 
@@ -15,7 +16,8 @@ solveLp(lp)
 
 - lp:
 
-  Object of class [LPproblem](LPproblem-class.md)
+  Object of class
+  [LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md)
 
 - ...:
 

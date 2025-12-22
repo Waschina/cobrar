@@ -1,6 +1,7 @@
 # Get the solver status
 
-Get the solver status of a solved [LPproblem](LPproblem-class.md).
+Get the solver status of a solved
+[LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md).
 
 ## Usage
 
@@ -15,7 +16,8 @@ getSolStat(lp)
 
 - lp:
 
-  Object of class [LPproblem](LPproblem-class.md)
+  Object of class
+  [LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md)
 
 - ...:
 

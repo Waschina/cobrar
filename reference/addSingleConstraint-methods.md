@@ -1,6 +1,7 @@
 # Add single constraint
 
-Add a single constraint to an existing [LPproblem](LPproblem-class.md).
+Add a single constraint to an existing
+[LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md).
 
 ## Usage
 
@@ -15,7 +16,8 @@ addSingleConstraint(lp, coeffs, lb, ub, type)
 
 - lp:
 
-  Object of class [LPproblem](LPproblem-class.md)
+  Object of class
+  [LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md)
 
 - ...:
 

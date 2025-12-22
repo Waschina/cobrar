@@ -1,6 +1,6 @@
 # Flux Variability Analysis (FVA)
 
-## Variabilibity in metabolite uptake/production of *E. coli*
+## Variability in metabolite uptake/production of *E. coli*
 
 This guide introduces Flux Variability Analysis (FVA) as applied in
 *cobrar* to the core metabolic network model of *Escherichia coli*.

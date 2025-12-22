@@ -13,7 +13,8 @@ fva(model, react = NULL, opt.factor = 1)
 
 - model:
 
-  Model of class [ModelOrg](ModelOrg-class.md)
+  Model of class
+  [ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
 
 - react:
 
@@ -29,8 +30,10 @@ fva(model, react = NULL, opt.factor = 1)
 
 ## See also
 
-Other Flux prediction algorithms: [`fba()`](fba.md),
-[`pfba()`](pfba.md), [`pfbaHeuristic()`](pfbaHeuristic.md)
+Other Flux prediction algorithms:
+[`fba()`](https://waschina.github.io/cobrar/reference/fba.md),
+[`pfba()`](https://waschina.github.io/cobrar/reference/pfba.md),
+[`pfbaHeuristic()`](https://waschina.github.io/cobrar/reference/pfbaHeuristic.md)
 
 ## Examples
 

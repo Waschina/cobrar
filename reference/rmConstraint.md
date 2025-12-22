@@ -12,7 +12,8 @@ rmConstraint(model, ind)
 
 - model:
 
-  Model of class [ModelOrg](ModelOrg-class.md)
+  Model of class
+  [ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
 
 - ind:
 
@@ -20,4 +21,4 @@ rmConstraint(model, ind)
 
 ## See also
 
-[`printConstraint()`](printConstraint.md)
+[`printConstraint()`](https://waschina.github.io/cobrar/reference/printConstraint.md)

@@ -12,7 +12,8 @@ setObjDir(model, dir)
 
 - model:
 
-  Model of class [ModelOrg](ModelOrg-class.md)
+  Model of class
+  [ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
 
 - dir:
 
@@ -20,4 +21,5 @@ setObjDir(model, dir)
 
 ## Value
 
-An updated model of class [ModelOrg](ModelOrg-class.md)
+An updated model of class
+[ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
