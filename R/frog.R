@@ -9,7 +9,7 @@
 #' @param outdir Path to output directory, where report files will be saved.
 #' @param ... Additional parameters passed on to the specific method instance.
 #' 
-#' @returns TRUE if frog report export was successful.
+#' @returns TRUE if FROG report export was successful.
 #'
 #' @examples
 #' fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
@@ -236,7 +236,7 @@ export_frog_report <- function(frogres, outdir, xmlfile) {
                                    paste0(outdir,"/03_gene_deletion.tsv"),
                                    sep = "\t", quote = FALSE, row.names = FALSE)
   export_success[4] <- write.table(frogres$react_del,
-                                   paste0(outdir,"/03_reaction_deletion.tsv"),
+                                   paste0(outdir,"/04_reaction_deletion.tsv"),
                                    sep = "\t", quote = FALSE, row.names = FALSE)
   
   # meta

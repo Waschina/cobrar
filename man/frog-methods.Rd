@@ -24,7 +24,7 @@ frog(model, ...)
 \item{outdir}{Path to output directory, where report files will be saved.}
 }
 \value{
-TRUE if frog report export was successful.
+TRUE if FROG report export was successful.
 }
 \description{
 Run a standardized FROG analysis on a model including (1) Objective Function
