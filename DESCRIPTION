@@ -25,7 +25,10 @@ LinkingTo:
     RcppArmadillo
 Imports: 
     Rcpp,
-    methods
+    methods,
+    tools,
+    utils,
+    jsonlite
 Suggests:
     knitr,
     rmarkdown,
@@ -53,6 +56,7 @@ Collate:
     'fixBMRatios.R'
     'fluxBMCoupling.R'
     'fluxdist_analysis.R'
+    'frog.R'
     'fva.R'
     'geneDel.R'
     'guessBMReaction.R'
