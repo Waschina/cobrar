@@ -218,6 +218,7 @@ run_frog <- function(model, filename) {
   out_frog
 }
 
+#' @importFrom tools md5sum
 #' @importFrom jsonlite write_json
 #' @importFrom utils write.table packageVersion
 export_frog_report <- function(frogres, outdir, xmlfile) {
