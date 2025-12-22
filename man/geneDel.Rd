@@ -4,18 +4,36 @@
 \alias{geneDel}
 \title{Identify reactions affected by gene knockouts}
 \usage{
-geneDel(model, gene)
+geneDel(model, gene, single = FALSE)
 }
 \arguments{
 \item{model}{Model of class \link{ModelOrg}}
 
 \item{gene}{Character or numeric vector providing the IDs or indices of genes
 to be deleted from 'model'.}
+
+\item{single}{If FALSE (default), the effect of simultaneous gene deletions
+of all genes in \code{gene} are assumed. If TRUE, results for single gene
+deletions are returned.}
 }
 \value{
-Character vector with reactions IDs.
+Character vector with reactions IDs if \code{single} is FALSE, an a list
+of character vectors if \code{single} is TRUE. In the latter case, the i-th
+element in the returned list corresponds to the gene deletion results of the
+i-th gene of the input parameter.
 }
 \description{
 This function identifies reactions, which cannot be catalyzed anymore when
 a specified set of genes is deleted from a model.
+}
+\examples{
+fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
+mod <- readSBMLmod(fpath)
+
+# Identify reactions that would be lost after multiple gene deletions
+geneDel(mod, gene = c("b3916","b1723","b4025"))
+
+# Identify reactions that would be lost after single gene deletions
+geneDel(mod, gene = c("b3916","b1723","b4025"), single = TRUE)
+
 }

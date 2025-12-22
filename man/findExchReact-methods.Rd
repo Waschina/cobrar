@@ -31,3 +31,10 @@ organism metabolic network models with the shared extracellular space.
 Finds all exchange reactions within a (community) model and report them in a
 data frame.
 }
+\details{
+In cobrar, an exchange reaction is an unbalanced reaction involving a single
+metabolite that appears exclusively on one side of the reaction equation
+(either as a substrate or as a product, but not both). This structure
+represents the import or export of that metabolite between the system and its
+environment.
+}
