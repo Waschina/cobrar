@@ -259,7 +259,7 @@ export_frog_report <- function(frogres, outdir, xmlfile) {
     ),
     model_filename = basename(xmlfile),
     frog_date = Sys.Date(),
-    model_sha256 = sha256sum(xmlfile),
+    # model_sha256 = sha256sum(xmlfile), # not available in 'tools' < 4.5.1
     model_md5 = md5sum(xmlfile),
     environment = R.version$version.string,
     frog_version = "0.1.4"
