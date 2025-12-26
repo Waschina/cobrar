@@ -1,6 +1,6 @@
 Package: cobrar
 Title: Constraint-Based Metabolic Network Analysis in R
-Version: 0.2.3
+Version: 0.2.2
 Authors@R: 
     c(person("Silvio", "Waschina", email = "s.waschina@nutrinf.uni-kiel.de", role = c("aut", "cre"),
              comment = c(ORCID = "0000-0002-6290-3593")),
@@ -25,18 +25,11 @@ LinkingTo:
     RcppArmadillo
 Imports: 
     Rcpp,
-    methods,
-    tools,
-    utils,
-    jsonlite
-Suggests:
+    methods
+Suggests: 
     knitr,
     rmarkdown,
-    ggplot2,
-    testthat (>= 3.0.0),
-    covr,
-    lintr
-Config/testthat/edition: 3
+    ggplot2
 VignetteBuilder: knitr
 Collate: 
     'ConstraintsClass.R'
@@ -56,7 +49,6 @@ Collate:
     'fixBMRatios.R'
     'fluxBMCoupling.R'
     'fluxdist_analysis.R'
-    'frog.R'
     'fva.R'
     'geneDel.R'
     'guessBMReaction.R'

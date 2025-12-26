@@ -13,14 +13,6 @@
 #' latter are exchange reactions, that connect extracellular metabolites of the
 #' organism metabolic network models with the shared extracellular space.
 #'
-#' @details
-#' In cobrar, an exchange reaction is an unbalanced reaction involving a single
-#' metabolite that appears exclusively on one side of the reaction equation
-#' (either as a substrate or as a product, but not both). This structure
-#' represents the import or export of that metabolite between the system and its
-#' environment.
-#'
-#'
 #' @docType methods
 #'
 #' @rdname findExchReact-methods
@@ -33,8 +25,8 @@ setGeneric("findExchReact" ,valueClass = "data.frame", function(model) {
 #' @aliases findExchReact,ModelOrg
 setMethod("findExchReact", signature(model = "ModelOrg"),
           function(model) {
-            ex_pos <- which(diff(model@S@p) == 1)
-            ex_id <- model@react_id[ex_pos]
+            ex_id <- model@react_id[grep("^EX_",model@react_id)]
+            ex_pos <- react_pos(model, ex_id)
 
             cpd_pos <- apply(model@S[,ex_pos],2,function(x) which(x!=0))
             cpd_id <- model@met_id[cpd_pos]
@@ -52,18 +44,14 @@ setMethod("findExchReact", signature(model = "ModelOrg"),
 #' @aliases findExchReact,ModelComm
 setMethod("findExchReact", signature(model = "ModelComm"),
           function(model) {
-            ex_pos <- which(diff(model@S@p) == 1)
-            ex_id <- model@react_id[ex_pos]
+            ex_id <- model@react_id[grep("^EX_",model@react_id)]
+            ex_pos <- react_pos(model, ex_id)
 
-            # mex_id <- model@react_id[grep("^M[0-9]+_EX_",model@react_id)]
-            # mex_pos <- react_pos(model, mex_id)
-            emets <- which(model@met_comp == "e")
-            Stmp <- model@S[-emets,]
-            mex_pos <- which(diff(Stmp@p) == 1)
-            mex_id <- model@react_id[mex_pos]
+            mex_id <- model@react_id[grep("^M[0-9]+_EX_",model@react_id)]
+            mex_pos <- react_pos(model, mex_id)
 
             cpd_posEX <- apply(model@S[,ex_pos],2,function(x) which(x!=0))
-            cpd_posMEX <- apply(model@S[,mex_pos],2,function(x) which(x!=0 & model@met_comp != "e"))
+            cpd_posMEX <- apply(model@S[grep("^M[0-9]+",model@met_id),mex_pos],2,function(x) which(x!=0))
             cpd_pos <- c(cpd_posEX, cpd_posMEX)
             cpd_id <- model@met_id[cpd_pos]
             cpd_name <- model@met_name[cpd_pos]
