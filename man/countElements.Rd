@@ -9,7 +9,7 @@ countElements(formulas, multiplier = 1)
 \arguments{
 \item{formulas}{Character vector of chemical formulas.}
 
-\item{multiplier}{Multiplier for the element counts in each molecule}
+\item{multiplier}{Multiplier for the element coutns in each molecule}
 }
 \value{
 A numeric matrix with named columns for individual elements. Rows

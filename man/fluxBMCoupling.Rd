@@ -49,6 +49,6 @@ parameters for the coupling constraints that define intercept (\emph{u}) and slo
 \itemize{
 \item Heinken A, Sahoo S, Fleming RMT, Thiele I. Systems-level characterization
 of a host-microbe metabolic symbiosis in the mammalian gut. Vol. 4, Gut
-Microbes; 2013.
+Microbes; 2013. \url{http://dx.doi.org/10.4161/gmic.22370}
 }
 }

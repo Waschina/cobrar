@@ -16,7 +16,7 @@
 #' @export
 getExchanges <- function(model, sol) {
 
-  exind <- findExchReact(model)$react_pos
+  exind <- which(grepl("^EX_", model@react_id))
 
   df <- data.frame(ID = model@react_id[exind],
                    name = model@react_name[exind],
