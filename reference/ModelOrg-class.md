@@ -65,10 +65,9 @@ to central model structures, metabolites, reactions, and genes.
 
 - `constraints`:
 
-  An object of class
-  [Constraints](https://waschina.github.io/cobrar/reference/Constraints-class.md)
-  which specifies constraints in a model in addition to stationarity and
-  individual flux bounds.
+  An object of class [Constraints](Constraints-class.md) which specifies
+  constraints in a model in addition to stationarity and individual flux
+  bounds.
 
 - `met_id`:
 
@@ -86,8 +85,7 @@ to central model structures, metabolites, reactions, and genes.
 
   A data.frame that enables the storage of additional data for
   metabolites. Only specific columns are exported to SBML files. See
-  [writeSBMLmod](https://waschina.github.io/cobrar/reference/writeSBMLmod.md)
-  for details.
+  [writeSBMLmod](writeSBMLmod.md) for details.
 
 - `react_id`:
 
@@ -113,8 +111,7 @@ to central model structures, metabolites, reactions, and genes.
 
   A data.frame that enables the storage of additional data for
   reactions. Only specific columns are exported to SBML files. See
-  [writeSBMLmod](https://waschina.github.io/cobrar/reference/writeSBMLmod.md)
-  for details.
+  [writeSBMLmod](writeSBMLmod.md) for details.
 
 - `gprRules`:
 
@@ -134,9 +131,8 @@ to central model structures, metabolites, reactions, and genes.
 
   A data.frame that enables the storage of additional data (e.g., name
   and CVTerms) for genes/gene products. Only specific columns are
-  exported to SBML files. See
-  [writeSBMLmod](https://waschina.github.io/cobrar/reference/writeSBMLmod.md)
-  for details.
+  exported to SBML files. See [writeSBMLmod](writeSBMLmod.md) for
+  details.
 
 - `metadata`:
 

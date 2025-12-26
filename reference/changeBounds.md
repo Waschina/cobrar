@@ -13,8 +13,7 @@ changeBounds(model, react, lb = NULL, ub = NULL)
 
 - model:
 
-  Model of class
-  [ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
+  Model of class [ModelOrg](ModelOrg-class.md)
 
 - react:
 
@@ -35,5 +34,4 @@ changeBounds(model, react, lb = NULL, ub = NULL)
 
 ## Value
 
-An updated model of class
-[ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
+An updated model of class [ModelOrg](ModelOrg-class.md)

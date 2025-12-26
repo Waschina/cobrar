@@ -1,7 +1,7 @@
 # Add columns to LP problem
 
 Add columns (a.k.a. variables/reactions) to an
-[LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md).
+[LPproblem](LPproblem-class.md).
 
 ## Usage
 
@@ -16,8 +16,7 @@ addCols(lp, ncols)
 
 - lp:
 
-  Object of class
-  [LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md)
+  Object of class [LPproblem](LPproblem-class.md)
 
 - ...:
 

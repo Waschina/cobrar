@@ -1,9 +1,7 @@
 # Exports a Metabolic Network in SBML Format
 
 Export a constraint-based metabolic network model from a S4 object of
-class
-[ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
-to a SBML file.
+class [ModelOrg](ModelOrg-class.md) to a SBML file.
 
 ## Usage
 
@@ -15,8 +13,7 @@ writeSBMLmod(model, file_path = NULL)
 
 - model:
 
-  Model of class
-  [ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
+  Model of class [ModelOrg](ModelOrg-class.md)
 
 - file_path:
 

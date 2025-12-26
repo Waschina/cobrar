@@ -43,27 +43,27 @@ at the predicted fluxes for all exchange reactions.
 
 ``` r
 getExchanges(mod, sol)
-#>             ID                    name          flux
-#> 1      EX_ac_e        Acetate exchange  0.000000e+00
-#> 2   EX_acald_e   Acetaldehyde exchange  0.000000e+00
-#> 3     EX_akg_e 2-Oxoglutarate exchange  0.000000e+00
-#> 4     EX_co2_e            CO2 exchange  2.280983e+01
-#> 5    EX_etoh_e        Ethanol exchange  0.000000e+00
-#> 6     EX_for_e        Formate exchange -6.804571e-13
-#> 7     EX_fru_e     D-Fructose exchange  0.000000e+00
-#> 8     EX_fum_e       Fumarate exchange  0.000000e+00
-#> 9  EX_glc__D_e      D-Glucose exchange -1.000000e+01
-#> 10 EX_gln__L_e    L-Glutamine exchange  0.000000e+00
-#> 11 EX_glu__L_e    L-Glutamate exchange  0.000000e+00
-#> 12      EX_h_e             H+ exchange  1.753087e+01
-#> 13    EX_h2o_e            H2O exchange  2.917583e+01
-#> 14 EX_lac__D_e      D-lactate exchange  0.000000e+00
-#> 15 EX_mal__L_e       L-Malate exchange  0.000000e+00
-#> 16    EX_nh4_e        Ammonia exchange -4.765319e+00
-#> 17     EX_o2_e             O2 exchange -2.179949e+01
-#> 18     EX_pi_e      Phosphate exchange -3.214895e+00
-#> 19    EX_pyr_e       Pyruvate exchange  0.000000e+00
-#> 20   EX_succ_e      Succinate exchange  0.000000e+00
+#>             ID                    name       flux
+#> 1      EX_ac_e        Acetate exchange   0.000000
+#> 2   EX_acald_e   Acetaldehyde exchange   0.000000
+#> 3     EX_akg_e 2-Oxoglutarate exchange   0.000000
+#> 4     EX_co2_e            CO2 exchange  22.809833
+#> 5    EX_etoh_e        Ethanol exchange   0.000000
+#> 6     EX_for_e        Formate exchange   0.000000
+#> 7     EX_fru_e     D-Fructose exchange   0.000000
+#> 8     EX_fum_e       Fumarate exchange   0.000000
+#> 9  EX_glc__D_e      D-Glucose exchange -10.000000
+#> 10 EX_gln__L_e    L-Glutamine exchange   0.000000
+#> 11 EX_glu__L_e    L-Glutamate exchange   0.000000
+#> 12      EX_h_e             H+ exchange  17.530865
+#> 13    EX_h2o_e            H2O exchange  29.175827
+#> 14 EX_lac__D_e      D-lactate exchange   0.000000
+#> 15 EX_mal__L_e       L-Malate exchange   0.000000
+#> 16    EX_nh4_e        Ammonia exchange  -4.765319
+#> 17     EX_o2_e             O2 exchange -21.799493
+#> 18     EX_pi_e      Phosphate exchange  -3.214895
+#> 19    EX_pyr_e       Pyruvate exchange   0.000000
+#> 20   EX_succ_e      Succinate exchange   0.000000
 ```
 
 This table indicates that the organism is growing aerobically, because
@@ -88,27 +88,27 @@ sol_anaero
 #> Objective fct. value:   0.2116629 
 #> Secondary objective:    NA
 getExchanges(mod_anaero, sol_anaero)
-#>             ID                    name        flux
-#> 1      EX_ac_e        Acetate exchange   8.5035853
-#> 2   EX_acald_e   Acetaldehyde exchange   0.0000000
-#> 3     EX_akg_e 2-Oxoglutarate exchange   0.0000000
-#> 4     EX_co2_e            CO2 exchange  -0.3781782
-#> 5    EX_etoh_e        Ethanol exchange   8.2794554
-#> 6     EX_for_e        Formate exchange  17.8046742
-#> 7     EX_fru_e     D-Fructose exchange   0.0000000
-#> 8     EX_fum_e       Fumarate exchange   0.0000000
-#> 9  EX_glc__D_e      D-Glucose exchange -10.0000000
-#> 10 EX_gln__L_e    L-Glutamine exchange   0.0000000
-#> 11 EX_glu__L_e    L-Glutamate exchange   0.0000000
-#> 12      EX_h_e             H+ exchange  30.5542183
-#> 13    EX_h2o_e            H2O exchange  -7.1157960
-#> 14 EX_lac__D_e      D-lactate exchange   0.0000000
-#> 15 EX_mal__L_e       L-Malate exchange   0.0000000
-#> 16    EX_nh4_e        Ammonia exchange  -1.1541557
-#> 17     EX_o2_e             O2 exchange   0.0000000
-#> 18     EX_pi_e      Phosphate exchange  -0.7786445
-#> 19    EX_pyr_e       Pyruvate exchange   0.0000000
-#> 20   EX_succ_e      Succinate exchange   0.0000000
+#>             ID                    name          flux
+#> 1      EX_ac_e        Acetate exchange  8.503585e+00
+#> 2   EX_acald_e   Acetaldehyde exchange  0.000000e+00
+#> 3     EX_akg_e 2-Oxoglutarate exchange  0.000000e+00
+#> 4     EX_co2_e            CO2 exchange -3.781782e-01
+#> 5    EX_etoh_e        Ethanol exchange  8.279455e+00
+#> 6     EX_for_e        Formate exchange  1.780467e+01
+#> 7     EX_fru_e     D-Fructose exchange  0.000000e+00
+#> 8     EX_fum_e       Fumarate exchange  0.000000e+00
+#> 9  EX_glc__D_e      D-Glucose exchange -1.000000e+01
+#> 10 EX_gln__L_e    L-Glutamine exchange  0.000000e+00
+#> 11 EX_glu__L_e    L-Glutamate exchange  0.000000e+00
+#> 12      EX_h_e             H+ exchange  3.055422e+01
+#> 13    EX_h2o_e            H2O exchange -7.115796e+00
+#> 14 EX_lac__D_e      D-lactate exchange  0.000000e+00
+#> 15 EX_mal__L_e       L-Malate exchange  0.000000e+00
+#> 16    EX_nh4_e        Ammonia exchange -1.154156e+00
+#> 17     EX_o2_e             O2 exchange  0.000000e+00
+#> 18     EX_pi_e      Phosphate exchange -7.786445e-01
+#> 19    EX_pyr_e       Pyruvate exchange  0.000000e+00
+#> 20   EX_succ_e      Succinate exchange -9.215424e-14
 ```
 
 ## Editing a metabolic network model

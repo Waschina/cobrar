@@ -6,11 +6,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Constraint-Based Metabolic Network Analysis in R • cobrar</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
-<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<link rel="icon" sizes="any" href="favicon.ico">
-<link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -18,7 +13,7 @@
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Constraint-Based Metabolic Network Analysis in R">
 <meta name="description" content="Structures and functions to perform constraint-based metabolic network analysis, e.g., the prediction of metabolic fluxes using Flux Balance Analysis (FBA).">
 <meta property="og:description" content="Structures and functions to perform constraint-based metabolic network analysis, e.g., the prediction of metabolic fluxes using Flux Balance Analysis (FBA).">
-<meta property="og:image" content="https://waschina.github.io/cobrar/logo.svg">
+<meta property="og:image" content="/logo.svg">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -28,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="index.html">cobrar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +62,6 @@
 </div>
 <!-- badges: start -->
 
-<!-- badges: end -->
 <p>The R package <em>cobrar</em> provides structures and functions for constraint-based metabolic network analysis, e.g. the prediction of metabolic fluxes using fluxes using Flux Balance Analysis (FBA). <em>cobrar</em> is inspired by the former CRAN R package <em>sybil</em><a href="#R1">(1)</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -107,7 +101,7 @@
 <div class="section level4">
 <h4 id="windows">Windows<a class="anchor" aria-label="anchor" href="#windows"></a>
 </h4>
-<p>Installation of <em>cobrar</em> in Windows requires reconfiguration of the R environment for package building and installation of <em>Rtools</em>. Detailed instructions can be found in <a href="README_WIN.html">README_WIN.md</a>.</p>
+<p><em>cobrar</em> is currently not available for Windows.</p>
 </div>
 <div class="section level4">
 <h4 id="conda">Conda<a class="anchor" aria-label="anchor" href="#conda"></a>
@@ -119,7 +113,7 @@
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>The full documentation including illustrative examples is available <a href="https://waschina.github.io/cobrar/">here</a>.</p>
+<p>The full documentation including illustrative examples is available <a href="https://waschina.github.io/cobrar/" class="external-link">here</a>.</p>
 <p>The vignettes of the package can also be accessed:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Waschina/cobrar" class="external-link">cobrar</a></span><span class="op">)</span></span>
@@ -130,7 +124,7 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Waschina/cobrar" class="external-link">cobrar</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: Matrix</span></span>
 <span><span class="co">#&gt; cobrar uses...</span></span>
-<span><span class="co">#&gt;  - libSBML (v. 5.19.0)</span></span>
+<span><span class="co">#&gt;  - libSBML (v. 5.20.4)</span></span>
 <span><span class="co">#&gt;  - glpk (v. 5.0)</span></span>
 <span></span>
 <span><span class="va">fpath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"e_coli_core.xml"</span>, package<span class="op">=</span><span class="st">"cobrar"</span><span class="op">)</span></span>
@@ -159,7 +153,7 @@
 <li>No more Class “SysBiolAlg” nor sub-classes. Different algorithms have their own function and detailed documentation of their return values</li>
 </ul>
 </li>
-<li>In <em>sybil</em>, columns named “annotation” were actually concatenated CVTerms (<a href="https://doi.org/10.2390/biecoll-jib-2015-266" class="external-link uri">https://doi.org/10.2390/biecoll-jib-2015-266</a>). To avoid confusion with other levels of annotation, the columns (e.g. in <code>react_attr</code> or <code>met_attr</code>) are named ‘CVTerms’ in <em>cobrar</em>.</li>
+<li>In <em>sybil</em>, columns named “annotation” were actually concatenated CVTerms (<a href="https://synonym.caltech.edu/software/libsbml/5.20.0/cpp-api/class_c_v_term.html" class="external-link uri">https://synonym.caltech.edu/software/libsbml/5.20.0/cpp-api/class_c_v_term.html</a>). To avoid confusion with other levels of annotation, the columns (e.g. in <code>react_attr</code> or <code>met_attr</code>) are named ‘CVTerms’ in <em>cobrar</em>.</li>
 <li>
 <em>cobrar</em> allows to assign SBOTerms to reactions, metabolites, genes.</li>
 <li>Performance (i.e., computation time) improvements in certain procedures:

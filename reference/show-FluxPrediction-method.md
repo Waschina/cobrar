@@ -14,5 +14,4 @@ show(object)
 
 - object:
 
-  S4-object of class
-  [FluxPrediction](https://waschina.github.io/cobrar/reference/FluxPrediction-class.md).
+  S4-object of class [FluxPrediction](FluxPrediction-class.md).

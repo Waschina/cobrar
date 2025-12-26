@@ -16,13 +16,13 @@ Source:
 [`DESCRIPTION`](https://github.com/Waschina/cobrar/blob/main/DESCRIPTION)
 
 Waschina S, Zimmermann J, Froitzheim S (2025). *cobrar: Constraint-Based
-Metabolic Network Analysis in R*. R package version 0.2.3,
+Metabolic Network Analysis in R*. R package version 0.2.2,
 <https://github.com/Waschina/cobrar>.
 
     @Manual{,
       title = {cobrar: Constraint-Based Metabolic Network Analysis in R},
       author = {Silvio Waschina and Johannes Zimmermann and Sina Froitzheim},
       year = {2025},
-      note = {R package version 0.2.3},
+      note = {R package version 0.2.2},
       url = {https://github.com/Waschina/cobrar},
     }

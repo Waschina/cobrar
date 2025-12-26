@@ -17,7 +17,7 @@ countElements(formulas, multiplier = 1)
 
 - multiplier:
 
-  Multiplier for the element counts in each molecule
+  Multiplier for the element coutns in each molecule
 
 ## Value
 

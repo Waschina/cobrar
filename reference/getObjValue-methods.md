@@ -1,7 +1,6 @@
 # Get the objective value of a solved LP problem
 
-Get the objective value of a solved
-[LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md).
+Get the objective value of a solved [LPproblem](LPproblem-class.md).
 
 ## Usage
 
@@ -16,8 +15,7 @@ getObjValue(lp)
 
 - lp:
 
-  Object of class
-  [LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md)
+  Object of class [LPproblem](LPproblem-class.md)
 
 - ...:
 

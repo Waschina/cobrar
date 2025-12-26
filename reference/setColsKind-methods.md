@@ -1,7 +1,6 @@
 # Set column types
 
-Set column/variable types of an
-[LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md).
+Set column/variable types of an [LPproblem](LPproblem-class.md).
 
 ## Usage
 
@@ -16,8 +15,7 @@ setColsKind(lp, j, kind)
 
 - lp:
 
-  Object of class
-  [LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md)
+  Object of class [LPproblem](LPproblem-class.md)
 
 - ...:
 

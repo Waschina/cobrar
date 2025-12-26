@@ -1,7 +1,6 @@
 # Add rows to LP problem
 
-Add rows (a.k.a. constraints) to an
-[LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md).
+Add rows (a.k.a. constraints) to an [LPproblem](LPproblem-class.md).
 
 ## Usage
 
@@ -16,8 +15,7 @@ addRows(lp, nrows)
 
 - lp:
 
-  Object of class
-  [LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md)
+  Object of class [LPproblem](LPproblem-class.md)
 
 - ...:
 

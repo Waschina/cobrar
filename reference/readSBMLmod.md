@@ -16,9 +16,7 @@ readSBMLmod(file_path)
 
 ## Value
 
-A
-[ModelOrg-class](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
-object.
+A [ModelOrg-class](ModelOrg-class.md) object.
 
 ## Examples
 

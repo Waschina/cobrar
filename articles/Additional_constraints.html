@@ -6,11 +6,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Additional constraints • cobrar</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
-<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
-<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="icon" sizes="any" href="../favicon.ico">
-<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -25,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cobrar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -138,7 +133,7 @@ reactions.</p>
 <span><span class="co">#&gt; 5    EX_etoh_e        Ethanol exchange  5.144425e+00</span></span>
 <span><span class="co">#&gt; 6     EX_for_e        Formate exchange  1.078766e+01</span></span>
 <span><span class="co">#&gt; 7     EX_fru_e     D-Fructose exchange -3.000000e+00</span></span>
-<span><span class="co">#&gt; 8     EX_fum_e       Fumarate exchange -2.398082e-14</span></span>
+<span><span class="co">#&gt; 8     EX_fum_e       Fumarate exchange -2.664535e-15</span></span>
 <span><span class="co">#&gt; 9  EX_glc__D_e      D-Glucose exchange -2.833333e+00</span></span>
 <span><span class="co">#&gt; 10 EX_gln__L_e    L-Glutamine exchange  0.000000e+00</span></span>
 <span><span class="co">#&gt; 11 EX_glu__L_e    L-Glutamate exchange  0.000000e+00</span></span>
@@ -166,27 +161,27 @@ dry weight biomass:
 <span>                     coeff <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">5</span><span class="op">)</span>, rtype <span class="op">=</span> <span class="st">"U"</span>, ub <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">sol</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fba.html">fba</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/getExchanges.html">getExchanges</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">sol</span><span class="op">)</span></span>
-<span><span class="co">#&gt;             ID                    name          flux</span></span>
-<span><span class="co">#&gt; 1      EX_ac_e        Acetate exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 2   EX_acald_e   Acetaldehyde exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 3     EX_akg_e 2-Oxoglutarate exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 4     EX_co2_e            CO2 exchange  1.104223e+01</span></span>
-<span><span class="co">#&gt; 5    EX_etoh_e        Ethanol exchange  1.048018e+01</span></span>
-<span><span class="co">#&gt; 6     EX_for_e        Formate exchange  2.438012e-01</span></span>
-<span><span class="co">#&gt; 7     EX_fru_e     D-Fructose exchange -3.000000e+00</span></span>
-<span><span class="co">#&gt; 8     EX_fum_e       Fumarate exchange -6.091407e-01</span></span>
-<span><span class="co">#&gt; 9  EX_glc__D_e      D-Glucose exchange -2.427240e+00</span></span>
-<span><span class="co">#&gt; 10 EX_gln__L_e    L-Glutamine exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 11 EX_glu__L_e    L-Glutamate exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 12      EX_h_e             H+ exchange  3.235326e-01</span></span>
-<span><span class="co">#&gt; 13    EX_h2o_e            H2O exchange -1.848859e-01</span></span>
-<span><span class="co">#&gt; 14 EX_lac__D_e      D-lactate exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 15 EX_mal__L_e       L-Malate exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 16    EX_nh4_e        Ammonia exchange -3.528317e-01</span></span>
-<span><span class="co">#&gt; 17     EX_o2_e             O2 exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 18     EX_pi_e      Phosphate exchange -2.380359e-01</span></span>
-<span><span class="co">#&gt; 19    EX_pyr_e       Pyruvate exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 20   EX_succ_e      Succinate exchange  2.784965e-11</span></span></code></pre></div>
+<span><span class="co">#&gt;             ID                    name       flux</span></span>
+<span><span class="co">#&gt; 1      EX_ac_e        Acetate exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 2   EX_acald_e   Acetaldehyde exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 3     EX_akg_e 2-Oxoglutarate exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 4     EX_co2_e            CO2 exchange 11.0422250</span></span>
+<span><span class="co">#&gt; 5    EX_etoh_e        Ethanol exchange 10.4801777</span></span>
+<span><span class="co">#&gt; 6     EX_for_e        Formate exchange  0.2438012</span></span>
+<span><span class="co">#&gt; 7     EX_fru_e     D-Fructose exchange -3.0000000</span></span>
+<span><span class="co">#&gt; 8     EX_fum_e       Fumarate exchange -0.6091407</span></span>
+<span><span class="co">#&gt; 9  EX_glc__D_e      D-Glucose exchange -2.4272395</span></span>
+<span><span class="co">#&gt; 10 EX_gln__L_e    L-Glutamine exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 11 EX_glu__L_e    L-Glutamate exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 12      EX_h_e             H+ exchange  0.3235326</span></span>
+<span><span class="co">#&gt; 13    EX_h2o_e            H2O exchange -0.1848859</span></span>
+<span><span class="co">#&gt; 14 EX_lac__D_e      D-lactate exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 15 EX_mal__L_e       L-Malate exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 16    EX_nh4_e        Ammonia exchange -0.3528317</span></span>
+<span><span class="co">#&gt; 17     EX_o2_e             O2 exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 18     EX_pi_e      Phosphate exchange -0.2380359</span></span>
+<span><span class="co">#&gt; 19    EX_pyr_e       Pyruvate exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 20   EX_succ_e      Succinate exchange  0.0000000</span></span></code></pre></div>
 <p>The results show that as an effect of the second constraint the
 proton production (<code>EX_h_e</code>) is reduced, and all three carbon
 sources are consumed, including Fumarate.</p>
@@ -222,27 +217,27 @@ simultaneously:</p>
 <span><span class="co"># Perform FBA</span></span>
 <span><span class="va">sol</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fba.html">fba</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/getExchanges.html">getExchanges</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">sol</span><span class="op">)</span></span>
-<span><span class="co">#&gt;             ID                    name          flux</span></span>
-<span><span class="co">#&gt; 1      EX_ac_e        Acetate exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 2   EX_acald_e   Acetaldehyde exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 3     EX_akg_e 2-Oxoglutarate exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 4     EX_co2_e            CO2 exchange  1.104223e+01</span></span>
-<span><span class="co">#&gt; 5    EX_etoh_e        Ethanol exchange  1.048018e+01</span></span>
-<span><span class="co">#&gt; 6     EX_for_e        Formate exchange  2.438012e-01</span></span>
-<span><span class="co">#&gt; 7     EX_fru_e     D-Fructose exchange -3.000000e+00</span></span>
-<span><span class="co">#&gt; 8     EX_fum_e       Fumarate exchange -6.091407e-01</span></span>
-<span><span class="co">#&gt; 9  EX_glc__D_e      D-Glucose exchange -2.427240e+00</span></span>
-<span><span class="co">#&gt; 10 EX_gln__L_e    L-Glutamine exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 11 EX_glu__L_e    L-Glutamate exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 12      EX_h_e             H+ exchange  3.235326e-01</span></span>
-<span><span class="co">#&gt; 13    EX_h2o_e            H2O exchange -1.848859e-01</span></span>
-<span><span class="co">#&gt; 14 EX_lac__D_e      D-lactate exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 15 EX_mal__L_e       L-Malate exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 16    EX_nh4_e        Ammonia exchange -3.528317e-01</span></span>
-<span><span class="co">#&gt; 17     EX_o2_e             O2 exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 18     EX_pi_e      Phosphate exchange -2.380359e-01</span></span>
-<span><span class="co">#&gt; 19    EX_pyr_e       Pyruvate exchange  0.000000e+00</span></span>
-<span><span class="co">#&gt; 20   EX_succ_e      Succinate exchange  2.784965e-11</span></span></code></pre></div>
+<span><span class="co">#&gt;             ID                    name       flux</span></span>
+<span><span class="co">#&gt; 1      EX_ac_e        Acetate exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 2   EX_acald_e   Acetaldehyde exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 3     EX_akg_e 2-Oxoglutarate exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 4     EX_co2_e            CO2 exchange 11.0422250</span></span>
+<span><span class="co">#&gt; 5    EX_etoh_e        Ethanol exchange 10.4801777</span></span>
+<span><span class="co">#&gt; 6     EX_for_e        Formate exchange  0.2438012</span></span>
+<span><span class="co">#&gt; 7     EX_fru_e     D-Fructose exchange -3.0000000</span></span>
+<span><span class="co">#&gt; 8     EX_fum_e       Fumarate exchange -0.6091407</span></span>
+<span><span class="co">#&gt; 9  EX_glc__D_e      D-Glucose exchange -2.4272395</span></span>
+<span><span class="co">#&gt; 10 EX_gln__L_e    L-Glutamine exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 11 EX_glu__L_e    L-Glutamate exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 12      EX_h_e             H+ exchange  0.3235326</span></span>
+<span><span class="co">#&gt; 13    EX_h2o_e            H2O exchange -0.1848859</span></span>
+<span><span class="co">#&gt; 14 EX_lac__D_e      D-lactate exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 15 EX_mal__L_e       L-Malate exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 16    EX_nh4_e        Ammonia exchange -0.3528317</span></span>
+<span><span class="co">#&gt; 17     EX_o2_e             O2 exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 18     EX_pi_e      Phosphate exchange -0.2380359</span></span>
+<span><span class="co">#&gt; 19    EX_pyr_e       Pyruvate exchange  0.0000000</span></span>
+<span><span class="co">#&gt; 20   EX_succ_e      Succinate exchange  0.0000000</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

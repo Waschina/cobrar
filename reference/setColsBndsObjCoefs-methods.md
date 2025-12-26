@@ -1,7 +1,7 @@
 # Set column bounds and objective coefficients
 
 Set column bounds and objective coefficients of an
-[LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md).
+[LPproblem](LPproblem-class.md).
 
 ## Usage
 
@@ -16,8 +16,7 @@ setColsBndsObjCoefs(lp, j, lb, ub, obj_coef, type = NULL)
 
 - lp:
 
-  Object of class
-  [LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md)
+  Object of class [LPproblem](LPproblem-class.md)
 
 - ...:
 

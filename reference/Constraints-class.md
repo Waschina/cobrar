@@ -1,10 +1,8 @@
 # Structure of Constraints Class
 
 This class represents user constraints that can be added to a model of
-class
-[ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
-in addition to the stationarity constraint (\\S v = 0\\) and flux
-bounds.
+class [ModelOrg](ModelOrg-class.md) in addition to the stationarity
+constraint (\\S v = 0\\) and flux bounds.
 
 ## Details
 
@@ -29,8 +27,7 @@ their effects are:
   representing the coefficients for each reaction in the model. Each row
   denotes a user constraint, each column a reaction in the model in the
   same order as in slot "S" in the corresponding
-  [ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
-  object.
+  [ModelOrg](ModelOrg-class.md) object.
 
 - `lb`:
 

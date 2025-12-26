@@ -12,8 +12,7 @@ fba(model)
 
 - model:
 
-  Model of class
-  [ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
+  Model of class [ModelOrg](ModelOrg-class.md)
 
 ## Value
 
@@ -22,10 +21,8 @@ A list with flux predictions (reaction fluxes 'fluxes', reduced costs
 
 ## See also
 
-Other Flux prediction algorithms:
-[`fva()`](https://waschina.github.io/cobrar/reference/fva.md),
-[`pfba()`](https://waschina.github.io/cobrar/reference/pfba.md),
-[`pfbaHeuristic()`](https://waschina.github.io/cobrar/reference/pfbaHeuristic.md)
+Other Flux prediction algorithms: [`fva()`](fva.md),
+[`pfba()`](pfba.md), [`pfbaHeuristic()`](pfbaHeuristic.md)
 
 ## Examples
 

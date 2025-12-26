@@ -13,8 +13,7 @@ pfbaHeuristic(model, costcoeffw = NULL, costcoefbw = NULL, pFBAcoeff = 1e-06)
 
 - model:
 
-  Model of class
-  [ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
+  Model of class [ModelOrg](ModelOrg-class.md)
 
 - costcoeffw, costcoefbw:
 
@@ -69,7 +68,5 @@ Media LLC, Mar. 10, 2021. doi: 10.1186/s13059-021-02295-1.
 
 ## See also
 
-Other Flux prediction algorithms:
-[`fba()`](https://waschina.github.io/cobrar/reference/fba.md),
-[`fva()`](https://waschina.github.io/cobrar/reference/fva.md),
-[`pfba()`](https://waschina.github.io/cobrar/reference/pfba.md)
+Other Flux prediction algorithms: [`fba()`](fba.md), [`fva()`](fva.md),
+[`pfba()`](pfba.md)
