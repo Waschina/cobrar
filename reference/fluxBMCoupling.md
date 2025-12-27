@@ -18,7 +18,8 @@ fluxBMCoupling(
 
 - model:
 
-  Community model of class [ModelComm](ModelComm-class.md)
+  Community model of class
+  [ModelComm](https://waschina.github.io/cobrar/reference/ModelComm-class.md)
 
 - BMreact:
 
@@ -58,4 +59,3 @@ slope (*c*) (see figure).
 - Heinken A, Sahoo S, Fleming RMT, Thiele I. Systems-level
   characterization of a host-microbe metabolic symbiosis in the
   mammalian gut. Vol. 4, Gut Microbes; 2013.
-  <http://dx.doi.org/10.4161/gmic.22370>

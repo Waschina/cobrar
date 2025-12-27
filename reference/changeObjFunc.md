@@ -12,7 +12,8 @@ changeObjFunc(model, react, obj_coef = rep(1, length(react)))
 
 - model:
 
-  Model of class [ModelOrg](ModelOrg-class.md)
+  Model of class
+  [ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
 
 - react:
 
@@ -26,7 +27,8 @@ changeObjFunc(model, react, obj_coef = rep(1, length(react)))
 
 ## Value
 
-An updated model of class [ModelOrg](ModelOrg-class.md)
+An updated model of class
+[ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
 
 ## Details
 

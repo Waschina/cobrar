@@ -1,7 +1,7 @@
 # Populate a constraint-X-variable matrix
 
 Add linear coefficients to the constraint-X-variable matrix of an
-[LPproblem](LPproblem-class.md).
+[LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md).
 
 ## Usage
 
@@ -16,7 +16,8 @@ loadMatrix(lp, ne, ia, ja, ra)
 
 - lp:
 
-  Object of class [LPproblem](LPproblem-class.md)
+  Object of class
+  [LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md)
 
 - ...:
 

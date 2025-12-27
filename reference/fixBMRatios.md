@@ -12,7 +12,8 @@ fixBMRatios(model, BMreact = guessBMReaction(model), tolerance = 0)
 
 - model:
 
-  Community model of class [ModelComm](ModelComm-class.md)
+  Community model of class
+  [ModelComm](https://waschina.github.io/cobrar/reference/ModelComm-class.md)
 
 - BMreact:
 

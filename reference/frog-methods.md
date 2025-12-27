@@ -34,7 +34,7 @@ frog(model, outdir = "frog_report")
 
 ## Value
 
-TRUE if frog report export was successful.
+TRUE if FROG report export was successful.
 
 ## References
 
@@ -57,7 +57,7 @@ dir(output_dir)
 #> [1] "01_objective.tsv"                      
 #> [2] "02_fva.tsv"                            
 #> [3] "03_gene_deletion.tsv"                  
-#> [4] "03_reaction_deletion.tsv"              
+#> [4] "04_reaction_deletion.tsv"              
 #> [5] "bslib-b4cb493c4e74a343d7a14e9c9b491bd8"
 #> [6] "downlit"                               
 #> [7] "e_coli_core.xml"                       

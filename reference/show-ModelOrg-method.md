@@ -1,7 +1,7 @@
 # Print a short summary of a metabolic network model
 
 Displays a few key properties of a metabolic network model of class
-[ModelOrg](ModelOrg-class.md).
+[ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md).
 
 ## Usage
 
@@ -14,4 +14,5 @@ show(object)
 
 - object:
 
-  S4-object of class [ModelOrg](ModelOrg-class.md).
+  S4-object of class
+  [ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md).

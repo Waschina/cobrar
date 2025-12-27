@@ -1,7 +1,7 @@
 # Retrieve column reduced costs
 
 Retrieve column reduced costs of a solved
-[LPproblem](LPproblem-class.md).
+[LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md).
 
 ## Usage
 
@@ -16,7 +16,8 @@ getRedCosts(lp)
 
 - lp:
 
-  Object of class [LPproblem](LPproblem-class.md)
+  Object of class
+  [LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md)
 
 - ...:
 

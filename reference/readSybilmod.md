@@ -17,5 +17,8 @@ readSybilmod(file_path)
 
 ## Value
 
-A [ModelOrg-class](ModelOrg-class.md) object or a list with
-[ModelOrg-class](ModelOrg-class.md) objects.
+A
+[ModelOrg-class](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
+object or a list with
+[ModelOrg-class](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
+objects.

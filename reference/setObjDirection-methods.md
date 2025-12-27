@@ -1,7 +1,7 @@
 # Set objective direction
 
 Set the objective function direction in an
-[LPproblem](LPproblem-class.md).
+[LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md).
 
 ## Usage
 
@@ -16,7 +16,8 @@ setObjDirection(lp, lpdir)
 
 - lp:
 
-  Object of class [LPproblem](LPproblem-class.md)
+  Object of class
+  [LPproblem](https://waschina.github.io/cobrar/reference/LPproblem-class.md)
 
 - ...:
 

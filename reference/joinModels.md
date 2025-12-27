@@ -22,7 +22,8 @@ joinModels(
 
 - models:
 
-  A list of objects of class [ModelOrg](ModelOrg-class.md)
+  A list of objects of class
+  [ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
 
 - mergeLB, mergeUB:
 

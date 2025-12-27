@@ -13,7 +13,8 @@ checkCompartmentId(model, comp)
 
 - model:
 
-  Model of class [ModelOrg](ModelOrg-class.md)
+  Model of class
+  [ModelOrg](https://waschina.github.io/cobrar/reference/ModelOrg-class.md)
 
 - comp:
 
