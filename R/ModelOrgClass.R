@@ -618,7 +618,7 @@ setMethod("constraint2string", signature(object = "ModelOrg", ind = "numeric"),
                                object@react_id[nz[i]])
             }
             mid <- paste(cnz, collapse = " ")
-            lhs <- switch(object@constraints@rtype[ind],
+            lhs <- switch(EXPR = object@constraints@rtype[ind],
               "F" = "-Inf < ",
               "L" = paste0(object@constraints@lb[ind]," <= "),
               "U" = "-Inf < ",
@@ -626,7 +626,7 @@ setMethod("constraint2string", signature(object = "ModelOrg", ind = "numeric"),
               "E" = paste0(object@constraints@lb[ind]," == ")
             )
 
-            rhs <- switch(object@constraints@rtype[ind],
+            rhs <- switch(EXPR = object@constraints@rtype[ind],
                           "F" = " < Inf",
                           "U" = paste0(" <= ", object@constraints@ub[ind]),
                           "L" = " < Inf",

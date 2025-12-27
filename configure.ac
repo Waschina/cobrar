@@ -1,5 +1,5 @@
 # Initialize Autoconf
-AC_INIT([cobrar], [0.2.1], [s.waschina@nutrinf.uni-kiel.de])
+AC_INIT([cobrar], [0.2.3], [s.waschina@nutrinf.uni-kiel.de])
 
 # Initialize variables
 LIBSBML_LIBS=""
@@ -31,7 +31,7 @@ AC_ARG_WITH([libsbml],
         fi
 
         # Last try (no user input, no pkg-config result)
-        if test "$LIBSBML_LIBS" == ""; then
+        if test "$LIBSBML_LIBS" = ""; then
             AC_CHECK_LIB([sbml], [main], [
                 LIBSBML_LIBS="-lsbml"
             ], [
