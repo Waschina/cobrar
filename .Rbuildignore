@@ -12,3 +12,4 @@ _pkgdown.yml
 pkgdown
 aclocal.m4
 README_WIN.md
+^\.lintr$
