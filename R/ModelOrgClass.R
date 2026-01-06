@@ -7,14 +7,19 @@
 #' @slot mod_desc A character vector describing the model.
 #' @slot mod_name A character vector containing the model name.
 #' @slot mod_compart A character vector indicating the model compartment.
-#' @slot mod_compart_name A character vector with the name of the model compartment.
+#' @slot mod_compart_name A character vector with the name of the model
+#' compartment.
 #' @slot mod_attr A data frame with additional model attributes.
 #' @slot mod_notes A character string that can contain an XML block with
 #' additional information about the model.
-#' @slot S A sparse numeric matrix of \link[Matrix]{dgCMatrix-class} representing the Stoichiometric matrix.
-#' @slot obj_coef A numeric vector containing coefficients for the objective function.
-#' @slot obj_dir Character specifying the objective direction. Either "maximize" or "minimize".
-#' @slot subSys A sparse Boolean matrix of \link[Matrix]{lgCMatrix-class} defining subsystems.
+#' @slot S A sparse numeric matrix of \link[Matrix]{dgCMatrix-class}
+#' representing the Stoichiometric matrix.
+#' @slot obj_coef A numeric vector containing coefficients for the objective
+#' function.
+#' @slot obj_dir Character specifying the objective direction. Either "maximize"
+#' or "minimize".
+#' @slot subSys A sparse Boolean matrix of \link[Matrix]{lgCMatrix-class}
+#' defining subsystems.
 #' @slot subSys_id A character vector representing subsystem identifiers.
 #' @slot subSys_name A character vector containing the subsystem names.
 #' @slot constraints An object of class \link{Constraints} which specifies
@@ -37,7 +42,8 @@
 #' reactions. Only specific columns are exported to SBML files. See
 #' \link{writeSBMLmod} for details.
 #'
-#' @slot gprRules A character vector with Gene-Protein-Reaction association rules
+#' @slot gprRules A character vector with Gene-Protein-Reaction association
+#' rules
 #' (with gene product indices corresponding to the order in slot 'genes').
 #' @slot genes A list of character vectors. Each vector contains the IDs of
 #' gene products associated to the respective reaction.
@@ -117,8 +123,10 @@ setClass("ModelOrg",
            subSys_id = character(0L),
            subSys_name = character(0L),
            constraints = new("Constraints",
-                             coeff = as(as(as(Matrix(nrow = 0, ncol = 0, sparse = TRUE),
-                                        "dMatrix"),"generalMatrix"),"CsparseMatrix"),
+                             coeff = as(as(as(Matrix(nrow = 0, ncol = 0,
+                                                     sparse = TRUE),
+                                              "dMatrix"), "generalMatrix"),
+                                        "CsparseMatrix"),
                              lb = numeric(0),
                              ub = numeric(0),
                              rtype = character(0)),
@@ -173,8 +181,14 @@ setValidity("ModelOrg", function(object) {
     "@met_id and @met_comp must be same length"
   } else if (length(object@met_id) != nrow(object@met_attr)) {
     "@met_id must be same length as the number of rows in @met_attr"
-  } else if (!all(c("chemicalFormula","charge","CVTerms","SBOTerm") %in% colnames(object@met_attr))) {
-    "The data.frame @met_attr must have the columns 'chemicalFormula','charge','CVTerms', and 'SBOTerm'"
+  } else if (!all(c(
+    "chemicalFormula",
+    "charge",
+    "CVTerms",
+    "SBOTerm"
+  ) %in% colnames(object@met_attr))) {
+    paste0("The data.frame @met_attr must have the columns 'chemicalFormula',",
+           "'charge','CVTerms', and 'SBOTerm'")
   } else if (length(object@react_id) != length(object@react_name)) {
     "@react_id and @react_name must be same length"
   } else if (length(object@react_id) != length(object@react_comp)) {
@@ -185,7 +199,7 @@ setValidity("ModelOrg", function(object) {
     "@react_id and @uppbnd must be same length"
   } else if (length(object@react_id) != nrow(object@react_attr)) {
     "@react_id must be same length as the number of rows in @react_attr"
-  } else if (!all(c("CVTerms","SBOTerm") %in% colnames(object@react_attr))) {
+  } else if (!all(c("CVTerms", "SBOTerm") %in% colnames(object@react_attr))) {
     "The data.frame @react_attr must have the columns 'CVTerms' and 'SBOTerm'"
   } else if (length(object@react_id) != length(object@gprRules)) {
     "@react_id and @gprRules must be same length"
@@ -193,10 +207,11 @@ setValidity("ModelOrg", function(object) {
     "@react_id and @genes must be same length"
   } else if (length(object@allGenes) != nrow(object@genes_attr)) {
     "@allGenes must be same length as the number of rows in @genes_attr"
-  } else if(!all(unlist(object@genes) %in% object@allGenes)) {
+  } else if (!all(unlist(object@genes) %in% object@allGenes)) {
     "All genes in @genes must be part of @allGenes"
-  } else if(ncol(object@S) != ncol(object@constraints@coeff)) {
-    "Matrix @constraints@S must have the number of columns as the stoichiometric matrix @S"
+  } else if (ncol(object@S) != ncol(object@constraints@coeff)) {
+    paste0("Matrix @constraints@S must have the number of columns as the",
+           "stoichiometric matrix @S")
   } else if (!validObject(object@constraints)) {
     ""
   } else {
@@ -217,15 +232,14 @@ setValidity("ModelOrg", function(object) {
 #' @docType methods
 #' @rdname react_num-methods
 #' @export
-setGeneric("react_num", valueClass = "numeric", function(model) {
+setGeneric("react_num", valueClass = "numeric", function(model) { # nolint
   standardGeneric("react_num")
 })
 #' @rdname react_num-methods
 #' @aliases react_num,ModelOrg
-setMethod("react_num", signature(model = "ModelOrg"),
-          function(model) {
-            return(length(model@react_id))
-          }
+setMethod("react_num", signature(model = "ModelOrg"), function(model) {
+  length(model@react_id)
+}
 )
 
 #' Index of reaction(s)
@@ -243,29 +257,38 @@ setMethod("react_num", signature(model = "ModelOrg"),
 #' @docType methods
 #' @rdname react_pos-methods
 #' @export
-setGeneric("react_pos", valueClass = "numeric", function(model, react) {
-  standardGeneric("react_pos")
-})
+setGeneric(
+  "react_pos",  # nolint
+  valueClass = "numeric",
+  function(model, react) {
+    standardGeneric("react_pos")
+  })
 #' @rdname react_pos-methods
 #' @aliases react_pos,ModelOrg,character
-setMethod("react_pos", signature(model = "ModelOrg", react = "character"),
-          function(model, react) {
-            return(match(react, model@react_id))
-          }
+setMethod(
+  "react_pos",
+  signature(model = "ModelOrg", react = "character"),
+  function(model, react) {
+    match(react, model@react_id)
+  }
 )
 #' @rdname react_pos-methods
 #' @aliases react_pos,ModelOrg,numeric
-setMethod("react_pos", signature(model = "ModelOrg", react = "numeric"),
-          function(model, react) {
-            return(ifelse(react <= react_num(model),react, NA_integer_))
-          }
+setMethod(
+  "react_pos",
+  signature(model = "ModelOrg", react = "numeric"),
+  function(model, react) {
+    ifelse(react <= react_num(model), react, NA_integer_)
+  }
 )
 #' @rdname react_pos-methods
 #' @aliases react_pos,ModelOrg,missing
-setMethod("react_pos", signature(model = "ModelOrg", react = "missing"),
-          function(model, react) {
-            return(NA_integer_)
-          }
+setMethod(
+  "react_pos",
+  signature(model = "ModelOrg", react = "missing"),
+  function(model, react) {
+    NA_integer_
+  }
 )
 
 
@@ -278,15 +301,17 @@ setMethod("react_pos", signature(model = "ModelOrg", react = "missing"),
 #' @docType methods
 #' @rdname met_num-methods
 #' @export
-setGeneric("met_num", valueClass = "numeric", function(model) {
+setGeneric("met_num", valueClass = "numeric", function(model) { # nolint
   standardGeneric("met_num")
 })
 #' @rdname met_num-methods
 #' @aliases met_num,ModelOrg
-setMethod("met_num", signature(model = "ModelOrg"),
-          function(model) {
-            return(length(model@met_id))
-          }
+setMethod(
+  "met_num",
+  signature(model = "ModelOrg"),
+  function(model) {
+    length(model@met_id)
+  }
 )
 
 #' Index of metabolite(s)
@@ -304,29 +329,35 @@ setMethod("met_num", signature(model = "ModelOrg"),
 #' @docType methods
 #' @rdname met_pos-methods
 #' @export
-setGeneric("met_pos", valueClass = "numeric", function(model, met) {
+setGeneric("met_pos", valueClass = "numeric", function(model, met) { # nolint
   standardGeneric("met_pos")
 })
 #' @rdname met_pos-methods
 #' @aliases met_pos,ModelOrg,character
-setMethod("met_pos", signature(model = "ModelOrg", met = "character"),
-          function(model, met) {
-            return(match(met, model@met_id))
-          }
+setMethod(
+  "met_pos",
+  signature(model = "ModelOrg", met = "character"),
+  function(model, met) {
+    match(met, model@met_id)
+  }
 )
 #' @rdname met_pos-methods
 #' @aliases met_pos,ModelOrg,numeric
-setMethod("met_pos", signature(model = "ModelOrg", met = "numeric"),
-          function(model, met) {
-            return(ifelse((met<=met_num(model)), met, NA_integer_))
-          }
+setMethod(
+  "met_pos",
+  signature(model = "ModelOrg", met = "numeric"),
+  function(model, met) {
+    ifelse((met <= met_num(model)), met, NA_integer_)
+  }
 )
 #' @rdname met_pos-methods
 #' @aliases met_pos,ModelOrg,missing
-setMethod("met_pos", signature(model = "ModelOrg", met = "missing"),
-          function(model, met) {
-            return(NA_integer_)
-          }
+setMethod(
+  "met_pos",
+  signature(model = "ModelOrg", met = "missing"),
+  function(model, met) {
+    NA_integer_
+  }
 )
 
 #' Number of genes
@@ -338,15 +369,17 @@ setMethod("met_pos", signature(model = "ModelOrg", met = "missing"),
 #' @docType methods
 #' @rdname gene_num-methods
 #' @export
-setGeneric("gene_num", valueClass = "numeric", function(model) {
+setGeneric("gene_num", valueClass = "numeric", function(model) { # nolint
   standardGeneric("gene_num")
 })
 #' @rdname gene_num-methods
 #' @aliases gene_num,ModelOrg
-setMethod("gene_num", signature(model = "ModelOrg"),
-          function(model) {
-            return(length(model@allGenes))
-          }
+setMethod(
+  "gene_num",
+  signature(model = "ModelOrg"),
+  function(model) {
+    length(model@allGenes)
+  }
 )
 
 
@@ -365,29 +398,35 @@ setMethod("gene_num", signature(model = "ModelOrg"),
 #' @docType methods
 #' @rdname gene_pos-methods
 #' @export
-setGeneric("gene_pos", valueClass = "numeric", function(model, gene) {
+setGeneric("gene_pos", valueClass = "numeric", function(model, gene) { # nolint
   standardGeneric("gene_pos")
 })
 #' @rdname gene_pos-methods
 #' @aliases gene_pos,ModelOrg,character
-setMethod("gene_pos", signature(model = "ModelOrg", gene = "character"),
-          function(model, gene) {
-            return(match(gene, model@allGenes))
-          }
+setMethod(
+  "gene_pos",
+  signature(model = "ModelOrg", gene = "character"),
+  function(model, gene) {
+    match(gene, model@allGenes)
+  }
 )
 #' @rdname gene_pos-methods
 #' @aliases gene_pos,ModelOrg,numeric
-setMethod("gene_pos", signature(model = "ModelOrg", gene = "numeric"),
-          function(model, gene) {
-            return(ifelse(gene<=gene_num(model),gene,NA_integer_))
-          }
+setMethod(
+  "gene_pos",
+  signature(model = "ModelOrg", gene = "numeric"),
+  function(model, gene) {
+    ifelse(gene <= gene_num(model), gene, NA_integer_)
+  }
 )
 #' @rdname gene_pos-methods
 #' @aliases gene_pos,ModelOrg,missing
-setMethod("gene_pos", signature(model = "ModelOrg", gene = "missing"),
-          function(model, gene) {
-            return(NA_integer_)
-          }
+setMethod(
+  "gene_pos", # nolint
+  signature(model = "ModelOrg", gene = "missing"),
+  function(model, gene) {
+    NA_integer_
+  }
 )
 
 #' Number of compartments
@@ -399,15 +438,17 @@ setMethod("gene_pos", signature(model = "ModelOrg", gene = "missing"),
 #' @docType methods
 #' @rdname comp_num-methods
 #' @export
-setGeneric("comp_num", valueClass = "numeric", function(model) {
+setGeneric("comp_num", valueClass = "numeric", function(model) { # nolint
   standardGeneric("comp_num")
 })
 #' @rdname comp_num-methods
 #' @aliases comp_num,ModelOrg
-setMethod("comp_num", signature(model = "ModelOrg"),
-          function(model) {
-            return(length(model@mod_compart))
-          }
+setMethod(
+  "comp_num", # nolint
+  signature(model = "ModelOrg"),
+  function(model) {
+    length(model@mod_compart)
+  }
 )
 
 #' Index of compartment(s)
@@ -419,42 +460,50 @@ setMethod("comp_num", signature(model = "ModelOrg"),
 #' indexes.
 #'
 #' @details
-#' Returns NA for compartment IDs not part of the model or if the index is larger
-#' than the number of compartments in the model.
+#' Returns NA for compartment IDs not part of the model or if the index is
+#' larger than the number of compartments in the model.
 #'
 #' @docType methods
 #' @rdname comp_pos-methods
 #' @export
-setGeneric("comp_pos", valueClass = "numeric", function(model, comp) {
+setGeneric("comp_pos", valueClass = "numeric", function(model, comp) { # nolint
   standardGeneric("comp_pos")
 })
 #' @rdname comp_pos-methods
 #' @aliases comp_pos,ModelOrg,character
-setMethod("comp_pos", signature(model = "ModelOrg", comp = "character"),
-          function(model, comp) {
-            return(match(comp, model@mod_compart))
-          }
+setMethod(
+  "comp_pos", # nolint
+  signature(model = "ModelOrg", comp = "character"),
+  function(model, comp) {
+    match(comp, model@mod_compart)
+  }
 )
 #' @rdname comp_pos-methods
 #' @aliases comp_pos,ModelOrg,numeric
-setMethod("comp_pos", signature(model = "ModelOrg", comp = "numeric"),
-          function(model, comp) {
-            return(ifelse(comp<=comp_num(model),comp,NA_integer_))
-          }
+setMethod(
+  "comp_pos",
+  signature(model = "ModelOrg", comp = "numeric"),
+  function(model, comp) {
+    ifelse(comp <= comp_num(model), comp, NA_integer_)
+  }
 )
 #' @rdname comp_pos-methods
 #' @aliases comp_pos,ModelOrg,missing
-setMethod("comp_pos", signature(model = "ModelOrg", comp = "missing"),
-          function(model, comp) {
-            return(NA_integer_)
-          }
+setMethod(
+  "comp_pos",
+  signature(model = "ModelOrg", comp = "missing"),
+  function(model, comp) {
+    NA_integer_
+  }
 )
 #' @rdname comp_pos-methods
 #' @aliases comp_pos,ModelOrg,logical
-setMethod("comp_pos", signature(model = "ModelOrg", comp = "logical"),
-          function(model, comp) {
-            return(rep(NA_integer_, length(comp)))
-          }
+setMethod(
+  "comp_pos",
+  signature(model = "ModelOrg", comp = "logical"),
+  function(model, comp) {
+    rep(NA_integer_, length(comp))
+  }
 )
 
 #' Number of constraints
@@ -466,15 +515,17 @@ setMethod("comp_pos", signature(model = "ModelOrg", comp = "logical"),
 #' @docType methods
 #' @rdname constraint_num-methods
 #' @export
-setGeneric("constraint_num", valueClass = "numeric", function(model) {
+setGeneric("constraint_num", valueClass = "numeric", function(model) { # nolint
   standardGeneric("constraint_num")
 })
 #' @rdname constraint_num-methods
 #' @aliases constraint_num,ModelOrg
-setMethod("constraint_num", signature(model = "ModelOrg"),
-          function(model) {
-            return(nrow(model@constraints@coeff))
-          }
+setMethod(
+  "constraint_num",
+  signature(model = "ModelOrg"),
+  function(model) {
+    nrow(model@constraints@coeff)
+  }
 )
 
 #' Number of subsystems
@@ -486,15 +537,17 @@ setMethod("constraint_num", signature(model = "ModelOrg"),
 #' @docType methods
 #' @rdname subsys_num-methods
 #' @export
-setGeneric("subsys_num", valueClass = "numeric", function(model) {
+setGeneric("subsys_num", valueClass = "numeric", function(model) { # nolint
   standardGeneric("subsys_num")
 })
 #' @rdname subsys_num-methods
 #' @aliases subsys_num,ModelOrg
-setMethod("subsys_num", signature(model = "ModelOrg"),
-          function(model) {
-            return(length(model@subSys_id))
-          }
+setMethod(
+  "subsys_num",
+  signature(model = "ModelOrg"),
+  function(model) {
+    length(model@subSys_id)
+  }
 )
 
 #' Index of subsystem(s)
@@ -512,36 +565,47 @@ setMethod("subsys_num", signature(model = "ModelOrg"),
 #' @docType methods
 #' @rdname subsys_pos-methods
 #' @export
-setGeneric("subsys_pos", valueClass = "numeric", function(model, subsys) {
-  standardGeneric("subsys_pos")
-})
+setGeneric(
+  "subsys_pos", # nolint
+  valueClass = "numeric",
+  function(model, subsys) {
+    standardGeneric("subsys_pos")
+  })
 #' @rdname subsys_pos-methods
 #' @aliases subsys_pos,ModelOrg,character
-setMethod("subsys_pos", signature(model = "ModelOrg", subsys = "character"),
-          function(model, subsys) {
-            return(match(subsys, model@subSys_id))
-          }
+setMethod(
+  "subsys_pos",
+  signature(model = "ModelOrg", subsys = "character"),
+  function(model, subsys) {
+    match(subsys, model@subSys_id)
+  }
 )
 #' @rdname subsys_pos-methods
 #' @aliases subsys_pos,ModelOrg,numeric
-setMethod("subsys_pos", signature(model = "ModelOrg", subsys = "numeric"),
-          function(model, subsys) {
-            return(ifelse(subsys<=subsys_num(model),subsys,NA_integer_))
-          }
+setMethod(
+  "subsys_pos",
+  signature(model = "ModelOrg", subsys = "numeric"),
+  function(model, subsys) {
+    ifelse(subsys <= subsys_num(model), subsys, NA_integer_)
+  }
 )
 #' @rdname subsys_pos-methods
 #' @aliases subsys_pos,ModelOrg,missing
-setMethod("subsys_pos", signature(model = "ModelOrg", subsys = "missing"),
-          function(model, subsys) {
-            return(NA_integer_)
-          }
+setMethod(
+  "subsys_pos",
+  signature(model = "ModelOrg", subsys = "missing"),
+  function(model, subsys) {
+    NA_integer_
+  }
 )
 #' @rdname subsys_pos-methods
 #' @aliases subsys_pos,ModelOrg,logical
-setMethod("subsys_pos", signature(model = "ModelOrg", subsys = "logical"),
-          function(model, subsys) {
-            return(rep(NA_integer_, length(subsys)))
-          }
+setMethod(
+  "subsys_pos",
+  signature(model = "ModelOrg", subsys = "logical"),
+  function(model, subsys) {
+    rep(NA_integer_, length(subsys))
+  }
 )
 
 #------------------------------------------------------------------------------#
@@ -551,23 +615,24 @@ setMethod("subsys_pos", signature(model = "ModelOrg", subsys = "logical"),
 setGeneric("printObjFunc", valueClass = "character", function(object) {
   standardGeneric("printObjFunc")
 })
-setMethod("printObjFunc", signature(object = "ModelOrg"),
-          function(object) {
-            cInd <- object@obj_coef != 0
+setMethod(
+  "printObjFunc",
+  signature(object = "ModelOrg"),
+  function(object) {
+    cInd <- object@obj_coef != 0
 
-            # check if there is an objective function
-            if (sum(cInd) == 0) {
-              of <- "no objective function"
-            }
-            else {
-              obj <- gsub("^([^-])", "+\\1",
-                          object@obj_coef[cInd], perl = TRUE)
-              of  <- paste(paste(obj, object@react_id[cInd]),
-                           collapse = " ")
-            }
+    # check if there is an objective function
+    if (sum(cInd) == 0) {
+      of <- "no objective function"
+    } else {
+      obj <- gsub("^([^-])", "+\\1",
+                  object@obj_coef[cInd], perl = TRUE)
+      of  <- paste(paste(obj, object@react_id[cInd]),
+                   collapse = " ")
+    }
 
-            return(of)
-          }
+    of
+  }
 )
 
 #' Print a short summary of a metabolic network model
@@ -578,64 +643,76 @@ setMethod("printObjFunc", signature(object = "ModelOrg"),
 #' @param object S4-object of class \link{ModelOrg}.
 #'
 #' @export
-setMethod("show", signature(object = "ModelOrg"),
-          function(object) {
-            cat("model ID:                  ", object@mod_id, "\n")
-            cat("model name:                ", object@mod_name, "\n")
-            cat("number of compartments:    ", length(object@mod_compart), "\n")
-            if(comp_num(object) > 0) {
-              for(i in 1:comp_num(object)) {
-                cat("                           ", object@mod_compart[i], " (",
-                    object@mod_compart_name[i], ")\n")
-              }
-            }
-            cat("number of reactions:       ", react_num(object), "\n")
-            cat("number of metabolites:     ", met_num(object), "\n")
-            cat("number of unique genes:    ", gene_num(object), "\n")
-            cat("number of user constraints:", constraint_num(object), "\n")
-            if(constraint_num(object) > 0 && constraint_num(object) <= 10) {
-              for(i in 1:constraint_num(object)) {
-                cat("                           ",constraint2string(object,i),"\n")
-              }
-            }
-            cat("number of subsystems:      ", subsys_num(object), "\n")
-            cat("\n")
-            cat("objective function:        ", printObjFunc(object), "\n")
-            cat("objective direction:       ", object@obj_dir, "\n")
-          }
+setMethod(
+  "show",
+  signature(object = "ModelOrg"),
+  function(object) {
+    cat("model ID:                  ", object@mod_id, "\n")
+    cat("model name:                ", object@mod_name, "\n")
+    cat("number of compartments:    ", length(object@mod_compart), "\n")
+    if (comp_num(object) > 0) {
+      for (i in 1:comp_num(object)) {
+        cat("                           ", object@mod_compart[i], " (",
+            object@mod_compart_name[i], ")\n")
+      }
+    }
+    cat("number of reactions:       ", react_num(object), "\n")
+    cat("number of metabolites:     ", met_num(object), "\n")
+    cat("number of unique genes:    ", gene_num(object), "\n")
+    cat("number of user constraints:", constraint_num(object), "\n")
+    if (constraint_num(object) > 0 && constraint_num(object) <= 10) {
+      for (i in 1:constraint_num(object)) {
+        cat("                           ", constraint2string(object, i), "\n")
+      }
+    }
+    cat("number of subsystems:      ", subsys_num(object), "\n")
+    cat("\n")
+    cat("objective function:        ", printObjFunc(object), "\n")
+    cat("objective direction:       ", object@obj_dir, "\n")
+  }
 )
 
-setGeneric("constraint2string" ,valueClass = "character", function(object, ind, ...) {
-  standardGeneric("constraint2string")
-})
-setMethod("constraint2string", signature(object = "ModelOrg", ind = "numeric"),
-          function(object, ind, digits = 5) {
-            nz <- which(object@constraints@coeff[ind,] != 0)
-            cnz <- c()
-            for(i in 1:length(nz)) {
-              cnz[i] <- paste0(ifelse(sign(object@constraints@coeff[ind,nz[i]])==1,"+","-"),
-                               round(abs(object@constraints@coeff[ind,nz[i]]), digits = digits)," ",
-                               object@react_id[nz[i]])
-            }
-            mid <- paste(cnz, collapse = " ")
-            lhs <- switch(EXPR = object@constraints@rtype[ind],
-              "F" = "-Inf < ",
-              "L" = paste0(object@constraints@lb[ind]," <= "),
-              "U" = "-Inf < ",
-              "D" = paste0(object@constraints@lb[ind]," <= "),
-              "E" = paste0(object@constraints@lb[ind]," == ")
-            )
+setGeneric(
+  "constraint2string",
+  valueClass = "character",
+  function(object, ind, ...) {
+    standardGeneric("constraint2string")
+  }
+)
+setMethod(
+  "constraint2string",
+  signature(object = "ModelOrg", ind = "numeric"),
+  function(object, ind, digits = 5) {
+    nz <- which(object@constraints@coeff[ind, ] != 0)
+    cnz <- c()
+    for (i in seq_along(nz)) {
+      cnz[i] <- paste0(ifelse(sign(object@constraints@coeff[ind, nz[i]]) == 1,
+                              "+", "-"),
+                       round(abs(object@constraints@coeff[ind, nz[i]]),
+                             digits = digits), " ",
+                       object@react_id[nz[i]])
+    }
+    mid <- paste(cnz, collapse = " ")
+    lhs <- switch(
+      EXPR = object@constraints@rtype[ind],
+      "F" = "-Inf < ",
+      "L" = paste0(object@constraints@lb[ind], " <= "),
+      "U" = "-Inf < ",
+      "D" = paste0(object@constraints@lb[ind], " <= "),
+      "E" = paste0(object@constraints@lb[ind], " == ")
+    )
 
-            rhs <- switch(EXPR = object@constraints@rtype[ind],
-                          "F" = " < Inf",
-                          "U" = paste0(" <= ", object@constraints@ub[ind]),
-                          "L" = " < Inf",
-                          "D" = paste0(" <= ", object@constraints@ub[ind]),
-                          "E" = paste0(" == ", object@constraints@ub[ind])
-            )
+    rhs <- switch(
+      EXPR = object@constraints@rtype[ind],
+      "F" = " < Inf",
+      "U" = paste0(" <= ", object@constraints@ub[ind]),
+      "L" = " < Inf",
+      "D" = paste0(" <= ", object@constraints@ub[ind]),
+      "E" = paste0(" == ", object@constraints@ub[ind])
+    )
 
-            return(paste0(lhs, mid, rhs))
-          }
+    paste0(lhs, mid, rhs)
+  }
 )
 
 
@@ -643,19 +720,27 @@ setMethod("constraint2string", signature(object = "ModelOrg", ind = "numeric"),
 setGeneric("rmDuplicateConstraints", valueClass = "ModelOrg", function(object) {
   standardGeneric("rmDuplicateConstraints")
 })
-setMethod("rmDuplicateConstraints", signature(object = "ModelOrg"),
-          function(object) {
-            ccstr <- sapply(1:constraint_num(object), function(i) constraint2string(object , i, digits = Inf))
+setMethod(
+  "rmDuplicateConstraints",
+  signature(object = "ModelOrg"),
+  function(object) {
+    ccstr <- sapply(1:constraint_num(object),
+                    function(i) constraint2string(object, i, digits = Inf))
 
-            indrm <- which(duplicated(ccstr))
+    indrm <- which(duplicated(ccstr))
 
-            if(length(indrm)>0) {
-              warning("Duplicate user constraints. Retaining only unique constraints.")
-              object@constraints@coeff <- object@constraints@coeff[-indrm,, drop = FALSE]
-              object@constraints@lb <- object@constraints@lb[-indrm]
-              object@constraints@ub <- object@constraints@ub[-indrm]
-              object@constraints@rtype <- object@constraints@rtype[-indrm]
-            }
-            return(object)
-          }
+    if (length(indrm) > 0) {
+      warning("Duplicate user constraints. Retaining only unique constraints.")
+      constraints <- object@constraints
+
+      constraints@coeff <- constraints@coeff[-indrm, , drop = FALSE]
+      constraints@lb    <- constraints@lb[-indrm]
+      constraints@ub    <- constraints@ub[-indrm]
+      constraints@rtype <- constraints@rtype[-indrm]
+
+      object@constraints <- constraints
+    }
+
+    object
+  }
 )

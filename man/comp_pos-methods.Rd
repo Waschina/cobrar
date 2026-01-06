@@ -33,6 +33,6 @@ indexes.}
 Returns the index(es) of specific compartment(s).
 }
 \details{
-Returns NA for compartment IDs not part of the model or if the index is larger
-than the number of compartments in the model.
+Returns NA for compartment IDs not part of the model or if the index is
+larger than the number of compartments in the model.
 }

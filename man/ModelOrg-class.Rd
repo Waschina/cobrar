@@ -20,20 +20,25 @@ to central model structures, metabolites, reactions, and genes.
 
 \item{\code{mod_compart}}{A character vector indicating the model compartment.}
 
-\item{\code{mod_compart_name}}{A character vector with the name of the model compartment.}
+\item{\code{mod_compart_name}}{A character vector with the name of the model
+compartment.}
 
 \item{\code{mod_attr}}{A data frame with additional model attributes.}
 
 \item{\code{mod_notes}}{A character string that can contain an XML block with
 additional information about the model.}
 
-\item{\code{S}}{A sparse numeric matrix of \link[Matrix]{dgCMatrix-class} representing the Stoichiometric matrix.}
+\item{\code{S}}{A sparse numeric matrix of \link[Matrix]{dgCMatrix-class}
+representing the Stoichiometric matrix.}
 
-\item{\code{obj_coef}}{A numeric vector containing coefficients for the objective function.}
+\item{\code{obj_coef}}{A numeric vector containing coefficients for the objective
+function.}
 
-\item{\code{obj_dir}}{Character specifying the objective direction. Either "maximize" or "minimize".}
+\item{\code{obj_dir}}{Character specifying the objective direction. Either "maximize"
+or "minimize".}
 
-\item{\code{subSys}}{A sparse Boolean matrix of \link[Matrix]{lgCMatrix-class} defining subsystems.}
+\item{\code{subSys}}{A sparse Boolean matrix of \link[Matrix]{lgCMatrix-class}
+defining subsystems.}
 
 \item{\code{subSys_id}}{A character vector representing subsystem identifiers.}
 
@@ -67,7 +72,8 @@ metabolites. Only specific columns are exported to SBML files. See
 reactions. Only specific columns are exported to SBML files. See
 \link{writeSBMLmod} for details.}
 
-\item{\code{gprRules}}{A character vector with Gene-Protein-Reaction association rules
+\item{\code{gprRules}}{A character vector with Gene-Protein-Reaction association
+rules
 (with gene product indices corresponding to the order in slot 'genes').}
 
 \item{\code{genes}}{A list of character vectors. Each vector contains the IDs of
