@@ -13,7 +13,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/Waschina/cobrar/blob/v0.2.3/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/Waschina/cobrar/blob/main/DESCRIPTION)
 
 Waschina S, Zimmermann J, Froitzheim S (2026). *cobrar: Constraint-Based
 Metabolic Network Analysis in R*. R package version 0.2.3,
