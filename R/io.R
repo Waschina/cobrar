@@ -13,7 +13,7 @@
 #' @export
 readSBMLmod <- function(file_path) {
   is_compressed <- FALSE
-  
+
   if(!file.exists(file_path))
     stop(paste0("SBML file '",file_path,"' does not exist."))
 
@@ -380,17 +380,29 @@ readSybilmod <- function(file_path) {
                met_id = sybildoc@met_id,
                met_name = sybildoc@met_name,
                met_comp = sybildoc@mod_compart[sybildoc@met_comp],
-               met_attr = sybildoc@met_attr,
+               met_attr = cbind(sybildoc@met_attr, data.frame(
+                 CVTerms = rep(NA_character_, nrow(sybildoc@met_attr)),
+                 SBOTerm = rep("SBO:0000247", nrow(sybildoc@met_attr))
+               )),
 
                react_id = sybildoc@react_id,
                react_name = sybildoc@react_name,
-               react_comp = "",
+               react_comp = rep(sybildoc@mod_compart[1],
+                                length(sybildoc@react_id)),
                lowbnd = sybildoc@lowbnd,
                uppbnd = sybildoc@uppbnd,
-               react_attr = sybildoc@react_attr,
+               react_attr = cbind(
+                 sybildoc@react_attr,
+                 data.frame(CVTerms = rep(NA_character_,
+                                          nrow(sybildoc@react_attr)),
+                            SBOTerm = rep("SBO:0000167",
+                                          nrow(sybildoc@react_attr)))
+               ),
 
-               gprRules = sybildoc@gprRules,
-               genes = sybildoc@genes,
+               gprRules = ifelse(sybildoc@gprRules == "",
+                                 character(0L),
+                                 sybildoc@gprRules),
+               genes = lapply(sybildoc@genes, FUN = function(xg) xg[xg != ""]),
                allGenes = sybildoc@allGenes,
                genes_attr = data.frame(name = sybildoc@allGenes,
                                        CVTerms = "", SBOTerm = ""))
