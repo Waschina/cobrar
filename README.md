@@ -41,7 +41,7 @@ Install cobrar (in *R*):
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("Waschina/cobrar", build_vignettes = TRUE)
+remotes::install_github("Waschina/cobrar")
 ```
 
 #### Centos/Fedora/RHEL
@@ -94,14 +94,6 @@ conda install bioconda::r-cobrar
 The full documentation including illustrative examples is available
 [here](https://waschina.github.io/cobrar/).
 
-The vignettes of the package can also be accessed:
-
-``` r
-library(cobrar)
-vignette(package = "cobrar")
-vignette(topic = "cobrar")
-```
-
 A simple Flux Balance Analysis (FBA) for the core metabolism of
 *Escherichia coli*:
 
@@ -109,7 +101,7 @@ A simple Flux Balance Analysis (FBA) for the core metabolism of
 library(cobrar)
 #> Loading required package: Matrix
 #> cobrar uses...
-#>  - libSBML (v. 5.20.5)
+#>  - libSBML (v. 5.20.4)
 #>  - glpk (v. 5.0)
 
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
