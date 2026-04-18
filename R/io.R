@@ -30,73 +30,72 @@ readSBMLmod <- function(file_path) {
     sbmldoc  <- readSBMLfile(file_path)
   }
 
-  # Pointers to SBML document and model (libSBML objects)
-  modelPtr <- getModelObj(sbmldoc)
-
   #---------------#
   # Model content #
   #---------------#
 
   # Model fields
-  mod_id <- getModelId(modelPtr)
-  mod_name <- getModelName(modelPtr)
+  mod_id <- getModelId(sbmldoc)
+  mod_name <- getModelName(sbmldoc)
   if(is.na(mod_name))
     mod_name <- mod_id
-  S <- getStoichiometricMatrix(modelPtr)
-  mod_compartments <- getModelCompartments(modelPtr)
+  S <- getStoichiometricMatrix(sbmldoc)
+  mod_compartments <- getModelCompartments(sbmldoc)
   mod_compartments$name <- ifelse(is.na(mod_compartments$name),
                                   mod_compartments$id,
                                   mod_compartments$name)
-  mod_cvterms <- paste(getModelCVTerms(modelPtr), collapse = ";")
-  mod_notes <- getModelNotes(modelPtr)
-  obj <- getObjectiveFunction(modelPtr)
+  mod_cvterms <- paste(getModelCVTerms(sbmldoc), collapse = ";")
+  mod_notes <- getModelNotes(sbmldoc)
+  obj <- getObjectiveFunction(sbmldoc)
   constraints <- new("Constraints",
                      coeff = as(Matrix(nrow = 0, ncol = ncol(S), sparse = TRUE),
                                 "dMatrix"),
                      lb = numeric(0),
                      ub = numeric(0),
                      rtype = character(0))
-  mod_sbo <- getModelSBOTerm(modelPtr)
+  mod_sbo <- getModelSBOTerm(sbmldoc)
 
   # Subsystems
-  subSys <- getSubsystems(modelPtr); colnames(subSys$subSys) <- subSys$subSys_ids
+  subSys <- getSubsystems(sbmldoc); colnames(subSys$subSys) <- subSys$subSys_ids
 
   # Reactions
-  react_id <- getReactionIds(modelPtr)
-  react_name <- getReactionNames(modelPtr)
-  react_bnds <- getReactionFluxBounds(modelPtr)
-  react_comp <- getReactionCompartment(modelPtr)
-  react_cvterms <- getReactionCVTerms(modelPtr)
+  react_id <- getReactionIds(sbmldoc)
+  react_name <- getReactionNames(sbmldoc)
+  react_bnds <- getReactionFluxBounds(sbmldoc)
+  react_comp <- getReactionCompartment(sbmldoc)
+  react_cvterms <- getReactionCVTerms(sbmldoc)
   react_cvterms <- lapply(react_cvterms, function(x) {
     paste(x, collapse = ";")
   })
-  react_sboterms <- getReactionSBOTerms(modelPtr)
+  react_sboterms <- getReactionSBOTerms(sbmldoc)
 
   # Metabolites
-  met_id <- getMetaboliteIds(modelPtr)
-  met_name <- getMetaboliteNames(modelPtr)
-  met_attr <- getMetaboliteAnnotation(modelPtr)
-  met_cvterms <- getMetaboliteCVTerms(modelPtr)
+  met_id <- getMetaboliteIds(sbmldoc)
+  met_name <- getMetaboliteNames(sbmldoc)
+  met_attr <- getMetaboliteAnnotation(sbmldoc)
+  met_cvterms <- getMetaboliteCVTerms(sbmldoc)
   met_cvterms <- lapply(met_cvterms, function(x) {
     paste(x, collapse = ";")
   })
   met_attr$CVTerms <- unlist(met_cvterms)
-  met_comp <- getMetaboliteCompartments(modelPtr)
-  met_attr$SBOTerm <- getMetaboliteSBOTerms(modelPtr)
+  met_comp <- getMetaboliteCompartments(sbmldoc)
+  met_attr$SBOTerm <- getMetaboliteSBOTerms(sbmldoc)
 
 
   # Genes
-  allGeneProducts <- getGeneProducts(modelPtr)
-  gpr <- getGPRs(modelPtr)
-  gpr_cvterms <- getGeneProductCVTerms(modelPtr)
+  allGeneProducts <- getGeneProducts(sbmldoc)
+  gpr <- getGPRs(sbmldoc)
+  gpr_cvterms <- getGeneProductCVTerms(sbmldoc)
   gpr_cvterms <- lapply(gpr_cvterms, function(x) {
     paste(x, collapse = ";")
   })
-  gpr_sbo <- getGeneProductSBOTerms(modelPtr)
+  gpr_sbo <- getGeneProductSBOTerms(sbmldoc)
 
   if(is_compressed)
     file.remove(tmpfile)
 
+  rm(sbmldoc)
+  
   return(
     new("ModelOrg",
         mod_id = mod_id,

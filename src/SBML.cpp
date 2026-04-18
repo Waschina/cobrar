@@ -30,58 +30,44 @@ Rcpp::String getSBMLVersion() {
 SEXP readSBMLfile(std::string file_path) {
   SBMLReader reader;
   SBMLDocument* document = reader.readSBML(file_path);
-
-  if (document->getErrorLog()->getNumFailsWithSeverity(LIBSBML_SEV_ERROR) > 0) {
-    Rcpp::stop(document->getErrorWithSeverity(0, LIBSBML_SEV_ERROR)->getMessage());
-  }
-
+  
   if (document == nullptr) {
     Rcpp::stop("Failed reading SBML document. Please check your SBML file.");
   }
 
+  if (document->getErrorLog()->getNumFailsWithSeverity(LIBSBML_SEV_ERROR) > 0) {
+    std::string msg = document->getErrorWithSeverity(0, LIBSBML_SEV_ERROR)->getMessage();
+    delete document;
+    Rcpp::stop(msg);
+  }
+
   // Convert SBML Level 2 to SBML Level 3 with FBC extension
-  if(document->getLevel() == 2) {
+  if (document->getLevel() == 2) {
     Rcpp::warning("Converting cobra-style SBML level 2 to level 3 incl. fbc extension.");
     ConversionProperties props;
     props.addOption("convert cobra", true, "Convert Cobra model to FBC");
     int result = document->convert(props);
-
     if (result != LIBSBML_OPERATION_SUCCESS) {
+      delete document;
       Rcpp::stop("Failed to convert SBML document to Level 3.");
     }
   }
 
   // Convert FBC v1 to FBC v2
-  FbcSBMLDocumentPlugin* dplugin = static_cast<FbcSBMLDocumentPlugin*>(document->getPlugin("fbc"));
-  if(dplugin->getPackageVersion() == 1) {
+  FbcSBMLDocumentPlugin* dplugin =
+    static_cast<FbcSBMLDocumentPlugin*>(document->getPlugin("fbc"));
+  if (dplugin != nullptr && dplugin->getPackageVersion() == 1) {
     Rcpp::warning("Loading SBML with fbc v1. It is recommended to encode flux blance contraints (fbc) in fbc v2.");
     ConversionProperties propsFBC;
     propsFBC.addOption("convert fbc v1 to fbc v2");
     int result = document->convert(propsFBC);
-
     if (result != LIBSBML_OPERATION_SUCCESS) {
+      delete document;
       Rcpp::stop("Failed to convert FBC v1 to FBC v2.");
     }
   }
 
-  return Rcpp::XPtr<SBMLDocument>(document, false);
-}
-
-// [[Rcpp::export]]
-SEXP getModelObj(SEXP sbml_document_ptr) {
-  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
-
-  if (document == nullptr) {
-    Rcpp::stop("Invalid SBMLDocument pointer.");
-  }
-
-  Model* model = document->getModel();
-
-  if (model == nullptr) {
-    Rcpp::stop("No Model object found in the SBMLDocument.");
-  }
-
-  return Rcpp::XPtr<Model>(model, false);
+  return Rcpp::XPtr<SBMLDocument>(document, true);
 }
 
 /*
@@ -89,9 +75,13 @@ SEXP getModelObj(SEXP sbml_document_ptr) {
  */
 
 // [[Rcpp::export]]
-Rcpp::String getModelId(SEXP model_ptr) {
+Rcpp::String getModelId(SEXP sbml_document_ptr) {
   // Get the Model object
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -105,9 +95,13 @@ Rcpp::String getModelId(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::String getModelName(SEXP model_ptr) {
+Rcpp::String getModelName(SEXP sbml_document_ptr) {
   // Get the Model object
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -121,9 +115,13 @@ Rcpp::String getModelName(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::DataFrame getModelCompartments(SEXP model_ptr) {
+Rcpp::DataFrame getModelCompartments(SEXP sbml_document_ptr) {
   // Get the Model object
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -151,9 +149,13 @@ Rcpp::DataFrame getModelCompartments(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-arma::sp_mat getStoichiometricMatrix(SEXP model_ptr) {
+arma::sp_mat getStoichiometricMatrix(SEXP sbml_document_ptr) {
   // Get the Model object from the SBMLDocument
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -186,9 +188,13 @@ arma::sp_mat getStoichiometricMatrix(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::StringVector getModelCVTerms(SEXP model_ptr) {
+Rcpp::StringVector getModelCVTerms(SEXP sbml_document_ptr) {
   // Get the Model object
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -224,9 +230,13 @@ Rcpp::StringVector getModelCVTerms(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::String getModelSBOTerm(SEXP model_ptr) {
+Rcpp::String getModelSBOTerm(SEXP sbml_document_ptr) {
   // Get the Model object
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -238,9 +248,13 @@ Rcpp::String getModelSBOTerm(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::String getModelNotes(SEXP model_ptr) {
+Rcpp::String getModelNotes(SEXP sbml_document_ptr) {
   // Get the Model object
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -254,9 +268,13 @@ Rcpp::String getModelNotes(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List getObjectiveFunction(SEXP model_ptr) {
+Rcpp::List getObjectiveFunction(SEXP sbml_document_ptr) {
   // Get the Model object
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -306,9 +324,13 @@ Rcpp::List getObjectiveFunction(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List getSubsystems(SEXP model_ptr) {
+Rcpp::List getSubsystems(SEXP sbml_document_ptr) {
   // Get the Model object
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -373,9 +395,14 @@ Rcpp::List getSubsystems(SEXP model_ptr) {
  */
 
 // [[Rcpp::export]]
-Rcpp::CharacterVector getReactionIds(SEXP model_ptr) {
+Rcpp::CharacterVector getReactionIds(SEXP sbml_document_ptr) {
   // Get the Model object from the SBMLDocument
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -393,9 +420,14 @@ Rcpp::CharacterVector getReactionIds(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::CharacterVector getReactionNames(SEXP model_ptr) {
+Rcpp::CharacterVector getReactionNames(SEXP sbml_document_ptr) {
   // Get the Model object from the SBMLDocument
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -413,9 +445,13 @@ Rcpp::CharacterVector getReactionNames(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::CharacterVector getReactionCompartment(SEXP model_ptr) {
+Rcpp::CharacterVector getReactionCompartment(SEXP sbml_document_ptr) {
   // Get the Model object from the SBMLDocument
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -433,9 +469,13 @@ Rcpp::CharacterVector getReactionCompartment(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List getReactionFluxBounds(SEXP model_ptr) {
+Rcpp::List getReactionFluxBounds(SEXP sbml_document_ptr) {
   // Get the Model object from the SBMLDocument
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -470,9 +510,13 @@ Rcpp::List getReactionFluxBounds(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List getReactionCVTerms(SEXP model_ptr) {
+Rcpp::List getReactionCVTerms(SEXP sbml_document_ptr) {
   // Get the Model object
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -520,9 +564,13 @@ Rcpp::List getReactionCVTerms(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::StringVector getReactionSBOTerms(SEXP model_ptr) {
+Rcpp::StringVector getReactionSBOTerms(SEXP sbml_document_ptr) {
   // Get the Model object
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -543,9 +591,13 @@ Rcpp::StringVector getReactionSBOTerms(SEXP model_ptr) {
  */
 
 // [[Rcpp::export]]
-Rcpp::CharacterVector getMetaboliteIds(SEXP model_ptr) {
+Rcpp::CharacterVector getMetaboliteIds(SEXP sbml_document_ptr) {
   // Get the Model object from the SBMLDocument
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -563,9 +615,13 @@ Rcpp::CharacterVector getMetaboliteIds(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::CharacterVector getMetaboliteNames(SEXP model_ptr) {
+Rcpp::CharacterVector getMetaboliteNames(SEXP sbml_document_ptr) {
   // Get the Model object from the SBMLDocument
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -583,9 +639,13 @@ Rcpp::CharacterVector getMetaboliteNames(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::DataFrame getMetaboliteAnnotation(SEXP model_ptr) {
+Rcpp::DataFrame getMetaboliteAnnotation(SEXP sbml_document_ptr) {
   // Get the Model object from the SBMLDocument
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -612,9 +672,13 @@ Rcpp::DataFrame getMetaboliteAnnotation(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List getMetaboliteCVTerms(SEXP model_ptr) {
+Rcpp::List getMetaboliteCVTerms(SEXP sbml_document_ptr) {
   // Get the Model object from the SBMLDocument
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -663,9 +727,13 @@ Rcpp::List getMetaboliteCVTerms(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::StringVector getMetaboliteSBOTerms(SEXP model_ptr) {
+Rcpp::StringVector getMetaboliteSBOTerms(SEXP sbml_document_ptr) {
   // Get the Model object from the SBMLDocument
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -684,9 +752,13 @@ Rcpp::StringVector getMetaboliteSBOTerms(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::CharacterVector getMetaboliteCompartments(SEXP model_ptr) {
+Rcpp::CharacterVector getMetaboliteCompartments(SEXP sbml_document_ptr) {
   // Get the Model object from the SBMLDocument
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -709,9 +781,13 @@ Rcpp::CharacterVector getMetaboliteCompartments(SEXP model_ptr) {
  */
 
 // [[Rcpp::export]]
-Rcpp::DataFrame getGeneProducts(SEXP model_ptr) {
+Rcpp::DataFrame getGeneProducts(SEXP sbml_document_ptr) {
   // Get the Model object from the SBMLDocument
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -736,9 +812,13 @@ Rcpp::DataFrame getGeneProducts(SEXP model_ptr) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List getGeneProductCVTerms(SEXP model_ptr) {
+Rcpp::List getGeneProductCVTerms(SEXP sbml_document_ptr) {
   // Get the Model object from the SBMLDocument
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -835,9 +915,13 @@ std::string getGPRString(FbcAssociation* fasso,
 }
 
 // [[Rcpp::export]]
-Rcpp::StringVector getGeneProductSBOTerms(SEXP model_ptr) {
+Rcpp::StringVector getGeneProductSBOTerms(SEXP sbml_document_ptr) {
   // Get the Model object from the SBMLDocument
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -864,9 +948,13 @@ Rcpp::StringVector getGeneProductSBOTerms(SEXP model_ptr) {
 
 
 // [[Rcpp::export]]
-Rcpp::List getGPRs(SEXP model_ptr) {
+Rcpp::List getGPRs(SEXP sbml_document_ptr) {
   // Get the Model object from the SBMLDocument
-  Model* model = Rcpp::XPtr<Model>(model_ptr);
+  SBMLDocument* document = Rcpp::XPtr<SBMLDocument>(sbml_document_ptr);
+  if (document == nullptr) {
+    Rcpp::stop("Invalid SBMLDocument pointer.");
+  }
+  Model* model = document->getModel();
 
   if (model == nullptr) {
     Rcpp::stop("Invalid Model pointer.");
@@ -1307,5 +1395,4 @@ bool writeSBML(
 
 RCPP_MODULE(sbml_module) {
   function("readSBMLfile", &readSBMLfile, "Read SBML document using libSBML");
-  function("getModelObj", &getModelObj, "Get the Model object from the SBMLDocument");
 }
