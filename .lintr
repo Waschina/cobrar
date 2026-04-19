@@ -1,4 +1,6 @@
 linters: linters_with_defaults(
-    object_name_linter(styles = c("camelCase", "symbols"))
+    object_name_linter(styles = c("camelCase", "symbols"),
+                       regexes = "S|file_path|((mod|met|react|obj|gpr)_(id|name|compartments|notes|dir|cvterms|sbo|bnds|comp|attr))"),
+    return_linter = NULL
   )
 encoding: "UTF-8"
