@@ -1,5 +1,5 @@
 # Initialize Autoconf
-AC_INIT([cobrar], [0.2.3], [s.waschina@nutrinf.uni-kiel.de])
+AC_INIT([cobrar], [0.2.5], [s.waschina@nutrinf.uni-kiel.de])
 
 # Initialize variables
 LIBSBML_LIBS=""

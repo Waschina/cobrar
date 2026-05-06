@@ -109,108 +109,104 @@ readSBMLfile <- function(file_path) {
     .Call(`_cobrar_readSBMLfile`, file_path)
 }
 
-getModelObj <- function(sbml_document_ptr) {
-    .Call(`_cobrar_getModelObj`, sbml_document_ptr)
+getModelId <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getModelId`, sbml_document_ptr)
 }
 
-getModelId <- function(model_ptr) {
-    .Call(`_cobrar_getModelId`, model_ptr)
+getModelName <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getModelName`, sbml_document_ptr)
 }
 
-getModelName <- function(model_ptr) {
-    .Call(`_cobrar_getModelName`, model_ptr)
+getModelCompartments <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getModelCompartments`, sbml_document_ptr)
 }
 
-getModelCompartments <- function(model_ptr) {
-    .Call(`_cobrar_getModelCompartments`, model_ptr)
+getStoichiometricMatrix <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getStoichiometricMatrix`, sbml_document_ptr)
 }
 
-getStoichiometricMatrix <- function(model_ptr) {
-    .Call(`_cobrar_getStoichiometricMatrix`, model_ptr)
+getModelCVTerms <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getModelCVTerms`, sbml_document_ptr)
 }
 
-getModelCVTerms <- function(model_ptr) {
-    .Call(`_cobrar_getModelCVTerms`, model_ptr)
+getModelSBOTerm <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getModelSBOTerm`, sbml_document_ptr)
 }
 
-getModelSBOTerm <- function(model_ptr) {
-    .Call(`_cobrar_getModelSBOTerm`, model_ptr)
+getModelNotes <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getModelNotes`, sbml_document_ptr)
 }
 
-getModelNotes <- function(model_ptr) {
-    .Call(`_cobrar_getModelNotes`, model_ptr)
+getObjectiveFunction <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getObjectiveFunction`, sbml_document_ptr)
 }
 
-getObjectiveFunction <- function(model_ptr) {
-    .Call(`_cobrar_getObjectiveFunction`, model_ptr)
+getSubsystems <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getSubsystems`, sbml_document_ptr)
 }
 
-getSubsystems <- function(model_ptr) {
-    .Call(`_cobrar_getSubsystems`, model_ptr)
+getReactionIds <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getReactionIds`, sbml_document_ptr)
 }
 
-getReactionIds <- function(model_ptr) {
-    .Call(`_cobrar_getReactionIds`, model_ptr)
+getReactionNames <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getReactionNames`, sbml_document_ptr)
 }
 
-getReactionNames <- function(model_ptr) {
-    .Call(`_cobrar_getReactionNames`, model_ptr)
+getReactionCompartment <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getReactionCompartment`, sbml_document_ptr)
 }
 
-getReactionCompartment <- function(model_ptr) {
-    .Call(`_cobrar_getReactionCompartment`, model_ptr)
+getReactionFluxBounds <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getReactionFluxBounds`, sbml_document_ptr)
 }
 
-getReactionFluxBounds <- function(model_ptr) {
-    .Call(`_cobrar_getReactionFluxBounds`, model_ptr)
+getReactionCVTerms <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getReactionCVTerms`, sbml_document_ptr)
 }
 
-getReactionCVTerms <- function(model_ptr) {
-    .Call(`_cobrar_getReactionCVTerms`, model_ptr)
+getReactionSBOTerms <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getReactionSBOTerms`, sbml_document_ptr)
 }
 
-getReactionSBOTerms <- function(model_ptr) {
-    .Call(`_cobrar_getReactionSBOTerms`, model_ptr)
+getMetaboliteIds <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getMetaboliteIds`, sbml_document_ptr)
 }
 
-getMetaboliteIds <- function(model_ptr) {
-    .Call(`_cobrar_getMetaboliteIds`, model_ptr)
+getMetaboliteNames <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getMetaboliteNames`, sbml_document_ptr)
 }
 
-getMetaboliteNames <- function(model_ptr) {
-    .Call(`_cobrar_getMetaboliteNames`, model_ptr)
+getMetaboliteAnnotation <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getMetaboliteAnnotation`, sbml_document_ptr)
 }
 
-getMetaboliteAnnotation <- function(model_ptr) {
-    .Call(`_cobrar_getMetaboliteAnnotation`, model_ptr)
+getMetaboliteCVTerms <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getMetaboliteCVTerms`, sbml_document_ptr)
 }
 
-getMetaboliteCVTerms <- function(model_ptr) {
-    .Call(`_cobrar_getMetaboliteCVTerms`, model_ptr)
+getMetaboliteSBOTerms <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getMetaboliteSBOTerms`, sbml_document_ptr)
 }
 
-getMetaboliteSBOTerms <- function(model_ptr) {
-    .Call(`_cobrar_getMetaboliteSBOTerms`, model_ptr)
+getMetaboliteCompartments <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getMetaboliteCompartments`, sbml_document_ptr)
 }
 
-getMetaboliteCompartments <- function(model_ptr) {
-    .Call(`_cobrar_getMetaboliteCompartments`, model_ptr)
+getGeneProducts <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getGeneProducts`, sbml_document_ptr)
 }
 
-getGeneProducts <- function(model_ptr) {
-    .Call(`_cobrar_getGeneProducts`, model_ptr)
+getGeneProductCVTerms <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getGeneProductCVTerms`, sbml_document_ptr)
 }
 
-getGeneProductCVTerms <- function(model_ptr) {
-    .Call(`_cobrar_getGeneProductCVTerms`, model_ptr)
+getGeneProductSBOTerms <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getGeneProductSBOTerms`, sbml_document_ptr)
 }
 
-getGeneProductSBOTerms <- function(model_ptr) {
-    .Call(`_cobrar_getGeneProductSBOTerms`, model_ptr)
-}
-
-getGPRs <- function(model_ptr) {
-    .Call(`_cobrar_getGPRs`, model_ptr)
+getGPRs <- function(sbml_document_ptr) {
+    .Call(`_cobrar_getGPRs`, sbml_document_ptr)
 }
 
 writeSBML <- function(file_path, mod_id, mod_name, mod_desc, mod_cvterms, mod_notes, mod_sbo, comp_id, comp_name, met_id, met_name, met_charge, met_formula, met_comp, met_cvterms, met_sbo, subsys, subsys_id, subsys_name, gene_id, gene_name, gene_cvterms, gene_sbo, param_id, param_val, param_sbo, react_id, react_name, Scoeff, react_mets, react_lb, react_ub, react_rev, react_cvterms, react_sbo, gpr, obj_coef, obj_dir) {

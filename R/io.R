@@ -11,16 +11,16 @@
 #'
 #' @import Matrix
 #' @export
-readSBMLmod <- function(file_path) {
-  is_compressed <- FALSE
+readSBMLmod <- function(file_path) { # nolint
+  isCompressed <- FALSE
 
-  if(!file.exists(file_path))
-    stop(paste0("SBML file '",file_path,"' does not exist."))
+  if (!file.exists(file_path))
+    stop(paste0("SBML file '", file_path, "' does not exist."))
 
   file_path <- normalizePath(file_path)
 
-  if(grepl("\\.gz$",file_path)) {
-    is_compressed <- TRUE
+  if (grepl("\\.gz$", file_path)) {
+    isCompressed <- TRUE
     fileconn <- gzfile(file_path)
     tmpfile <- tempfile(fileext = ".xml")
     writeLines(readLines(fileconn), tmpfile)
@@ -30,110 +30,111 @@ readSBMLmod <- function(file_path) {
     sbmldoc  <- readSBMLfile(file_path)
   }
 
-  # Pointers to SBML document and model (libSBML objects)
-  modelPtr <- getModelObj(sbmldoc)
-
   #---------------#
   # Model content #
   #---------------#
 
   # Model fields
-  mod_id <- getModelId(modelPtr)
-  mod_name <- getModelName(modelPtr)
-  if(is.na(mod_name))
+  mod_id <- getModelId(sbmldoc)
+  mod_name <- getModelName(sbmldoc)
+  if (is.na(mod_name))
     mod_name <- mod_id
-  S <- getStoichiometricMatrix(modelPtr)
-  mod_compartments <- getModelCompartments(modelPtr)
+  S <- getStoichiometricMatrix(sbmldoc)
+  mod_compartments <- getModelCompartments(sbmldoc)
   mod_compartments$name <- ifelse(is.na(mod_compartments$name),
                                   mod_compartments$id,
                                   mod_compartments$name)
-  mod_cvterms <- paste(getModelCVTerms(modelPtr), collapse = ";")
-  mod_notes <- getModelNotes(modelPtr)
-  obj <- getObjectiveFunction(modelPtr)
+  mod_cvterms <- paste(getModelCVTerms(sbmldoc), collapse = ";")
+  mod_notes <- getModelNotes(sbmldoc)
+  obj <- getObjectiveFunction(sbmldoc)
   constraints <- new("Constraints",
                      coeff = as(Matrix(nrow = 0, ncol = ncol(S), sparse = TRUE),
                                 "dMatrix"),
                      lb = numeric(0),
                      ub = numeric(0),
                      rtype = character(0))
-  mod_sbo <- getModelSBOTerm(modelPtr)
+  mod_sbo <- getModelSBOTerm(sbmldoc)
 
   # Subsystems
-  subSys <- getSubsystems(modelPtr); colnames(subSys$subSys) <- subSys$subSys_ids
+  subSys <- getSubsystems(sbmldoc)
+  colnames(subSys$subSys) <- subSys$subSys_ids
 
   # Reactions
-  react_id <- getReactionIds(modelPtr)
-  react_name <- getReactionNames(modelPtr)
-  react_bnds <- getReactionFluxBounds(modelPtr)
-  react_comp <- getReactionCompartment(modelPtr)
-  react_cvterms <- getReactionCVTerms(modelPtr)
+  react_id <- getReactionIds(sbmldoc)
+  react_name <- getReactionNames(sbmldoc)
+  react_bnds <- getReactionFluxBounds(sbmldoc)
+  react_comp <- getReactionCompartment(sbmldoc)
+  react_cvterms <- getReactionCVTerms(sbmldoc)
   react_cvterms <- lapply(react_cvterms, function(x) {
     paste(x, collapse = ";")
   })
-  react_sboterms <- getReactionSBOTerms(modelPtr)
+  react_sboterms <- getReactionSBOTerms(sbmldoc)
 
   # Metabolites
-  met_id <- getMetaboliteIds(modelPtr)
-  met_name <- getMetaboliteNames(modelPtr)
-  met_attr <- getMetaboliteAnnotation(modelPtr)
-  met_cvterms <- getMetaboliteCVTerms(modelPtr)
+  met_id <- getMetaboliteIds(sbmldoc)
+  met_name <- getMetaboliteNames(sbmldoc)
+  met_attr <- getMetaboliteAnnotation(sbmldoc)
+  met_cvterms <- getMetaboliteCVTerms(sbmldoc)
   met_cvterms <- lapply(met_cvterms, function(x) {
     paste(x, collapse = ";")
   })
   met_attr$CVTerms <- unlist(met_cvterms)
-  met_comp <- getMetaboliteCompartments(modelPtr)
-  met_attr$SBOTerm <- getMetaboliteSBOTerms(modelPtr)
+  met_comp <- getMetaboliteCompartments(sbmldoc)
+  met_attr$SBOTerm <- getMetaboliteSBOTerms(sbmldoc)
 
 
   # Genes
-  allGeneProducts <- getGeneProducts(modelPtr)
-  gpr <- getGPRs(modelPtr)
-  gpr_cvterms <- getGeneProductCVTerms(modelPtr)
+  allGeneProducts <- getGeneProducts(sbmldoc)
+  gpr <- getGPRs(sbmldoc)
+  gpr_cvterms <- getGeneProductCVTerms(sbmldoc)
   gpr_cvterms <- lapply(gpr_cvterms, function(x) {
     paste(x, collapse = ";")
   })
-  gpr_sbo <- getGeneProductSBOTerms(modelPtr)
+  gpr_sbo <- getGeneProductSBOTerms(sbmldoc)
 
-  if(is_compressed)
+  if (isCompressed)
     file.remove(tmpfile)
 
+  rm(sbmldoc)
+
   return(
-    new("ModelOrg",
-        mod_id = mod_id,
-        mod_desc = mod_id,
-        mod_name = mod_name,
-        mod_compart = mod_compartments$id,
-        mod_compart_name = mod_compartments$name,
-        mod_attr = data.frame(CVTerms = mod_cvterms, SBOTerm = mod_sbo),
-        mod_notes = mod_notes,
-        S = S,
-        obj_coef = obj$coeff,
-        obj_dir = ifelse(!(obj$dir %in% c("minimize","maximize")),
-                         "maximize", obj$dir),
-        subSys = as(subSys$subSys, "lMatrix"),
-        subSys_id = subSys$subSys_ids,
-        subSys_name = subSys$subSys_names,
-        constraints = constraints,
+    new(
+      "ModelOrg",
+      mod_id = mod_id,
+      mod_desc = mod_id,
+      mod_name = mod_name,
+      mod_compart = mod_compartments$id,
+      mod_compart_name = mod_compartments$name,
+      mod_attr = data.frame(CVTerms = mod_cvterms, SBOTerm = mod_sbo),
+      mod_notes = mod_notes,
+      S = S,
+      obj_coef = obj$coeff,
+      obj_dir = ifelse(!(obj$dir %in% c("minimize", "maximize")),
+                       "maximize", obj$dir),
+      subSys = as(subSys$subSys, "lMatrix"),
+      subSys_id = subSys$subSys_ids,
+      subSys_name = subSys$subSys_names,
+      constraints = constraints,
 
-        met_id = gsub("^M_","",met_id),
-        met_name = met_name,
-        met_comp = ifelse(met_comp == "", NA_character_, met_comp),
-        met_attr = met_attr,
+      met_id = gsub("^M_", "", met_id),
+      met_name = met_name,
+      met_comp = ifelse(met_comp == "", NA_character_, met_comp),
+      met_attr = met_attr,
 
-        react_id = gsub("^R_","",react_id),
-        react_name = react_name,
-        react_comp = ifelse(react_comp == "", NA_character_, react_comp),
-        lowbnd = react_bnds$lower_bound,
-        uppbnd = react_bnds$upper_bound,
-        react_attr = data.frame(CVTerms = unlist(react_cvterms),
-                                SBOTerm = react_sboterms),
+      react_id = gsub("^R_", "", react_id),
+      react_name = react_name,
+      react_comp = ifelse(react_comp == "", NA_character_, react_comp),
+      lowbnd = react_bnds$lower_bound,
+      uppbnd = react_bnds$upper_bound,
+      react_attr = data.frame(CVTerms = unlist(react_cvterms),
+                              SBOTerm = react_sboterms),
 
-        gprRules = gpr$rules,
-        genes = lapply(gpr$genes, function(x) gsub("^G_","",x)),
-        allGenes = gsub("^G_","",allGeneProducts$ID),
-        genes_attr = data.frame(name = allGeneProducts$name,
-                                CVTerms = unlist(gpr_cvterms),
-                                SBOTerm = gpr_sbo)
+      gprRules = gpr$rules,
+      genes = lapply(gpr$genes, function(x) gsub("^G_", "", x)),
+      allGenes = gsub("^G_", "", allGeneProducts$ID),
+      genes_attr = data.frame(name = allGeneProducts$name,
+                              CVTerms = unlist(gpr_cvterms),
+                              SBOTerm = gpr_sbo)
     )
   )
 }
@@ -141,7 +142,7 @@ readSBMLmod <- function(file_path) {
 
 # Small helpter function to transform an SBO Term to it's integer als ID
 sboterm2int <- function(sbo) {
-  return(as.numeric(gsub("SBO:|SBO_","",sbo)))
+  return(as.numeric(gsub("SBO:|SBO_", "", sbo)))
 }
 
 #' Exports a Metabolic Network in SBML Format
@@ -166,92 +167,96 @@ sboterm2int <- function(sbo) {
 writeSBMLmod <- function(model, file_path = NULL) {
 
   compress <- FALSE
-  if(!is.null(file_path) && grepl("\\.gz$",file_path)) {
+  if (!is.null(file_path) && grepl("\\.gz$", file_path)) {
     compress <- TRUE
-    out_file <- file_path
-    file_path <- gsub("\\.gz$","", file_path)
+    outFile <- file_path
+    file_path <- gsub("\\.gz$", "", file_path)
   }
 
-  if(is.null(file_path))
+  if (is.null(file_path))
     file_path <- paste0(model@mod_id, ".xml")
 
   file_path <- path.expand(file_path)
 
   # small corrections before export
-  if(!all(grepl("^R_",model@react_id)))
-    model@react_id <- paste0("R_",model@react_id)
-  if(!all(grepl("^M_",model@met_id)))
-    model@met_id <- paste0("M_",model@met_id)
-  if(!all(grepl("^G_",model@allGenes))) {
-    model@allGenes <- paste0("G_",model@allGenes)
-    model@genes <- lapply(model@genes, function(x) paste0("G_",x))
+  if (!all(grepl("^R_", model@react_id)))
+    model@react_id <- paste0("R_", model@react_id)
+  if (!all(grepl("^M_", model@met_id)))
+    model@met_id <- paste0("M_", model@met_id)
+  if (!all(grepl("^G_", model@allGenes))) {
+    model@allGenes <- paste0("G_", model@allGenes)
+    model@genes <- lapply(model@genes, function(x) paste0("G_", x))
   }
   colnames(model@subSys) <- NULL
-  model@subSys_id <- gsub("-","_",model@subSys_id)
-  if(!all(grepl("^subsys_",model@subSys_id)))
-    model@subSys_id <- paste0("subsys_",model@subSys_id)
+  model@subSys_id <- gsub("-", "_", model@subSys_id)
+  if (!all(grepl("^subsys_", model@subSys_id)))
+    model@subSys_id <- paste0("subsys_", model@subSys_id)
   model@met_id <- sub("\\[(.*)\\]$", "_\\1", model@met_id)
 
-  # libSBML seems not to allow ".", ":", "-" in gene and model IDs... replacing them here
-  # with underscores
+  # libSBML seems not to allow ".", ":", "-" in gene and model IDs...
+  # replacing them here with underscores
   regrepl <- "\\.|\\:|-"
-  if(any(grepl(regrepl,model@allGenes))) {
-    model@allGenes <- gsub(regrepl,"_",model@allGenes)
-    model@genes <- lapply(model@genes, FUN = function(x) gsub(regrepl,"_",x))
+  if (any(grepl(regrepl, model@allGenes))) {
+    model@allGenes <- gsub(regrepl, "_", model@allGenes)
+    model@genes <- lapply(model@genes, FUN = function(x) gsub(regrepl, "_", x))
     model@genes_attr$name <- gsub(regrepl, "_", model@genes_attr$name)
-    model@mod_id <- gsub(regrepl,"_", model@mod_id)
-    # warning("Some gene IDs contain dots ('.'). Replacing them with underscores ('_').")
+    model@mod_id <- gsub(regrepl, "_", model@mod_id)
   }
 
 
-  if(is.na(model@mod_attr$CVTerms[1]))
+  if (is.na(model@mod_attr$CVTerms[1]))
     model@mod_attr$CVTerms[1] <- ""
 
-  if(react_num(model) > 0)
+  if (react_num(model) > 0)
     model@react_attr$CVTerms <- ifelse(is.na(model@react_attr$CVTerms),
-                                       "",model@react_attr$CVTerms)
-  if(met_num(model) > 0)
+                                       "", model@react_attr$CVTerms)
+  if (met_num(model) > 0)
     model@met_attr$CVTerms <- ifelse(is.na(model@met_attr$CVTerms),
-                                     "",model@met_attr$CVTerms)
-  if(gene_num(model) > 0)
+                                     "", model@met_attr$CVTerms)
+  if (gene_num(model) > 0)
     model@genes_attr$CVTerms <- ifelse(is.na(model@genes_attr$CVTerms),
-                                       "",model@genes_attr$CVTerms)
+                                       "", model@genes_attr$CVTerms)
 
   # Stoichiometry lists
-  lReaMets <- apply(model@S, 2, FUN = function(x) model@met_id[which(abs(x)>0)])
-  lReaStoich <- apply(model@S, 2, FUN = function(x) x[which(abs(x)>0)])
+  lReaMets <- apply(model@S, 2,
+                    FUN = function(x) model@met_id[which(abs(x) > 0)])
+  lReaStoich <- apply(model@S, 2, FUN = function(x) x[which(abs(x) > 0)])
 
   # bound groups
-  bndgrp <- data.frame(id = model@react_id, lb = model@lowbnd, ub = model@uppbnd,
+  bndgrp <- data.frame(id = model@react_id,
+                       lb = model@lowbnd,
+                       ub = model@uppbnd,
                        lb.term = rep(NA_character_, react_num(model)),
                        ub.term = rep(NA_character_, react_num(model)))
-  if(nrow(bndgrp)>0){
-    bndgrp$lb.term <- paste0(bndgrp$id,"_lb")
-    bndgrp$ub.term <- paste0(bndgrp$id,"_ub")
-    bndgrp$lb.term <- ifelse(bndgrp$lb == 0,"default_0", bndgrp$lb.term)
-    bndgrp$ub.term <- ifelse(bndgrp$ub == 0,"default_0", bndgrp$ub.term)
-    bndgrp$lb.term <- ifelse(bndgrp$lb == -COBRAR_SETTINGS("MAXIMUM"),"default_lb", bndgrp$lb.term)
-    bndgrp$ub.term <- ifelse(bndgrp$ub == COBRAR_SETTINGS("MAXIMUM"),"default_ub", bndgrp$ub.term)
+  if (nrow(bndgrp) > 0) {
+    bndgrp$lb.term <- paste0(bndgrp$id, "_lb")
+    bndgrp$ub.term <- paste0(bndgrp$id, "_ub")
+    bndgrp$lb.term <- ifelse(bndgrp$lb == 0, "default_0", bndgrp$lb.term)
+    bndgrp$ub.term <- ifelse(bndgrp$ub == 0, "default_0", bndgrp$ub.term)
+    bndgrp$lb.term <- ifelse(bndgrp$lb == -COBRAR_SETTINGS("MAXIMUM"),
+                             "default_lb", bndgrp$lb.term)
+    bndgrp$ub.term <- ifelse(bndgrp$ub == COBRAR_SETTINGS("MAXIMUM"),
+                             "default_ub", bndgrp$ub.term)
   }
-  bndgrp_para <- data.frame(bnd = c(bndgrp$lb.term, bndgrp$ub.term),
-                            val = c(bndgrp$lb, bndgrp$ub))
-  bndgrp_para <- bndgrp_para[!duplicated(bndgrp_para$bnd),]
-  bndgrp_para$SBO <- ifelse(grepl("^default_",bndgrp_para$bnd),626,625)
-  bndgrp_para <- bndgrp_para[order(bndgrp_para$bnd),]
+  bndgrpPara <- data.frame(bnd = c(bndgrp$lb.term, bndgrp$ub.term),
+                           val = c(bndgrp$lb, bndgrp$ub))
+  bndgrpPara <- bndgrpPara[!duplicated(bndgrpPara$bnd), ]
+  bndgrpPara$SBO <- ifelse(grepl("^default_", bndgrpPara$bnd), 626, 625)
+  bndgrpPara <- bndgrpPara[order(bndgrpPara$bnd), ]
 
   # gpr string for libSBML
   gpr <- character(0L)
-  if(react_num(model)>0) {
-    for(i in 1:length(model@react_id)) {
+  if (react_num(model) > 0) {
+    for (i in seq_along(model@react_id)) {
       x <- model@gprRules[[i]]
       y <- model@genes[[i]]
-      y <- ifelse(y == "G_NA","false",y)
+      y <- ifelse(y == "G_NA", "false", y)
 
-      if(length(y) == 0) {
+      if (length(y) == 0) {
         gpr <- append(gpr, "")
       } else {
-        for(j in 1:length(y)) {
-          x <- gsub(paste0("x[",j,"]"),
+        for (j in seq_along(y)) {
+          x <- gsub(paste0("x[", j, "]"),
                     y[j], x, fixed = TRUE)
         }
         gpr <- append(gpr, x)
@@ -260,7 +265,6 @@ writeSBMLmod <- function(model, file_path = NULL) {
     gpr <- gsub("\\&", "and", gpr)
     gpr <- gsub("\\|", "or", gpr)
   }
-  #print(gpr)
 
   # Let's export
   out <- writeSBML(
@@ -288,7 +292,7 @@ writeSBMLmod <- function(model, file_path = NULL) {
     met_sbo = sboterm2int(model@met_attr$SBOTerm),
 
     # Subsystems
-    subsys = apply(model@subSys, 2, function(x) which(x)-1),
+    subsys = apply(model@subSys, 2, function(x) which(x) - 1),
     subsys_id = model@subSys_id,
     subsys_name = model@subSys_name,
 
@@ -299,9 +303,9 @@ writeSBMLmod <- function(model, file_path = NULL) {
     gene_sbo = sboterm2int(model@genes_attr$SBOTerm),
 
     # Parameters (bound groups)
-    param_id = bndgrp_para$bnd,
-    param_val = bndgrp_para$val,
-    param_sbo = bndgrp_para$SBO,
+    param_id = bndgrpPara$bnd,
+    param_val = bndgrpPara$val,
+    param_sbo = bndgrpPara$SBO,
 
     # Reactions and Stoichiometry
     react_id = model@react_id,
@@ -320,13 +324,13 @@ writeSBMLmod <- function(model, file_path = NULL) {
     obj_dir = model@obj_dir
   )
 
-  if(compress) {
-    input_conn <- file(file_path, "r")
-    output_conn <- gzfile(out_file, "w")
-    file_content <- readLines(input_conn)
-    writeLines(file_content, output_conn)
-    close(input_conn)
-    close(output_conn)
+  if (compress) {
+    inputConn <- file(file_path, "r")
+    outputConn <- gzfile(outFile, "w")
+    fileContent <- readLines(inputConn)
+    writeLines(fileContent, outputConn)
+    close(inputConn)
+    close(outputConn)
     file.remove(file_path)
   }
 
@@ -344,16 +348,17 @@ writeSBMLmod <- function(model, file_path = NULL) {
 #'
 #' @export
 readSybilmod <- function(file_path) {
-  sybildoc.lst  <- readRDS(normalizePath(file_path))
+  sybildocLst  <- readRDS(normalizePath(file_path))
 
-  if( !is.list(sybildoc.lst) ) sybildoc.lst <- list(sybildoc.lst)
+  if (!is.list(sybildocLst)) sybildocLst <- list(sybildocLst)
 
-  models.lst <- vector(mode="list", length=length(sybildoc.lst))
-  names(models.lst) <- names(sybildoc.lst)
-  for(i in seq_along(sybildoc.lst)){
-    sybildoc <- sybildoc.lst[[i]]
+  modelsLst <- vector(mode = "list", length = length(sybildocLst))
+  names(modelsLst) <- names(sybildocLst)
+  for (i in seq_along(sybildocLst)) {
+    sybildoc <- sybildocLst[[i]]
     constraints <- new("Constraints",
-                       coeff = as(Matrix(nrow = 0, ncol = ncol(sybildoc@S), sparse = TRUE),
+                       coeff = as(Matrix(nrow = 0, ncol = ncol(sybildoc@S),
+                                         sparse = TRUE),
                                   "dMatrix"),
                        lb = numeric(0),
                        ub = numeric(0),
@@ -366,9 +371,11 @@ readSybilmod <- function(file_path) {
                mod_compart = sybildoc@mod_compart,
                mod_compart_name = sybildoc@mod_compart,
                mod_attr = sybildoc@mod_attr,
-               mod_notes = paste0("<notes>\n  <html xmlns=\"http://www.w3.org/1999/xhtml\">\n    <p>",
-                                  sybildoc@mod_desc,
-                                  "</p>\n  </html>\n</notes>"),
+               mod_notes =
+                 paste0("<notes>\n  <html xmlns=\"",
+                        "http://www.w3.org/1999/xhtml\">\n    <p>",
+                        sybildoc@mod_desc,
+                        "</p>\n  </html>\n</notes>"),
                S = sybildoc@S,
                obj_coef = sybildoc@obj_coef,
                obj_dir = "maximize",
@@ -415,12 +422,12 @@ readSybilmod <- function(file_path) {
     mod@react_attr$CVTerms <- ""
     mod@react_attr$SBOTerm <- ""
 
-    models.lst[[i]] <- mod
+    modelsLst[[i]] <- mod
   }
 
-  if( length(models.lst) == 1 ){
-    return(models.lst[[1]])
-  }else{
-    return(models.lst)
+  if (length(modelsLst) == 1) {
+    return(modelsLst[[1]])
+  } else {
+    return(modelsLst)
   }
 }
