@@ -1,6 +1,7 @@
 # Introduction to cobrar
 
 ``` r
+
 library(cobrar)
 #> Loading required package: Matrix
 #> cobrar uses...
@@ -21,6 +22,7 @@ but without oxygen to simulate an anoxic growth environment.
 First, we load the wild type *E. coli* core metabolic model.
 
 ``` r
+
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)
 ```
@@ -29,6 +31,7 @@ Next, FBA is performed to predict the model’s growth rate and reaction
 fluxes.
 
 ``` r
+
 sol <- fba(mod)
 sol
 #> Algorithm:              FBA 
@@ -42,6 +45,7 @@ We can also inspect the metabolite consumption and production by looking
 at the predicted fluxes for all exchange reactions.
 
 ``` r
+
 getExchanges(mod, sol)
 #>             ID                    name          flux
 #> 1      EX_ac_e        Acetate exchange  0.000000e+00
@@ -73,6 +77,7 @@ To simulate anaerobic growth, the lower bound of the exchange reaction
 “EX_o2_e” can be set to 0.
 
 ``` r
+
 mod_anaero <- changeBounds(mod, react = "EX_o2_e", lb = 0)
 ```
 
@@ -80,6 +85,7 @@ Now, the growth rate and reaction fluxes can be predicted for anaerobic
 growth.
 
 ``` r
+
 sol_anaero <- fba(mod_anaero)
 sol_anaero
 #> Algorithm:              FBA 
@@ -121,6 +127,7 @@ First, the transporter reaction is added to the model, that can import
 4-aminobutyrate (ID: `4abut`).
 
 ``` r
+
 mod <- addReact(mod, id = "ABUTt", Scoef = c(-1,-1,1,1),
                 met = c("4abut_e","h_e","4abut_c","h_c"), reversible = TRUE,
                 lb = -1000, ub = 1000,
@@ -133,6 +140,7 @@ mod <- addReact(mod, id = "ABUTt", Scoef = c(-1,-1,1,1),
 Next, we add the exchange reaction for 4-aminobutyrate.
 
 ``` r
+
 mod <- addReact(mod, id = "EX_4abut_e", Scoef = c(-1), met = "4abut_e",
                 lb = -1.5, ub = 1000, reactName = "4-aminobutyrate exchange")
 ```
@@ -147,6 +155,7 @@ alpha-ketoglutarate (ID `akg_c`) and forms L-glutamate (ID `glu__L_c`)
 and succinic semialdehyde (ID `sucsal_c`).
 
 ``` r
+
 mod <- addReact(mod, id = "ABTA", Scoef = c(-1,-1,1,1),
                 met = c("4abut_c","akg_c","glu__L_c","sucsal_c"),
                 lb = 0,
@@ -164,6 +173,7 @@ is added, which oxidises succinic semialdehyde to form succinate (ID
 `succ_c`).
 
 ``` r
+
 mod <- addReact(mod, id = "SSALx", Scoef = c(-1,-1,-1,2,1,1),
                 met = c("h2o_c","nad_c","sucsal_c","h_c","nadh_c","succ_c"),
                 lb = 0,
@@ -176,6 +186,7 @@ mod <- addReact(mod, id = "SSALx", Scoef = c(-1,-1,-1,2,1,1),
 All new reaction can be printed as equations:
 
 ``` r
+
 printReaction(mod, c("EX_4abut_e","ABUTt","ABTA","SSALx"))
 #> [1] "(1) 4-aminobutyrate <==> "                                                               
 #> [2] "(1) H+ + (1) 4-aminobutyrate <==> (1) H+ + (1) 4-aminobutyrate"                          
@@ -188,6 +199,7 @@ rate increased with the new pathway and that 4-aminobutyrate is indeed
 consumed by *E. coli*.
 
 ``` r
+
 sol <- fba(mod)
 sol
 #> Algorithm:              FBA 

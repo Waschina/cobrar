@@ -49,6 +49,7 @@ file named `.Renviron`.
 It can be obtained after starting R by typing
 
 ``` r
+
 getwd()
 ```
 
@@ -132,6 +133,7 @@ the updated environment variables are loaded.You can confirm your
 environment is correctly configured by running the following in R:
 
 ``` r
+
 Sys.getenv("PATH")
 Sys.getenv("R_MAKEVARS_USER")
 ```
@@ -148,6 +150,7 @@ Once your environment is configured and verified, you can install the
 **Note:** You may need to install the `remotes` package first:
 
 ``` r
+
 install.packages("remotes")
 ```
 
@@ -155,12 +158,14 @@ Once the `remotes` packages is installed you can just get cobrar by
 running
 
 ``` r
+
 remotes::install_github("Waschina/cobrar")
 ```
 
 After the installation is completed you can just load the package using
 
 ``` r
+
 library(cobrar)
 ```
 

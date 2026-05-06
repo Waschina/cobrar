@@ -12,6 +12,7 @@ aerobic or anaerobic growth conditions.
 For the following example, two packages are required:
 
 ``` r
+
 library(cobrar)
 #> Loading required package: Matrix
 #> cobrar uses...
@@ -23,6 +24,7 @@ library(ggplot2)
 ### Aerobic growth conditions
 
 ``` r
+
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)
 
@@ -50,6 +52,7 @@ ggplot(fvares,
 ### Anaerobic growth conditions
 
 ``` r
+
 mod_anero <- changeBounds(mod, "EX_o2_e", lb = 0)
 
 fvares <- fva(mod_anero, react = mod_anero@react_id[grepl("^EX_",mod_anero@react_id)],

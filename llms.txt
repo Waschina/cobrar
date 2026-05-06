@@ -27,8 +27,9 @@ sudo apt install libsbml-dev libglpk-dev
 Install cobrar (in *R*):
 
 ``` r
+
 # install.packages("remotes")
-remotes::install_github("Waschina/cobrar", build_vignettes = TRUE)
+remotes::install_github("Waschina/cobrar")
 ```
 
 #### Centos/Fedora/RHEL
@@ -42,6 +43,7 @@ sudo yum install libsbml-devel glpk-devel
 Install cobrar (in *R*):
 
 ``` r
+
 # install.packages("remotes")
 remotes::install_github("Waschina/cobrar")
 ```
@@ -57,6 +59,7 @@ brew install glpk brewsci/bio/libsbml
 Install cobrar (in *R*):
 
 ``` r
+
 # install.packages("remotes")
 remotes::install_github("Waschina/cobrar")
 ```
@@ -82,22 +85,15 @@ conda install bioconda::r-cobrar
 The full documentation including illustrative examples is available
 [here](https://waschina.github.io/cobrar/).
 
-The vignettes of the package can also be accessed:
-
-``` r
-library(cobrar)
-vignette(package = "cobrar")
-vignette(topic = "cobrar")
-```
-
 A simple Flux Balance Analysis (FBA) for the core metabolism of
 *Escherichia coli*:
 
 ``` r
+
 library(cobrar)
 #> Loading required package: Matrix
 #> cobrar uses...
-#>  - libSBML (v. 5.20.5)
+#>  - libSBML (v. 5.20.4)
 #>  - glpk (v. 5.0)
 
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")

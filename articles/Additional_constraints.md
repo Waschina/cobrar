@@ -1,6 +1,7 @@
 # Additional constraints
 
 ``` r
+
 library(cobrar)
 #> Loading required package: Matrix
 #> cobrar uses...
@@ -12,9 +13,10 @@ library(cobrar)
 
 Standard FBA models already contain the linear constraints:
 
-- Stationarity constraints: $\mathbf{S}\ \mathbf{v} = \mathbf{0}$
+- Stationarity constraints:
+  $`\boldsymbol{S}\ \boldsymbol{v}=\boldsymbol{0}`$
 - Flux bounds on individual reactions:
-  ${\mathbf{l}\mathbf{b}} \leq \mathbf{v} \leq {\mathbf{u}\mathbf{b}}$
+  $`\boldsymbol{lb} \le \boldsymbol{v} \le \boldsymbol{ub}`$
 
 In specific cases, it can be useful to include additional linear
 constraints to a model, e.g., to add additional thermodynamic
@@ -27,6 +29,7 @@ predictions.
 First, we load a model of *Escherichia coli*’s core metabolism.
 
 ``` r
+
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)
 ```
@@ -35,11 +38,12 @@ Second, we change the lower bounds of the exchange reactions for three
 potential carbon sources, namely Glucose, Fructose, and Fumarate. By
 doing so, we simulate a growth environment that provides three carbon
 sources simultaneously. The maximum uptake rate for each carbon source
-is set to $3\ mmol\ gDW^{- 1}\ hr^{- 1}$. Furthermore, we set the lower
+is set to $`3\ mmol\  gDW^{-1}\ hr^{-1}`$. Furthermore, we set the lower
 bound for the exchange reaction of oxygen (`EX_o2_e`) to
-$0\ mmol\ gDW^{- 1}\ hr^{- 1}$, to simulate anoxic conditions.
+$`0\ mmol\ gDW^{-1}\ hr^{-1}`$, to simulate anoxic conditions.
 
 ``` r
+
 mod <- changeBounds(mod, react = c("EX_glc__D_e","EX_fru_e", "EX_fum_e"),
                     lb = c(-3,-3,-3))
 mod <- changeBounds(mod, react = "EX_o2_e", lb = 0)
@@ -51,6 +55,7 @@ that limits carbon source uptake to a total of 35 C-atom-mmol per gram
 dry weight and and per hour. This can be accomplished by:
 
 ``` r
+
 mod <- addConstraint(mod, react = c("EX_glc__D_e","EX_fru_e", "EX_fum_e"),
                      coeff = c(6,6,4), rtype = "L", lb = -35)
 # print the user constraint
@@ -64,6 +69,7 @@ additional constraint and inspect predicted fluxes of all exchange
 reactions.
 
 ``` r
+
 sol <- fba(mod)
 getExchanges(mod, sol)
 #>             ID                    name          flux
@@ -94,13 +100,20 @@ Fumarate is virtually zero. Also, there is a quite high production of
 protons (ID: `EX_h_e`). Next, we will add another constraint, that
 limits the release of protons depending on the growth rate.
 Specifically, we will limit the release to 5 mmol per newly formed gram
-dry weight biomass: $$v_{H^{+}} \leq 5\ v_{Biomass}$$
+dry weight biomass:
+``` math
+v_{H^+} \le 5\ v_{Biomass}
+```
 
-Which is the same as: $$v_{H^{+}} - 5\ v_{Biomass} \leq 0$$
+Which is the same as:
+``` math
+v_{H^+} - 5\ v_{Biomass} \le 0
+```
 
 This constraint can easily be added to the model:
 
 ``` r
+
 mod <- addConstraint(mod, react = c("EX_h_e","BIOMASS_Ecoli_core_w_GAM"),
                      coeff = c(1, -5), rtype = "U", ub = 0)
 sol <- fba(mod)
@@ -141,6 +154,7 @@ call. You can achieve the same final outcome model by adding both
 constraints simultaneously:
 
 ``` r
+
 # Load model
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)

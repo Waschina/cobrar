@@ -58,7 +58,7 @@ dir(output_dir)
 #> [2] "02_fva.tsv"                            
 #> [3] "03_gene_deletion.tsv"                  
 #> [4] "04_reaction_deletion.tsv"              
-#> [5] "bslib-246362e7e3ff6191071d5f9b40ba8d62"
+#> [5] "bslib-8a92d22979ec96a3105b4f8cbcdeeec5"
 #> [6] "downlit"                               
 #> [7] "e_coli_core.xml"                       
 #> [8] "metadata.json"                         

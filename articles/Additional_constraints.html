@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cobrar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +65,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Additional constraints</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Waschina/cobrar/blob/v0.2.4/vignettes/Additional_constraints.Rmd" class="external-link"><code>vignettes/Additional_constraints.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Waschina/cobrar/blob/main/vignettes/Additional_constraints.Rmd" class="external-link"><code>vignettes/Additional_constraints.Rmd</code></a></small>
       <div class="d-none name"><code>Additional_constraints.Rmd</code></div>
     </div>
 
@@ -105,10 +105,10 @@ three potential carbon sources, namely Glucose, Fructose, and Fumarate.
 By doing so, we simulate a growth environment that provides three carbon
 sources simultaneously. The maximum uptake rate for each carbon source
 is set to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mspace width="0.222em"></mspace><mi>m</mi><mi>m</mi><mi>o</mi><mi>l</mi><mspace width="0.222em"></mspace><mi>g</mi><mi>D</mi><msup><mi>W</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mspace width="0.222em"></mspace><mi>h</mi><msup><mi>r</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">3\ mmol\  gDW^{-1}\ hr^{-1}</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mspace width="0.222em"></mspace><mi>m</mi><mi>m</mi><mi>o</mi><mi>l</mi><mspace width="0.222em"></mspace><mi>g</mi><mi>D</mi><msup><mi>W</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mspace width="0.222em"></mspace><mi>h</mi><msup><mi>r</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">3\ mmol\  gDW^{-1}\ hr^{-1}</annotation></semantics></math>.
 Furthermore, we set the lower bound for the exchange reaction of oxygen
 (<code>EX_o2_e</code>) to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mspace width="0.222em"></mspace><mi>m</mi><mi>m</mi><mi>o</mi><mi>l</mi><mspace width="0.222em"></mspace><mi>g</mi><mi>D</mi><msup><mi>W</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mspace width="0.222em"></mspace><mi>h</mi><msup><mi>r</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">0\ mmol\ gDW^{-1}\ hr^{-1}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mspace width="0.222em"></mspace><mi>m</mi><mi>m</mi><mi>o</mi><mi>l</mi><mspace width="0.222em"></mspace><mi>g</mi><mi>D</mi><msup><mi>W</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mspace width="0.222em"></mspace><mi>h</mi><msup><mi>r</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">0\ mmol\ gDW^{-1}\ hr^{-1}</annotation></semantics></math>,
 to simulate anoxic conditions.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/changeBounds.html">changeBounds</a></span><span class="op">(</span><span class="va">mod</span>, react <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"EX_glc__D_e"</span>,<span class="st">"EX_fru_e"</span>, <span class="st">"EX_fum_e"</span><span class="op">)</span>,</span>
