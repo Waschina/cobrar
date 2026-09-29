@@ -4,9 +4,9 @@
 
 library(cobrar)
 #> Loading required package: Matrix
-#> cobrar uses...
-#>  - libSBML (v. 5.20.2)
-#>  - glpk (v. 5.0)
+#> This is cobrar (version 0.3.0) with...
+#>  - libSBML (5.20.2)
+#>  - glpk (5.0)
 ```
 
 ## Merge models of organisms to construct community metabolic models

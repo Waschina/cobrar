@@ -92,9 +92,9 @@ A simple Flux Balance Analysis (FBA) for the core metabolism of
 
 library(cobrar)
 #> Loading required package: Matrix
-#> cobrar uses...
-#>  - libSBML (v. 5.20.4)
-#>  - glpk (v. 5.0)
+#> This is cobrar (version 0.3.0) with...
+#>  - libSBML (5.20.5)
+#>  - glpk (5.0)
 
 fpath <- system.file("extdata", "e_coli_core.xml", package="cobrar")
 mod <- readSBMLmod(fpath)

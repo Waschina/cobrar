@@ -15,9 +15,9 @@ For the following example, two packages are required:
 
 library(cobrar)
 #> Loading required package: Matrix
-#> cobrar uses...
-#>  - libSBML (v. 5.20.2)
-#>  - glpk (v. 5.0)
+#> This is cobrar (version 0.3.0) with...
+#>  - libSBML (5.20.2)
+#>  - glpk (5.0)
 library(ggplot2)
 ```
 

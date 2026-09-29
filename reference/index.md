@@ -145,48 +145,13 @@
 - [`ModelComm-class`](https://waschina.github.io/cobrar/reference/ModelComm-class.md)
   [`ModelComm`](https://waschina.github.io/cobrar/reference/ModelComm-class.md)
   : Structure of ModelComm Class
-
-## Setup
-
-- [`COBRAR_SETTINGS()`](https://waschina.github.io/cobrar/reference/COBRAR_SETTINGS.md)
-  : Set and get central cobrar parameters
-
-## Internal LP solver connectors
-
-- [`addCols()`](https://waschina.github.io/cobrar/reference/addCols-methods.md)
-  : Add columns to LP problem
-- [`addRows()`](https://waschina.github.io/cobrar/reference/addRows-methods.md)
-  : Add rows to LP problem
-- [`addSingleConstraint()`](https://waschina.github.io/cobrar/reference/addSingleConstraint-methods.md)
-  : Add single constraint
-- [`deleteLP()`](https://waschina.github.io/cobrar/reference/deleteLP-methods.md)
-  : Delete an LP problem
-- [`fvaJob()`](https://waschina.github.io/cobrar/reference/fvaJob-methods.md)
-  : Wrapper function for efficient FVA
-- [`getColsPrimal()`](https://waschina.github.io/cobrar/reference/getColsPrimal-methods.md)
-  : Retrieve column primal value
-- [`getObjValue()`](https://waschina.github.io/cobrar/reference/getObjValue-methods.md)
-  : Get the objective value of a solved LP problem
-- [`getRedCosts()`](https://waschina.github.io/cobrar/reference/getRedCosts-methods.md)
-  : Retrieve column reduced costs
-- [`getSolStat()`](https://waschina.github.io/cobrar/reference/getSolStat-methods.md)
-  : Get the solver status
-- [`loadLPprob()`](https://waschina.github.io/cobrar/reference/loadLPprob-methods.md)
-  : Initialize a LP problem
-- [`loadMatrix()`](https://waschina.github.io/cobrar/reference/loadMatrix-methods.md)
-  : Populate a constraint-X-variable matrix
-- [`setColsBndsObjCoefs()`](https://waschina.github.io/cobrar/reference/setColsBndsObjCoefs-methods.md)
-  : Set column bounds and objective coefficients
-- [`setColsKind()`](https://waschina.github.io/cobrar/reference/setColsKind-methods.md)
-  : Set column types
-- [`setObjDirection()`](https://waschina.github.io/cobrar/reference/setObjDirection-methods.md)
-  : Set objective direction
-- [`setRowsBnds()`](https://waschina.github.io/cobrar/reference/setRowsBnds-methods.md)
-  : Set row bounds
-- [`solveLp()`](https://waschina.github.io/cobrar/reference/solveLp-methods.md)
-  : Solve an LP problem
 - [`LPproblem-class`](https://waschina.github.io/cobrar/reference/LPproblem-class.md)
   [`LPproblem`](https://waschina.github.io/cobrar/reference/LPproblem-class.md)
   : Structure of LPproblem Class
 - [`LPproblem_glpk-class`](https://waschina.github.io/cobrar/reference/LPproblem_glpk-class.md)
   : Structure of LPproblem_glpk Class
+
+## Setup
+
+- [`COBRAR_SETTINGS()`](https://waschina.github.io/cobrar/reference/COBRAR_SETTINGS.md)
+  : Set and get central cobrar parameters
