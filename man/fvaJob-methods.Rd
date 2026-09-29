@@ -21,3 +21,4 @@ fvaJob(lp, ...)
 \description{
 Wrapper function for efficient FVA
 }
+\keyword{internal}

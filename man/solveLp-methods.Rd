@@ -19,3 +19,4 @@ solveLp(lp, ...)
 \description{
 Solves an \link{LPproblem}.
 }
+\keyword{internal}

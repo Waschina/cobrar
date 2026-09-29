@@ -19,3 +19,4 @@ getRedCosts(lp, ...)
 \description{
 Retrieve column reduced costs of a solved \link{LPproblem}.
 }
+\keyword{internal}

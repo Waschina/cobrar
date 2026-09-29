@@ -21,3 +21,4 @@ addCols(lp, ...)
 \description{
 Add columns (a.k.a. variables/reactions) to an \link{LPproblem}.
 }
+\keyword{internal}

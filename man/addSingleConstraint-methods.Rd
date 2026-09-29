@@ -27,3 +27,4 @@ addSingleConstraint(lp, ...)
 \description{
 Add a single constraint to an existing \link{LPproblem}.
 }
+\keyword{internal}

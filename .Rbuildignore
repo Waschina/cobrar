@@ -13,3 +13,5 @@ pkgdown
 aclocal.m4
 README_WIN.md
 ^\.lintr$
+^\.positai$
+^\.claude$

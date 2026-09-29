@@ -32,7 +32,7 @@ setClass("LPproblem",
 #'
 #' @docType methods
 #' @rdname loadLPprob-methods
-#' @export
+#' @keywords internal
 setGeneric("loadLPprob", function(lp, ...) {
   standardGeneric("loadLPprob")
 })
@@ -46,7 +46,7 @@ setGeneric("loadLPprob", function(lp, ...) {
 #'
 #' @docType methods
 #' @rdname setObjDirection-methods
-#' @export
+#' @keywords internal
 setGeneric("setObjDirection", function(lp, ...) {
   standardGeneric("setObjDirection")
 })
@@ -60,7 +60,7 @@ setGeneric("setObjDirection", function(lp, ...) {
 #'
 #' @docType methods
 #' @rdname addCols-methods
-#' @export
+#' @keywords internal
 setGeneric("addCols", function(lp, ...) {
   standardGeneric("addCols")
 })
@@ -74,7 +74,7 @@ setGeneric("addCols", function(lp, ...) {
 #'
 #' @docType methods
 #' @rdname addRows-methods
-#' @export
+#' @keywords internal
 setGeneric("addRows", function(lp, ...) {
   standardGeneric("addRows")
 })
@@ -89,7 +89,7 @@ setGeneric("addRows", function(lp, ...) {
 #'
 #' @docType methods
 #' @rdname loadMatrix-methods
-#' @export
+#' @keywords internal
 setGeneric("loadMatrix", function(lp, ...) {
   standardGeneric("loadMatrix")
 })
@@ -103,7 +103,7 @@ setGeneric("loadMatrix", function(lp, ...) {
 #'
 #' @docType methods
 #' @rdname setColsBndsObjCoefs-methods
-#' @export
+#' @keywords internal
 setGeneric("setColsBndsObjCoefs", function(lp, ...) {
   standardGeneric("setColsBndsObjCoefs")
 })
@@ -117,7 +117,7 @@ setGeneric("setColsBndsObjCoefs", function(lp, ...) {
 #'
 #' @docType methods
 #' @rdname setColsKind-methods
-#' @export
+#' @keywords internal
 setGeneric("setColsKind", function(lp, ...) {
   standardGeneric("setColsKind")
 })
@@ -131,7 +131,7 @@ setGeneric("setColsKind", function(lp, ...) {
 #'
 #' @docType methods
 #' @rdname setRowsBnds-methods
-#' @export
+#' @keywords internal
 setGeneric("setRowsBnds", function(lp, ...) {
   standardGeneric("setRowsBnds")
 })
@@ -145,7 +145,7 @@ setGeneric("setRowsBnds", function(lp, ...) {
 #'
 #' @docType methods
 #' @rdname solveLp-methods
-#' @export
+#' @keywords internal
 setGeneric("solveLp", function(lp, ...) {
   standardGeneric("solveLp")
 })
@@ -159,7 +159,7 @@ setGeneric("solveLp", function(lp, ...) {
 #'
 #' @docType methods
 #' @rdname getObjValue-methods
-#' @export
+#' @keywords internal
 setGeneric("getObjValue", function(lp, ...) {
   standardGeneric("getObjValue")
 })
@@ -173,7 +173,7 @@ setGeneric("getObjValue", function(lp, ...) {
 #'
 #' @docType methods
 #' @rdname getSolStat-methods
-#' @export
+#' @keywords internal
 setGeneric("getSolStat", function(lp, ...) {
   standardGeneric("getSolStat")
 })
@@ -187,7 +187,7 @@ setGeneric("getSolStat", function(lp, ...) {
 #'
 #' @docType methods
 #' @rdname getColsPrimal-methods
-#' @export
+#' @keywords internal
 setGeneric("getColsPrimal", function(lp, ...) {
   standardGeneric("getColsPrimal")
 })
@@ -201,7 +201,7 @@ setGeneric("getColsPrimal", function(lp, ...) {
 #'
 #' @docType methods
 #' @rdname getRedCosts-methods
-#' @export
+#' @keywords internal
 setGeneric("getRedCosts", function(lp, ...) {
   standardGeneric("getRedCosts")
 })
@@ -215,7 +215,7 @@ setGeneric("getRedCosts", function(lp, ...) {
 #'
 #' @docType methods
 #' @rdname addSingleConstraint-methods
-#' @export
+#' @keywords internal
 setGeneric("addSingleConstraint", function(lp, ...) {
   standardGeneric("addSingleConstraint")
 })
@@ -229,7 +229,7 @@ setGeneric("addSingleConstraint", function(lp, ...) {
 #'
 #' @docType methods
 #' @rdname fvaJob-methods
-#' @export
+#' @keywords internal
 setGeneric("fvaJob", function(lp, ...) {
   standardGeneric("fvaJob")
 })
@@ -244,7 +244,7 @@ setGeneric("fvaJob", function(lp, ...) {
 #'
 #' @docType methods
 #' @rdname deleteLP-methods
-#' @export
+#' @keywords internal
 setGeneric("deleteLP", function(lp, ...) {
   standardGeneric("deleteLP")
 })

@@ -28,3 +28,4 @@ loadMatrix(lp, ...)
 Add linear coefficients to the constraint-X-variable matrix of an
 \link{LPproblem}.
 }
+\keyword{internal}

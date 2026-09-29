@@ -32,9 +32,9 @@ fvares
 
 }
 \seealso{
-Other Flux prediction algorithms: 
-\code{\link{fba}()},
-\code{\link{pfba}()},
-\code{\link{pfbaHeuristic}()}
+Other Flux prediction algorithms:
+\code{\link[=fba]{fba()}},
+\code{\link[=pfba]{pfba()}},
+\code{\link[=pfbaHeuristic]{pfbaHeuristic()}}
 }
 \concept{Flux prediction algorithms}

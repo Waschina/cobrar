@@ -19,3 +19,4 @@ deleteLP(lp, ...)
 \description{
 Deletes an existing \link{LPproblem} and frees associated memory.
 }
+\keyword{internal}

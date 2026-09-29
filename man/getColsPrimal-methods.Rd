@@ -19,3 +19,4 @@ getColsPrimal(lp, ...)
 \description{
 Retrieve column primal value of a solved \link{LPproblem}.
 }
+\keyword{internal}

@@ -5,10 +5,13 @@
 ## usethis namespace: end
 NULL
 
+#' @importFrom utils packageVersion
 .onAttach <- function(libname, pkgname) {
-  packageStartupMessage("cobrar uses...\n",
-                        " - libSBML (v. ", getSBMLVersion(),")\n",
-                        " - glpk (v. ",getGLPKVersion(),")")
+  packageStartupMessage(
+    "This is cobrar (version ", utils::packageVersion(pkgname), ") with...\n",
+    " - libSBML (", getSBMLVersion(),")\n",
+    " - glpk (",getGLPKVersion(),")"
+  )
 }
 
 .COBRARenv <- new.env()
