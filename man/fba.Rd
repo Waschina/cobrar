@@ -31,9 +31,9 @@ cat(" Growth rate:       ", res_anaero@obj,"\n",
 
 }
 \seealso{
-Other Flux prediction algorithms: 
-\code{\link{fva}()},
-\code{\link{pfba}()},
-\code{\link{pfbaHeuristic}()}
+Other Flux prediction algorithms:
+\code{\link[=fva]{fva()}},
+\code{\link[=pfba]{pfba()}},
+\code{\link[=pfbaHeuristic]{pfbaHeuristic()}}
 }
 \concept{Flux prediction algorithms}

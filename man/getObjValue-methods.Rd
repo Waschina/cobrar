@@ -19,3 +19,4 @@ getObjValue(lp, ...)
 \description{
 Get the objective value of a solved \link{LPproblem}.
 }
+\keyword{internal}

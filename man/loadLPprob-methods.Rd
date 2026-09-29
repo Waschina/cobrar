@@ -54,3 +54,4 @@ loadLPprob(lp, ...)
 \description{
 Transfers variables, constraints and objectives to \link{LPproblem}.
 }
+\keyword{internal}

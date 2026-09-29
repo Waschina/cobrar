@@ -95,31 +95,12 @@ reference:
       - FluxPrediction-class
       - ModelOrg-class
       - ModelComm-class
+      - LPproblem-class
+      - LPproblem_glpk-class
 
   - title: "Setup"
     contents:
       - COBRAR_SETTINGS
-
-  - title: "Internal LP solver connectors"
-    contents:
-      - addCols
-      - addRows
-      - addSingleConstraint
-      - deleteLP
-      - fvaJob
-      - getColsPrimal
-      - getObjValue
-      - getRedCosts
-      - getSolStat
-      - loadLPprob
-      - loadMatrix
-      - setColsBndsObjCoefs
-      - setColsKind
-      - setObjDirection
-      - setRowsBnds
-      - solveLp
-      - LPproblem-class
-      - LPproblem_glpk-class
 
 articles:
 - title: Tutorials

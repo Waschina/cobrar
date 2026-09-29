@@ -19,3 +19,4 @@ getSolStat(lp, ...)
 \description{
 Get the solver status of a solved \link{LPproblem}.
 }
+\keyword{internal}

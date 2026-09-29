@@ -21,3 +21,4 @@ addRows(lp, ...)
 \description{
 Add rows (a.k.a. constraints) to an \link{LPproblem}.
 }
+\keyword{internal}

@@ -29,3 +29,4 @@ setColsBndsObjCoefs(lp, ...)
 \description{
 Set column bounds and objective coefficients of an \link{LPproblem}.
 }
+\keyword{internal}

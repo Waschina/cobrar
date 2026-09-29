@@ -27,3 +27,4 @@ setRowsBnds(lp, ...)
 \description{
 Set row bounds of an \link{LPproblem}.
 }
+\keyword{internal}

@@ -21,3 +21,4 @@ setObjDirection(lp, ...)
 \description{
 Set the objective function direction in an \link{LPproblem}.
 }
+\keyword{internal}

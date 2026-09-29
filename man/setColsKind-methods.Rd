@@ -23,3 +23,4 @@ setColsKind(lp, ...)
 \description{
 Set column/variable types of an \link{LPproblem}.
 }
+\keyword{internal}
